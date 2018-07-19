@@ -1,0 +1,2856 @@
+% -*- coding: utf-8 -*-
+% !TEX program = xelatex
+
+\documentclass[14pt,notheorems,leqno,xcolor={rgb}]{beamer} % ignorenonframetext
+
+\input{../common/theme.sty}
+\input{../common/share.sty}
+\input{../common/local.sty}
+
+\begin{document}
+
+\occasion{高等数学课程}
+\title{第一章·函数与极限}
+\author{\href{https://lvjr.bitbucket.io}{吕荐瑞}}
+\institute{暨南大学数学系}
+
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+\section{数集与函数}
+
+\subsection{数集与区间}
+
+\begin{frame}
+\frametitle{数集}
+人类对数的认识是逐步发展的：
+\begin{itemize}[<+->]
+  \item 自然数集$\mathbb{N}$
+  \item 整数集$\mathbb{Z}$
+  \item 有理数集$\mathbb{Q}$
+  \item \bold{实数集$\mathbb{R}$}\onslide<6->{\space\lead{$\longleftarrow$\space 微积分的研究对象}}
+  \item 复数集$\mathbb{C}$
+\end{itemize}
+\vpause
+\begin{thinking}
+$\bold{\mathbb{R}}$ 与$\mathbb{Z}$、$\mathbb{C}$、$\mathbb{Q}$分别有何区别？
+\end{thinking}
+\end{frame}
+
+\begin{sframe}
+\frametitle{区间的定义}
+\begin{remark*}
+我们希望下册定义的开区域（闭区域）概念是这里的开区间（闭区间）概念在
+$\mathbb{R}^n$中的推广，因此
+\begin{enumzero}
+  \item \hspace{-0.4em}开区间分为有限开区间和无限开区间，排除空集
+  \item \hspace{-0.4em}闭区间分为有限闭区间和无限闭区间，排除独点集
+  \item \hspace{-0.4em}规定整个实数集$\mathbb{R}$既是开区间又是闭区间
+\end{enumzero}
+\end{remark*}
+\end{sframe}
+
+\begin{frame}
+\frametitle{有限区间}
+\vspace{-1em}
+数轴上长度大于零的一段称为\bold{区间}\pause ：
+$\left\{\begin{array}{@{}l@{}}\text{有限区间}\\\text{无限区间}\end{array}\right.$
+\ppause\vspace{0.3em}\hrule\vspace{0.2em}
+\bold{有限区间}有四种（$a<b$，$a$和$b$称为区间的\bold{端点}）：
+\begin{align*}
+  (a,b)&=\{x \mid a<x<b\}          &\text{有限\bold{开区间}}\\[-0.2em]
+  [a,b]&=\{x \mid a \le x \le b\}  &\text{有限\bold{闭区间}}\\[-0.2em]
+  (a,b]&=\{x \mid a<x \le b\}      &\stext{\smark\text{左开右闭区间}}\\[-0.2em]
+  [a,b)&=\{x \mid a \le x<b\}      &\stext{\smark\text{左闭右开区间}}
+\end{align*}
+\vspace{-1.5em}\pause
+\begin{example*}
+用区间表示下列数集：
+\begin{enumhalf}
+  \item $\{x \mid 1<x<3\}$ ~
+  \item $\{x \mid -5 \le x < 0\}$ ~
+\end{enumhalf}
+\end{example*}
+\end{frame}
+
+\begin{frame}
+\frametitle{无限区间}
+\bold{无限区间}有五种（其中$a$或$b$称为区间的\bold{端点}）：
+\begin{align*}
+  &(-\infty, b)=\{x \mid x<b\}     &\text{无限开区间} \\[-0.2em]
+  &(a,+\infty)=\{x \mid x>a\}      &\text{无限开区间} \\[-0.2em]
+  &(-\infty, b]=\{x \mid x \le b\} &\text{无限闭区间} \\[-0.2em]
+  &[a,+\infty)=\{x \mid x \ge a\}  &\text{无限闭区间} \\[-0.2em]
+  &(-\infty, +\infty)=\mathbb{R}   &\stext{\smark\text{既是开区间又是闭区间}}
+\end{align*}
+\vspace{-1.5em}\pause
+\begin{example*}
+用区间表示下列数集：
+\begin{enumhalf}
+  \item $\{x \mid x<3\}$ ~
+  \item $\{x \mid x \ge 2\}$ ~
+\end{enumhalf}
+\end{example*}
+\end{frame}
+
+%\begin{frame}
+%\frametitle{绝对值}
+%一个实数的\bold{绝对值}定义为$|x|=\left\{\begin{array}{ll}x,&x\ge0\\-x,&x<0\end{array}\right.$。
+%\ppause
+%去绝对值号的方法（设$a,b>0$）：
+%\begin{itemize}[<+->]
+%  \item $|x|<b$ 等价于 $-b<x<b$
+%  \item $|x|>a$ 等价于 $x<-a$或$x>a$
+%  \item $a<|x|<b$ 等价于 $-b<x<-a$或$a<x<b$
+%\end{itemize}
+%\onslide<+->
+%绝对值的\bold{三角不等式}：
+%\begin{multicols}{2}
+%\begin{itemize}[<+->]
+%  \item $|x+y|\le|x|+|y|$
+%  \item $|x-y|\ge|x|-|y|$
+%\end{itemize}
+%\end{multicols}
+%\end{frame}
+
+\begin{frame}
+\frametitle{区间}
+\begin{example}
+用区间表示下列数集：
+\begin{enumlite}
+  \item $\left\{x \,\big|\, |x-2|<1\right\}$
+  \item $\left\{x \,\big|\, |x+3|\ge5\right\}$
+  \item $\left\{x \,\big|\, 1\le|x+1|<4\right\}$
+\end{enumlite}
+\end{example}
+\end{frame}
+
+\begin{oframe}
+\frametitle{区间}
+\begin{exercise}
+用区间表示下列数集：
+\begin{enumlite}
+  \item $\left\{x \,\big|\, |x+2|\le3\right\}$
+  \item $\left\{x \,\big|\, |x-4|>7\right\}$
+  \item $\left\{x \,\big|\, 2<|x+3|\le5\right\}$
+\end{enumlite}
+\end{exercise}
+\vpause
+\begin{solution}
+\begin{enumlite}
+  \item $[-5,1]$
+  \item $(-\infty,-3)\cup(11,+\infty)$
+  \item $[-8,-5)\cup(-1,2]$
+\end{enumlite} 
+\end{solution}
+\end{oframe}
+
+%\begin{iframe}
+%\frametitle{区间}
+%\begin{example}
+%用区间表示下列数集：
+%\begin{enumerate}
+%  \item $\left\{x \,\big|\, x^2-x-2<0\right\}$
+%  \item $\left\{x \,\big|\, x^2+x-6\ge0\right\}$
+%\end{enumerate}
+%\end{example}
+%\pause
+%\begin{exercise}
+%用区间表示下列数集：
+%\begin{enumerate}
+%  \item $\left\{x \,\big|\, x^2+2x-3\le0\right\}$
+%  \item $\left\{x \,\big|\, x^2-3x+2>0\right\}$
+%\end{enumerate}
+%\end{exercise}
+%\pause
+%\begin{example}
+%用区间表示数集$\left\{x \,\big|\, |x^2-3x-2|<2\right\}$。
+%\end{example}
+%\end{iframe}
+
+\begin{frame}
+\frametitle{邻域}
+\begin{itemize}
+  \item $a$的\bold{邻域} $U(a,\delta)$：$$\left\{x \,\big|\, |x-a|<\delta\right\}=(a-\delta,a+\delta)$$
+  \item $a$的\bold{去心邻域} $\mathring{U}(a,\delta)$：$$\left\{x \,\big|\, 0<|x-a|<\delta\right\}=(a-\delta,a)\cup(a,a+\delta)$$
+\end{itemize}
+\pause
+\begin{itemize}
+  \item $a$的\bold{左邻域}：$(a-\delta,a)$
+  \item $a$的\bold{右邻域}：$(a,a+\delta)$
+\end{itemize}
+\pause
+其中$a$称为邻域的\bold{中心}，$\delta$称为邻域的\bold{半径}。
+\end{frame}
+
+\subsection{函数的概念}
+
+\begin{frame}
+\begin{definition}
+设非空数集$D\subset\mathbb{R}$，如果存在一个对应规则$f$，使得对每个$x\in D$，都有一个确定的实数$y$ 与之对应，
+则称$f$为定义在$D$上的一个\bold{函数}，记为$f:D\longrightarrow\mathbb{R}$，简记为$y=f(x)$。
+\end{definition}%
+\pause
+\begin{itemize}
+  \item $x$称为\bold{自变量}；
+  \item $y$称为\bold{因变量}；
+  \item $D$称为\bold{定义域}；
+  \item $Z=\left\{y \,\big|\, y=f(x), x\in D\right\}$称为\bold{值域}。
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\begin{remark*}
+两个函数相同，当且仅当两者的定义域和对应规则都相同。
+\end{remark*}
+\pause
+\begin{example}
+研究$y=x$和$y=\dfrac{x^2}x$是不是相同的函数。
+\end{example}
+\pause
+\begin{example}
+研究$y=x$和$y=\sqrt{x^2}$是不是相同的函数。
+\end{example}
+\end{frame}
+
+%\begin{frame}
+%\frametitle{函数的记号}
+%\begin{example}
+%已知$f(x)=x(x+1)$，求$f(x-1)$。
+%\end{example}
+%\pause
+%\begin{example}
+%已知$f(x-1)=x^2+1$，求$f(x)$。
+%\end{example}
+%\end{frame}
+%
+%\begin{frame}
+%\frametitle{函数的记号}
+%\begin{exercise}
+%已知$f(3x-1)=9x^2+6x-2$，求$f(x)$。
+%\end{exercise}
+%\pause
+%\begin{solution}
+%$f(x)=x^2+4x+1$。
+%\end{solution}
+%\vpause
+%\begin{exercise}
+%已知$f(\frac{x-1}{x+1})=x+2$，求$f(x)$。
+%\end{exercise}
+%\pause
+%\begin{solution}
+%$f(x)=\frac{x-3}{x-1}$。
+%\end{solution}
+%\end{frame}
+
+\begin{frame}
+\frametitle{自然定义域}
+对未指明定义域的函数，通常根据函数表达式确定它的\bold{自然定义域}。
+例如
+\begin{enumerate}[<+->]
+\item $y=\sqrt{x}$的定义域为$D=[0,+\infty)$，
+\item $y=\log_a{x}$的定义域为$D=(0,+\infty)$，
+\item $y=\frac1{x}$ 的定义域为$D=(-\infty,0)\cup(0,+\infty)$。
+\end{enumerate}
+\onslide<+->
+求函数的自然定义域时有三个基本要求：
+\begin{enumerate}[<+->]
+  \item 根号里面要求大于等于零；
+  \item 对数里面要求大于零；
+  \item 分母要求不能等于零。
+\end{enumerate}
+\end{frame}
+
+\begin{oframe}
+\frametitle{自然定义域}
+\begin{example}
+用区间表示下列函数的定义域：
+\begin{enumlite}
+  \item $y = \sqrt{x-2}$
+  \item $y= \ln(2x+6)+\sqrt{5-x}$
+  \item $y = \dfrac{1}{x-4}$
+\end{enumlite}
+\end{example}
+\end{oframe}
+
+\begin{oframe}
+\frametitle{自然定义域}
+\begin{exercise}
+用区间表示下列函数的定义域：
+\begin{enumlite}
+  \item $y=\ln(3-x)$
+  \item $y=\sqrt{4-x^2}+\dfrac{x+1}{x-1}$
+\end{enumlite}
+\end{exercise}
+\vpause
+\begin{solution}
+\begin{enumlite}
+  \item $(-\infty,3)$
+  \item $[-2,1)\cup(1,2]$
+\end{enumlite}
+\end{solution}
+\end{oframe}
+
+\begin{iframe}
+\frametitle{自然定义域}
+\begin{example}
+用区间表示下列函数的定义域：
+\begin{enumlite}
+  \item $y= \ln(2x+6)+\sqrt{5-x}$
+  \item $y= \frac{1}{\ln(x-5)}$
+\end{enumlite}
+\end{example}
+\pause
+\begin{exercise}
+用区间表示下列函数的定义域：
+\begin{enumlite}
+  \item $y= \frac1{4-x^2}+\sqrt{x+3}$
+  \item $y= \ln(\frac{x+1}{x-1})$
+\end{enumlite}
+\end{exercise}
+\end{iframe}
+
+\subsection{函数的性质}
+
+\begin{frame}
+\frametitle{函数的奇偶性}
+\begin{definition}
+给定函数$y=f(x)$，
+\begin{enumerate}
+  \item 如果$\forall x\in D$，总有$f(-x)=f(x)$，则称$f(x)$为\bold{偶函数}。
+  \item 如果$\forall x\in D$，总有$f(-x)=-f(x)$，则称$f(x)$为\bold{奇函数}。
+\end{enumerate}
+\end{definition}
+\vpause
+\begin{example*}
+$x$, $x^3$, $\dfrac1x$, $\dfrac1{x^3}$, $\sin x$, $\tan x$ 为奇函数。
+\end{example*}
+\pause
+\begin{example*}
+$x^2$, $x^4$, $\dfrac1{x^2}$, $\dfrac1{x^4}$, $\cos x$ 为偶函数。
+\end{example*}
+\end{frame}
+
+\begin{frame}
+\frametitle{函数的奇偶性}
+\begin{example}
+判断下列函数的奇偶性：
+\begin{enumlite}
+  \item $f(x)=x^4-2x^2+1$ %为偶函数。
+  \item $f(x)=x^3+x$ %为奇函数。
+  \item $f(x)=x^2+x+1$ %为非奇非偶函数。
+\end{enumlite}
+\end{example}
+\pause
+\begin{exercise}
+判断下列函数的奇偶性：
+\begin{enumlite}
+  \item $f(x)=\frac{1-x^2}{\cos x}$ \onslide<3->{\cdotfill 偶函数}
+  \item $f(x)=\frac{e^x-1}{e^x+1}$ \onslide<3->{\cdotfill 奇函数}
+\end{enumlite}
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\frametitle{函数的周期性}
+\begin{definition}
+对于函数$y=f(x)$，如果存在正常数$T$使得$f(x+T)=f(x)$恒成立，则称此函数为\bold{周期函数}；
+满足这个等式的最小正数$T$，称为此函数的\bold{周期}。
+\end{definition}
+\vpause
+\begin{example*}
+$y=\sin x$ 和 $y=\cos x$ 以 $2\pi$ 为周期。
+\end{example*}
+\pause
+\begin{example*}
+$y=\tan x$ 和 $y=\cot x$ 以 $\pi$ 为周期。
+\end{example*}
+\end{frame}
+
+\begin{frame}
+\frametitle{函数的单调性}
+\begin{definition}
+设函数$y=f(x)$在区间$I$上有定义，对于区间$I$上的任意两点$x_1$和$x_2$，
+\begin{enumerate}
+  \item 若当$x_1<x_2$时有$f(x_1)<f(x_2)$，则称$f(x)$在区间$I$上是\bold{单调增加的}；
+  \item 若当$x_1<x_2$时有$f(x_1)>f(x_2)$，则称$f(x)$在区间$I$上是\bold{单调减少的}；
+\end{enumerate}
+\end{definition}
+\end{frame}
+
+\begin{frame}
+\frametitle{函数的单调性}
+\begin{example*}
+$y=x$在$(-\infty,+\infty)$上是单调增加的。
+\end{example*}
+\vpause
+\begin{example*}
+$y=\ln x$在$(0,+\infty)$上是单调增加的。
+\end{example*}
+\vpause
+\begin{example*}
+$y=1/x$在$(-\infty,0)$和$(0,+\infty)$上单调减少。
+\end{example*}
+\vpause
+\begin{example*}
+$y=x^2$在$(-\infty,0]$上单调减少，在$[0,+\infty)$上单调增加。
+\end{example*}
+\end{frame}
+
+\begin{frame}
+\frametitle{函数的有界性}
+\begin{definition}
+设函数$y=f(x)$在数集$I$上有定义，如果存在一个正数$M$，对于所有$x\in I$，恒有$|f(x)|\le M$，
+则称函数$f(x)$在数集$I$上\bold{有界}。若这样的$M$不存在，则称$f(x)$在$I$上\bold{无界}。\ppause
+如果函数在其定义域上有界，则称它为\bold{有界函数}；否则称它为\bold{无界函数}。
+\end{definition}
+\vpause
+\begin{example*}
+$y=\sin x$，$y=\cos x$ 是有界函数。
+\end{example*}
+\pause
+\begin{example*}
+$y=x^2$，$y=\tan x$，$y=x\cos x$ 是无界函数。
+\end{example*}
+\end{frame}
+
+\begin{frame}
+\frametitle{函数的有界性}
+\begin{example}
+证明下列函数为有界函数：
+\begin{enumlite}
+  \item $y=\sin x - 2\cos x$；
+  \item $y=\frac1{3+x^2}$。
+\end{enumlite}
+\end{example}
+\pause
+\begin{exercise}
+证明下列函数为有界函数：
+\begin{enumlite}
+  \item $y=\sin x -\frac{1}{2+x^2}$\pause ；
+  \item $y=\frac{x^2}{1+x^2}$。
+\end{enumlite}
+\end{exercise}
+\pause
+\begin{solution}
+\begin{multicols}{2}
+\begin{enumlite}
+  \item $|y|\le\frac32$；
+  \item $|y|\le1$。
+\end{enumlite}
+\end{multicols}
+\end{solution}
+\end{frame}
+
+\begin{iframe}
+\frametitle{函数的有界性}
+类似地，我们可以定义函数有上界和有下界的概念。
+\begin{itemize}
+  \item 对于所有$x$，恒有 $|f(x)|\leq M$ \dotfill\bold{有界}
+  \item 对于所有$x$，恒有 $f(x)\le M_1$ \dotfill\bold{有上界}
+  \item 对于所有$x$，恒有 $f(x)\ge M_2$ \dotfill\bold{有下界}
+\end{itemize}
+\vpause
+\begin{theorem*}
+$f(x)$有界 $\Longleftrightarrow$ $f(x)$有上界而且有下界。
+\end{theorem*}
+\end{iframe}
+
+\subsection{函数的构建}
+
+\begin{frame}
+\frametitle{反函数}
+\begin{definition}
+设$y=f(x)$的定义域为$D$，值域为$Z$。如果对每个$y\in Z$，有唯一的$x\in D$满足$y=f(x)$，
+则可以得到定义在 $Z$ 上的函数 $x=f^{-1}(y)$，称为$y=f(x)$的\bold{反函数}。
+\end{definition}
+\vpause
+\begin{example}
+求函数$y=3x-1$的反函数。
+\end{example}
+\pause
+\begin{example}
+求函数$y=2\ln x+1$的反函数。
+\end{example}
+\end{frame}
+
+\begin{oframe}
+\frametitle{反函数}
+\begin{exercise}
+求下列函数的反函数：
+\begin{multicols}{2}
+\begin{enumlite}
+  \item $y=\frac{x-1}{x+2}$；
+  \item $y=\frac{e^x-2}{e^x}$。
+\end{enumlite}
+\end{multicols}
+\end{exercise}
+\vpause
+\begin{solution}
+\begin{multicols}{2}
+\begin{enumlite}
+  \item $y=\frac{-2x-1}{x-1}$；
+  \item $y=\ln\big(\frac{2}{1-x}\big)$。
+\end{enumlite}
+\end{multicols}
+\end{solution}
+\end{oframe}
+
+\begin{oframe}
+\frametitle{复合函数}
+\begin{definition*}
+将$u=g(x)$代入$y=f(u)$，得到的新函数$y=f[g(x)]$，称为这两个函数的\bold{复合函数}。\pause
+复合函数的定义域是那些使得它有意义的$x$所组成的集合。
+\end{definition*}
+\vpause
+\begin{example*}
+两个函数$y=\sqrt{u}$ 和 $u=1-x^2$ 的复合函数是$y=\sqrt{1-x^2}$。
+\end{example*}
+\vpause
+\begin{example*}
+三个函数$y=\sin u$、$u=v^2-1$ 和 $v=e^x$的复合函数是$y=\sin(e^{2x}-1)$。
+\end{example*}
+\end{oframe}
+
+\begin{iframe}
+\frametitle{复合函数}
+\begin{definition}
+设$y=f(u)$的定义域是$D(f)$，$u=g(x)$的值域是$Z(g)$，$D(f)\cap Z(G)$非空，
+则称$y=f[g(x)]$为$y=f(u)$和$u=g(x)$的\bold{复合函数}。
+\end{definition}
+\vpause
+\begin{example}
+两个函数$y=\sqrt{u}$ 和 $u=1-x^2$ 的复合函数是$y=\sqrt{1-x^2}$。
+\end{example}
+\vpause
+\begin{example}
+三个函数$y=\sin u$、$u=v^2-1$ 和 $v=e^x$的复合函数是$y=\sin(e^{2x}-1)$。
+\end{example}
+\end{iframe}
+
+\begin{frame}
+\frametitle{三角函数}
+\begin{enumerate}[<+->]
+  \item 正弦函数$y=\sin x$
+  \item 余弦函数$y=\cos x$
+  \item 正切函数$y=\tan x$
+  \item 余切函数$y=\cot x$
+  \item 正割函数$y=\sec x = \dfrac1{\cos x}$
+  \begin{itemize}
+    \item $\sec^2x=\tan^2x+1$
+  \end{itemize}
+  \item 余割函数$y=\csc x = \dfrac1{\sin x}$
+  \begin{itemize}
+    \item $\csc^2x=\cot^2x+1$
+  \end{itemize}
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{反三角函数}
+\begin{enumerate}[<+->]
+  \item 反正弦函数$y=\arcsin x$ \dotfill $x=\sin y$
+  \begin{itemize}
+    \item $x\in[-1,1],\quad y\in[-\frac{\pi}2,\frac{\pi}2]$
+  \end{itemize}
+  \item 反余弦函数$y=\arccos x$ \dotfill $x=\cos y$
+  \begin{itemize}
+    \item $x\in[-1,1],\quad y\in[0,\pi]$
+  \end{itemize}
+  \item 反正切函数$y=\arctan x$ \dotfill $x=\tan y$
+  \begin{itemize}
+    \item $x\in(-\infty,+\infty),\quad y\in(-\frac{\pi}2,\frac{\pi}2)$
+  \end{itemize}
+  \item 反余切函数$y=\arccot x$ \dotfill $x=\cot y$
+  \begin{itemize}
+    \item $x\in(-\infty,+\infty),\quad y\in(0,\pi)$
+  \end{itemize}
+\end{enumerate}%
+\onslide<+->{\begin{example*}
+$\arccos(\frac12)=\frac\pi3$，$\arctan(\frac{\sqrt3}3)=\frac\pi6$。
+\end{example*}}
+\end{frame}
+
+\begin{frame}{初等函数}
+下面这六种函数，统称为\bold{基本初等函数}：
+\begin{enumerate}[<+->]
+  \item 常值函数$y=c$；
+  \item 幂函数$y=x^\mu$；
+  \item 指数函数$y=a^x$；
+  \item 对数函数$y=\log_ax$；
+  \item 三角函数$y=\sin x$，$y=\cos x$，等；
+  \item 反三角函数$y=\arcsin x$，$y=\arccos x$，等。
+\end{enumerate}
+%\vpause
+%由六种基本初等函数经过有限次四则运算所得到的函数，称为\bold{简单函数}。
+\onslide<+->
+由六种基本初等函数经过有限次四则运算和函数复合所得到的函数，称为\bold{初等函数}。
+\end{frame}
+
+\begin{oframe}
+\frametitle{初等函数的分解}
+\begin{example}
+将下列初等函数分解为简单函数的复合：
+\begin{enumlite}
+  \item $y=e^{2x^2-1}$；
+  \item $y=\sqrt{2+\cos^2 x}$；
+  %\item $y=\frac{e^{-x}+1}{e^{-x}-1}$。
+\end{enumlite}
+\end{example}
+\vpause
+\begin{exercise}
+将下列初等函数分解为简单函数的复合：
+\begin{enumlite}
+  \item $y=(1+\ln x)^5$；
+  \item $y=\sin^2(3x+1)$。
+  %\item $y=\frac1{e^{-x^2}}$；
+\end{enumlite}
+\end{exercise}
+\pause
+\begin{solution}
+\begin{enumlite}
+  \item $y=u^5$，$u=1+\ln x$；
+  \item $y=u^2$，$u=\sin v$，$v=3x+1$。
+\end{enumlite}
+\end{solution}
+\end{oframe}
+
+%\begin{frame}
+%\frametitle{经济学常用函数}
+%\begin{itemize}[<+->]
+%  \item 总成本函数$C(Q)$，平均成本函数$\overline{C}(Q)$
+%  \item 总收益函数$R(Q)$，平均收益函数$\overline{R}(Q)$
+%  \item 总利润函数$L(Q)$，平均利润函数$\overline{L}(Q)$
+%\end{itemize}
+%\end{frame}
+
+\section{数列的极限}
+
+\subsection{数列极限的定义}
+
+\begin{frame}
+\begin{definition}
+\frametitle{数列的定义}
+一列按照顺序排列的数 $x_1, x_2, x_3, \cdots, x_n, \cdots$ 称为\bold{数列}，记为 $\{x_n\}$．
+第$n$项$x_n$的表达式称为数列的\bold{通项}或一般项。
+\end{definition}
+\vpause
+\begin{problem*}
+随着$n$的增大，$x_n$也跟着变化。当$n$趋于无穷大时，$x_n$是否会\bold{无限接近}一个确定的数？
+\end{problem*}
+\end{frame}
+
+\begin{frame}
+\frametitle{数列的例子}
+\begin{enumerate}[<+->]
+  \item \makebox[7em][l]{$x_n=3$} $3,\ 3,\ 3,\ 3,\ \cdots
+                             \onslide<9->{\hfill\longrightarrow3}$
+  \item \makebox[7em][l]{$x_n=\frac1n$} $1,\ \frac12,\ \frac13,\ \frac14,\ \cdots
+                             \onslide<10->{\hfill\longrightarrow0}$
+  \item \makebox[7em][l]{$x_n=\frac{1}{2^n}$} $\frac12,\ \frac14,\ \frac18,\ \frac1{16},\ \cdots
+                             \onslide<11->{\hfill\longrightarrow0}$
+  \item \makebox[7em][l]{$x_n=\frac{n}{n+1}$} $\frac12,\ \frac23,\ \frac34,\ \frac45,\ \cdots
+                             \onslide<12->{\hfill\longrightarrow1}$
+  \item \makebox[7em][l]{$x_n=\frac{(-1)^n}{n}$}  $-1,\ \frac12,\ -\frac13,\ \frac14,\ \cdots
+                             \onslide<13->{\hfill\longrightarrow0}$
+  \item \makebox[7em][l]{$x_n=2^n$} $2,\ 4,\ 8,\ 16,\ \cdots
+                             \onslide<14->{\hfill\text{\warn{\ding{53}}}}$
+  \item \makebox[7em][l]{$x_n=(-1)^n$} $-1,\ 1,\ -1,\ 1,\ \cdots
+                             \onslide<15->{\hfill\text{\warn{\ding{53}}}}$
+%  \item \makebox[7em][l]{$x_n=\frac{n+(-1)^n}{n}$} $0,\ \frac32,\ \frac23,\ \frac54,\ \frac45,\ \cdots
+%                            \onslide<16->{\hfill\longrightarrow1}$
+\end{enumerate}
+\end{frame}
+
+\begin{iframe}
+\frametitle{数列的趋势}
+\begin{example*}
+如下数列不容易凭借观察得出其变化趋势：
+\begin{enumerate}
+  \item $x_n = \sqrt[n]{n}$
+  \item $x_n = \left(1+\frac1n\right)^n$
+\end{enumerate}
+\end{example*}
+\end{iframe}
+
+\begin{oframe}
+\frametitle{数列的极限}
+\begin{definition*}
+如果当$n$趋于无穷大时，$x_n$无限接近一个确定的常数$A$，我们称数列$\{x_n\}$的\bold{极限}等于$A$，
+或者称数列$\{x_n\}$ \bold{收敛}于$A$，记为
+\[ \lim_{n\to\infty}x_n=A. \]
+否则，称数列$\{x_n\}$的极限不存在，或者称数列\bold{发散}。
+\end{definition*}
+%\vpause
+%\begin{remark*}
+%此定义是不严格的，严格的定义可以见下一页。
+%\end{remark*}
+\end{oframe}
+
+\begin{iframe}
+\frametitle{数列的极限}
+\begin{definition}
+设$\{x_n\}$为一个数列，如果存在常数$A$，对任何$\epsilon>0$，总存在$N>0$，使得当$n>N$时，总有
+\[ |x_n-A|<\epsilon \]
+则称数列$\{x_n\}$的\bold{极限}等于$A$，或者称数列$\{x_n\}$ \bold{收敛}于$A$，记为
+\[ \lim_{n\to\infty}x_n=A. \]
+\end{definition}
+如果这样的常数$A$不存在，则称数列$\{x_n\}$ \bold{发散}．
+\end{iframe}
+
+\begin{frame}
+\frametitle{数列极限的基本公式}
+\noindent\fbox{\parbox{0.956\textwidth}{%
+\begin{enumerate}
+\item $\limit_{n\to\infty}C=C$
+\item $\limit_{n\to\infty}\dfrac1{n^k}=0$，（$k>0$）
+\item $\limit_{n\to\infty}\dfrac{(-1)^n}{n^k}=0$，（$k>0$）
+\item $\limit_{n\to\infty}\dfrac{1}{a^n}=0$，（$|a|>1$）
+\end{enumerate}
+}}
+\end{frame}
+
+\begin{iframe}
+\frametitle{数列极限}
+\begin{example*}
+设$x_n=C$，证明$\limit_{n\to\infty}x_n= C$。
+\end{example*}
+\pause
+\begin{proof}
+$\forall\epsilon>0$，取$N=1$，则当$n>N$时就有
+\[ |x_n-C|=\left|C-C\right|=0<\epsilon.\]
+\end{proof}
+\pause
+\begin{example*}
+证明$\limit_{n\to\infty}\dfrac{1}{n}= 0$。
+\end{example*}
+\pause
+\begin{proof}
+$\forall\epsilon>0$，取$N=\dfrac1\epsilon$，则当$n>N$时就有
+\[ |x_n-0|=\left|\dfrac{1}{n}-0\right|=\frac1n<\epsilon.\]
+\end{proof}
+\end{iframe}
+
+\begin{iframe}
+\frametitle{数列极限}
+\begin{example*}
+证明$\limit_{n\to\infty}\frac{(-1)^n}{n}= 0$。
+\end{example*}
+\pause
+\begin{proof}
+$\forall\epsilon>0$，取$N=\frac1\epsilon$，则当$n>N$时就有
+\[ |x_n-0|=\left|\tfrac{(-1)^n}{n}-0\right|=\tfrac1n<\epsilon.\]
+\end{proof}
+\pause
+\begin{example*}
+证明$\limit_{n\to\infty}\frac1{2^n}= 0$。
+\end{example*}
+\pause
+\begin{proof}
+$\forall\epsilon>0$，取$N=\frac1\epsilon$，则当$n>N$时就有
+\[ |x_n-0|=\left|\tfrac1{2^n}-0\right|=\tfrac1{2^n}<\tfrac1n<\epsilon.\]
+其中不等式$2^n>n$可由数学归纳法得到．
+\end{proof}
+\end{iframe}
+
+\begin{frame}
+\frametitle{发散数列}
+发散的数列至少有这两种可能：
+\begin{enumerate}
+  \item 无界型的：比如 $x_n=2^n$；
+  \item 摆动型的：比如 $x_n=(-1)^n$。
+\end{enumerate}
+\end{frame}
+
+\subsection{数列极限的运算}
+
+\begin{frame}
+\frametitle{数列极限的四则运算}
+\begin{theorem}
+如果$\limit_{n\to\infty}x_n=A$，$\limit_{n\to\infty}y_n=B$，那么
+\begin{enumerate}
+  \item $\limit_{n\to\infty}(x_n \pm y_n) = \limit_{n\to\infty}x_n \pm \limit_{n\to\infty}y_n = A \pm B$；
+  \item $\limit_{n\to\infty}(x_n \cdot y_n) = \limit_{n\to\infty}x_n \cdot \limit_{n\to\infty}y_n = A \cdot B$；
+  \item $\limit_{n\to\infty}\dfrac{x_n}{y_n} = \dfrac{\limit_{n\to\infty}x_n}{\limit_{n\to\infty}y_n} = \dfrac{A}{B}$ 
+      （要求分母不为零）．
+\end{enumerate}
+\end{theorem}
+\vpause
+\begin{corollary*}
+$\limit_{n\to\infty}(c\cdot x_n) = c \limit_{n\to\infty}x_n$。
+\end{corollary*}
+\end{frame}
+
+\begin{jframe}
+\frametitle{四则运算法则}
+\small
+\begin{proof}
+(1) $\forall\epsilon>0$, 取$\epsilon_1=\epsilon/2$，则由$\limit_{n\to\infty}x_n=A$得到，
+$\exists N_1>0$ 使得当$n>N_1$时总有
+\[ |x_n-A|<\epsilon_1; \]
+再取$\epsilon_2=\epsilon/2$，则由$\limit_{n\to\infty}y_n=B$得到，
+$\exists N_1>0$ 使得当$n>N_1$时总有
+\[|y_n-B|<\epsilon_2. \]
+令 $N=\max\{N_1,N_2\}$，则当 $n>N$ 时总有
+\begin{align*}
+|(x_n+y_n)-(A+B)|&=|(x_n-A)+(y_n-B)|\\
+ &\le|x_n-A|+|y_n-B| <\epsilon_1+\epsilon_2=\epsilon.
+\end{align*}
+%\par
+%(2) 参考后面$x\to\infty$的情形，略。\par
+%(3) 参考后面$x\to x_0$的情形，略。
+\end{proof}
+\end{jframe}
+
+\begin{frame}
+%\frametitle{数列极限的计算}
+\begin{example}
+求数列极限$\limit_{n\to\infty}\bigg(1-\dfrac1{n^2}\bigg)$.
+\end{example}
+\pause
+\begin{solution}
+原式$=\limit_{n\to\infty}1-\limit_{n\to\infty}\dfrac1{n^2}=1-0=1$。
+\end{solution}
+\vpause
+\begin{example}
+ 求数列极限$\limit_{n\to\infty}\dfrac{n}{n+1}$.
+\end{example}
+\pause
+\begin{solution}
+原式\unskip$\begin{aligned}[t]
+&=\limit_{n\to\infty}\dfrac{1}{1+\frac1n}
+         =\dfrac{\limit_{n\to\infty}1}{\limit_{n\to\infty}1+\limit_{n\to\infty}\frac1n}\\
+&=\dfrac{1}{1+0}=1.\end{aligned}$
+\end{solution}
+\end{frame}
+
+\begin{frame}
+\frametitle{数列极限的计算}
+\begin{example}
+求数列极限$\limit_{n\to\infty}\dfrac{3n^2+1}{n^2+4n}$.
+\end{example}
+\pause
+\begin{solution}
+原式\unskip$\begin{aligned}[t]
+&=\limit_{n\to\infty}\dfrac{3+\dfrac1{n^2}}{1+4\cdot\dfrac1n}
+ =\dfrac{\limit_{n\to\infty}3+\limit_{n\to\infty}\dfrac1{n^2}}{\limit_{n\to\infty}1+4\limit_{n\to\infty}\dfrac1n}\\
+&=\dfrac{3+0}{1+4\cdot0}=3.
+\end{aligned}$
+\end{solution}
+\end{frame}
+
+\begin{frame}
+\frametitle{数列极限的计算}
+\begin{example}
+求数列极限$\limit_{n\to\infty}\dfrac{n+4}{n^2+1}$.
+\end{example}
+\pause
+\begin{solution}
+原式\unskip$\begin{aligned}[t]
+&=\limit_{n\to\infty}\dfrac{\dfrac1n+4\cdot\dfrac1{n^2}}{1+\dfrac1{n^2}}
+ =\dfrac{\limit_{n\to\infty}\dfrac1n+4\limit_{n\to\infty}\dfrac1{n^2}}{\limit_{n\to\infty}1+\limit_{n\to\infty}\dfrac1{n^2}}\\
+&=\dfrac{0+4\times0}{1+0}=0.
+\end{aligned}$
+\end{solution}
+\end{frame}
+
+\begin{frame}
+\frametitle{数列极限的计算}
+\begin{example}
+求数列极限$\limit_{n\to\infty}\dfrac{n+(-1)^n}{n+1}$.
+\end{example}
+\pause
+\begin{solution}
+原式\unskip$\begin{aligned}[t]
+&=\limit_{n\to\infty}\dfrac{1+\frac{(-1)^n}{n}}{1+\frac1n}
+ =\dfrac{\limit_{n\to\infty}1+\limit_{n\to\infty}\frac{(-1)^n}{n}}{\limit_{n\to\infty}1+\limit_{n\to\infty}\frac1n}\\
+&=\frac{1+0}{1+0}=1.
+\end{aligned}$
+\end{solution}
+\end{frame}
+
+\begin{frame}
+\frametitle{数列极限的计算}
+\begin{example}
+求数列极限$\limit_{n\to\infty}\dfrac{2\times 3^n}{3^n+1}$.
+\end{example}
+\pause
+\begin{solution}
+原式$\begin{aligned}[t]
+&=\limit_{n\to\infty}\dfrac{2}{1+\dfrac1{3^n}}
+ =\dfrac{\limit_{n\to\infty}2}{\limit_{n\to\infty}1+\limit_{n\to\infty}\dfrac1{3^n}}\\
+&=\frac{2}{1+0}=2.
+\end{aligned}$
+\end{solution}
+\end{frame}
+
+\begin{oframe}
+\frametitle{数列极限的计算}
+\begin{exercise}
+求数列极限
+\begin{enumlite}
+  \item $\limit_{n\to\infty}\dfrac{3n-1}{n+2}$
+  \item $\limit_{n\to\infty}\dfrac{n^2+2n}{5n^2+1}$
+  \item $\limit_{n\to\infty}\dfrac{3^n+1}{6^n+1}$
+\end{enumlite}
+\end{exercise}
+\end{oframe}
+
+\begin{iframe}
+\frametitle{数列极限的计算}
+\begin{exercise}
+求数列极限
+\begin{enumlite}
+  \item $\limit_{n\to\infty}\dfrac{2n+3n^2}{1+n^3}$
+  \item $\limit_{n\to\infty}\dfrac{3n+(-1)^n}{n+(-1)^n}$
+  \item $\limit_{n\to\infty}\dfrac{3^n+1}{6^n+1}$
+\end{enumlite}
+\end{exercise}
+\end{iframe}
+
+\subsection{数列极限的性质}
+
+\begin{iframe}
+\frametitle{数列极限的性质}
+\begin{property}[唯一性]
+若$\{x_n\}$收敛，则其极限是唯一的。
+\end{property}
+\end{iframe}
+
+\begin{iframe}
+\frametitle{数列极限的性质}
+\begin{property}[有界性]
+设$\{x_n\}$收敛，则存在$M>0$使得$|x_n|\le M$。
+\end{property}
+\vpause
+\begin{proof}
+设$\limit_{n\to\infty}x_n=A$。取$\epsilon=1$，则存在$N>0$，
+使得当$n>N$时有$|x_n-A|<\epsilon=1$。此时
+\[ |x_n|=|(x_n-A)+A|\le|x_n-A|+|A|< 1+|A| \]
+取$M=\max\{x_1,x_2,\cdots,x_{[N]},1+|A|\}$，则对任何$n$都有$|x_n|\le M$。
+\end{proof}
+\vpause
+\begin{example*}
+$x_n=1-5/n$收敛于$1$，此时有$|x_n|\le4$。
+\end{example*}
+\end{iframe}
+
+\begin{iframe}
+\frametitle{数列极限的性质}
+\begin{property}[保号性]
+设数列收敛于$A>0$（或$A<0$），则存在$N>0$，使得当$n>N$时有$x_n>0$（或$x_n<0$）。
+\end{property}
+\vpause
+\begin{proof}
+取$\epsilon=A/2$，则存在$N>0$，使得当$n>N$时有$|x_n-A|<\epsilon=A/2$。
+此时$x_n>A/2>0$。
+\end{proof}
+\vpause
+\begin{example*}
+$x_n=1-5/n$收敛于$1>0$，此时当$n>5$时，有$x_n>0$。
+\end{example*}
+\end{iframe}
+
+\begin{frame}
+\frametitle{数列极限的性质}
+\begin{theorem*}[保号性]
+设数列$x_n\ge0$（或$x_n\le0$），且$\limit_{n\to\infty}x_n=A$，则有$A\ge0$（或$A\le0$）。
+\end{theorem*}
+\vpause
+\begin{corollary*}
+如果$x_n\ge y_n$，而且$\limit_{n\to\infty}x_n=A$，$\limit_{n\to\infty}y_n=B$，则有$A\ge B$。
+\end{corollary*}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{choice}
+已知数列$\{x_n\}$的通项为$x_n=(-1)^n\frac{n}{n+1}$，则该数列\dotfill(\select{C})
+\begin{choicehalf}
+  \item 收敛且有界 ~
+  \item 收敛且无界 ~
+  \item 发散且有界 ~
+  \item 发散且无界 ~
+\end{choicehalf}
+\end{choice}
+\end{frame}
+
+\section{函数的极限I}
+
+\subsection{函数极限的定义}
+
+\begin{frame}
+\frametitle{函数极限的例子}
+\begin{enumerate}[<+->]
+  \item $y=\wfrac1x$
+  \begin{itemize}
+    \item $x\to+\infty$ 时 $y\to0$
+    \item $x\to-\infty$ 时 $y\to0$
+  \end{itemize}
+  \item $y=\wfrac1{x^2}$
+  \begin{itemize}
+    \item $x\to+\infty$ 时 $y\to0$
+    \item $x\to-\infty$ 时 $y\to0$
+  \end{itemize}
+  \item $y=\left(\frac12\right)^x$
+  \begin{itemize}
+    \item $x\to+\infty$ 时 $y\to0$
+  \end{itemize}
+  \item $y=2^x$
+  \begin{itemize}
+    \item $x\to-\infty$ 时 $y\to0$
+  \end{itemize}
+\end{enumerate}
+\end{frame}
+
+\begin{oframe}
+\frametitle{函数的极限($x\to\infty$)}
+\begin{definition*}
+如果当$x$趋于无穷时，$f(x)$无限接近一个确定的常数$A$，
+则称当$x\to\infty$时$f(x)$以$A$为\bold{极限}，记为
+\[ \lim_{x\to\infty}f(x)=A. \]
+%否则，称当$x\to\infty$时函数$f(x)$的极限不存在。
+\end{definition*}
+\vpause
+\begin{remark*}
+$x\to\infty$有两种方向，即$x\to-\infty$和$x\to+\infty$。类似地可以定义
+$\limit_{x\to-\infty}f(x)=A$和$\limit_{x\to+\infty}f(x)=A$。
+\end{remark*}
+\vpause
+\begin{property*}
+$\limit_{x\to\infty}f(x)=A$ 当且仅当 $\limit_{x\to-\infty}f(x)=A$ 且 $\limit_{x\to+\infty}f(x)=A$。
+\end{property*}
+\end{oframe}
+
+\begin{iframe}
+\frametitle{函数的极限($x\to\infty$)}
+\begin{definition}
+设$f(x)$在$|x|$足够大时有定义，如果存在常数$A$，对任何$\epsilon>0$，总存在$N>0$，
+使得当$|x|>N$时，总有$|f(x)-A|<\epsilon$，
+则称当$x\to\infty$时$f(x)$以$A$为\bold{极限}，记为
+\[ \lim_{x\to\infty}f(x)=A. \]
+%如果这样的$A$不存在，则称当$x\to\infty$时 $f(x)$ 的极限不存在．
+\end{definition}
+\vpause
+\begin{remark*}
+$x\to\infty$有两种方向，即$x\to-\infty$和$x\to+\infty$。类似地可以定义
+$\limit_{x\to-\infty}f(x)=A$和$\limit_{x\to+\infty}f(x)=A$。
+\end{remark*}
+\vpause
+\begin{property*}
+$\limit_{x\to\infty}f(x)=A$ 当且仅当 $\limit_{x\to-\infty}f(x)=A$ 且 $\limit_{x\to+\infty}f(x)=A$。
+\end{property*}
+\end{iframe}
+
+\begin{jframe}
+\frametitle{函数极限的例子}
+\begin{example*}
+证明$\limit_{x\to+\infty}\dfrac1{2^x}= 0$。
+\end{example*}
+\begin{proof}
+$\forall\epsilon>0$，由数列极限$\limit_{n\to\infty}\dfrac1{2^n}= 0$知道，
+存在$N_1>0$使得当$n>N_1$时有$\dfrac1{2^n}<\epsilon$.
+\par
+取$N=N_1+1$，则当$x>N$时有$[x]>N_1$，从而
+$$\left|\frac1{2^x}-0\right|=\frac1{2^x}\le\frac1{2^{[x]}}<\frac1{2^{N_1}}<\epsilon.$$
+\end{proof}
+\end{jframe}
+
+\begin{frame}
+\frametitle{函数极限的基本公式I}
+\noindent\fbox{\parbox{0.956\textwidth}{%
+\begin{align}
+&\lim_{x\to\infty}C= C\\
+&\lim_{x\to\infty}\frac1{x^k}= 0 \quad (k\text{为正整数})\\
+&\lim_{x\to+\infty}\frac1{a^x}= 0 \quad (a>1)\\
+&\lim_{x\to-\infty}b^x= 0 \quad (b>1)
+\end{align}%
+}}
+\end{frame}
+
+\subsection{函数极限的运算}
+
+\begin{frame}
+\frametitle{四则运算法则}
+\begin{theorem}
+如果$\limit_{x\to\infty}f(x)=A$，$\limit_{x\to\infty}g(x)=B$，那么
+\begin{enumerate}
+  \item $\limit_{x\to\infty}(f(x) \pm g(x)) = \limit_{x\to\infty}f(x) \pm \limit_{x\to\infty}g(x) = A \pm B$
+  \item $\limit_{x\to\infty}(f(x) \cdot g(x)) = \limit_{x\to\infty}f(x) \cdot \limit_{x\to\infty}g(x) = A \cdot B$
+  \item $\limit_{x\to\infty}\dfrac{f(x)}{g(x)} = \dfrac{\limit_{x\to\infty}f(x)}{\limit_{x\to\infty}g(x)} = \dfrac{A}{B}$ 
+       （要求分母不为零）
+\end{enumerate}
+\end{theorem}
+\vpause
+\begin{corollary*}
+$\limit_{x\to\infty}\big(c\cdot f(x)\big) = c \limit_{x\to\infty}f(x)$。
+\end{corollary*}
+\end{frame}
+
+\begin{jframe}[plain]
+\frametitle{四则运算法则 \optstar}
+\footnotesize
+\begin{proof}
+%(1) 参考数列极限的情形，略。\par
+(2) $\limit_{x\to\infty}f(x)=A$，由局部有界性知道，存在 $M>0$ 和 $N_0>0$ 使得当$|x|>N_0$时有
+$ |f(x)|<M$.\par
+且由$\limit_{x\to\infty}f(x)=A$ 知道，$\forall\epsilon_1>0$, $\exists N_1>0$ 使得当$|x|>N_1$时有
+\[ |f(x)-A|<\epsilon_1. \]
+再由$\limit_{x\to\infty}g(x)=B$ 知道，$\forall\epsilon_2>0$，$\exists N_2>0$ 使得当$|x|>N_2$时有
+\[ |g(x)-B|<\epsilon_2. \]
+$\forall\epsilon>0$，令 $\epsilon_1=\frac{\epsilon}{2|B|+1}$，$\epsilon_2=\frac{\epsilon}{2M}$，
+$N=\max\{N_0,N_1,N_2\}$，则当 $|x|>N$ 时总有
+\begin{align*}
+|f(x)g(x)-AB|&=\big|f(x)[g(x)-B]+B[f(x)-A]\big| \\
+             &\le |f(x)|\cdot|g(x)-B|+|B|\cdot|f(x)-A|<M\epsilon_2+|B|\epsilon_1\\
+             &=M\cdot\frac{\epsilon}{2M}+|B|\cdot\frac{\epsilon}{2|B|+1}<\epsilon/2+\epsilon/2=\epsilon.
+\end{align*}%\par
+%(3) 参考后面$x\to x_0$的情形，略。
+\end{proof}
+\end{jframe}
+
+\begin{frame}
+\frametitle{函数的极限($x\to\infty$)}
+\begin{example}
+求函数极限$\limit_{x\to\infty}\dfrac{2x-1}{3x+4}$。
+\end{example}
+\vpause
+\begin{solution}
+原式\unskip$\begin{aligned}[t]
+&=\limit_{x\to\infty}\dfrac{2-\dfrac1x}{3+4\cdot\dfrac1x}
+ =\dfrac{\limit_{x\to\infty}2-\limit_{x\to\infty}\dfrac1x}{\limit_{x\to\infty}3+4\limit_{x\to\infty}\dfrac1x}\\
+&=\frac{2-0}{3+4\times0}=\frac32
+\end{aligned}$
+\end{solution}
+\end{frame}
+
+\begin{frame}
+\frametitle{函数的极限($x\to\infty$)}
+\begin{example}
+求函数极限$\limit_{x\to\infty}\dfrac{2x+1}{3x^2+2}$。
+\end{example}
+\vpause
+\begin{solution}
+原式\unskip$\begin{aligned}[t]
+&=\limit_{x\to\infty}\dfrac{\dfrac2x+\dfrac1{x^2}}{3+2\cdot\dfrac1{x^2}}
+ =\dfrac{\limit_{x\to\infty}\dfrac2x+\limit_{x\to\infty}\dfrac1{x^2}}{\limit_{x\to\infty}3+2\limit_{x\to\infty}\dfrac1{x^2}}\\
+&=\frac{0+0}{3+2\times0}=0
+\end{aligned}$
+\end{solution}
+\end{frame}
+
+\begin{frame}
+\frametitle{函数的极限($x\to\infty$)}
+\begin{example}
+求函数极限$\limit_{x\to\infty}\dfrac{3x^2+1}{x^2+5x}$。
+\end{example}
+\vpause
+\begin{solution}
+原式\unskip$\begin{aligned}[t]
+&=\limit_{x\to\infty}\dfrac{3+\dfrac1{x^2}}{1+5\cdot\dfrac1{x}}
+ =\dfrac{\limit_{x\to\infty}3+\limit_{x\to\infty}\dfrac1{x^2}}{\limit_{x\to\infty}1+5\limit_{x\to\infty}\dfrac1{x}}\\
+&=\frac{3+0}{1+5\times0}=3
+\end{aligned}$
+\end{solution}
+\end{frame}
+
+\begin{oframe}
+\frametitle{函数的极限($x\to\infty$)}
+\begin{exercise}
+求下列函数极限：
+\begin{enumlite}
+  \item $\limit_{x\to\infty}\dfrac{x^2+5}{2x^2+1}$；
+  \item $\limit_{x\to\infty}\dfrac{1000x+1}{x^2+1}$。
+\end{enumlite}
+\end{exercise}
+\end{oframe}
+
+\begin{iframe}
+\frametitle{函数的极限($x\to\infty$)}
+\begin{exercise}
+求下列函数极限：
+\begin{enumlite}
+  \item $\limit_{x\to\infty}\dfrac{1+2x^2}{x+2x^2+3x^3}$；\pause
+  \item $\limit_{x\to+\infty}\dfrac{3^x+4^x}{2^x+5^x}$。
+\end{enumlite}
+\end{exercise}
+\end{iframe}
+
+\subsection{函数极限的性质}
+
+\setcounter{property}{0}
+
+\begin{iframe}
+\frametitle{函数极限的性质}
+\begin{property}[唯一性]
+若$\limit_{x\to\infty}f(x)$存在，则极限唯一。
+\end{property}
+\end{iframe}
+
+\begin{iframe}
+\frametitle{函数极限的性质}
+\begin{property}[局部有界性]
+如果$\limit_{x\to\infty}f(x)=A$，则存在$N>0$和$M>0$，使得当$|x|>N$时有$|f(x)|\le M$。
+\end{property}
+\vpause
+\begin{example*}
+设$f(x)=1-5/x$，则$\limit_{x\to\infty}f(x)=1$，\pause 此时当$|x|>5$时有$|f(x)|\le2$。
+\end{example*}
+\end{iframe}
+
+\begin{iframe}
+\frametitle{函数极限的性质}
+\begin{property}[局部保号性]
+如果$\limit_{x\to\infty}f(x)=A$，且$A>0$（\bold{或$A<0$}），则存在$N>0$，
+使得当$|x|>N$时有$f(x)>\frac A2>0$（\bold{或$f(x)<\frac A2<0$}）。
+\end{property}
+\vpause
+\begin{example*}
+设$f(x)=1-5/x$，则$\limit_{x\to\infty}f(x)=1>0$，\pause 此时当$|x|>5/2$时，有$f(x)>1/2>0$。
+\end{example*}
+\end{iframe}
+
+\begin{frame}
+\frametitle{函数极限的性质}
+\begin{theorem*}[保号性]
+设$f(x)\ge0$（\bold{或$f(x)\le0$}），且$\limit_{x\to\infty}f(x)=A$，则$A\ge0$（\bold{或$A\le0$}）。
+\end{theorem*}
+\vpause
+\begin{corollary*}
+如果函数$g(x)  \ge h(x)$，而且$\limit_{x\to\infty}g(x)=A$，$\limit_{x\to\infty}h(x)=B$，则有$A\ge B$。
+\end{corollary*}
+\end{frame}
+
+\begin{frame}
+\frametitle{前面两节复习题}
+\begin{review}
+求下列极限：
+\begin{enumlite}
+  \item $\limit_{n\to\infty}\dfrac{(-1)^n-2n^2}{n^2+(-1)^n}$；
+  \item $\limit_{x\to\infty}\dfrac{2x^2+3}{x^2+2x+1}$；\pause
+  \item $\limit_{x\to+\infty}\dfrac{2^x+4}{4^x+1}$。
+\end{enumlite}
+\end{review}
+\end{frame}
+
+\section{函数的极限II}
+
+\subsection{函数极限的定义}
+
+\begin{oframe}
+\frametitle{函数极限的例子}
+\begin{enumerate}[<+->]
+  \item $y=c$
+  \begin{itemize}
+    \item 当 $x\to 1$ 时，$y\to c$
+  \end{itemize}
+  \item $y=x$
+  \begin{itemize}
+    \item 当 $x\to 2$ 时，$y\to 2$
+  \end{itemize}
+  \item $y=2x+1$
+  \begin{itemize}
+    \item 当 $x\to 3$ 时，$y\to 7$
+  \end{itemize}
+  \item $y=\sqrt{x}$
+  \begin{itemize}
+    \item 当 $x\to 4$ 时，$y\to 2$
+  \end{itemize}
+\end{enumerate}
+\end{oframe}
+
+\begin{iframe}
+\frametitle{函数极限的例子}
+\begin{enumerate}[<+->]
+  \item $y=c$
+  \begin{itemize}
+    \item 当 $x\to x_0$ 时，$y\to c$
+  \end{itemize}
+  \item $y=x$
+  \begin{itemize}
+    \item 当 $x\to x_0$ 时，$y\to x_0$
+  \end{itemize}
+  \item $y=2x+1$
+  \begin{itemize}
+    \item 当 $x\to x_0$ 时，$y\to 2x_0+1$
+  \end{itemize}
+  \item $y=\sqrt{x}$
+  \begin{itemize}
+    \item 当 $x\to x_0$ 时，$y\to\sqrt{x_0}$
+  \end{itemize}
+\end{enumerate}
+\end{iframe}
+
+\begin{oframe}
+\frametitle{函数的极限($x\to x_0$)}
+\begin{definition*}
+设$f(x)$在$x_0$附近有定义，如果当$x$从\emph{左右}两边趋于$x_0$时，
+$f(x)$都无限接近一个确定的常数$A$，则称当$x\to x_0$ 时$f(x)$以$A$为\bold{极限}，记为
+\[ \lim_{x\to x_0}f(x)=A. \]
+%否则，称当$x\to x_0$时函数$f(x)$的极限不存在。
+\end{definition*}
+%\vpause
+%\begin{remark*}
+%此定义是不严格的，严格的定义可以见下一页。
+%\end{remark*}
+\end{oframe}
+
+\begin{iframe}
+\frametitle{函数的极限($x\to x_0$)}
+\begin{definition}
+设$f(x)$在$x_0$的某个去心邻域内有定义，如果存在常数$A$，对于任何$\epsilon>0$，总存在$\delta>0$，使得当$0<|x-x_0|<\delta$时，总有
+\[ |f(x)-A|<\epsilon \]
+则称当$x\to x_0$时$f(x)$以$A$为\bold{极限}，记为
+\[ \lim_{x\to x_0}f(x)=A. \]
+%如果这样的常数$A$不存在，就称当$x\to x_0$时函数 $f(x)$ 的极限不存在．
+\end{definition}
+\end{iframe}
+
+\begin{iframe}
+\frametitle{函数极限的例子}
+\begin{example*}
+证明$\limit_{x\to x_0}x=x_0$。
+\end{example*}
+\vpause
+\begin{proof}
+$\forall\epsilon>0$，取$\delta=\epsilon$，则当$0<|x-x_0|<\delta$时，就有
+\begin{align*}
+|f(x)-A|=|x-x_0|<\epsilon
+\end{align*}
+所以$\limit_{x\to x_0}x=x_0$。
+\end{proof}
+\end{iframe}
+
+\begin{jframe}
+\frametitle{函数极限的例子}
+\begin{example*}
+证明$\limit_{x\to x_0}\sqrt{x}= \sqrt{x_0}$（$x_0>0$）。
+\end{example*}
+\vpause
+\begin{proof}
+$\forall\epsilon>0$，取$\delta=\min\{x_0,\sqrt{x_0}\,\epsilon\}$，则当$0<|x-x_0|<\delta$时，有
+\begin{align*}
+\left|\sqrt{x}-\sqrt{x_0}\right|&=\left|\frac{x-x_0}{\sqrt{x}+\sqrt{x_0}}\right|\\
+&\le\frac{|x-x_0|}{\sqrt{x_0}}<\frac{\sqrt{x_0}\,\epsilon}{\sqrt{x_0}}=\epsilon
+\end{align*}
+\end{proof}
+\end{jframe}
+
+\begin{sframe}
+\frametitle{详细解释}
+\tikzset{
+  box/.style =
+  { rectangle, rounded corners=5pt,
+    minimum width=40pt, minimum height=20pt, inner sep=5pt,
+    draw=accent2, %fill=lightgray
+  },
+  conn/.style = { -stealth,double=white,double distance=1pt }
+}
+\begin{tikzpicture}[thick]
+  \node[box] (a0) at (4.5,6) {$\delta=\min\{x_0,\sqrt{x_0}\,\epsilon\}$};
+  \node[box] (a1) at (0,3) {$\delta\le x_0$};
+  \node[box] (b0) at  (4.5,3) {$0<|x-x_0|<\delta$};
+  \node[box] (a2) at (9.5,3) {$\delta\le\sqrt{x_0}\,\epsilon$};
+  \node[box] (c1) at (2,0) {$\mathring{U}(x_0,\delta)\in D$ (定义域)};
+  \node[box] (c2) at (8,0) {$|x-x_0|<\sqrt{x_0}\,\epsilon$};
+  \draw[conn] (a0) -- (a1);
+  \draw[conn] (a0) -- (a2);
+  \draw[conn] (a1) .. controls (0,2.2) and (2,2) .. (2,1.5) -- (c1);
+  \draw[conn] (b0) .. controls (3,2.2) and (2,2) .. (2,1.5) -- (c1);
+  \draw[conn] (a2) .. controls (9.5,2.2) and (8,2) .. (8,1.5) -- (c2);
+  \draw[conn] (b0.south) .. controls (4.5,2.2) and (8,2) .. (8,1.5) -- (c2);
+\end{tikzpicture}
+\end{sframe}
+
+\begin{frame}
+\frametitle{函数极限的基本公式II}
+\noindent\fbox{\parbox{0.956\textwidth}{%
+\begin{theorem*}[初等函数的连续性]
+如果初等函数$f(x)$在$x_0$的某个邻域有定义，则有
+\[ \lim_{x\to x_0}f(x)=f(x_0). \]
+\end{theorem*}%
+}}
+\end{frame}
+
+\begin{frame}
+\begin{example*}
+对于六种基本初等函数，我们有这些极限：
+\begin{enumerate}[<+->]
+  \item $\limit_{x\to x_0}c=c$；
+  \item $\limit_{x\to 2}x^3=2^3=8$；
+  \item $\limit_{x\to 3}e^x=e^3$；
+  \item $\limit_{x\to 9}\log_3x=\log_3 9=2$；
+  \item $\limit_{x\to \frac{\pi}6}\sin x=\sin\frac{\pi}6=\frac12$；
+  \item $\limit_{x\to 1}\arctan x=\arctan1=\frac{\pi}4$。
+\end{enumerate}
+\end{example*}
+\end{frame}
+
+\begin{frame}
+\frametitle{函数的极限($x\to x_0$)}
+\begin{remark*}
+$\limit_{x\to x_0}f(x)$与$f(x_0)$未必总是相等。\pause
+\end{remark*}
+\pause
+\begin{example}
+设$f(x)=\left\{\begin{array}{ll}x+1, & x\neq 1; \\ 3, & x=1.\end{array}\right.$
+则$\limit_{x\to 1}f(x)=2$。
+\end{example}
+\pause
+\begin{remark*}
+即使$f(x)$在$x_0$处无定义，极限$\limit_{x\to x_0}f(x)$仍可能存在。
+\end{remark*}
+\pause
+\begin{example}
+函数极限$\limit_{x\to 1}\dfrac{x^2-1}{x-1}=2$。
+\end{example}
+\pause
+\begin{example}
+函数极限$\limit_{x\to 1}\dfrac{x+1}{x-1}$不存在。
+\end{example}
+\end{frame}
+
+\subsection{函数极限的运算}
+
+\begin{frame}[shrink=6]
+\frametitle{四则运算法则}
+\begin{theorem}
+如果$\limit_{x\to x_0}f(x)=A$且$\limit_{x\to x_0}g(x)=B$，那么
+\begin{enumerate}
+  \item $\limit_{x\to x_0}(f(x) \pm g(x)) = \limit_{x\to x_0}f(x) \pm \limit_{x\to x_0}g(x) = A \pm B$
+  \item $\limit_{x\to x_0}(f(x) \cdot g(x))=\limit_{x\to x_0}f(x) \cdot \limit_{x\to x_0}g(x) = A \cdot B$
+  \item $\limit_{x\to x_0}\dfrac{f(x)}{g(x)}=\dfrac{\limit_{x\to x_0}f(x)}{\limit_{x\to x_0}g(x)}= \dfrac{A}{B}$
+       （要求分母不为零）
+\end{enumerate}
+\end{theorem}
+\vpause
+\begin{corollary*}
+$\limit_{x\to x_0}\big(c\cdot f(x)\big) = c \limit_{x\to x_0}f(x)$。
+\end{corollary*}
+\end{frame}
+
+\begin{jframe}[plain]
+\frametitle{四则运算法则 \optstar}
+\small
+\begin{proof}
+%(1) 参考数列极限的情形，略。\par
+%(2) 参考$x\to\infty$的情形，略。\par
+我们只证明(3)。 事实上，利用(2)我们只需要证明
+$$\limit_{x\to x_0}\dfrac{1}{g(x)} = \dfrac{1}{B}.\eqno{(*)}$$
+%因为此时由(2)自然有
+%$$\limit_{x\to x_0}\dfrac{f(x)}{g(x)}=\limit_{x\to x_0}\left(f(x)\cdot\dfrac{1}{g(x)}\right)=A\cdot\dfrac{1}{B}=\frac AB.$$\par
+现在我们来证明$(*)$。由$\limit_{x\to x_0}g(x)=B$，可以知道，$\forall\epsilon_1>0$，$\exists\delta_1>0$，使得当$0<|x-x_0|<\delta_1$时有
+$|g(x)-B|<\epsilon_1.$
+\par
+再由局部保号性，$\exists\delta_2>0$，使得当 $0<|x-x_0|<\delta_2$ 时有
+$|g(x)|>|B|/2.$
+\par
+因此，$\forall\epsilon>0$，取 $\delta=\min\{\delta_1,\delta_2\}$ 和 $\epsilon_1=|B|^2\epsilon/2$，则当$0<|x-x_0|<\delta$时有
+$$\left|\frac1{g(x)}-\frac1B\right|=\left|\frac{g(x)-B}{Bg(x)}\right|<\frac{\epsilon_1}{|B|\cdot|B|/2}=\epsilon.$$
+%这就证明了结论。
+\end{proof}
+\end{jframe}
+
+\begin{frame}
+\frametitle{函数的极限($x\to x_0$)}
+\begin{example}
+求函数极限$\limit_{x\to1}(3x^2-2x+1)$。
+\end{example}
+\vpause
+\begin{solution}
+$\begin{aligned}[t]
+\text{原式}&=3\limit_{x\to1}x^2-2\limit_{x\to1}x+\limit_{x\to1}1\\
+           &=3\times1^2-2\times1+1=2
+\end{aligned}$
+\end{solution}
+\end{frame}
+
+\begin{frame}
+\frametitle{函数的极限($x\to x_0$)}
+\begin{example}
+求函数极限$\limit_{x\to3}\dfrac{x^2-2x-3}{x^2-9}$。
+\end{example}
+\vpause
+\begin{solution}
+$\begin{aligned}[t]
+\text{原式}&=\limit_{x\to3}\dfrac{(x+1)(x-3)}{(x+3)(x-3)}=\limit_{x\to3}\dfrac{x+1}{x+3}\\
+&=\limit_{x\to3}\dfrac{3+1}{3+3}=\frac23
+\end{aligned}$
+\end{solution}
+\end{frame}
+
+\begin{frame}
+\frametitle{函数的极限($x\to x_0$)}
+\begin{example}
+求函数极限$\limit_{x\to4}\dfrac{\sqrt{x}-2}{x-4}$。
+\end{example}
+\vpause
+\begin{solution}
+原式\unskip$\begin{aligned}[t]
+&=\limit_{x\to4}\dfrac{(\sqrt{x}-2)(\sqrt{x}+2)}{(x-4)(\sqrt{x}+2)}\\
+&=\limit_{x\to4}\dfrac{x-4}{(x-4)(\sqrt{x}+2)}=\limit_{x\to4}\dfrac{1}{\sqrt{x}+2}\\
+&=\limit_{x\to4}\dfrac{1}{\sqrt4+2}=\frac14
+\end{aligned}$
+\end{solution}
+\end{frame}
+
+\begin{frame}
+\frametitle{函数的极限($x\to x_0$)}
+\begin{exercise}
+求下列函数极限：
+\begin{enumlite}
+  \item $\limit_{x\to0}(x+2\ln(1+x)+e^x+2)$；
+  \item $\limit_{x\to1}\dfrac{2x-2}{\sqrt{x}-1}$；
+  \item $\limit_{x\to3}\dfrac{x^2-x-6}{x^2-2x-3}$。
+\end{enumlite}
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\frametitle{函数的极限($x\to x_0$)}
+\begin{example}
+求函数极限$\limit_{x\to1}\left(\dfrac1{1-x}-\dfrac2{1-x^2}\right)$。
+\end{example}
+\vpause
+\begin{solution}
+原式\unskip$\begin{aligned}[t]
+&=\limit_{x\to1}\left(\dfrac{1+x}{1-x^2}-\dfrac{2}{1-x^2}\right)\\
+&=\limit_{x\to1}\dfrac{1+x-2}{1-x^2}=\limit_{x\to1}\dfrac{x-1}{1-x^2}\\
+&=\limit_{x\to1}\dfrac{x-1}{(1-x)(1+x)}=-\limit_{x\to1}\dfrac{1}{1+x}\\
+&=-\dfrac{1}{1+1}=-\frac12
+\end{aligned}$
+\end{solution}
+\end{frame}
+
+\subsection{函数极限的性质}
+
+\setcounter{property}{0}
+
+\begin{iframe}
+\frametitle{函数极限的性质}
+\begin{property}[唯一性]
+若$\limit_{x\to x_0}f(x)$存在，则极限唯一。
+\end{property}
+\end{iframe}
+
+\begin{iframe}[shrink=4]
+\frametitle{函数极限的性质}
+\begin{property}[局部有界性]
+如果$\limit_{x\to x_0}f(x)=A$，则存在$\delta>0$和$M>0$，使得当$0<|x-x_0|<\delta$时有$|f(x)|\le M$。
+\end{property}
+\pause
+\begin{proof}
+取$\epsilon=1$，则存在$\delta>0$，使得当$0<|x-x_0|<\delta$时有$|f(x)-A|<\epsilon=1$。此时
+\begin{align*}
+|f(x)|&=|(f(x)-A)+A|\\
+      &\le|f(x)-A|+|A|<1+|A|
+\end{align*}
+取$M=1+|A|$，就得到函数极限的局部有界性。
+\end{proof}
+\pause
+\begin{example*}
+设$f(x)=1/x$，则$\limit_{x\to1}f(x)=1$，\pause 此时当$0<|x-1|<1/2$时有$|f(x)|\le2$。
+\end{example*}
+\end{iframe}
+
+\begin{iframe}
+\frametitle{函数极限的性质}
+\begin{property}[局部保号性]
+如果$\limit_{x\to x_0}f(x)=A$，且$A>0$（\bold{或$A<0$}），则存在$\delta>0$，
+使得当$0<|x-x_0|<\delta$时有$f(x)>\frac A2>0$（\bold{或$f(x)<\frac A2 < 0$}）。
+\end{property}
+\vpause
+\begin{proof}
+取$\epsilon=A/2$，则存在$\delta>0$，使得当$0<|x-x_0|<\delta$时有$|f(x)-A|<\epsilon=A/2$。
+此时$f(x)>A/2>0$。
+\end{proof}
+\vpause
+\begin{example*}
+设$f(x)=2x-1$，则$\limit_{x\to1}f(x)=1>0$，\pause 此时当$0<|x-1|<1/4$时，有$f(x)>1/2>0$。
+\end{example*}
+\end{iframe}
+
+\begin{frame}
+\frametitle{函数极限的性质}
+\begin{theorem*}[保号性]
+设$f(x)\ge0$（\bold{或$f(x)\le0$}），且$\limit_{x\to x_0}f(x)=A$，则$A\ge0$（\bold{或$A\le0$}）。
+\end{theorem*}
+\vpause
+\begin{corollary*}
+如果函数$g(x)  \ge h(x)$，而且$\limit_{x\to x_0}g(x)=A$，$\limit_{x\to x_0}h(x)=B$，则有$A\ge B$。
+\end{corollary*}
+\end{frame}
+
+\subsection{左极限与右极限}
+
+\begin{oframe}
+\frametitle{左极限和右极限}
+\begin{definition*}
+设函数$f(x)$在$x_0$的\bold{左侧}有定义．如果$x$从$x_0$ \bold{左侧}趋于$x_0$时，$f(x)$无限接近一个确定的常数$A$，
+则称当$x\to x_0$ 时$f(x)$以$A$为\bold{左极限}，记为
+\[ \lim_{x\to \bold{x_0^-}}f(x)=A \text{\quad 或\quad} f(\bold{x_0^-})=A. \]
+\end{definition*}
+\pause
+\vfill\hrule\vfill
+\begin{definition*}
+设函数$f(x)$在$x_0$的\bold{右侧}有定义．如果$x$从$x_0$ \bold{右侧}趋于$x_0$时，$f(x)$无限接近一个确定的常数$A$，则称当$x\to x_0$ 时$f(x)$ 的以$A$为\bold{右极限}，记为
+\[ \lim_{x\to \bold{x_0^+}}f(x)=A \text{\quad 或\quad} f(\bold{x_0^+})=A. \]
+\end{definition*}
+\end{oframe}
+
+\begin{iframe}%[shrink=1]
+\frametitle{左极限和右极限}
+\vskip-0.5em
+\begin{definition*}
+设$f(x)$在点$x_0$ \bold{左邻域}有定义，如果对任何$\epsilon>0$，总存在$\delta>0$，使得当$\pmb x_0-\delta<x<x_0$ 时有
+\[ |f(x)-A|<\epsilon, \]
+则称当$x\to x_0$时$f(x)$以$A$为\bold{左极限}，记为
+\[ \lim_{x\to \bold{x_0^-}}f(x)=A \text{\quad 或\quad} f(\bold{x_0^-})=A. \]
+\end{definition*}
+\pause
+\vfill\hrule\vfill
+\begin{definition*}
+设$f(x)$在点$x_0$ \bold{右邻域}有定义，如果对任何$\epsilon>0$，总存在$\delta>0$，使得当$\pmb x_0<x<x_0+\delta$ 时有
+\[ |f(x)-A|<\epsilon, \]
+则称当$x\to x_0$时$f(x)$以$A$为\bold{右极限}，记为
+\[ \lim_{x\to \bold{x_0^+}}f(x)=A \text{\quad 或\quad} f(\bold{x_0^+})=A. \]
+\end{definition*}
+\end{iframe}
+
+\begin{frame}
+\begin{theorem}
+极限存在等价于左右极限都存在且相等，即%有
+\[\lim_{x\to x_0}f(x)=A \Longleftrightarrow \lim_{x\to x_0^-}f(x)=A=\lim_{x\to x_0^+}f(x)\]
+\end{theorem}
+\vpause
+\begin{example}
+设$f(x)=|x|$，研究函数极限$\limit_{x\to0}f(x)$。
+\end{example}
+\pause
+\begin{example}
+设$f(x)=\left\{\begin{array}{cc}1,&x<0\\x,&x\ge0\end{array}\right.$，则$\limit_{x\to0}f(x)$不存在。
+\end{example}
+\pause
+\begin{example}
+设$f(x)=\left\{\begin{array}{ll}x+1,&x<1\\x^2-x+2,&x>1\end{array}\right.$，求$\limit_{x\to1}f(x)$。
+\end{example}
+\vpause
+\begin{remark*}
+研究当$x\to x_0$时函数$f(x)$的左右极限，不必要求$f(x)$在$x_0$处有定义。
+\end{remark*}
+\end{frame}
+
+\begin{frame}
+\frametitle{左极限和右极限}
+\begin{exercise}
+已知函数$f(x)=\begin{cases}
+x^2+x+1, & x<0 \\
+e^x, & 0<x<1 \\
+x^2-1, & x>1
+\end{cases}$；
+判断极限$\limit_{x\to0}f(x)$和$\limit_{x\to1}f(x)$是否存在，若存在求出该极限。
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\frametitle{前面三节复习题}
+\begin{review}
+求下列极限：
+\begin{enumlite}
+  \item $\limit_{n\to\infty}\dfrac{n^2+(-1)^n}{2n^2+n+(-1)^n}$；
+  \item $\limit_{x\to{\bm\infty}}\dfrac{2x^2+3x-5}{x^2+2x-3}$；
+  \item $\limit_{x\to{\bm1}}\dfrac{2x^2+3x-5}{x^2+2x-3}$。
+\end{enumlite}
+\end{review}
+\end{frame}
+
+\section{无穷小量与无穷大量}
+
+\subsection{无穷小量}
+
+\begin{frame}
+\frametitle{无穷小量}
+\begin{definition*}
+如果$\limit_{x\to x_0}f(x)=0$，就称$f(x)$为$x\to x_0$时的\bold{无穷小量}．
+\end{definition*}
+\vpause
+\begin{definition*}
+如果$\limit_{x\to\infty}f(x)=0$，就称$f(x)$为$x\to\infty$时的\bold{无穷小量}．
+\end{definition*}
+\vpause
+\begin{remark*}
+类似地，可以定义 $x\to-\infty$、$x\to+\infty$
+%、$x\to x_0^-$ 和 $x\to x_0^+$
+时的无穷小量。
+\end{remark*}
+\end{frame}
+
+\begin{frame}
+\frametitle{无穷小量}
+\begin{example}
+$0$、$x$、$x^2$、$\sin x$、$1-\cos x$、$\sqrt{1+x}-1$ 和 $e^x-1$ 都是 $x\to0$时的无穷小量。
+\end{example}
+\vpause
+\begin{example}
+函数$\dfrac1x$、$\dfrac2{1+x}$ 和 $\dfrac{x}{x^2+1}$ 都是 $x\to\infty$时的无穷小量。
+\end{example}
+\vpause
+\begin{example}
+函数$y=\dfrac{x-1}{x^2-1}$ 何时是无穷小量？
+\end{example}
+\end{frame}
+
+\begin{frame}
+\frametitle{无穷小量的运算}
+\begin{enumerate}
+  \item 两个无穷小量的和差还是无穷小量．
+  \item 两个无穷小量的乘积还是无穷小量．
+  \item 无穷小量和有界函数的乘积还是无穷小量．
+\end{enumerate}
+\pause
+\begin{example}
+求函数极限$\limit_{x\to\infty}\dfrac{\sin x}{x}$。
+\end{example}
+%\pause
+%\begin{example}
+%求函数极限$\limit_{x\to\infty}\dfrac{\sin x+\cos x}{x^2}$.
+%\end{example}
+\pause
+\begin{example}
+求函数极限$\limit_{x\to\infty}\dfrac{3x+1}{x+\sin x}$。
+\end{example}
+\pause
+\begin{example}
+求函数极限$\limit_{x\to0}x\sin\dfrac{1}{x}$。
+\end{example}
+\end{frame}
+
+\begin{frame}
+\frametitle{无穷小量与有界函数的乘积}
+\begin{center}
+\begin{tikzpicture}[thick]
+\path[use as bounding box] (-0.2,-3.5) -- (11,3.5);
+\draw[very thin,color=gray] (0,-3) grid (10,3);
+\draw[thin,->] (-0.2,0) -- (10.5,0) node[right]{$x$};
+\draw[thin,->] (0,-3.5) -- (0,3.5) node[above]{$y$};
+\draw[color=accent2] plot[domain=0.3:10,samples=50] (\x,{1/\x});
+\draw[color=accent2] plot[domain=0.3:10,samples=50] (\x,{-1/\x});
+\onslide+<2->{\draw[color=accent3] plot[domain=0.3:10,samples=50] (\x,{sin(\x r)/\x});}
+\node[text width=10em] at (7.6,3) {\bold{绿线}：$y=\pm\dfrac1x\to0$};
+\onslide+<2->{\node[text width=10em] at (7.6,1.5){\warn{红线}：$y=\dfrac{\sin x}{x}\to0$};} 
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\begin{exercise}
+求下列函数极限：
+\begin{enumlite}
+  \item $\limit_{x\to\infty}\dfrac{\cos x}{x^2}$；
+  \item $\limit_{x\to\infty}\dfrac{x^2+\cos x}{\cos x +3x^2}$。
+\end{enumlite}
+\end{exercise}
+\end{frame}
+
+\subsection{无穷大量}
+
+\begin{oframe}
+\frametitle{无穷大量($x\to\infty$)}
+如果对任何$M>0$，只要$|x|$足够大，总有$|f(x)|>M$，则称$f(x)$为$x\to\infty$时的\bold{无穷大量}．记为
+$$\lim_{x\to\infty}f(x)=\infty \eqno{\digitcircled{1}}$$
+\pause
+类似地可以定义$x\to-\infty$的无穷大量，记为
+$$\limit_{x\to-\infty}f(x)=\infty \eqno{\digitcircled{2}}$$
+\pause
+以及和$x\to+\infty$时的无穷大量，记为
+$$\limit_{x\to+\infty}f(x)=\infty \eqno{\digitcircled{3}}$$
+\pause
+\bold{结论：\digitcircled{1} 成立等价于 \digitcircled{2} 和 \digitcircled{3} 同时成立。}
+\end{oframe}
+
+\begin{iframe}
+\frametitle{无穷大量($x\to\infty$)}
+\begin{definition*}
+设$f(x)$在$|x|$大于某个正数时有定义。如果对任何$M>0$，总存在$N>0$，使得只要$|x|>N$，
+就有$|f(x)|>M$，则称$f(x)$为$x\to\infty$时的\bold{无穷大量}，记为
+$$\lim_{x\to\infty}f(x)=\infty \eqno{\digitcircled{1}}$$
+\end{definition*}
+\pause
+类似地可以定义$x\to-\infty$的无穷大量，记为
+$$\limit_{x\to-\infty}f(x)=\infty \eqno{\digitcircled{2}}$$
+\pause
+以及和$x\to+\infty$时的无穷大量，记为
+$$\limit_{x\to+\infty}f(x)=\infty \eqno{\digitcircled{3}}$$
+\pause
+\bold{结论：\digitcircled{1} 成立等价于 \digitcircled{2} 和 \digitcircled{3} 同时成立。}
+\end{iframe}
+
+\begin{frame}
+\frametitle{无穷大量($x\to\infty$)}
+\begin{example}
+$x$，$x^2$，$x+1$ 都是$x\to\infty$时的无穷大量，即
+\begin{align*}
+  &\limit_{x\to\infty} x = \infty, \\
+  &\limit_{x\to\infty} x^2 = \infty, \\
+  &\limit_{x\to\infty}(x+1) = \infty.
+\end{align*}
+\end{example}
+\vpause
+\begin{example}
+$e^x$ 是$x\to+\infty$时的无穷大量，即
+\[ \limit_{x\to+\infty} e^x = \infty. \]
+\end{example}
+\end{frame}
+
+\begin{oframe}
+\frametitle{无穷大量($x\to x_0$)}
+如果对任何$M>0$，只要$x$足够接近$x_0$，总有$|f(x)|>M$，就称$f(x)$为$x\to x_0$时的\bold{无穷大量}．记为
+$$\lim_{x\to x_0}f(x)=\infty$$
+\end{oframe}
+
+\begin{iframe}
+\frametitle{无穷大量($x\to x_0$)}
+\begin{definition*}
+设函数$f(x)$在$x_0$的某个去心邻域有定义。如果对任何给定的$M>0$，总存在$\delta>0$，
+使得只要$0<|x-x_0|<\delta$，就有$|f(x)|>M$，则称$f(x)$为$x\to x_0$ 时的\bold{无穷大量}，记为$\limit_{x\to x_0}f(x)=\infty$。
+\end{definition*}
+\end{iframe}
+
+\begin{frame}
+\frametitle{无穷大量($x\to x_0$)}
+\begin{example}
+$\dfrac1{x}$ 和 $\dfrac{x+1}{x^2}$ 是$x\to 0$时的无穷大量。
+\end{example}
+\vpause
+\begin{example}
+$\dfrac1{x-1}$ 和 $\dfrac{x+2}{x^2-1}$ 是$x\to 1$时的无穷大量。
+\end{example}
+\vpause
+\begin{example}
+函数$y=\dfrac{x-1}{x^2-1}$ 何时是无穷大量？
+\end{example}
+\end{frame}
+
+\begin{frame}
+\frametitle{无穷大量与无穷小量的关系}
+\begin{theorem}
+无穷大量$y$的倒数$\dfrac1y$为无穷小量，而非零无穷小量$y$的倒数$\dfrac1y$为无穷大量．
+\end{theorem}
+\pause
+\begin{example}
+$\limit_{x\to\infty}\dfrac{3x+1}{2x^2+1}=0$\quad$\Longrightarrow$\quad$\limit_{x\to\infty}\dfrac{2x^2+1}{3x+1}=\infty$。
+\end{example}
+\end{frame}
+
+\begin{frame}
+\frametitle{有理分式的极限}
+\noindent\begin{align*}
+&\lim_{x\to\infty}\frac{2x+1}{3x+1}=\frac23
+&&\lim_{x\to\infty}\frac{2x^{\lead2}+1}{3x^{\lead2}+1}=\frac23\\
+&\lim_{x\to\infty}\frac{2x+1}{3x^{\lead2}+1}=0
+&&\lim_{x\to\infty}\frac{2x^{\lead2}+1}{3x+1}=\infty
+\end{align*}
+\pause\hrule
+\[\bold{\lim_{x\to\infty}\frac{a_0x^n+a_1x^{n-1}+\cdots+a_n}{b_0x^m+b_1x^{m-1}+\cdots+b_m}
+=\begin{cases}
+  \dfrac{a_0}{b_0}, & n=m;\\
+  0, & n<m;\\
+  \infty, & n>m. 
+\end{cases}}\]
+\end{frame}
+
+\begin{frame}
+\frametitle{前面四节复习题}
+\begin{review}
+求下列函数极限：
+\begin{enumlite}
+  \item $\limit_{x\to1}\dfrac{x-1}{\sqrt{x}-1}$；
+  \item $\limit_{x\to-1}\left(\dfrac1{x+1}+\dfrac2{x^2-1}\right)$；
+  \item $\limit_{x\to\infty}\dfrac{\cos x+2x}{x+\cos x}$。
+\end{enumlite}
+\end{review}
+\end{frame}
+
+%\begin{frame}
+%\frametitle{数学笑话}
+%\lead{题目}\quad 已知$\dfrac{1}{\infty}=0$，证明$\dfrac{1}{0}=\infty$。\par
+%\lead{证明}\quad
+%因为$\dfrac{1}{\infty}=0$，两边同时旋转得
+%\[ -18=0 \]
+%两边同时$+8$得
+%\[ -10=8 \]
+%两边同时旋转得
+%\[\dfrac{1}{0}=\infty\]
+%\end{frame}
+
+\section{两个重要极限}
+
+\begin{frame}
+\frametitle{本节基本内容}
+\begin{tabular}{c<{\qquad}c}
+  极限存在准则I & 极限存在准则II \\
+  $\Downarrow$  & $\Downarrow$ \\
+  重要极限I     & 重要极限II \\
+  $\pmb\limit_{x\to0}\dfrac{\sin x}x=1$ &
+  $\pmb\limit_{x\to\infty}\left(1+\dfrac1x\right)^x=\e$
+\end{tabular}
+\end{frame}
+
+\subsection{重要极限I}
+
+\begin{frame}
+\frametitle{极限存在准则I}
+\begin{theorem*}[极限存在准则I]%[三明治定理]
+如果数列 $x_n \le y_n \le z_n$，而且 $\limit_{n\to\infty}x_n=A$，$\limit_{n\to\infty}z_n=A$，则有 $\limit_{n\to\infty}y_n=A$．
+\end{theorem*}
+\vpause
+\begin{example}
+求$\limit_{n\to\infty}\left(\dfrac{n}{n^2+1}+\dfrac{n}{n^2+2}+\cdots+\dfrac{n}{n^2+n}\right)$
+\end{example}
+\vpause
+\begin{remark*}
+在上述定理中，如果不等式$x_n \le y_n \le z_n$仅在$n>N$时成立，结论不变。
+\end{remark*}
+\end{frame}
+
+\begin{sframe}
+\frametitle{极限存在准则I}
+\begin{remark*}
+用极限存在准则I很难求出下面的数列极限：
+\begin{align*}
+&\limit_{n\to\infty}\left(\dfrac1{n+1}+\dfrac1{n+2}+\cdots+\dfrac1{n+n}\right)\\
+=&\int_0^1\frac1{1+x}\d{x}=\ln2
+\end{align*}
+\end{remark*}
+\end{sframe}
+
+\begin{frame}
+\frametitle{极限存在准则I}
+\begin{theorem*}[极限存在准则I]%[三明治定理]
+如果 $f(x) \le g(x) \le h(x)$，且 $\limit_{x\to x_0}f(x)=A$，$\limit_{x\to x_0}h(x)=A$，则有$\limit_{x\to x_0}g(x)=A$．
+\end{theorem*}
+\pause
+\begin{remark*}
+若将$x\to x_0$全部改为$x\to\infty$，定理仍成立。
+\end{remark*}
+\vpause
+\begin{remark*}
+在上述定理中，如果不等式$f(x) \le g(x) \le h(x)$仅在$x_0$的某个去心邻域上成立，结论不变。
+\end{remark*}
+\end{frame}
+
+\begin{frame}
+\frametitle{重要极限I}
+\noindent\fbox{\parbox{0.956\textwidth}{%
+\[ \bold{\limit_{x\to0}\dfrac{\sin x}{x}=1} \]
+}}
+\vpause
+一般地，如果当$x\to0$时，$\phi(x)\to0$，则有\par
+\noindent\fbox{\parbox{0.956\textwidth}{%
+\[ \bold{\limit_{x\to0}\dfrac{\sin\phi(x)}{\phi(x)}=1} \]
+}}
+\end{frame}
+
+\begin{frame}
+\frametitle{重要极限I}
+\begin{example}
+求极限$\limit_{x\to0}\dfrac{\tan x}{x}$．
+\end{example}
+\pause
+\begin{solution}
+原式\noindent$\begin{aligned}[t]
+&=\lim_{x\to0}\dfrac{\sin x}{x\cos x}=\lim_{x\to0}\left(\dfrac{\sin x}{x}\cdot\dfrac1{\cos x}\right)\\
+&=\lim_{x\to0}\dfrac{\sin x}{x}\cdot\lim_{x\to0}\dfrac1{\cos x}=1\times\dfrac11=1
+\end{aligned}$
+\end{solution}
+\end{frame}
+
+\begin{frame}
+\frametitle{重要极限I}
+\begin{example}
+求极限$\limit_{x\to0}\dfrac{\sin 3x}{x}$．
+\end{example}
+\pause
+\begin{solution}
+原式\noindent$\begin{aligned}[t]
+&=\lim_{x\to0}\left(3\cdot\dfrac{\sin 3x}{3x}\right)\\
+&=3\lim_{x\to0}\dfrac{\sin 3x}{3x}=3\times1=3
+\end{aligned}$
+\end{solution}
+\end{frame}
+
+\begin{frame}
+\frametitle{重要极限I}
+\begin{example}
+求极限$\limit_{x\to0}\dfrac{\sin x}{\sin 4x}$．
+\end{example}
+\pause
+\begin{solution}
+原式\noindent$\begin{aligned}[t]
+&=\lim_{x\to0}\left(\dfrac14\cdot\dfrac{\sin x}{x}\cdot\dfrac{4x}{\sin 4x}\right)\\
+&=\dfrac14\cdot\lim_{x\to0}\dfrac{\sin x}{x}\cdot\lim_{x\to0}\dfrac{4x}{\sin 4x}\\
+&=\dfrac14\times1\times1=\dfrac14
+\end{aligned}$
+\end{solution}
+\end{frame}
+
+\begin{oframe}
+\frametitle{重要极限I}
+\begin{exercise*}
+求下列函数极限：
+\begin{multicols}{2}
+\begin{enumlite}
+  \item $\limit_{x\to0}\dfrac{\sin 5x}{4x}$
+  \item $\limit_{x\to0}\dfrac{\sin 2x}{\sin 3x}$
+\end{enumlite}
+\end{multicols}
+\end{exercise*}
+\end{oframe}
+
+\begin{iframe}
+\frametitle{重要极限I}
+\begin{exercise}
+求下列函数极限：
+\begin{enumlite}
+  \item $\limit_{x\to0}\dfrac{\sin(2x^2)}{3x^2}$
+  \item $\limit_{x\to0}\dfrac{\sin 3x}{\tan 5x}$
+  \item $\limit_{x\to0^+}\dfrac{\sin\sqrt{x}\;\tan\sqrt{x}}{x}$
+\end{enumlite}
+\end{exercise}
+\end{iframe}
+
+\begin{frame}
+\frametitle{重要极限I}
+\begin{example}
+求极限$\limit_{x\to0}\dfrac{\arcsin x}{x}$．
+\end{example}
+\begin{example}
+求极限$\limit_{x\to0}\dfrac{\arctan x}{x}$．
+\end{example}\pause
+\begin{example}
+求极限$\limit_{x\to0}\dfrac{1-\cos x}{\frac12x^2}$．
+\end{example}
+\end{frame}
+
+\subsection{重要极限II}
+
+\begin{frame}
+\frametitle{极限存在准则II}
+\begin{theorem*}[极限存在准则II]
+单调且有界的数列必定收敛．\pause\unskip
+\begin{enumerate}
+  \item 单调\bold{增加}且有\bold{上界}的数列必定收敛。
+  \item 单调\bold{减少}且有\bold{下界}的数列必定收敛。
+\end{enumerate}
+\end{theorem*}
+\vpause
+\begin{remark*}
+若数列是某一项开始单调变化，结论仍然成立。
+\end{remark*}
+\end{frame}
+
+\begin{frame}
+\frametitle{重要极限II}
+\renewcommand*{\arraystretch}{0.95}%
+\begin{columns}[onlytextwidth]
+\column{0.48\textwidth}
+\noindent$$\begin{array}{|r<{\quad}|>{\quad}l|}
+  \hline
+  \pmb n & \pmb\left(1+\frac1n\right)^n \\[2pt]
+  \hline
+  1 & 2 \\
+  2 & 2.250 \\
+  3 & 2.370 \\
+  4 & 2.441 \\
+  5 & 2.488 \\
+  10 & 2.594 \\
+  100 & 2.705 \\
+  1000 & 2.717 \\
+  10000 & 2.718 \\
+  \hline
+\end{array}$$
+\column{0.08\textwidth}
+\onslide<2->{$\Longrightarrow$}
+\column{0.42\textwidth}
+\onslide<2->{\noindent\fbox{\parbox{0.9\textwidth}{%
+\[ \bold{\lim_{n\to\infty}\left(1+\frac1n\right)^n=\e}\]}}}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{重要极限II}
+\noindent\fbox{\parbox{0.956\textwidth}{%
+\[ \bold{\lim_{x\to\infty}\left(1+\frac1x\right)^x=\e} \pause\quad\xLongrightarrow{u=1/x}
+   \quad \bold{\lim_{u\to0}\big(1+u\big)^{\frac1u}=\e} \]}}
+\vpause
+%一般地，如果当$x\to\infty$时，$\phi(x)\to\infty$；如果当$u\to0$时，$\psi(u)\to0$，则有\par
+%\noindent\fbox{\parbox{0.956\textwidth}{%
+%\[ \bold{\lim_{x\to\infty}\left(1+\frac1{\phi(x)}\right)^{\phi(x)}\kern-0.6em=\e}, \pause
+%   \quad\bold{\lim_{u\to0}\big(1+\psi(u)\big)^{\frac1{\psi(u)}}=\e} \]}}
+一般地，如果\warn{当$x\to a$时，$\psi(x)\to0$}，则有\par
+\noindent\fbox{\parbox{0.956\textwidth}{\Large%
+\[ \bold{\lim_{x\to a}\Big(1+\psi(x)\Big)^{\frac1{\psi(x)}}=\e} \]}}
+%\par 其中 $a$ 可以是 $x_0$ 或 $\infty$。
+\end{frame}
+
+\begin{frame}
+\frametitle{简单情形}
+\begin{example}
+求极限$\limit_{x\to\infty}\left(1+\dfrac2x\right)^x$
+\end{example}
+\pause
+\begin{solution}
+原式\unskip$\begin{aligned}[t]
+&=\limit_{x\to\infty}\left(1+\dfrac2x\right)^{\frac{x}{2}\,\cdot\,2}\\
+&=\limit_{x\to\infty}\left[\left(1+\dfrac2x\right)^{\frac{x}{2}}\right]^2=\e^2
+\end{aligned}$
+\end{solution}
+\end{frame}
+
+\begin{frame}
+\frametitle{简单情形}
+\begin{example}
+求极限$\limit_{x\to\infty}\left(1-\dfrac1{3x}\right)^x$
+\end{example}
+\pause
+\begin{solution}
+原式\unskip$\begin{aligned}[t]
+&=\limit_{x\to\infty}\left(1+\dfrac{-1}{3x}\right)^{\frac{3x}{-1}\,\cdot\,\left(-\frac13\right)}\\
+&=\limit_{x\to\infty}\left[\left(1+\dfrac{-1}{3x}\right)^{\frac{3x}{-1}}\right]^{-\frac13}=\e^{-1/3}
+\end{aligned}$
+\end{solution}
+\end{frame}
+
+\begin{frame}
+\frametitle{简单情形}
+\begin{example}
+求极限$\limit_{x\to0}\left(1-\dfrac{x}2\right)^{\frac1x}$
+\end{example}
+\pause
+\begin{solution}
+原式\unskip$\begin{aligned}[t]
+&=\limit_{x\to0}\left(1+\dfrac{-x}{2}\right)^{\frac{2}{-x}\,\cdot\,\left(-\frac12\right)}\\
+&=\limit_{x\to0}\left[\left(1+\dfrac{-x}{2}\right)^{\frac{2}{-x}}\right]^{-\frac12}=\e^{-1/2}
+\end{aligned}$
+\end{solution}
+\end{frame}
+
+\begin{frame}
+\begin{exercise}求函数极限：
+\begin{enumlite}
+  %\item $\limit_{x\to\infty}\left(1+\dfrac5x\right)^x$
+  \item $\limit_{x\to\infty}\left(1-\dfrac4{x}\right)^x$
+  \item $\limit_{x\to0}\Big(1-2x\Big)^{\frac1{3x}}$
+\end{enumlite}
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\frametitle{幂指情形}
+\begin{example}
+求极限$\limit_{x\to\infty}\left(\dfrac{x+1}{x-1}\right)^x$
+\end{example}
+\pause
+\begin{solution}
+原式$=\limit_{x\to\infty}\left(1+\dfrac2{x-1}\right)^x$\\
+$\begin{aligned}[t]
+&=\lim_{x\to\infty}\left(1+\dfrac2{x-1}\right)^{\!\!\frac{x-1}2\cdot\frac{2x}{x-1}}\\
+&=\lim_{x\to\infty}\left[\left(1+\dfrac2{x-1}\right)^{\frac{x-1}2}\right]^{\frac{2x}{x-1}}
+ =\lim_{x\to\infty}\e^{\frac{2x}{x-1}}=\e^2.
+\end{aligned}$
+\end{solution}
+\end{frame}
+
+\begin{frame}
+\frametitle{幂指情形}
+\begin{example}
+求极限$\limit_{x\to0}\Big(1+3x\Big)^{\frac1{\sin x}}$
+\end{example}
+\pause
+\begin{solution}
+原式\noindent$\begin{aligned}[t]
+&=\lim_{x\to0}\Big(1+3x\Big)^{\frac1{\sin x}}\\
+&=\lim_{x\to0}\Big(1+3x\Big)^{\frac1{3x}\cdot\frac{3x}{\sin x}}\\
+&=\lim_{x\to0}\left[\big(1+3x\big)^{\frac1{3x}}\right]^{\frac{3x}{\sin x}}\\
+&=\lim_{x\to0}\e^{\frac{3x}{\sin x}}=\e^3.
+\end{aligned}$
+\end{solution}
+\end{frame}
+
+\begin{frame}
+\begin{exercise}求函数极限：
+\begin{enumlite}
+  \item $\limit_{x\to0}\left(1+\sin x\right)^{\frac1{4x}}$
+  \item $\limit_{x\to\infty}\left(\dfrac{x-1}x\right)^{x+1}$
+  \pause
+  \item $\limit_{x\to\infty}\left(\dfrac{x+1}{x-1}\right)^{2x-3}$
+\end{enumlite}
+\end{exercise}
+\end{frame}
+
+\begin{jframe}
+\frametitle{幂指函数的极限}
+\begin{theorem*}
+若$\limit_{x\to\Box}u(x)=A>0$，$\limit_{x\to\Box}v(x)=B$，则有
+\[ \lim_{x\to\Box}u(x)^{v(x)}=A^B.\]
+\end{theorem*}
+\end{jframe}
+
+\begin{rframe}
+\frametitle{常数$\mathrm{e}$的意义}
+\begin{example*}
+树木增长问题：假设树木的高度与细胞的个数成比例，而每个细胞平均每年分裂一次（即增加$1$倍），
+则树木的高度一年后变为原来的多少倍？\pause\dotfill[$\e$倍]
+\end{example*}\pause
+\begin{fact*}
+常数 $\mathrm{e}$ 反映了连续生长的规律．
+\end{fact*}
+\end{rframe}
+
+\begin{frame}
+\frametitle{常数$\mathrm{e}$的意义}
+\begin{example*}
+复利问题：假设银行活期存款的年利率为$0.5\%$，存入$M$元一年后最多可以得到多少钱？
+\end{example*}\pause
+\begin{itemize}
+  \item 粗略：$M(1+0.5\%)=M\times 1.005$\pause
+  \item 正常：$M\left(1+\dfrac{0.5\%}4\right)^4=M \times 1.00500938 $\pause
+  \item 极端：$M\left(1+\dfrac{0.5\%}{360}\right)^{360}= M \times 1.00501249$
+\end{itemize}\pause
+\begin{fact*}
+常数 $\mathrm{e}$ 反映了连续增长的规律．
+\end{fact*}
+\end{frame}
+
+\begin{frame}
+\frametitle{两个重要极限}
+\begin{review}求函数极限：
+\begin{enumlite}
+  \item $\limit_{x\to0}\left(1-2\sin x\right)^{\frac1{3x}}$
+  \item $\limit_{x\to\infty}\left(\dfrac{x^2-1}{x^2}\right)^{x\sin x}$
+  \pause
+  \item $\limit_{x\to\infty}\left(\dfrac{2x-1}{2x+1}\right)^{3x+1}$
+\end{enumlite}
+\end{review}
+\end{frame}
+
+\begin{jframe}
+\frametitle{复习与提高}
+\begin{example}
+用极限存在准则I证明数列极限$\limit_{n\to\infty}\sqrt[n]{n}=1$。
+\end{example}
+\pause
+\begin{proof}
+令 $x_n=\sqrt[n]{n}-1$, 则$x_n>0$。当$n>1$时又有
+\[ n=(1+x_n)^n\ge C_n^2x_n^2 = \frac{n(n-1)}2\,x_n^2. \]
+即$x_n\le\sqrt{\frac{2}{n-1}}$．即当$n>1$时我们有
+\[ 0 < x_n \le \sqrt{\frac{2}{n-1}}. \]
+由极限存在准则I得$\limit_{n\to\infty}x_n=0$，即$\limit_{n\to\infty}\sqrt[n]{n}=1$。
+\end{proof}
+\end{jframe}
+
+\begin{iframe}
+\frametitle{复习与提高}
+\begin{example}
+求函数极限$\limit_{x\to0}\left(1+\cos x\right)^{\frac1{\cos x}}$。
+\end{example}
+\pause
+\begin{solution}
+因为当$x\to0$时，$\cos x$不是无穷小量，所以不能用重要极限II公式来计算。\ppause
+实际上，这个函数是初等函数，且在$0$的邻域有定义，所以其极限为$(1+1)^1=2$。
+\end{solution}
+\end{iframe}
+
+\begin{iframe}
+\frametitle{复习与提高}
+\begin{example}
+设数列$x_n=\dfrac{n!}{n^n}$，研究数列的极限。
+\end{example}
+\vpause
+\begin{example}
+设数列$\{x_n\}$满足$x_1=\dfrac12$，且当$n\ge1$时有$x_{n+1}=\dfrac{1+x_n^2}{2}$。研究数列的极限。
+\end{example}
+\vpause
+\begin{solution}
+先说明数列收敛，再根据数列的递归关系求出其极限。
+\end{solution}
+\end{iframe}
+
+\section{无穷小量的比较}
+
+\subsection{无穷小量的阶}
+
+\begin{frame}
+\frametitle{无穷小量的比较}
+\begin{example*}
+比较$x\to0$时的三个无穷小量$x$，$2x$，$x^2$。
+\end{example*}
+\pause
+\[\begin{array}{c|rrrrrrr}
+\hline
+x         & 1 & 0.1 & 0.01 & 0.001 & \cdots & \rightarrow & 0\\ \hline
+2x      & 2 & 0.2 & 0.02 & 0.002  & \cdots & \rightarrow & 0\\ \hline
+x^2   & 1 & 0.01 & 0.0001 & 0.000001 & \cdots & \rightarrow & 0 \\
+\hline
+\end{array}\]
+\end{frame}
+
+\begin{frame}
+\frametitle{无穷小量的阶}
+\begin{definition*}
+设$\alpha$、$\beta$是同一变化过程中的两个无穷小量．
+\begin{enumerate}[<+->]
+  \item 称$\beta$比$\alpha$ \bold{高阶}，若$\lim\frac{\beta}{\alpha}=0$，记为$\bold{\beta=o(\alpha)}$．
+  \item 称$\beta$比$\alpha$ \bold{低阶}，若$\lim\frac{\beta}{\alpha}=\infty$．
+  \item 称$\beta$和$\alpha$ \bold{同阶}，若$\lim\frac{\beta}{\alpha}=c\neq0$．
+  \item[$\bigstar$] 称$\beta$和$\alpha$ \bold{等价}，若$\lim\frac{\beta}{\alpha}=1$，记为$\bold{\beta\sim\alpha}$．
+\end{enumerate}
+\end{definition*}
+\end{frame}
+
+\begin{frame}
+\frametitle{无穷小量的阶}
+\begin{example}
+在$x\to0$时，无穷小量$x^2$比$x$高阶。
+\end{example}
+\vpause
+\begin{example}
+在$x\to0$时，无穷小量$x^2$比$x^3$低阶。
+\end{example}
+\vpause
+\begin{example}
+在$x\to0$时，无穷小量$x^2$和$5x^2$同阶。
+\end{example}
+\vpause
+\begin{example}
+在$x\to0$时，无穷小量$x^2$和$x^2+2x^3$等价。
+\end{example}
+\end{frame}
+
+\begin{iframe}
+\frametitle{无穷小量的阶}
+\begin{exercise}
+易知 $f(x)=ax^3+bx^2+cx$ 和 $g(x)=x^2$ 均为 $x\to0$ 时的无穷小量。
+\begin{enumlite}
+  \item 何时 $f(x)$ 比 $g(x)$ 高阶？
+  \item 何时 $f(x)$ 比 $g(x)$ 低阶？
+  \item 何时 $f(x)$ 与 $g(x)$ 同阶？
+  \item 何时 $f(x)$ 与 $g(x)$ 等价？
+\end{enumlite}
+\end{exercise}
+\end{iframe}
+
+\begin{frame}
+\frametitle{常用的等价无穷小量}
+当$x\to0$时，有如下这些常用的等价无穷小量：\\[0.6em]
+\noindent\fbox{\parbox{0.956\textwidth}{%
+\renewcommand{\arraystretch}{1.8}
+\begin{tabularx}{\textwidth}{XX}
+ (1)\quad $\sin x\sim x$    & (5)\quad $\ln(1+x)\sim x$ \\
+ (2)\quad $\tan x\sim x$    & (6)\quad $\mathrm{e}^x-1\sim x$ \\
+ (3)\quad $\arcsin x\sim x$ & (7)\quad $1-\cos x\sim \dfrac12x^2$ \\
+ (4)\quad $\arctan x\sim x$ & (8)\quad $\sqrt[n]{1+x}-1\sim \dfrac{x}n$
+\end{tabularx}
+}}
+%\begin{multicols}{2}
+%\begin{itemize}
+%  \item $\sin x\sim x$
+%  \item $\tan x\sim x$
+%  \item $\arcsin x\sim x$
+%  \item $\arctan x\sim x$
+%  %\vfill
+%  \columnbreak
+%  \item $\mathrm{e}^x-1\sim x$
+%  \item $\ln(1+x)\sim x$
+%  \item $1-\cos x\sim \dfrac12x^2$
+%  \item $\sqrt[n]{1+x}-1\sim \dfrac{x}n$
+%\end{itemize}
+%\end{multicols}
+\end{frame}
+
+\begin{jframe}
+\frametitle{等价无穷小量}
+\begin{solution}
+(8)\ $\limit_{x\to0}\dfrac{\sqrt[n]{1+x}-1}x=\limit_{t\to0}\dfrac{t}{(1+t)^n-1}=n$。\par
+(5)\ $\limit_{x\to0}\dfrac{\ln(1+x)}{x}=\limit_{x\to0}\ln\big(1+x\big)^{\frac1x}\overset{\warn?}{=}\ln\e=1$。\par
+(6)\ $\limit_{x\to0}\dfrac{\e^x-1}x=\limit_{t\to0}\dfrac{t}{\ln(1+t)}=1$。
+\end{solution}
+\end{jframe}
+
+\begin{jframe}
+\frametitle{等价无穷小量}
+更一般地，我们有\par\vspace{0.5em}
+(5)\ $\begin{aligned}[t]
+\limit_{x\to0}\dfrac{\log_a(1+x)}{x}&=\limit_{x\to0}\log_a\big(1+x\big)^{\frac1x}\\
+   &\overset{\warn?}{=}\log_a\e=\frac1{\ln a}.
+\end{aligned}$\ppause
+(6)\ $\begin{aligned}[t]
+\limit_{x\to0}\dfrac{a^x-1}x=\limit_{t\to0}\dfrac{t}{\log_a(1+t)}=\ln a.
+\end{aligned}$
+\end{jframe}
+
+\begin{jframe}
+\frametitle{等价无穷小量}
+(8)$\begin{aligned}[t]
+ &\limit_{x\to0}\dfrac{(1+x)^a-1}x\\
+=&\limit_{x\to0}\left[\dfrac{(1+x)^a-1}{\ln(1+x)^a}\cdot\dfrac{\ln(1+x)^a}{x}\right]\\
+=&\limit_{x\to0}\dfrac{(1+x)^a-1}{\ln(1+x)^a}\cdot\limit_{x\to0}\dfrac{\ln(1+x)^a}{x}\\
+=&\limit_{t\to0}\dfrac{t}{\ln(1+t)}\cdot\limit_{x\to0}\dfrac{a\ln(1+x)}{x}\\
+=&1 \cdot a = a.
+\end{aligned}$
+\end{jframe}
+
+\subsection{等价无穷小量代换}
+
+\begin{frame}
+\frametitle{等价无穷小量代换}
+\begin{theorem}
+设当 $x\to x_0$ 时 %$\alpha$、$\alpha'$、$\beta$、$\beta'$ 都为无穷小量，而且
+$\alpha\sim\alpha'$、$\beta\sim\beta'$，则有\par
+(1) $\bold{\displaystyle\lim_{x\to x_0}\alpha\gamma=\lim_{x\to x_0}\alpha'\gamma}$\qquad
+(2) $\bold{\displaystyle\lim_{x\to x_0}\frac{\alpha}{\beta}=\lim_{x\to x_0}\frac{\alpha'}{\beta'}}$
+\end{theorem}
+\end{frame}
+
+\begin{frame}
+\frametitle{等价无穷小量代换}
+\begin{example}
+求函数极限$\limit_{x\to0}\dfrac{\tan 2x}{\sin 3x}$。
+\end{example}
+\vpause
+\begin{example}
+求函数极限$\limit_{x\to0}\dfrac{1-\cos 5x}{\sin(x^2)}$。
+\end{example}
+\vpause
+\begin{example}
+求函数极限$\limit_{x\to0}\dfrac{\ln(1+x)}{\sqrt[3]{1+2x}-1}$。
+\end{example}
+\vpause
+\begin{example}
+求函数极限$\limit_{x\to0}\dfrac{\e^{x^2}-1}{(\sqrt{1+x}-1)\arcsin x}$。
+\end{example}
+\end{frame}
+
+\begin{frame}
+\frametitle{等价无穷小量代换}
+\begin{exercise}
+求下列函数极限：
+\begin{enumlite}
+  \item $\limit_{x\to0}\dfrac{\tan 3x}{\arcsin 2x}$；
+  \item $\limit_{x\to0}\dfrac{1-\cos 3x}{(\e^{2x}-1)\ln(1-2x)}$。
+\end{enumlite}
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\frametitle{等价无穷小量代换}
+\begin{example}
+求函数极限$\limit_{x\to0}\dfrac{\sin x\cdot(\e^{x+1}-1)}{\sqrt{1+x+x^2}-1}$。
+\end{example}
+\vpause
+\begin{remark*}
+\emph{只能代换无穷小量，不能代换非无穷小量。}
+\end{remark*}
+\vpause
+\begin{example}
+求函数极限$\limit_{x\to0}\dfrac{\tan x-\sin x}{\sin^3x}$。
+\end{example}
+\vpause
+\begin{remark*}
+\emph{只能分别代换乘除项，不能分别代换加减项。}
+\end{remark*}
+\end{frame}
+
+\begin{rframe}
+\frametitle{等价无穷小量代换}
+\begin{remark*}
+当$\alpha_1\sim\beta_1$、$\alpha_2\sim\beta_2$时，下列等式总是成立：
+$$ \alpha_1\cdot\alpha_2 \overset{\bold{\checkmark}}{\sim} \beta_1\cdot\beta_2 $$
+但下列等式未必成立：
+$$ \alpha_1\pm\alpha_2 \overset{\warn{\times}}{\sim} \beta_1\pm\beta_2 $$
+\end{remark*}
+\pause\vfill\hrule\vfill
+\begin{example*}
+当$x\to0$时，有
+$$\boxed{\begin{aligned}
+  x+x^2 &\sim x+x^3 \\
+  x &\sim x
+\end{aligned}}
+\xrightarrow{\text{两边同时相减}}
+\boxed{x^2\overset{\warn{\times}}{\sim}x^3}$$
+\end{example*}
+\end{rframe}
+
+\begin{frame}
+\frametitle{等价无穷小量代换}
+\begin{review}
+求下列函数极限：
+\begin{enumlite}
+  \item $\limit_{x\to0^+}\dfrac{(\sqrt{1+\sqrt{x}}-1)(\e^{\sqrt{x}}-1)}{\sin x}$；
+  \item $\limit_{x\to0}\dfrac{\ln(1-2x+x^2)\cdot\tan3x}{1-\cos3x}$。
+\end{enumlite}
+\end{review}
+\end{frame}
+
+\begin{frame}
+\frametitle{等价无穷小量代换}
+\begin{review}
+求下列函数极限：
+\begin{enumlite}
+  \item $\limit_{x\to0}\dfrac{(\sqrt[3]{1-2x^2}-1)(\e^{2x+1}-1)}{\sin(x^2)}$；
+  \item $\limit_{x\to0}\dfrac{\sin x-\tan x}{\sqrt{1-x^3}-1}$。
+\end{enumlite}
+\end{review}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{choice}
+当$x\to0^+$时，下列各无穷小量中与$\sqrt{x}$等价的是\dotfill(\select{B})
+\begin{choicehalf}
+  \item $1-\e^{\sqrt{x}}$ ~
+  \item $\ln\frac{1+x}{1-\sqrt{x}}$ ~
+  \item $\sqrt{1+\sqrt{x}}-1$ ~
+  \item $1-\cos\sqrt{x}$ ~ 
+\end{choicehalf}
+\end{choice}
+\end{frame}
+
+\section{函数的连续性}
+
+\subsection{函数的连续性}
+
+\begin{frame}
+\frametitle{连续的概念}
+\begin{example*}
+自然界中有很多现象都是\bold{连续}地变化着的。
+\begin{enumerate}
+  \item 当时间变化很微小时，气温的变化也很微小。
+  \item 当边长变化很微小时，正方形的面积变化很微小。
+\end{enumerate}
+\end{example*}
+\vpause
+对于$y=f(x)$定义域中的一点$x_0$，如果$x$从$x_0$作微小改变$\Delta x$后，
+$y$的相应改变量$\Delta y$也很微小，则称$f(x)$在点$x_0$ \bold{连续}。
+\end{frame}
+
+\begin{frame}
+\frametitle{连续的概念}
+\begin{definition*}
+设$y=f(x)$在$x_0$的某个邻域内有定义，如果
+\[ \lim_{\Delta x\to0}\Delta y = \lim_{\Delta x\to0}\big(f(x_0+\Delta x)-f(x_0)\big)=0,\]
+则称$f(x)$在点$x_0$ \bold{连续}。
+\end{definition*}
+\pause\noindent
+\[ \warn{\Updownarrow} \]
+\begin{definition*}
+设$y=f(x)$在$x_0$的某个邻域内有定义，如果
+\[ \limit_{x\to x_0}f(x)=f(x_0),\]
+则称$f(x)$在点$x_0$ \bold{连续}。
+\end{definition*}
+\end{frame}
+
+\begin{frame}
+\frametitle{连续函数}
+\begin{definition*}
+如果$f(x)$在区间$I$的每一点都连续，则称$f(x)$在区间$I$上\bold{连续}，
+或称$f(x)$是区间$I$上的\bold{连续函数}。\pause\unskip
+\begin{itemize}
+  \item $f(x)$在区间左端点$a$处连续是指$f(a^+)=f(a)$
+  \item $f(x)$在区间右端点$b$处连续是指$f(b^-)=f(b)$  
+\end{itemize}
+\end{definition*}
+\vpause
+\begin{remark*}
+连续函数的图形是一条连续而不间断的曲线。
+\end{remark*}
+\end{frame}
+
+\subsection{连续函数的运算}
+
+\begin{iframe}
+\frametitle{极限与连续}
+$\limit_{x\to x_0}f(x)=A$（极限存在）：
+\[\forall\epsilon>0,\; \exists\delta>0,\; x\in\bold{\mathring{U}(x_0,\delta)} \rightwhitearrow f(x)\in \bold{U(A,\epsilon)}\]
+\vskip0pt plus 0.5fill{\clead\cdotfill}\vskip0pt plus 0.5fill\pause
+$\limit_{x\to x_0}f(x)=f(x_0)$（连续）：
+\[\forall\epsilon>0,\; \exists\delta>0,\; x\in\bold{U(x_0,\delta)} \rightwhitearrow f(x)\in \bold{U(f(x_0),\epsilon)}\]
+\end{iframe}
+
+\begin{iframe}
+\frametitle{复合函数的极限}
+\vskip1em
+$\limit_{x\to x_0}g(x)=u_0,\; \limit_{u\to u_0}f(u)=A$
+$\warn{\centernot\Longrightarrow}$ $\limit_{x\to x_0}f[g(x)]=A$
+\vskip0pt plus 0.2fill\lead{\hrule}\vskip0pt plus 0.2fill\pause
+\begin{tikzpicture}[thick]
+  \node (g1) at (0,4) {$\mathring{U}(x_0,\delta)$}; \node (g2) at (0,2) {$U(u_0,\eta)$};
+  \draw[->] (g1) -- node[right]{$g$} (g2);
+  \node (f1) at (4,2) {$\mathring{U}(u_0,\eta)$}; \node (f2) at (4,0) {$U(A,\epsilon)$};
+  \draw[->] (f1) -- node[right]{$f$} (f2);
+  \node (fg1) at (8,4) {$\mathring{U}(x_0,\delta)$}; \node (fg2) at (8,0) {$U(A,\epsilon)$};
+  \draw[->] (fg1) -- node[right=0.4em]{$f\text{\small$\circ$}g$} node{\Large\only<4->{\cwarn$\times$}} (fg2);
+  \only<3->{\node at (2,2) {\Large\cwarn$\neq$};}
+\end{tikzpicture}
+\end{iframe}
+
+\begin{iframe}
+\frametitle{复合函数的极限}
+\vskip1em
+$\limit_{x\to x_0}g(x)=u_0,\; \limit_{u\to u_0}f(u)=A$
+$\tikzmark{aa}\bold{\Longrightarrow}\tikzmark{bb}$ $\limit_{x\to x_0}f[g(x)]=A$
+\vskip0pt plus 0.2fill\lead{\hrule}\vskip0pt plus 0.2fill\pause
+\begin{tikzpicture}[thick]
+  \node (g1) at (0,4) {$\mathring{U}(x_0,\delta)$}; \node (g2) at (0,2) {$\clead\mathring{U}(u_0,\eta)$};
+  \draw[->] (g1) -- node[right]{$g$} (g2);
+  \node (f1) at (4,2) {$\mathring{U}(u_0,\eta)$}; \node (f2) at (4,0) {$U(A,\epsilon)$};
+  \draw[->] (f1) -- node[right]{$f$} (f2);
+  \node (fg1) at (8,4) {$\mathring{U}(x_0,\delta)$}; \node (fg2) at (8,0) {$U(A,\epsilon)$};
+  \draw[->] (fg1) -- node[right=0.4em]{$f\text{\small$\circ$}g$} node[xshift=-0.2em]{\Large\only<4->{\cbold$\checkmark$}} (fg2);
+  \only<3->{\node at (2,2) {\Large\cbold$\phantom{o}=\phantom{o}$};}
+\end{tikzpicture}%
+\begin{tikzpicture}[remember picture,overlay]
+  \path (aa) -- node[above=1em,shape=rectangle,draw,text width=5.5em,align=center]
+    {\small\clead$x\in\mathring{U}(x_0,\delta_0)$\newline$g(x)\neq u_0$} (bb);
+\end{tikzpicture}
+\end{iframe}
+
+\begin{iframe}
+\frametitle{复合函数的极限}
+\vskip1em
+$\limit_{x\to x_0}g(x)=u_0,\; \limit_{u\to u_0}f(u)=A$
+$\tikzmark{cc}\bold{\Longrightarrow}\tikzmark{dd}$ $\limit_{x\to x_0}f[g(x)]=A$
+\vskip0pt plus 0.2fill\lead{\hrule}\vskip0pt plus 0.2fill\pause
+\begin{tikzpicture}[thick]
+  \node (g1) at (0,4) {$\mathring{U}(x_0,\delta)$}; \node (g2) at (0,2) {$U(u_0,\eta)$};
+  \draw[->] (g1) -- node[right]{$g$} (g2);
+  \node (f1) at (4,2) {$\clead U(u_0,\eta)$}; \node (f2) at (4,0) {$U(A,\epsilon)$};
+  \draw[->] (f1) -- node[right]{$f$} (f2);
+  \node (fg1) at (8,4) {$\mathring{U}(x_0,\delta)$}; \node (fg2) at (8,0) {$U(A,\epsilon)$};
+  \draw[->] (fg1) -- node[right=0.4em]{$f\text{\small$\circ$}g$} node[xshift=-0.2em]{\Large\only<4->{\cbold$\checkmark$}} (fg2);
+  \only<3->{\node at (2,2) {\Large\cbold$\phantom{o}=\phantom{o}$};}
+\end{tikzpicture}%
+\begin{tikzpicture}[remember picture,overlay]
+  \path (cc) -- node[above=1em,shape=rectangle,draw,text width=5em,align=left] % align=center无效？
+    {\small\clead\quad$y=f(u)$\newline 在$u_0$点连续} (dd);
+\end{tikzpicture}
+\end{iframe}
+
+\begin{iframe}
+\frametitle{复合函数的极限}
+\begin{theorem}
+如果$\limit_{x\to x_0}g(x)=u_0$，$\limit_{u\to u_0}f(u)=A$，
+并且存在$\delta_0>0$使得 \bold{$x\in\mathring{U}(x_0,\delta_0)$时$g(x)\neq u_0$}，
+则有$$\limit_{x\to x_0}f[g(x)]=A$$
+\end{theorem}
+\vpause
+\begin{theorem}
+若$\limit_{x\to x_0}g(x)=u_0$且$f(u)$在$u_0$点连续，则
+\[ \lim_{x\to x_0}f[g(x)]=f\Big[\lim_{x\to x_0}g(x)\Big]=f(u_0). \]
+\end{theorem}
+\vpause
+\begin{example}
+$\limit_{x\to2}\sqrt{\dfrac{x-2}{x^2-4}}=\sqrt{\limit_{x\to2}\dfrac{x-2}{x^2-4}}=\sqrt{\dfrac14}=\dfrac{1}{2}$．
+\end{example}
+\end{iframe}
+
+\begin{frame}
+\frametitle{连续函数}
+\begin{theorem}
+两个连续函数的\bold{四则运算}仍然是连续函数。
+\end{theorem}
+\pause
+\begin{theorem}
+两个连续函数的\bold{复合函数}仍然是连续函数。
+\end{theorem}
+\vpause
+\begin{theorem}
+基本初等函数在其定义域内都是连续函数。
+\end{theorem}
+\pause
+\begin{theorem}
+初等函数在其定义区间内都是连续函数。
+\end{theorem}
+\end{frame}
+
+\begin{frame}
+\frametitle{函数的连续性}
+\begin{property*}
+$f(x)$在$x_0$点连续 $\pmb\Leftrightarrow$ $f(x_0^-)=f(x_0^+)=f(x_0)$。
+\end{property*}
+\pause
+\begin{example}
+判断函数$f(x)$在$x=0$点的连续性：
+\begin{enumlite}
+  \item $f(x)=\begin{cases}x+1,&x<0\\x-1,&x\ge0\end{cases}$；
+  \item $f(x)=\begin{cases}\frac{2\sin x}x,&x<0\\2,&x=0\\\frac{x}{\sqrt{1+x}-1},&x>0\end{cases}$。
+\end{enumlite}
+\end{example}
+\end{frame}
+
+\begin{frame}
+\frametitle{函数的连续性}
+\begin{exercise}
+已知函数$f(x)=\begin{cases}\dfrac{\sin x}x,&x<0\\1,&x=0\\x^2+1,&x>0\end{cases}$，判断它在$x=0$点的连续性。
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+%\frametitle{函数的连续性}
+\begin{example}
+已知函数$f(x)=\begin{cases}x^2+1,&x<1\\b,&x=1\\ax+1,&x>1\end{cases}$是连续的，求$a$和$b$。
+\end{example}
+\vpause
+\begin{exercise}
+已知函数$f(x)$在$x=0$点连续，求$a$和$b$：
+$$f(x)=\begin{cases}\dfrac{\e^{ax}-1}x,&x<0\\2,&x=0\\\dfrac{\sqrt[3]{1-bx+x^2}-1}{x},&x>0\end{cases}.$$
+\end{exercise}
+\end{frame}
+
+\begin{sframe}
+\frametitle{函数的连续性}
+\begin{solution}
+$f(0)=2$，
+\begin{align*}
+f(0^-)&=\limit_{x\to0^-}\dfrac{\e^{ax}-1}{x}=\limit_{x\to0^-}\dfrac{ax}{x}=a,\\
+f(0^+)&=\limit_{x\to0^+}\dfrac{\sqrt[3]{1-bx+x^2}-1}{x}\\
+&=\limit_{x\to0^+}\dfrac{(-bx+x^2)/3}{x}=\limit_{x\to0^+}\dfrac{-b+x}{3}=-\frac{b}3.
+\end{align*}
+$f(x)$在$x=0$点连续，故$f(0)=f(0^-)=f(0^+)$，即有$a=2$，$b=-6$。
+\end{solution}
+\end{sframe}
+
+\subsection{函数的间断点}
+
+\begin{frame}
+\frametitle{函数的间断点}
+\begin{definition*}
+设$f(x)$在点$x_0$的某个去心邻域有定义，如果$f(x)$在点$x_0$不连续，
+则称它在点$x_0$ \bold{间断}，或者称点$x_0$是$f(x)$的\bold{间断点}。
+\end{definition*}
+\end{frame}
+
+\begin{frame}
+\frametitle{间断点的分类}
+\begin{itemize}[<+->]
+  \item \bold{第一类间断点}：$f(x_0^-)$和$f(x_0^+)$均存在
+  \begin{itemize}
+    \item \bold{可去间断点}：$f(x_0^-)=f(x_0^+)$
+    \item \bold{跳跃间断点}：$f(x_0^-)\neq f(x_0^+)$
+  \end{itemize}
+  \item \bold{第二类间断点}：$f(x_0^-)$和$f(x_0^+)$至少一个不存在
+  \begin{itemize}
+    \item \bold{无穷间断点}：$f(x_0^-)$和$f(x_0^+)$至少一个为无穷大
+    \item \bold{振荡间断点}：$f(x_0^-)$和$f(x_0^+)$均不为无穷大
+  \end{itemize}
+\end{itemize}
+% 问题：$x=0$ 属于 $\frac1x\sin\frac1x$ 的哪种间断点？
+\end{frame}
+
+\begin{frame}
+\frametitle{函数的间断点}
+\begin{example}
+$f(x)=\begin{cases}x+1,&x\neq1\\1,&x=1\end{cases}$\dotfill\bold{可去间断点}
+\end{example}
+\pause
+\begin{example}
+$f(x)=\begin{cases}x-1,&x<0\\0,&x=0\\x+1,&x>0\end{cases}$\dotfill\bold{跳跃间断点}
+\end{example}
+\pause
+\begin{example}
+$f(x)=\frac1x$\dotfill\bold{无穷间断点}
+\end{example}
+\pause
+\begin{example}
+$f(x)=\sin\frac1x$\dotfill\bold{振荡间断点}
+\end{example}
+\end{frame}
+
+\begin{frame}
+\frametitle{函数的间断点}
+\begin{remark*}
+间断点常见位置：（1）\CJKunderdot{分母为零}；（2）\CJKunderdot{分段点}。
+\end{remark*}
+\pause\vfill\hrule\vfill
+\begin{example}
+求函数$f(x)=\dfrac{x-1}{x^2-1}$的间断点，并判断类型。
+\end{example}
+\vpause
+\begin{example}
+求$f(x)=\left\{\begin{array}{ll}
+\dfrac1{x^2}, & x\le1, x\neq0 \\[1em]
+\dfrac{x^2-4}{x-2}, & x>1, x\neq2
+\end{array}\right.$的间断点，并判断其类型。
+\end{example}
+\end{frame}
+
+\begin{iframe}
+\frametitle{复习与提高}
+\begin{choice}
+已知函数$f(x)=\dfrac{\e^{\frac1x}-1}{\e^{\frac1x}+1}$，则点$x=0$属于$f(x)$的\dotfill(\select{B})
+\begin{choicehalf}
+  \item 可去间断点 ~
+  \item 跳跃间断点 ~
+  \item 第二类间断点 ~
+  \item 连续点 ~
+\end{choicehalf}
+\end{choice}
+\vpause
+\begin{thinking}
+修改$f(x)$，使得$x\to0$时$f(x)$为无穷大量？
+\end{thinking}
+\vpause
+\begin{remark*}
+小心$\warn{\e^{\frac1x}}$和$\warn{\arctan\big(\frac1x\big)}$等复合函数的间断点！
+\end{remark*}
+\end{iframe}
+
+\section{闭区间上连续函数}
+
+\subsection{最值定理}
+
+\begin{frame}
+\frametitle{最值定理}
+\begin{theorem}
+设$f(x)$在闭区间$[a,b]$上连续，则$f(x)$在该区间上有界而且一定能取到最大值$M$和最小值$m$．
+\end{theorem}
+\vpause
+\begin{remark*}
+函数$y=\tan x$在开区间$\left(-\frac\pi2,\frac\pi2\right)$上是连续的，
+但在这个开区间上它是无界的，而且也没有最大值和最小值。
+\end{remark*}
+\end{frame}
+
+\subsection{零值定理}
+
+\begin{frame}
+\frametitle{零值定理}
+\begin{theorem}
+设$f(x)$在闭区间$[a,b]$上连续，且$f(a)$和$f(b)$异号，则在开区间$(a,b)$内至少存在一点$\xi$，使得$f(\xi)=0$.
+\end{theorem}
+\vpause
+\begin{example}
+证明方程$x^3-3x^2+1=0$在区间$(-1,0)$，$(0,1)$，$(1,3)$内各有一个实根。
+\end{example}
+\vpause
+\begin{example}
+证明方程$2\sin x=x+1$有实数解。
+\end{example}
+\end{frame}
+
+\subsection{介值定理}
+
+\begin{frame}
+\frametitle{介值定理}
+\begin{theorem}
+设$f(x)$在闭区间$[a,b]$上连续，且$f(a)=A$和$f(b)=B$不相等，则对于$A$与$B$之间的任何数$C$，
+在开区间$(a,b)$内至少存在一点$\xi$，使得$f(\xi)=C$.
+\end{theorem}
+\pause
+\begin{proof}
+令$g(x)=f(x)-C$．则由零值定理可得结论．
+\end{proof}
+\end{frame}
+
+\end{document}

@@ -1,0 +1,1144 @@
+% -*- coding: utf-8 -*-
+% !TEX program = xelatex
+
+\documentclass[14pt,notheorems,leqno,xcolor={rgb}]{beamer} % ignorenonframetext
+
+\input{../common/theme.sty}
+\input{../common/share.sty}
+\input{../common/local.sty}
+
+\begin{document}
+
+\occasion{高等数学课程}
+\title{第五章·定积分}
+\author{\href{https://lvjr.bitbucket.io}{吕荐瑞}}
+\institute{暨南大学数学系}
+
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+\section{定积分的概念}
+
+\begin{frame}
+%\frametitle{引例}
+\begin{example}
+计算由抛物线$y=x^2$, 直线$x=1$, 和$x$轴所围成的曲边梯形的面积$S$．
+\end{example}
+\end{frame}
+
+\pgfplotsset{
+  integral segments/.code={\pgfmathsetmacro\integralsegments{#1}},
+  integral/.style args={#1:#2}{
+    ybar interval,
+    domain=#1+((#2-#1)/\integralsegments)/2:#2+((#2-#1)/\integralsegments)/2,
+    samples=\integralsegments+1,
+    x filter/.code=\pgfmathparse{\pgfmathresult-((#2-#1)/\integralsegments)/2}
+  }
+}
+\begin{frame}
+\frametitle{曲边梯形的面积}
+\centering
+\begin{tikzpicture}[
+	declare function={f = -3*(\x-5)+0.4*(\x-5)^3+10;},
+	scale=1
+]
+\begin{axis}[
+	%samples=100,
+    x=1.5cm, y=0.4cm,
+	axis lines=middle,
+	ymin=-1.5, ymax=13.5,
+	xmin=1.5, xmax=9,
+	yticklabels={,,},
+	xticklabels={,,}
+]
+\addplot[fill=gray, fill opacity=0.1, thick, domain=2:8] {f}\closedcycle;
+\node at (axis cs:2,-1) {$a$};
+\node at (axis cs:8,-1) {$b$};
+% define some special values
+\pgfmathsetmacro\sxa{-3*(4.5-5)+0.4*(4.5-5)^3+10}
+\pgfmathsetmacro\sxb{-3*(4.25-5)+0.4*(4.25-5)^3+10}
+\pgfmathsetmacro\sxc{-3*(4.125-5)+0.4*(4.125-5)^3+10}
+% create overlaps inside the pgfplots
+\only<2->{\node at (axis cs:6,12) {$y=f(x)\geq0$};}
+\only<3-8>{
+\node at (axis cs:3,-1) {$x_1$};
+\node at (axis cs:7,-1) {$x_{n-1}$};
+\node at (axis cs:4,-1) {$x_{i-1}$};
+\node at (axis cs:5,-1) {$x_i$};}
+\only<3->{
+\addplot[dashed, thin, domain=2:3] {f}\closedcycle;
+\addplot[dashed, thin, domain=3:4] {f}\closedcycle;
+\addplot[dashed, thin, domain=4:5] {f}\closedcycle;
+\addplot[dashed, thin, domain=6:7] {f}\closedcycle;
+\addplot[dashed, thin, domain=7:8] {f}\closedcycle;
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\only<4-8>{
+\addplot[draw=accent3, fill=blue, fill opacity=0.1, thin, dashed] coordinates {(4,\sxa) (5,\sxa)}\closedcycle;
+}
+\only<5-8>{
+\node at (axis cs:4.5,-1) {$\xi_i$};
+\node at (axis cs:4.5,10)[thick] {$f(\xi_i)$};
+\addplot [mark=none, color=blue, thick, dashed] coordinates{(4.5,0) (4.5,\sxa)};
+}
+\only<6-8>{
+\node at (axis cs:4.5,0.6) {$\Delta x_i$};
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\only<8>{
+\addplot [
+	integral segments=6,% number of subintervals 20
+	draw=accent3,
+	fill=filler4,
+	integral=2:8
+] {f};
+\addplot[draw=accent3, fill=blue, fill opacity=0.1, thin, dashed] coordinates {(4,\sxa) (5,\sxa)}\closedcycle;
+\addplot [color=blue, thick, dashed] coordinates{(4.5,0) (4.5,\sxa)};
+\node at (axis cs:4.5,10)[thick] {$f(\xi_i)$};
+\node at (axis cs:4.5,0.6) {$\Delta x_i$};
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\only<9|handout:0>{
+\addplot [
+	integral segments=12,% number of subintervals 20
+	draw=accent3,
+	fill=filler4,
+	integral=2:8
+] {f};
+\addplot[draw=accent3, fill=blue, fill opacity=0.1, thin, dashed] coordinates {(4,\sxb) (4.5,\sxb)}\closedcycle;
+\addplot [color=blue, thick, dashed] coordinates{(4.25,0) (4.25,\sxb)}\closedcycle;
+\node at (axis cs:2.5,-1) {$x_1$};
+\node at (axis cs:7.35,-1) {$x_{n-1}$};
+\node at (axis cs:3.7,-1) {$x_{i-1}$};
+\node at (axis cs:4.25,-1) {$\xi_i$};
+\node at (axis cs:4.65,-1) {$x_i$};
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\only<10-|handout:0>{
+\addplot [
+	integral segments=24,% number of subintervals 20
+	draw=accent3,
+	fill=filler4,
+	integral=2:8
+] {f};
+\addplot[red, fill=blue, fill opacity=0.1, thin, dashed] coordinates {(4,\sxc) (4.25,\sxc)}\closedcycle;
+\addplot [color=blue, thick, dashed] coordinates{(4.125,0) (4.125,\sxc)}\closedcycle;
+\node at (axis cs:2.4,-1) {$x_1$};
+\node at (axis cs:7.5,-1) {$x_{n-1}$};
+\node at (axis cs:3.7,-1) {$x_{i-1}$};
+\node at (axis cs:4.2,-1) {$\xi_i$};
+\node at (axis cs:4.6,-1) {$x_i$};
+}
+\only<4->{\addplot [thick,domain=2:8] {f};}
+\end{axis}
+\end{tikzpicture}
+\vskip.5em\hrule\noindent
+\[
+S=\uncover<3->{\sum_{i}\Delta S_{i}}\uncover<7->{\uncover<8->{\approx\sum_{i}}f(\xi_{i})\Delta x_{i}}
+\uncover<11->{\rightwhitearrow S=\lim_{\Delta x\rightarrow0}\sum_{i}f(\xi_{i})\Delta x_{i}}
+\]
+\end{frame}
+
+\begin{frame}[shrink=7]
+\frametitle{曲边梯形的面积}
+\begin{example}
+计算由曲线$y=f(x)$, 直线$x=a$, $x=b$, 和$x$轴所围成的曲边梯形的面积$S$．
+\end{example}\pause
+\begin{enumerate}
+\item 将区间$[a,b]$分为$n$段$[x_{i-1},x_i]$, 各段的长度为
+  $\Delta x_i=x_i-x_{i-1}$, $1\leq i \leq n$.\pause
+\item 在每小段区间$[x_{i-1},x_i]$上任取一点$\xi_i$，得到面积的近似值为
+  $\displaystyle S\approx \sum_{i=1}^n f(\xi_i)\Delta x_i $.\pause
+\item 令$\Delta x=\displaystyle\max_{i}\{\Delta x_i\}$, 则当$\Delta x\to0$时就得到面积的实际值为
+  $\displaystyle S = \lim_{\Delta x\to0} \sum_{i=1}^n f(\xi_i)\Delta x_i $.
+\end{enumerate}
+\end{frame}
+
+\begin{frame}[shrink=7]
+\frametitle{变速直线运动的位移}
+\begin{example}
+设物体以速度$v=v(t)$沿直线运动，求在时间段$a\leq t \leq b$内的位移$s$．
+\end{example}\pause
+\begin{enumerate}
+\item 将时间段$[a,b]$分为$n$段$[t_{i-1},t_i]$, 各段的长度为
+  $\Delta t_i=t_i-t_{i-1}$, $1\leq i \leq n$.\pause
+\item 在每小段区间$[t_{i-1},t_i]$上任取一点$\xi_i$，得到位移的近似值为
+  $\displaystyle s\approx \sum_{i=1}^n v(\xi_i)\Delta t_i $.\pause
+\item 令$\Delta t=\displaystyle\max_{i}\{\Delta t_i\}$, 则当$\Delta t\to0$时就得到位移的实际值为
+  $\displaystyle s = \lim_{\Delta t\to0} \sum_{i=1}^n v(\xi_i)\Delta t_i $.
+\end{enumerate}
+\end{frame}
+
+\begin{frame}%[shrink=8]
+\begin{definition}
+设$f(x)$在区间$[a,b]$上有定义，用点$a=x_0<x_1<\cdots<x_{n-1}<x_n=b$将区间分为$n$段$[x_{i-1},x_i]$ ($i=1,2,\cdots,n$)，其长度分别为$\Delta x_i=x_i-x_{i-1}$．\pause
+在每段$[x_{i-1},x_i]$上任取一点$\xi_i$，得到近似和$$\displaystyle\sum_{i=1}^n f(\xi_i)\Delta x_i.$$\pause
+记$\Delta x=\displaystyle\max_i\{\Delta x_i\}$，如果$\Delta x \to 0$时近似和的极限存在，\pause
+我们就称$f(x)$在区间$[a,b]$上是\bold{可积的}，并将这个极限值称为$f(x)$在$[a,b]$上的\bold{定积分}，\pause
+记为
+\[ \lim_{\Delta x\to 0} \sum_{i=1}^n f(\xi_i)\Delta x_i = \int_a^b f(x)\d x \]
+\end{definition}
+\end{frame}
+
+\begin{frame}
+\frametitle{定积分}
+我们已经定义
+\[ \int_a^b f(x)\d x  = \lim_{\Delta x\to 0} \sum_{i=1}^n f(\xi_i)\Delta x_i \]\pause
+其中：\pause
+\begin{itemize}[<+->]
+\item $x$称为\bold{积分变量}，$f(x)$称为\bold{被积函数}，$f(x)\d x$称为\bold{被积表达式}
+\item $a$称为\bold{积分下限}，$b$称为\bold{积分上限}，$[a,b]$称为\bold{积分区间}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\begin{remark}
+定积分的值只与被积函数$f$和积分区间$[a,b]$有关，而与积分变量用什么字母无关．即有
+\[ \int_a^b f(x)\d x = \int_a^b f(t)\d t = \int_a^b f(u)\d u \]
+\end{remark}\pause
+\begin{remark}
+如果$f(x)$在区间$[a,b]$上是连续函数（或者是只有有限个间断点的有界函数），则它在$[a,b]$上是可积的．
+\end{remark}
+\end{frame}
+
+\begin{frame}
+\begin{remark}
+如果$a>b$，我们规定
+\[ \int_a^b f(x)\d x = -\int_b^a f(x)\d x \]\pause
+特别地，如果$a=b$，我们可以得到
+\[ \int_a^b f(x)\d x = 0 \]
+\end{remark}
+\end{frame}
+
+\begin{frame}
+\begin{remark}
+设由曲线$y=f(x)$, 直线$x=a$, $x=b$, 和$x$轴所围成的曲边梯形的面积为$S$
+\begin{itemize}[<+->]
+\item 如果在$[a,b]$上$f(x)\geq 0$，则定积分$$\int_a^b f(x)\d x=S.$$
+\item 如果在$[a,b]$上$f(x)\leq 0$，则定积分$$\int_a^b f(x)\d x=-S.$$
+\end{itemize}
+\end{remark}
+\end{frame}
+
+\section{定积分的性质}
+
+\begin{frame}
+\begin{property}设$k$为常数，则有
+\[ \int_a^b kf(x)\d x=k\int_a^b f(x)\d x\]
+\end{property}\pause
+\begin{property}（函数可加性）
+\[ \int_a^b [f(x) \pm g(x)]\d x = \int_a^b f(x)\d x \pm \int_a^b g(x) \d x \]
+\end{property}
+\end{frame}
+
+\begin{frame}
+\begin{property}（区间可加性）设$a<c<b$，则有
+\[ \int_a^b f(x)\d x = \int_a^c f(x)\d x + \int_c^b f(x)\d x \]
+\end{property}\pause
+\begin{remark}
+即使$c$不在$a$和$b$之间，上述性质依然是成立的．
+\end{remark}
+\end{frame}
+
+\begin{frame}
+\begin{property}
+\[\int_a^b 1\d x = \int_a^b \d x= b-a\]
+\end{property}
+\end{frame}
+
+\begin{frame}
+\begin{property}设在区间$[a,b]$上$f(x)\geq g(x)$，则有
+\[ \int_a^b f(x)\d x \geq \int_a^b g(x)\d x.\]\pause
+特别地，如果在区间$[a,b]$上$f(x)\geq 0$，则有
+\[ \int_a^b f(x)\d x \geq 0.\]
+\end{property}
+\vpause
+\begin{corollary*}
+$\left|\,\int_a^b f(x)\d x\,\right| \le \int_a^b\big|f(x)\big|\d x$．
+\end{corollary*}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+比较下面各组积分的大小．
+\begin{enumlite}
+  \item $\int_0^1 x\d x$ 和 $\int_0^1 x^2 \d x$
+  %\item $\int_0^{\frac\pi2}x\d{x}$ 和 $\int_0^{\frac\pi2}\sin x \d{x}$
+  \item $\int_{-\frac\pi2}^0 \sin x \d x$ 和 $\int_0^{\frac\pi2}\sin x \d x$
+\end{enumlite}
+\end{example}\pause
+\begin{exercise}
+比较下面各组积分的大小．
+\begin{enumlite}
+  \item $\int_1^2 x\d x$ 和 $\int_1^2 x^2 \d x$\pause
+  \item $\int_0^{\frac\pi4}\sin x\d x$ 和 $\int_0^{\frac\pi4}\tan x\d x$
+  %\item $\int_0^1 e^x\d{x}$ 和 $\int_0^1 e^{x^2} \d{x}$
+  %\item $\int_{-1}^0 (x^3+x) \d{x}$ 和 $\int_0^1 (x^3+x)\d{x}$
+\end{enumlite}
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\begin{property}
+如果函数$f(x)$在区间$[a,b]$上的最大值和最小值分别为$M$和$m$，则有
+\[ m(b-a) \leq \int_a^b f(x)\d x \leq M(b-a) \]
+\end{property}\pause
+\begin{example}
+估计下面的积分值：
+\[ \int_0^1 \e^{x^2} \dx \]
+\end{example}
+\end{frame}
+
+\begin{frame}
+\begin{property}
+（积分中值定理）设$f(x)$在$[a,b]$上连续，则在$[a,b]$中至少存在一点$\xi$，使得
+\[ \int_a^b f(x)\d x = f(\xi)(b-a) \]
+\end{property}\pause
+\begin{remark}上述性质也是说，存在$\xi\in[a,b]$，使得
+\[ \frac1{b-a} \int_a^b f(x)\d x = f(\xi)\]
+说明连续函数在区间$[a,b]$上的平均值是可以取到的．
+\end{remark}
+\end{frame}
+
+\begin{frame}
+\frametitle{积分中值定理}
+设$f(x)$在$[a,b]$上连续，则在$[a,b]$中至少存在一点$\xi$，使得
+$\bold{\int_a^b f(x)\dx = f(\xi)(b-a)}$.
+\begin{center}\vspace{-0.5em}
+\begin{tikzpicture}[
+	declare function={f=-3*(x-3.5)+0.4*(x-3.5)^3+10;},
+	scale=1]
+\begin{axis}[
+	%samples=100,
+	axis lines=middle,
+	ymin=-1.5, ymax=14,
+	xmin=-1, xmax=5.5,
+	yticklabels={,,},
+	xticklabels={,,}
+]
+\addplot [fill=gray!20, domain=0.5:4.5] {f}\closedcycle;
+\addplot [domain=0.5:4.5, thick] {f};
+\addplot [mark=none, thick, dashed] coordinates{(0, 13.16227766) (4.5, 13.16227766)};
+\addplot [mark=none, thick, dashed] coordinates{(0.5, 0) (0.5, 13.16227766)};
+\addplot [mark=none, thick, dashed] coordinates{(4.5, 0) (4.5, 13.16227766)};
+\node at (axis cs:-0.4,13.16227766) {$M$};
+\addplot [mark=none, thick, dashed] coordinates{(0, 7.4) (4.5, 7.4)};
+\node at (axis cs:-0.4,7.4) {$m$};
+\node at (axis cs:3.85,12.5) {$y=f(x)$};
+\node at (axis cs:0.5,-1) {$a$};
+\node at (axis cs:4.5,-1) {$b$};
+% create overlaps inside the pgfplots
+\only<2|handout:0>{
+\addplot [mark=none, color=gray, thick, dashed] coordinates{(0,12) (4.5,12)};
+\addplot [mark=none, fill=yellow, fill opacity=0.2, thick, dashed] coordinates{(0.5,12) (4.5,12)}\closedcycle;
+}
+\only<3|handout:0>{
+\addplot [mark=none, color=gray, thick, dashed] coordinates{(0,9) (4.5,9)};
+\addplot [mark=none, fill=yellow, fill opacity=0.2, thick, dashed] coordinates{(0.5,9) (4.5,9)}\closedcycle;
+}
+\only<4->{
+\addplot [mark=none, color=gray, thick, dashed] coordinates{(0,11) (4.5,11)};
+\addplot [mark=none, fill=yellow, fill opacity=0.2, thick, dashed] coordinates{(0.5,11) (4.5,11)}\closedcycle;
+}
+\only<5->{
+\node at (axis cs:-0.5,11) {$f(\xi)$};
+\node at (axis cs:0.946375228,-1) {$\xi$};
+\addplot [mark=none, color=blue, thick, dashed] coordinates{(0.946375228,0) (0.946375228,11)};
+}
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\mybookmark{复习与提高}
+
+\begin{iframe}
+\frametitle{定积分的保号性}
+\begin{puzzle}
+设在$[a,b]$上$f(x)$连续，$f(x)\ge0$，且$f(x)$不恒为零，证明
+\[ \int_a^b f(x)\dx > 0.\]
+\end{puzzle}
+\end{iframe}
+
+\begin{sframe}
+\frametitle{定积分的保号性}
+\begin{solution}
+设$f(c)>0$，则由极限的保号性，存在$\delta>0$，使得当$c-\delta<x<c+\delta$时，
+总有$f(x)>f(c)/2$．从而
+\begin{align*}
+\int_a^b f(x)\dx &\ge \int_{c-\delta}^{c+\delta} f(x)\dx \\
+&\ge\int_{c-\delta}^{c+\delta} f(c)/2 \dx =\delta\cdot f(c)>0 
+\end{align*}
+\end{solution}
+\vpause
+\begin{remark*}
+这是习题5--1的第12题，作业题．
+\end{remark*}
+\end{sframe}
+
+\section{微积分基本公式}
+
+\begin{frame}
+\begin{definition}
+设函数$f(x)$在$[a,b]$上连续，令$p(x)=\int_a^x f(t)\d t$，$x\in[a,b]$，称为\bold{变上限积分}．
+\end{definition}\pause
+\begin{theorem}
+\[ p'(x)=\left(\int_a^x f(t)\d t\right)' = f(x)\]
+\end{theorem}\pause
+\begin{remark}
+上述定理说明，对于闭区间上的连续函数，它的原函数总是存在的．
+\end{remark}
+\end{frame}
+
+\begin{frame}%[shrink=10]
+\frametitle{微积分基本公式}
+\begin{theorem}设$f(x)$在$[a,b]$上连续，且$F(x)$是$f(x)$的一个原函数，则有
+\[\int_a^b f(x)\d x = F(b)-F(a)\]
+若记$[F(x)]_a^b=F(b)-F(a)$，则上式又可表示为
+\[\int_a^b f(x)\d x = [F(x)]_a^b\]\pause
+它称为\bold{微积分基本公式}或\bold{牛顿－莱布尼茨公式}．
+\end{theorem}
+\end{frame}
+
+\begin{frame}
+\begin{example}求下列定积分．
+\begin{enumlite}
+\item $\int_0^1 x^2 \d x$
+\item $\int_2^4 \dfrac{\d x}x$
+\item $\int_{-1}^3 |2-2x|\d x$
+\end{enumlite}
+\end{example}
+\end{frame}
+
+\begin{frame}
+\begin{exercise}求下列定积分．
+\begin{enumlite}
+\item $\int_0^1 e^x \d x$
+\item $\int_0^{\frac\pi2} \cos x \d x$
+\item $\int_{-1}^2 |2x|\d x$
+\end{enumlite}
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\begin{theorem}对于更一般的变限积分，我们有下面求导公式：
+\[ \left(\int_{a(x)}^{b(x)} f(t)\d t\right)'=f(b(x))b'(x)-f(a(x))a'(x) \]
+特别地，我们有
+\[ \left(\int_a^x f(t)\d t\right)'=f(x) \]
+\[ \left(\int_x^b f(t)\d t\right)'=-f(x) \]
+\end{theorem}
+\end{frame}
+
+\begin{frame}
+\begin{example}求下列变限积分的导数．
+\begin{enumlite}
+\item $\int_0^x e^{2t}\d t$
+\item $\int_x^{-1} \cos^2t\d t$
+\item $\int_x^{x^2}\sin t\d t$
+\end{enumlite}
+\end{example}\pause
+\begin{exercise}求下列变限积分的导数．
+\begin{enumlite}
+\item $\int_0^{x^2} \arctan t \d t$
+\item $\int_{\cos x}^{0} t^2\d t$\pause
+\item $\int_{\ln x}^{e^x}t^3\d t$
+\end{enumlite}
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\begin{example}求函数极限．
+\begin{enumlite}
+\item $\displaystyle \lim_{x\to0}\frac{\int_0^{\sin x}e^t\d t}{x}$
+\item $\displaystyle \lim_{x\to0}\frac{\int_0^x(e^t-1)\d t}{x^2}$
+\end{enumlite}
+\end{example}\pause
+\begin{exercise}求函数极限．
+\begin{enumlite}
+\item $\displaystyle \lim_{x\to0}\frac{\int_0^x\cos^2t\d t}{x}$\pause
+\item $\displaystyle \lim_{x\to0}\frac{\int_x^0\arctan t\d t}{x^2}$
+\end{enumlite}
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+求函数$f(x)=\int_0^x(t-1)\d t$的极值．
+\end{example}\pause
+\begin{exercise}
+求函数$f(x)=\int_0^xt(t-4)\d t$的极值．
+\end{exercise}
+\end{frame}
+
+\begin{iframe}
+\frametitle{分段函数的定积分}
+\begin{example}
+求$k$的值，使得$\int_k^3f(x)\d{x}=\frac{40}{3}$，其中
+$$f(x)=\begin{cases}
+  2x+1, & x\le2; \\ x^2+1, &x>2.
+\end{cases}$$
+\end{example}
+\end{iframe}
+
+\begin{frame}
+\frametitle{积分中值定理}
+\begin{remark*}
+积分中值定理的“$\xi\in[a,b]$”可以改进为“$\xi\in(a,b)$”．
+\end{remark*}
+\vpause
+\begin{theorem*}[积分中值定理]
+设$f(x)$在$[a,b]$上连续，则至少存在一点$\xi\in\bold{(a,b)}$，使得
+\[ \int_a^b f(x)\d x = f(\xi)(b-a). \]
+\end{theorem*}
+\vpause
+\begin{proof}
+利用\CJKunderwave{微积分基本公式}和\CJKunderwave{微分中值定理}．
+\end{proof}
+\end{frame}
+
+\begin{iframe}
+\frametitle{积分中值定理}
+\begin{example}
+设$f(x)$在$[0,\infty]$上连续且$f(x)>0$．证明
+\[ F(x)=\frac{\int_0^x tf(t) \d t}{\int_0^x f(t) \d t}\]
+在$(0,\infty)$上是单调递增的．
+\end{example}
+\end{iframe}
+
+\mybookmark{复习与提高}
+
+\begin{oframe}
+\frametitle{定积分的计算}
+\begin{review}
+求下列定积分．
+\begin{enumlite}
+  \item $\int_2^3 (x^2-1) \d x$
+  \item $\int_1^8 \dfrac{\d x}{\sqrt[3]x}$
+  \pause
+  \item $\int_{0}^{\pi} |\cos x|\d x$
+\end{enumlite}
+\end{review}
+\end{oframe}
+
+\begin{oframe}
+\frametitle{变限积分的导数}
+\begin{review}
+求下列变限积分的导数．
+\begin{enumlite}
+\item $\int_1^{x^2} e^t \d{t}$
+\item $\int_{\cos x}^{e^x} t^2\d{t}$
+\end{enumlite}
+\end{review}
+\end{oframe}
+
+\begin{frame}
+\frametitle{变限积分的导数}
+\begin{review}
+求函数极限．
+\begin{enumlite}
+  \item $\displaystyle \lim_{x\to0}\frac{\int_0^x\ln(1+t)\d{t}}{x^2}$
+  \item $\displaystyle \lim_{x\to0}\frac{\int_0^{x^2}e^t\d{t}}{1-\cos x}$
+\end{enumlite}
+\end{review}
+\end{frame}
+
+\begin{oframe}
+\frametitle{变限积分的导数}
+\begin{review}
+求函数$f(x)=\int_x^0(t^2-1)\d t$的极值．
+\end{review}
+\end{oframe}
+
+\begin{frame}
+\frametitle{定积分与极限}
+\begin{puzzle}
+求极限$\displaystyle\limit_{n\to\infty}\int_0^1\frac{x^n\e^x}{1+\e^x}\dx$．
+\end{puzzle}
+\end{frame}
+
+\begin{iframe}
+\frametitle{定积分与极限}
+\begin{puzzle}
+求数列极限$\limit_{n\to\infty}(\frac1{n+1}+\frac1{n+2}+\cdots+\frac{1}{n+n})$．
+\end{puzzle}
+\vpause
+\begin{solution}
+原式\unskip$\begin{aligned}[t]
+&=\limit_{n\to\infty}\sum_{i=1}^{n}\frac1{1+i/n}\cdot\frac1n\\
+&=\int_0^1 \frac1{1+x}\d{x}=\ln2.
+\end{aligned}$
+\end{solution}
+\vpause
+\begin{thinking}
+求数列极限$\limit_{n\to\infty}(\frac{n}{n^2+1^2}+\frac{n}{n^2+2^2}+\cdots+\frac{n}{n^2+n^2})$．
+\end{thinking}
+\end{iframe}
+
+\begin{jframe}
+\frametitle{定积分与极限}
+\begin{solution}
+原式\unskip$\begin{aligned}[t]
+&=\limit_{n\to\infty}\sum_{i=1}^{n}\frac1{1+(i/n)^2}\cdot\frac1n\\
+&=\int_0^1 \frac1{1+x^2}\d{x}=\big[\arctan x\big]_0^1=\frac{\pi}{4}.
+\end{aligned}$
+\end{solution}
+\end{jframe}
+
+\begin{frame}
+\frametitle{定积分不等式}
+\begin{puzzle}
+设$f(x)$在$[a,b]$上连续，且单调递增，证明
+\[\int_a^b xf(x)\dx \ge \frac{a+b}{2}\int_a^b f(x) \dx \]
+\end{puzzle}
+\vpause
+\begin{solution}
+令$L(t)=\int_a^t xf(x)\dx - \frac{a+t}{2}\int_a^t f(x) \dx$，求导．
+\end{solution}
+\end{frame}
+
+\begin{iframe}
+\frametitle{定积分不等式}
+\begin{puzzle}
+设$f(x)$在$[0,1]$上连续，证明
+\[\int_0^1 f^2(x)\dx \ge \left(\int_0^1 f(x) \dx \right)^2 \]
+\end{puzzle}
+\end{iframe}
+
+\begin{sframe}
+%\frametitle{定积分不等式}
+\begin{solution}
+欲利用导数证明不等式，先作换元$u=bx$（$b>0$），则有
+\[ b\int_0^b f^2(u/b)\du \ge \left(\int_0^b f(u/b)\du \right)^2 \]
+再令$g(u)=f(u/b)$，则只需证明下面推广的不等式
+\[ b\int_0^b g^2(u)\du \ge \left(\int_0^b g(u)\du \right)^2 \]
+令$L(t)=t\int_0^t g^2(u)\du -\left(\int_0^t g(u)\du \right)^2$，求导可得．
+\end{solution}
+\vpause
+\begin{remark*}
+这是习题5--1的第11题，作业题．
+\end{remark*}
+\end{sframe}
+
+\begin{iframe}
+\frametitle{定积分不等式}
+\begin{puzzle}
+设连续函数$f(x)$在$[0,1]$上单调递减．试证明对于任何$q\in[0,1]$，都有不等式
+$$\int_0^q f(x)\dx \ge q\int_0^1 f(x)\dx.$$
+\end{puzzle}
+\end{iframe}
+
+\begin{sframe}
+%\frametitle{定积分不等式}
+\begin{solution}[方法1]
+令$L(t)=\int_0^t f(x)\dx - t\int_0^1 f(x)\dx$，则有
+$L'(t)=f(t)-\int_0^1 f(x)\dx=f(t)-f(\xi)$．因此，
+当$0\le q\le\xi$时，$L'(t)\ge0$，从而$L(q)\ge L(0)=0$．
+当$\xi\le q\le1$时，$L'(t)\le0$，从而$L(q)\ge L(1)=0$．
+\end{solution}
+\vpause
+\begin{solution}[方法2]
+$\int_0^q f(x)\dx - q\int_0^1 f(x)\dx$\newline
+$\!\!\begin{aligned}[t]
+&\textstyle=(1-q)\int_0^q f(x)\dx - q\int_q^1 f(x)\dx \\
+&=(1-q)\cdot q\,f(\xi_1) - q\cdot (1-q)\,f(\xi_2) \\
+&=q(1-q)[f(\xi_1)-f(\xi_2)]\ge 0.
+\end{aligned}$
+\end{solution}
+\end{sframe}
+
+\begin{sframe}
+\frametitle{定积分不等式}
+\begin{solution}[方法3]
+对左边的积分作换元$x=qu$，则有
+\begin{align*}
+   & \int_0^q f(x)\dx - q\int_0^1 f(x)\dx \\
+={}& q\int_0^1 f(qu)\du - q\int_0^1 f(u)\du \\
+={}& q\int_0^1 \big[f(qu)-f(u)\big]\du
+\end{align*}
+由函数单调递减及$q\in[0,1]$，得$f(qu)-f(u)\ge0$，从而结论成立．
+\end{solution}
+\end{sframe}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{choice}
+$\dfrac{\d}{\dx}\left(\int_a^x g(x)\,f(t)\dt\right)$等于\dotfill(\qquad)
+\begin{choiceline}
+  \item $g(x)\,f(x)$
+  \item $g'(x)\,f'(x)$
+  \item $g'(x)\,f(x)+g(x)\,f'(x)$
+  \item $g(x)\,f(x)+g'(x)\int_a^x f(t)\dt$
+\end{choiceline}
+\end{choice}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{choice}
+假设$F(x)$是连续函数$f(x)$的一个原函数，则必有\dotfill(\qquad)
+\begin{choiceline}
+  \item $F(x)$是偶函数 $\Leftrightarrow$ $f(x)$是奇函数
+  \item $F(x)$是奇函数 $\Leftrightarrow$ $f(x)$是偶函数
+  \item $F(x)$是周期函数 $\Leftrightarrow$ $f(x)$是周期函数
+  \item $F(x)$是单调函数 $\Leftrightarrow$ $f(x)$是单调函数
+\end{choiceline}
+\end{choice}
+\end{frame}
+
+\section{定积分的换元积分法}
+
+%\begin{frame}
+%\lead{第一类换元法}：设$f(x)$连续，$x=\phi(t)$有连续导数，则有
+%\[ \int_\alpha^\beta f(\phi(t))\phi'(t)\d{t}=\int_a^bf(x)\d{x} \]
+%其中，当 $t=\alpha$ 时，$x=a$；当 $t=\beta$ 时，$x=b$．
+%\pause\vfill\hrule\vfill
+%\lead{第二类换元法}：设$f(x)$连续，$x=\phi(t)$有连续导数，则有
+%\[ \int_a^bf(x)\d{x}=\int_\alpha^\beta f(\phi(t))\phi'(t)\d{t} \]
+%其中，当 $x=a$ 时，$t=\alpha$；当 $x=b$ 时，$t=\beta$．
+%\end{frame}
+%%注记：$x=\phi(t)$未必需要单调！
+\begin{frame}
+\frametitle{定积分的换元法}
+设$f(x)$连续，$x=\phi(t)$有连续导数，则有
+\[ \int_a^bf(x)\d{x}=\int_\alpha^\beta f(\phi(t))\phi'(t)\d{t} \]
+其中，当 $x=a$ 时，$t=\alpha$；当 $x=b$ 时，$t=\beta$．
+\end{frame}
+
+\begin{frame}
+\begin{example}求下列定积分．
+\begin{enumlite}
+  \item $\int_{-1}^{2}xe^{x^2}\d x$
+  \item $\Int_0^8 \dfrac{\d x}{1+\sqrt[3]x}$
+\end{enumlite}
+\end{example}
+\pause
+\begin{exercise}求下列定积分．
+\begin{enumlite}
+  \item $\Int_0^1 \dfrac{x\d x}{x^2+1}$
+  \item $\Int_0^4 \dfrac{\d x}{1+\sqrt{x}}$
+\end{enumlite}
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+求定积分$\int_0^a \sqrt{a^2-x^2}\d x$．
+\end{example}
+\pause
+\begin{exercise}
+求定积分$\int_0^{1/2} \frac{x^2}{\sqrt{1-x^2}}\d x$．
+\end{exercise}
+\end{frame}
+
+\begin{iframe}
+\frametitle{定积分的换元法}
+\begin{exercise}
+求定积分$\int_1^2 \frac{\sqrt{x^2-1}}{x}\d x$．
+\end{exercise}
+\end{iframe}
+
+\begin{frame}
+%\frametitle{奇偶性与定积分}
+\begin{theorem*}
+(1) 若$f(x)$为奇函数，则$\displaystyle\int_{-a}^a f(x)\d x=0$.\ppause
+(2) 若$f(x)$为偶函数，则$\displaystyle\int_{-a}^a f(x)\d x=2\int_0^a f(x)\d x$.
+\end{theorem*}
+\pause\dotfill
+\begin{proof}
+(1) $\int_{-a}^a f(x)\d x={\color{accent5}\int_{-a}^0 f(x)\d x}+{\color{accent4}\int_0^a f(x)\d x}$．\ppause
+而$\hspace{-1em}\begin{aligned}[t]
+\textstyle\phantom{{}={}}{\color{accent5}\int_{-a}^0 f(x)\d x}
+\onslide<4->&\textstyle=-\int_a^0 f(-t)\d t\text{（令$t=-x$）}\\
+&\onslide<5->\textstyle=-\int_0^a f(t)\d t
+\onslide<6->\textstyle=-{\color{accent4}\int_0^a f(x)\d x}
+\end{aligned}$\par
+\onslide<7->从而$\int_{-a}^a f(x)\d x=-\int_{0}^a f(x)\d x+\int_0^a f(x)\d x\onslide<8->=0.$
+\end{proof}
+\end{frame}
+
+\begin{frame}
+\frametitle{奇偶性与定积分}
+\begin{example}
+求下列定积分：
+\begin{enumlite}
+  \item $\int_{-1}^1 x^3 \d x$
+  \item $\int_{-1}^1 (x+1)^3 \d x$
+\end{enumlite}
+\end{example}
+\pause
+\begin{example}
+证明$\int_0^{2\pi} \sin^3x \d x=0$．
+\end{example}
+\end{frame}
+
+\begin{iframe}
+\frametitle{奇偶性与定积分}
+\begin{exercise}
+求下列定积分：
+\begin{enumlite}
+  \item $\int_{-1}^1 \left(x+\sqrt{1-x^2}\right)^2\d x$；
+  \item $\int_{-\pi/4}^{\pi/4}\frac{1+\sin x}{\cos^2 x}\d x$．
+\end{enumlite}
+\end{exercise}
+\end{iframe}
+
+\begin{frame}
+\frametitle{周期性与定积分}
+\begin{example}
+设$f(x)$是连续的周期函数，周期为$T$．
+\begin{enumlite}
+  \item 证明$\displaystyle\int_a^{a+T}f(x)\dx=\int_0^T f(x)\dx$
+  \item 证明$\displaystyle\int_a^{a+nT}f(x)\dx=n\int_0^T f(x)\dx$（$n\in\mathbb{N}$）
+  \item 计算$\displaystyle\int_0^{n\pi}\sqrt{1+\sin 2x}\dx$
+\end{enumlite}
+\end{example}
+\end{frame}
+
+\begin{frame}
+\frametitle{三角函数的定积分}
+\begin{example}
+设$f(x)$在$[0,1]$上连续．
+\begin{enumlite}
+  \item 证明$\displaystyle\int_0^{\frac{\pi}{2}}f(\sin x)\dx=\int_0^{\frac{\pi}{2}}f(\cos x)\dx$
+  \item 证明$\displaystyle\int_0^{\pi}x\,f(\sin x)\dx=\frac{\pi}{2}\int_0^{\pi}f(\sin x)\dx$
+  \item 计算$\displaystyle\int_0^{\pi}\frac{x\sin x}{1+\cos^2 x}\dx$
+\end{enumlite}
+\end{example}
+\end{frame}
+
+\begin{frame}
+\frametitle{分段函数的定积分}
+\begin{example}
+计算$\int_1^4 f(x-2)\dx$，其中函数
+$$f(x)=\left\{\begin{array}{rr}
+  \dfrac{1}{1+\cos x}, & -\pi<x<0;\\[1em]
+  x\e^{-x^2}, & x\ge0.
+\end{array}\right.$$
+\end{example}
+\end{frame}
+
+\mybookmark{复习与提高}
+
+\begin{frame}
+\frametitle{换元积分法}
+\begin{review}求下列定积分：
+\begin{enumlite}
+  \item $\int_0^1 x(x^2+1)^3\d x$
+  \item $\Int_0^1 \dfrac{\e^x\d x}{\e^x+1}$
+\end{enumlite}
+\end{review}
+\pause
+\begin{review}求定积分$\int_0^1 \sqrt{4-x^2}\d x$．
+\end{review}
+\end{frame}
+
+\section{定积分的分部积分法}
+
+\begin{frame}
+\frametitle{定积分的分部积分公式}
+\LARGE\noindent
+\[ \bold{\int_a^b u\d v = [uv]_a^b - \int_a^b v\d u} \]
+\end{frame}
+
+\begin{frame}
+\begin{example}求下列定积分．
+\begin{enumlite}
+  \item $\int_1^5 \ln x \dx$
+  \item $\int_0^1 x\e^x \dx$
+\end{enumlite}
+\end{example}
+\vpause
+\begin{example}
+求定积分$\int_0^4 \e^{\sqrt{x}} \dx$.
+\end{example}
+\end{frame}
+
+\begin{frame}
+\begin{exercise}求下列定积分．
+\begin{enumlite}
+  \item $\int_0^1 \arctan x \dx$
+  \item $\int_0^{\frac{\pi}2} x\sin x \dx$
+\end{enumlite}
+\end{exercise}
+\end{frame}
+
+\begin{iframe}
+\frametitle{定积分的分部积分法}
+\begin{example}
+求$I_n=\int_0^{\pi/2}\sin^{n}x\d{x}$的递归公式，并求出$I_n$．
+\end{example}
+\vpause
+\begin{example}
+设$f(x)=\int_1^{x^2}\frac{\sin t}{t}\d t$，求$\int_0^1 xf(x)\d x$．
+\end{example}
+\end{iframe}
+
+\mybookmark{复习与提高}
+
+\begin{frame}
+\begin{review}
+求下列定积分：
+\begin{enumlite}
+  \item $\int_0^1 x\e^{-x} \dx;$
+  \item $\int_1^2 x\ln x \dx.$
+\end{enumlite}
+\end{review}
+\pause
+\begin{review}
+求定积分$\int_0^{\frac{\pi}2}\e^x\sin x \dx$．
+\end{review}
+\end{frame}
+
+\begin{iframe}
+\frametitle{定积分的分部积分法}
+\begin{example}
+已知$f(x)$在$[0,1]$上有连续的二阶导数，而且$f(0)=1$，$f(2)=3$，$f'(2)=5$．
+求$\int_0^1 xf''(2x)\dx$．
+\end{example}
+\end{iframe}
+
+\section{反常积分}
+
+%\begin{frame}
+%\frametitle{反常积分}
+%反常积分有两种类型：\pause
+%\begin{enumerate}
+%  \item 无限区间上的积分\pause
+%  \item 对无界函数的积分\pause
+%\end{enumerate}
+%\end{frame}
+
+\subsection{无限区间上的积分}
+
+\begin{frame}
+\frametitle{无限区间上的积分1}
+设 $f(x)$ 的原函数为 $F(x)$．则有
+\begin{align*}
+\int_a^{+\infty}\hspace{-.5em}f(x)\d x &= \Big[F(x)\Big]^{+\infty}_a=F(+\infty)-F(a)\\
+                       &=\lim\limits_{x\to+\infty}F(x)-F(a)
+\end{align*}
+\pause\vspace{-1em}
+\begin{itemize}
+  \item 如果极限存在，则称反常积分\bold{收敛}；
+  \item 如果极限不存在，则称反常积分\bold{发散}．
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\begin{example}求反常积分
+\begin{enumlite}
+  \item $\int_0^{+\infty} xe^{-x^2}\d x$\pause
+  \item $\displaystyle\int_1^{+\infty}\frac{\d x}{x^p}$
+\end{enumlite}
+\end{example}
+\end{frame}
+
+\begin{frame}
+\begin{exercise}求反常积分
+\begin{enumlite}
+  \item $\int_0^{+\infty} \e^{-x}\d{x}$\pause
+  \item $\int_0^{+\infty} x\e^{-x}\d{x}$
+\end{enumlite}
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\frametitle{无限区间上的积分2}
+设 $f(x)$ 的原函数为 $F(x)$．则有
+\begin{align*}
+\int_{-\infty}^b \hspace{-.5em}f(x)\d x &= \Big[F(x)\Big]^b_{-\infty}=F(b)-F(-\infty)\\
+                        &= F(b)-\lim\limits_{x\to-\infty}F(x)
+\end{align*}
+\pause\vspace{-1em}
+\begin{itemize}
+  \item 如果极限存在，则称反常积分\bold{收敛}；
+  \item 如果极限不存在，则称反常积分\bold{发散}．
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{无限区间上的积分3}
+设 $f(x)$ 的原函数为 $F(x)$．则有
+\begin{align*}
+\int_{-\infty}^{+\infty}\hspace{-.5em}f(x)\d x &=\Big[F(x)\Big]^{+\infty}_{-\infty}=F(+\infty)-F(-\infty)\\
+                               &=\lim\limits_{x\to+\infty}F(x)-\lim\limits_{x\to-\infty}F(x)
+\end{align*}
+\pause\vspace{-1em}
+\begin{itemize}
+  \item 如果两个极限都存在，则称反常积分\bold{收敛}；
+  \item 如果其中一个极限不存在，则称反常积分\bold{发散}．
+\end{itemize}
+\vpause
+\begin{example}
+反常积分$\int_{-\infty}^{+\infty}x\d{x}$发散．
+\end{example}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+求反常积分$\int_{-\infty}^{+\infty}\frac{\d x}{1+x^2}$．
+\end{example}
+\end{frame}
+
+\subsection{对无界函数的积分}
+
+\begin{frame}
+\frametitle{无界函数的积分}
+设$f(x)$在$\warn{(}a,b]$上连续且有原函数$F(x)$，而在趋于点$\warn{a}$时无界．则定义
+$$\int_a^bf(x)\d{x}=\big[F(x)\big]_{a^+}^b=F(b)-F(a^+)$$
+\pause\hrule
+设$f(x)$在$[a,b\warn{)}$上连续且有原函数$F(x)$，而在趋于点$\warn{b}$时无界．则定义
+$$\int_a^bf(x)\d{x}=\big[F(x)\big]_{a}^{b^-}=F(b^-)-F(a)$$
+\pause\hrule
+\begin{remark*}
+如果上述极限不存在，则称反常积分\bold{发散}．
+\end{remark*}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+求反常积分
+\begin{enumlite}
+\item $\int_0^1 \ln x\d x$\pause
+\item $\displaystyle\int_0^1 \wfrac{\d x}{x^p}$（$p>0$）
+\end{enumlite}
+\end{example}
+\vpause
+\begin{exercise}
+求反常积分 $\displaystyle\int_0^1 \frac{\d x}{\sqrt{1-x}}$．
+\end{exercise}
+\end{frame}
+
+\begin{iframe}
+\frametitle{无界函数的积分}
+设 $f(x)$ 仅在点$c\in(a,b)$处无界．则有
+\begin{align*}
+\int_a^bf(x)\d{x}&=\int_a^c f(x)\d{x}+\int_c^b f(x)\d{x}\\
+&=\big[F(x)\big]_{a}^{c^-}+ \big[F(x)\big]_{c^+}^b\\
+&=F(c^-)-F(a) + F(b)-F(c^+)\\
+&=F(b)-F(a)+\warn{F(c^-)-F(c^+)}
+\end{align*}
+\noindent%FIXME 用 \pause 或 \onslide 会多出个空行 
+\begin{remark*}
+如果其中一个极限不存在，则称反常积分\bold{发散}．
+\end{remark*}
+\end{iframe}
+
+\begin{iframe}
+\frametitle{无界函数的积分}
+\begin{example}
+研究反常积分$\displaystyle\int_{-1}^1\wfrac{\d x}{x^3}$．
+\end{example}
+\pause
+\begin{remark*}
+虽然$[-1,1]$为对称区间，且$\frac1{x^3}$是奇函数，但由于函数在$x=0$处有瑕点，不能说积分等于$0$．
+\end{remark*}
+\end{iframe}
+
+\mybookmark{复习与提高}
+
+\begin{oframe}
+\frametitle{反常积分}
+\begin{review}
+求反常积分$\displaystyle\int_1^{+\infty} \frac{\d x}{(x+1)^2}$．
+\end{review}
+\end{oframe}
+
+\begin{iframe}
+\frametitle{反常积分}
+\begin{review}
+求下列积分
+\begin{enumlite}
+  \item $\displaystyle\int_2^{+\infty} \frac{\d x}{x(\ln x)^2}$
+  \item $\displaystyle\int_0^1 \frac{\d x}{\sqrt{1-x^2}}$
+\end{enumlite}
+\end{review}
+\end{iframe}
+
+\begin{frame}
+\frametitle{反常积分的换元法}
+\begin{example}
+求反常积分$\displaystyle\int_0^{+\infty}\!\!\frac{\dx}{\sqrt{x(x+1)^3}}$．
+\end{example}
+%\vpause
+\begin{remark*}
+这个反常积分既有无限区间又有瑕点$0$．
+\end{remark*}
+\end{frame}
+
+\begin{rframe}
+\frametitle{补充：换元积分法}
+\begin{puzzle}[习题4--4第24题]%\par
+求$\displaystyle\int\frac{\dx}{\sqrt[3]{(x+1)^2(x-1)^4}}$．
+\end{puzzle}
+\pause
+\begin{solution}
+用$x+1=\dfrac1t$换元，可以去掉$(x+1)$部分．
+\end{solution}
+\vpause
+\begin{thinking}
+对形如$\sqrt[k]{(x+a)^m(x+b)^n}$的不定积分，
+当$m$，$n$，$k$满足什么条件时，这样换元可以去掉根号？
+\end{thinking}
+\end{rframe}
+
+%\section{反常积分审敛法与\texorpdfstring{$\Gamma$}{Γ}函数}
+%
+%\begin{frame}
+%\frametitle{$\Gamma$函数}
+%\begin{definition}
+%$\Gamma(r)=\int_0^{+\infty}x^{r-1}e^{-x}\d x$ ($r>0$)为 \bold{$\Gamma$函数}．
+%\end{definition}
+%\vpause
+%\begin{property}$\Gamma$函数有如下公式
+%\begin{enumerate}
+%  \item $\Gamma(1)=1$\pause
+%  \item $\Gamma(r+1)=r\Gamma(r)\pause\rightwhitearrow\Gamma(n+1)=n!$\pause
+%  \item $\Gamma(\frac12)=\sqrt{\pi}$
+%\end{enumerate}
+%\end{property}
+%\vpause
+%\begin{definition}
+%对任何实数$x>-1$，定义其\bold{阶乘}为$$x!=\Gamma(x+1).$$
+%\end{definition}
+%\end{frame}
+%
+%\begin{frame}
+%\begin{example}
+%\begin{enumlite}
+%  \item 求$\Gamma(4)$\pause
+%  \item 求$\Gamma(\frac52)$
+%\end{enumlite}
+%\end{example}
+%\pause
+%\begin{exercise}
+%求$\frac{\Gamma(7)}{\Gamma(\frac72)}$
+%\end{exercise}
+%\end{frame}
+%
+%\begin{frame}
+%\begin{example}
+%求下列积分：
+%\begin{enumlite}
+%  \item $\int_0^{+\infty}x^3e^{-x}\d x$\pause
+%  \item $\int_0^{+\infty}x^{r-1}e^{-\lambda x}\d x$（$\lambda>0$）
+%\end{enumlite}
+%\end{example}
+%\pause
+%\begin{exercise}
+%求$\int_0^{+\infty}x^4e^{-2x^2}\d x$
+%\end{exercise}
+%\end{frame}
+%
+%\begin{frame}
+%\begin{review}
+%求$\frac{\Gamma(7)}{\Gamma(4)\Gamma(\frac32)}$．
+%\end{review}
+%\pause
+%\begin{review}
+%求$\int_0^{+\infty}x^3e^{-4x^2}\d{x}$．
+%\end{review}
+%\end{frame}
+
+\end{document}

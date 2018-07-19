@@ -1,0 +1,833 @@
+% -*- coding: utf-8 -*-
+
+% ----------------------------------------------
+% 中文显示相关代码
+% ----------------------------------------------
+
+% 以前要放在 usetheme 后面，否则报错；但是现在没问题了
+\PassOptionsToPackage{CJKnumber}{xeCJK}
+\usepackage[UTF8,noindent]{ctex}
+%\usepackage[UTF8,indent]{ctexcap}
+
+% 开明式标点：句末点号用全角，其他用半角。
+%\punctstyle{kaiming}
+
+% 在旧版本 xecjk 中用 CJKnumber 选项会自动载入 CJKnumb 包
+% 但在新版本 xecjk 中 CJKnumber 选项已经被废弃，需要在后面自行载入它
+\usepackage{CJKnumb}
+
+%\CTEXoptions[today=big] % 数字年份前会有多余空白，中文年份前是正常的
+
+\makeatletter
+\ifxetex
+  \setCJKsansfont{SimHei} % fix for ctex 2.0
+  \renewcommand\CJKfamilydefault{\CJKsfdefault}%
+\else
+  \@ifpackagelater{ctex}{2014/03/01}{}{\AtBeginDocument{\heiti}} %无效？
+\fi
+\makeatother
+
+%% 在旧版本 ctex 中，\today 命令生成的中文日期前面有多余空格
+\makeatletter
+\@ifpackagelater{ctex}{2014/03/01}{}{%
+  \renewcommand{\today}{\number\year 年 \number\month 月 \number\day 日}
+}
+\makeatother
+
+%% 在 xeCJK 中，默认将一些字符排除在 CJK 类别之外，需要时可以加入进来
+%% 可以在 “附件->系统工具->字符映射表”中查看某字体包含哪些字符
+% https://en.wikipedia.org/wiki/Number_Forms
+% Ⅰ、Ⅱ、Ⅲ、Ⅳ、Ⅴ、Ⅵ、Ⅶ、Ⅷ、Ⅸ、Ⅹ、Ⅺ、Ⅻ
+\xeCJKsetcharclass{"2150}{"218F}{1} % 斜线分数，全角罗马数字等
+% https://en.wikipedia.org/wiki/Enclosed_Alphanumerics
+\xeCJKsetcharclass{"2460}{"24FF}{1} % 带圈数字字母，括号数字字母，带点数字等
+
+\ifxetex
+% 在标点后，xeCJK 会自动添加空格，但不会去掉换行空格
+%\catcode`，=\active  \def，{\textup{,} \ignorespaces}
+%\catcode`；=\active  \def；{\textup{;} \ignorespaces}
+%\catcode`：=\active  \def：{\textup{:} \ignorespaces}
+%\catcode`。=\active  \def。{\textup{.} \ignorespaces}
+%\catcode`．=\active  \def．{\textup{.} \ignorespaces}
+\catcode`。=\active   \def。{．}
+% 在公式中使用中文逗号和分号
+%\let\douhao, \def\zhdouhao{\text{，\hskip-0.5em}}
+%\let\fenhao; \def\zhfenhao{\text{；\hskip-0.5em}}
+%\begingroup
+%\catcode`\,=\active \protected\gdef,{\text{，\hskip-0.5em}}
+%\catcode`\;=\active \protected\gdef;{\text{；\hskip-0.5em}}
+% 似乎 beamer 的 \onslide<1,3> 不受影响
+% 但是如果 tikz 图形中包含逗号，可能无法编译
+%\catcode`\,=\active
+%\protected\gdef,{\ifmmode\expandafter\zhdouhao\else\expandafter\douhao\fi}
+%\catcode`\;=\active
+%\protected\gdef;{\ifmmode\expandafter\zhfenhao\else\expandafter\fenhao\fi}
+%\endgroup
+%\AtBeginDocument{\catcode`\,=\active \catcode`\;=\active}
+% 这样写反而无效
+%\def\zhpunct{\catcode`\,=\active \catcode`\;=\active}
+%\AtBeginDocument{%
+%  \everymath\expandafter{\the\everymath\zhpunct}%
+%  \everydisplay\expandafter{\the\everydisplay\zhpunct}%
+%}
+% 改为使用 kerkis 字体的逗号
+\DeclareSymbolFont{myletters}{OML}{mak}{m}{it}
+\SetSymbolFont{myletters}{bold}{OML}{mak}{b}{it}
+\AtBeginDocument{%
+  \DeclareMathSymbol{,}{\mathpunct}{myletters}{"3B}%
+}
+\fi
+
+% 汉字下面加点表示强调
+\usepackage{CJKfntef}
+
+% ----------------------------------------------
+% 字体选用相关代码
+% ----------------------------------------------
+
+% 虽然 arevtext 字体的宽度较大，但考虑到文档的美观还是同时使用 arevtext 和 arevmath
+% 若在 ctex 包之前载入它，其设定的 arevtext 字体会在载入 ctex 时被重置为 lm 字体
+% 因此我们在 ctex 宏包之后才载入它，但此时字体编码被改为 T1，需要修正 \nobreakspace
+\usepackage{arev}
+\DeclareTextCommandDefault{\nobreakspace}{\leavevmode\nobreak\ }
+
+% 即使只需要 arevmath，也不能直接用 \usepackage{arevmath}，
+% 因为旧版本 fontspec 有问题，这样会导致它错误地修改数学字体
+
+% 旧版本的 XeTeX 无法使用 arev sans 等 T1 编码字体的单独重音字符
+% 因此我们恢复使用组合重音字符，见 t1enc.def, fntguide.pdf 和 encguide.pdf
+\ifxetex\ifdim\the\XeTeXversion\XeTeXrevision pt<0.9999pt
+  \DeclareTextAccent{\'}{T1}{1}
+\fi\fi
+% 在 T1enc.def 文件中定义了 T1 编码中的重音字符
+% 先用 \DeclareTextAccent{\'}{T1}{1} 表示在 T1 编码中 \'e 等于 \accent"01 e
+% 再用 \DeclareTextComposite{\'}{T1}{e}{233} 表示在 T1 编码中 \'e 等于 \char"E9
+
+% ----------------------------------------------
+% 版式定制相关代码
+% ----------------------------------------------
+
+\usepackage{hyperref}
+\hypersetup{
+  %pdfpagemode={FullScreen},
+  bookmarksnumbered=true,
+  unicode=true
+}
+
+%% 保证在新旧 ctex 宏包下编译得到相同的结果
+\renewcommand{\baselinestretch}{1.3} % ctex 2.4.1 开始为 1，之前为 1.3
+
+%% LaTeX 中 默认 \parskip=0pt plus 1pt，而 Beamer 中默认 \parskip=0pt
+
+%% \parskip 用 plus 1fil 没有效果，用 plus 1fill 则节标题错位
+\setlength{\parskip}{5pt plus 1pt minus 1pt}       % 段间距为 5pt + 1pt - 1pt
+%\setlength{\baselineskip}{19pt plus 1pt minus 1pt} % 行间距为 5pt + 1pt - 1pt
+\setlength{\lineskiplimit}{4pt}                    % 行间距小于 4pt 时重新设置
+\setlength{\lineskip}{4pt}                         % 行间距太小时自动改为 4pt
+
+\AtBeginDocument{
+  \setlength{\baselineskip}{19pt plus 1pt minus 1pt} % 似乎不能放在导言区中
+  \setlength{\abovedisplayskip}{4pt minus 2pt}
+  \setlength{\belowdisplayskip}{4pt minus 2pt}
+  \setlength{\abovedisplayshortskip}{2pt}
+  \setlength{\belowdisplayshortskip}{2pt}
+}
+
+% 默认是 \raggedright，改为两边对齐
+\usepackage{ragged2e}
+\justifying
+\let\oldraggedright\raggedright
+\let\raggedright\justifying
+
+% ----------------------------------------------
+% 文本环境相关代码
+% ----------------------------------------------
+
+\setlength{\fboxsep}{0.02\textwidth}\setlength{\fboxrule}{0.002\textwidth}
+
+\usepackage{adjustbox}
+\newcommand{\mylinebox}[1]{\adjustbox{width=\linewidth}{#1}}
+
+\usepackage{comment}
+\usepackage{multicol}
+
+% 带圈的数字
+%\newcommand{\digitcircled}[1]{\textcircled{\raisebox{.8pt}{\small #1}}}
+\newcommand{\digitcircled}[1]{%
+  \tikz[baseline=(char.base)]{%
+     \node[shape=circle,draw,inner sep=0.01em,line width=0.07em] (char) {\small #1};
+  }%
+}
+
+\usepackage{pifont}
+% 因为 xypic 将 \1 定义为 frm[o]{--}，这里改为在文档内部定义
+%\def\1{\ding{51}} % 勾
+%\def\0{\ding{55}} % 叉
+
+% 若在 enumerate 中使用自定义模板，则各项前的间距由第七项决定
+% 对于我们使用的 arev 数学字体来说各个数字是等宽的，所以没问题
+% 参考 https://tex.stackexchange.com/q/377959/8956
+% 以及 https://chat.stackexchange.com/transcript/message/38541073#38541073
+\newenvironment{enumskip}[1][]{%
+  \setbeamertemplate{enumerate mini template}[default]%
+  \if\relax\detokenize{#1}\relax % empty
+    \begin{enumerate}[\quad(1)]
+  \else
+    \begin{enumerate}[#1][\quad(1)]
+  \fi
+}{\end{enumerate}}
+\newenvironment{enumzero}[1][]{%
+  \setbeamertemplate{enumerate mini template}[default]%
+  \if\relax\detokenize{#1}\relax % empty
+    \begin{enumerate}[(1)\,]
+  \else
+    \begin{enumerate}[#1][(1)\,]
+  \fi
+}{\end{enumerate}}
+%
+\newenvironment{enumlite}[1][]{%
+  \setbeamertemplate{enumerate mini template}[default]%
+  \setbeamercolor{enumerate item}{fg=,bg=}%
+  \if\relax\detokenize{#1}\relax % empty
+    \begin{enumerate}[(1)\,]%
+  \else
+    \begin{enumerate}[#1][(1)\,]%
+  \fi
+}{\end{enumerate}}
+%
+\newcounter{mylistcnt}
+%
+\newenvironment{enumhalf}{%
+  \par\setcounter{mylistcnt}{0}%
+  \def\item##1~{%
+    \leavevmode\ifhmode\unskip\fi\linebreak[2]%
+    \makebox[.5002\textwidth][l]{\stepcounter{mylistcnt}(\arabic{mylistcnt}) \,##1\ignorespaces}%
+  }%
+  \ignorespaces%
+}{\par}
+%
+\newenvironment{choiceline}[1][]{%
+  \par\vskip-0.5em\relax
+  \setbeamertemplate{enumerate mini template}[default]%
+  \setbeamercolor{enumerate item}{fg=,bg=}%
+  \if\relax\detokenize{#1}\relax % empty
+    \begin{enumerate}[(A)\,]
+  \else
+    \begin{enumerate}[#1][(A)\,]
+  \fi
+}{\end{enumerate}}
+%
+\newenvironment{choicehalf}{%
+  \par\setcounter{mylistcnt}{0}%
+  \def\item##1~{%
+    \leavevmode\ifhmode\unskip\fi\linebreak[2]%
+    \makebox[.5001\textwidth][l]{\stepcounter{mylistcnt}(\Alph{mylistcnt}) \,##1\ignorespaces}%
+  }%
+  \ignorespaces%
+}{\par}
+\newenvironment{choicequar}{%
+  \par\setcounter{mylistcnt}{0}%
+  \def\item##1~{%
+    \leavevmode\ifhmode\unskip\fi\linebreak[0]%
+    \makebox[.2501\textwidth][l]{\stepcounter{mylistcnt}(\Alph{mylistcnt}) \,##1\ignorespaces}%
+  }%
+  \ignorespaces%
+}{\par}
+
+% ----------------------------------------------
+% 定理环境相关代码
+% ----------------------------------------------
+
+\makeatletter
+\patchcmd{\@thm}{ \csname}{\kern0.18em\relax\csname}{}{}
+\makeatother
+
+\newcommand{\mynewtheorem}[2]{%
+  \newtheorem{#1}{#2}[section]%
+  \expandafter\renewcommand\csname the#1\endcsname{\arabic{#1}}%
+}
+
+\mynewtheorem{theorem}{定理}
+\newtheorem*{theorem*}{定理}
+
+\mynewtheorem{algorithm}{算法}
+\newtheorem*{algorithm*}{算法}
+
+\mynewtheorem{conjecture}{猜想}
+\newtheorem*{conjecture*}{猜想}
+
+\mynewtheorem{corollary}{推论}
+\newtheorem*{corollary*}{推论}
+
+\mynewtheorem{definition}{定义}
+\newtheorem*{definition*}{定义}
+
+\mynewtheorem{example}{例}
+\newtheorem*{example*}{例子}
+
+\mynewtheorem{exercise}{练习}
+\newtheorem*{exercise*}{练习}
+
+\mynewtheorem{fact}{事实}
+\newtheorem*{fact*}{事实}
+
+\mynewtheorem{guess}{猜测}
+\newtheorem*{guess*}{猜测}
+
+\mynewtheorem{lemma}{引理}
+\newtheorem*{lemma*}{引理}
+
+\mynewtheorem{method}{解法}
+\newtheorem*{method*}{解法}
+
+\mynewtheorem{origin}{引例}
+\newtheorem*{origin*}{引例}
+
+\mynewtheorem{problem}{问题}
+\newtheorem*{problem*}{问题}
+
+\mynewtheorem{property}{性质}
+\newtheorem*{property*}{性质}
+
+\mynewtheorem{proposition}{命题}
+\newtheorem*{proposition*}{命题}
+
+\mynewtheorem{puzzle}{题}
+\newtheorem*{puzzle*}{题目}
+
+\mynewtheorem{remark}{注记}
+\newtheorem*{remark*}{注记}
+
+\mynewtheorem{review}{复习}
+\newtheorem*{review*}{复习}
+
+\mynewtheorem{result}{结论}
+\newtheorem*{result*}{结论}
+
+\newtheorem*{analysis}{分析}
+\newtheorem*{answer}{答案}
+\newtheorem*{choice}{选择}
+\newtheorem*{hint}{提示}
+\newtheorem*{solution}{解答}
+\newtheorem*{thinking}{思考}
+
+\newcommand{\mynewtheoremx}[2]{%
+  \newtheorem{#1}{#2}%
+  \expandafter\renewcommand\csname the#1\endcsname{\arabic{#1}}%
+}
+\mynewtheoremx{bonus}{选做}
+\newtheorem*{bonus*}{选做}
+
+\renewcommand{\proofname}{证明}
+\renewcommand{\qedsymbol}{}
+\renewcommand{\tablename}{表格}
+
+% ----------------------------------------------
+% 数学环境相关代码
+% ----------------------------------------------
+
+% 选学内容的角标星号
+\newcommand{\optstar}{\texorpdfstring{\kern0pt$^\ast$}{}}
+
+\usepackage{mathtools} % \mathclap 命令
+\usepackage{extarrows}
+
+% 切换 amsmath 的公式编号位置
+% 不使用 leqno 选项而在这里才修改，会导致编号与公式重叠
+% 因此在 \documentclass 里都加上了 leqno 选项
+\makeatletter
+\newcommand{\leqnomath}{\tagsleft@true}
+\newcommand{\reqnomath}{\tagsleft@false}
+\makeatother
+%\leqnomath
+
+% 定义带圈数字的 tag 格式，需要 mathtools 包
+\newtagform{circ}[\color{accent2}\digitcircled]{}{}
+\newtagform{skip}[\quad\color{accent2}\digitcircled]{}{}
+
+\newcounter{savedequation}
+
+\newenvironment{aligncirc}{%
+  \setcounter{savedequation}{\value{equation}}%
+  \setcounter{equation}{0}%
+  \usetagform{circ}%
+  \align
+}{
+  \endalign
+  \setcounter{equation}{\value{savedequation}}%
+}
+\newenvironment{alignskip}{%
+  \setcounter{savedequation}{\value{equation}}%
+  \setcounter{equation}{0}%
+  \usetagform{skip}%
+  \align
+}{
+  \endalign
+  \setcounter{equation}{\value{savedequation}}%
+}
+\newenvironment{alignlite}{%
+  \setcounter{savedequation}{\value{equation}}%
+  \setcounter{equation}{0}%
+  \align
+}{
+  \endalign
+  \setcounter{equation}{\value{savedequation}}%
+}
+
+% cases 环境开始时 \def\arraystretch{1.2}
+% 在中文文档中还有 \linespread{1.3}，这样公式的左花括号就太大了
+% 这里利用 etoolbox 包将 \linespread 临时改回 1
+\AtBeginEnvironment{cases}{\linespread{1}\selectfont}
+% 奇怪的是在最新的 miktex 中无此问题，
+% 而且即使这样修改，在新旧 miktex 中用 arev 字体时花括号大小还是有差别
+% 而用默认的 lm 字体时花括号却没有差别
+
+% 用于给带括号的方程组编号
+\usepackage{cases}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Rn}{\mathbb{R}^n}
+
+% 大型的积分号
+\usepackage{relsize}
+\newcommand{\Int}{\mathop{\mathlarger{\int}}}
+
+% \oiint 命令
+% \usepackage[integrals]{wasysym}
+
+% http://tex.stackexchange.com/q/84302
+\DeclareMathOperator{\arccot}{arccot}
+
+% https://tex.stackexchange.com/a/178948/8956
+% 保证 \d x 和 \d(2x) 和 \d^2 x 的间距都合适
+\let\oldd=\d
+\renewcommand{\d}{\mathop{}\!\mathrm{d}}
+\newcommand{\dx}{\d x}
+\newcommand{\dy}{\d y}
+\def\dz{\d z} % 不确定命令是否已经定义
+\newcommand{\du}{\d u}
+\newcommand{\dv}{\d v}
+\newcommand{\dr}{\d r}
+\newcommand{\ds}{\d s}
+\newcommand{\dt}{\d t}
+\newcommand{\dS}{\d S}
+
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\limit}{\lim\limits}
+
+% 分数线长一点的分数，\wfrac[2pt]{x}{y} 表示左右加 2pt
+% 参考 http://tex.stackexchange.com/a/21580/8956
+\DeclareRobustCommand{\wfrac}[3][2pt]{%
+  {\begingroup\hspace{#1}#2\hspace{#1}\endgroup\over\hspace{#1}#3\hspace{#1}}}
+
+% 划去部分公式
+% 横着划线，参考 http://tex.stackexchange.com/a/20613/8956
+\newcommand{\hcancel}[2][accent3]{%
+  \setbox0=\hbox{$#2$}%
+  \rlap{\raisebox{.3\ht0}{\textcolor{#1}{\rule{\wd0}{1pt}}}}#2%
+}
+% 斜着划线，参考 https://tex.stackexchange.com/a/15958
+\newcommand{\dcancel}[2][accent3]{%
+    \tikz[baseline=(tocancel.base),ultra thick]{
+        \node[inner sep=0pt,outer sep=0pt] (tocancel) {$#2$};
+        \draw[#1] (tocancel.south west) -- (tocancel.north east);
+    }%
+}%
+
+% 竖直居中的 \dotfill
+\newcommand\cdotfill{\leavevmode\xleaders\hbox to 0.5em{\hss\footnotesize$\cdot$\hss}\hfill\kern0pt\relax}
+
+% 保持居中的 \not 命令
+\usepackage{centernot}
+
+% 使用 stix font 中的 white arrows
+\ifxetex
+    \IfFileExists{STIX-Regular.otf}{%
+        \newfontfamily{\mystix}{STIX} % stix v1.1
+    }{%
+        \newfontfamily{\mystix}{STIXGeneral} % stix v1.0
+    }
+    \DeclareRobustCommand\leftwhitearrow{%
+      \mathrel{\text{\normalfont\mystix\symbol{"21E6}}}%
+    }
+    \DeclareRobustCommand\upwhitearrow{%
+      \mathrel{\text{\normalfont\mystix\symbol{"21E7}}}%
+    }
+    \DeclareRobustCommand\rightwhitearrow{%
+      \mathrel{\text{\normalfont\mystix\symbol{"21E8}}}%
+    }
+    \DeclareRobustCommand\downwhitearrow{%
+      \mathrel{\text{\normalfont\mystix\symbol{"21E9}}}%
+    }
+\else
+    \let \leftwhitearrow = \Leftarrow
+    \let \rightwhitearrow = \Rightarrow
+    \let \upwhitearrow = \Uparrow
+    \let \downwhitearrow = \Downarrow
+\fi
+
+% ----------------------------------------------
+% 绘图动画相关代码
+% ----------------------------------------------
+
+% pgf/tikz 的所有选项都称为 key，它们按照 unix 路径的方式组织，
+% 例如：/tikz/external/force remake={boolean}
+% 这些 key 可以用 \pgfkeys 定义，用 \tikzset 设置
+% \tikzset 实际上等同于 \pgfkeys{/tikz/.cd,#1}.
+% Using Graphic Options: P120 in manual 2.10 (\tikzset)
+% Key Management: P481 in manual 2.10 (\pgfkeys)
+
+\usepackage{tikz}
+\usepackage{pgfplots}
+%\usepackage{calc}
+
+% 文档标注，通常需要编译两次就可以得到正确结果
+% 但如果主题的 section page 用 tikz 绘图，将需要编译三次
+% 这是因为 tikzmark 依赖 aux 文件的 pgfid 编号
+% 第一次编译时缺少 toc 文件，将缺少若干个 tikz 图片
+% 第二次编译时图片个数正确了，但是 aux 文件的 pgfid 仍然是错误的
+% 这个问题在主题文件中已经修正了
+\newcommand\tikzmark[1]{%
+  \tikz[overlay,remember picture] \node[coordinate] (#1) {};%
+}
+
+% pgf 包含的  xxcolor 包存在问题，导致与 xeCJKfntef 包冲突
+% 见 https://github.com/CTeX-org/ctex-kit/issues/323
+% 注意此冲突在 ctex 2.9 中不存在，仅在最新的 miktex 2.9 中出现
+\makeatletter
+\g@addto@macro\XC@mcolor{\edef\current@color{\current@color}}
+\makeatother
+
+\usetikzlibrary{matrix} % 用于在 node 四周加括号
+\usetikzlibrary{decorations}
+\usetikzlibrary{decorations.markings} % 用于在箭头上作标记
+\usetikzlibrary{intersections} % 用于计算路径的交点
+\usetikzlibrary{positioning} % 可以更方便地定位
+\usetikzlibrary{shapes.geometric} % 钻石形状节点
+
+\usetikzlibrary{calc}
+\usetikzlibrary{snakes}
+
+% Externalizing Graphics: P343 and P651 in manual 2.10
+\usetikzlibrary{external}
+% 编译时需加上 --shell-escape（texlive）或 -enable-write18（miktex）选项
+%\tikzexternalize[prefix=figure/] %\tikzexternalize[shell escape=-enable-write18]
+
+% 默认 tikz 图片会用 pdflatex 编译，可以自己改为 xelatex
+%\tikzset{external/system call={%
+%  xelatex \tikzexternalcheckshellescape -halt-on-error -interaction=batchmode -jobname "\image" "\texsource"}}
+
+% 强制重新生成图片, pgf 3.0 中会自动比较文件的 md5
+%\tikzset{external/force remake} %\tikzset{external/remake next}
+
+%\tikzset{draw=black,color=black}
+%\mode<beamer>{\tikzset{every path/.style={color=white!90!black}}}
+
+\usetikzlibrary{patterns}
+
+% hack pgf prior to version 3.0 for pgf patterns in xetex
+% code taken from pgfsys-dvipdfmx.def and pgfsys-xetex.def in pgf 3.0
+\makeatletter
+\def\myhackpgf{
+  % fix typo in pgfsys-common-pdf-via-dvi.def in pgf 2.10
+  \pgfutil@insertatbegineverypage{%
+     \ifpgf@sys@pdf@any@resources%
+        \special{pdf:put @resources
+           << \ifpgf@sys@pdf@patterns@exists /Pattern @pgfpatterns \fi >>}%
+     \fi%
+  }
+  % required to give colors on pattern objects.
+  \pgfutil@addpdfresource@colorspaces{ /pgfprgb [/Pattern /DeviceRGB] }
+  % hook for xdvipdfmx
+  \def\pgfsys@dvipdfmx@patternobj##1{%
+	 \pgfutil@insertatbegincurrentpagefrombox{##1}%
+  }%
+  % dvipdfmx provides a new special `pdf:stream' for a stream object
+  \def\pgfsys@dvipdfmx@stream##1##2##3{%
+     \special{pdf:stream ##1 (##2) << ##3 >>}%
+  }%
+  % declare patterns and set patterns
+  \def\pgfsys@declarepattern##1##2##3##4##5##6##7##8##9{%
+     \pgf@xa=##2\relax \pgf@ya=##3\relax%
+     \pgf@xb=##4\relax \pgf@yb=##5\relax%
+     \pgf@xc=##6\relax \pgf@yc=##7\relax%
+     \pgf@sys@bp@correct\pgf@xa \pgf@sys@bp@correct\pgf@ya%
+     \pgf@sys@bp@correct\pgf@xb \pgf@sys@bp@correct\pgf@yb%
+     \pgf@sys@bp@correct\pgf@xc \pgf@sys@bp@correct\pgf@yc%
+     \pgfsys@dvipdfmx@patternobj{%
+        \pgfsys@dvipdfmx@stream{@pgfpatternobject##1}{##8}{%
+           /Type /Pattern
+           /PatternType 1
+           /PaintType \ifnum##9=0 2 \else 1 \fi
+           /TilingType 1
+           /BBox [\pgf@sys@tonumber\pgf@xa\space\pgf@sys@tonumber\pgf@ya\space
+                  \pgf@sys@tonumber\pgf@xb\space\pgf@sys@tonumber\pgf@yb]
+           /XStep \pgf@sys@tonumber\pgf@xc\space
+           /YStep \pgf@sys@tonumber\pgf@yc\space
+           /Resources << >> %<<
+        }%
+     }%
+     \pgfutil@addpdfresource@patterns{/pgfpat##1\space @pgfpatternobject##1}%
+  }
+  \def\pgfsys@setpatternuncolored##1##2##3##4{%
+     \pgfsysprotocol@literal{/pgfprgb cs ##2 ##3 ##4 /pgfpat##1\space scn}%
+  }
+  \def\pgfsys@setpatterncolored##1{%
+     \pgfsysprotocol@literal{/Pattern cs /pgfpat##1\space scn}%
+  }
+}
+\@ifpackagelater{pgf}{2013/12/18}{}{\ifxetex\expandafter\myhackpgf\fi}%
+\makeatother
+
+% ----------------------------------------------
+% 表格制作相关代码
+% ----------------------------------------------
+
+\newcommand{\narrowsep}[1][2pt]{\setlength{\arraycolsep}{#1}}
+\newcommand{\narrowtab}[1][3pt]{\setlength{\tabcolsep}{#1}}
+
+% diagbox 依赖 pict2e，但 miktex 中旧版本 pict2e 打包错误，使得引擎判别错误
+% 从而导致在编译时出现大量警告，以及导致底栏右下角按钮链接错位
+\ifxetex\PassOptionsToPackage{xetex}{pict2e}\fi
+\usepackage{diagbox}
+
+\usepackage{multirow} % 跨行表格
+
+\usepackage{array} % 可以用 \extrarowheight
+% 双倍宽度的横线和竖线，\arrayrulewidth 默认为 0.4pt
+\setlength{\doublerulesep}{0pt}
+\newcommand{\dhline}{\noalign{\global\arrayrulewidth0.8pt}\hline\noalign{\global\arrayrulewidth0.4pt}}
+\newcolumntype{?}{!{\vrule width 0.8pt}} % 即使 \doublerulesep 为 0pt，|| 也不能得到双倍宽度
+% 最好还是用 tabu，更简单
+
+\usepackage{tabularx}
+
+%\usepackage{arydshln} % 在分块矩阵中加虚线
+%\setlength{\dashlinedash}{2pt} % 默认4pt
+%\setlength{\dashlinegap}{2pt} % 默认4pt
+
+% tabu 与 arydshln 会冲突，可以不使用 arydshln，
+% 而用 tabu 定义虚线 \newcolumntype{:}{|[on 2pt off 2pt]}
+% 参考 http://bbs.ctex.org/forum.php?mod=viewthread&tid=63944#pid405057
+\usepackage{tabu}
+\newcolumntype{:}{|[on 2pt off 2pt]}
+\newcommand{\hdashline}{\tabucline[0.4pt on 2pt off 2pt]{-}} % 兼容 arydshln 的命令
+\setlength{\tabulinesep}{4pt} % 拉开大型公式与表格横线的距离
+
+%\usepackage{colortbl} % 否则 \taburowcolors 命令无效
+
+% ----------------------------------------------
+% 绝对定位相关代码
+% ----------------------------------------------
+
+\usepackage[absolute,overlay]{textpos}
+
+% 将整个页面分为 32 乘 24 个边长为 4mm 的小正方形
+\setlength{\TPHorizModule}{4mm}
+\setlength{\TPVertModule}{4mm}
+
+\setlength{\TPboxrulesize}{0.6pt}
+\newlength{\tpmargin}
+\setlength{\tpmargin}{2mm}
+
+\newenvironment{bblock}[1][black]{%
+  \begingroup
+  \TPshowboxestrue\TPMargin{\tpmargin}%
+  \textblockrulecolor{#1}\textblockcolour{}%
+  \begin{textblock}%
+}{%
+  \end{textblock}%
+  \endgroup
+}
+\newenvironment{cblock}[2][black]{%
+  \begingroup
+  \TPshowboxestrue\TPMargin{\tpmargin}%
+  \textblockrulecolor{#1}\textblockcolour{#2}%
+  \begin{textblock}%
+}{%
+  \end{textblock}%
+  \endgroup
+}
+\newenvironment{cblocka}{\begin{cblock}{filler1}}{\end{cblock}}
+\newenvironment{cblockb}{\begin{cblock}{filler2}}{\end{cblock}}
+\newenvironment{cblockc}{\begin{cblock}{filler3}}{\end{cblock}}
+\newenvironment{cblockd}{\begin{cblock}{filler4}}{\end{cblock}}
+\newenvironment{cblocke}{\begin{cblock}{filler5}}{\end{cblock}}
+
+% ----------------------------------------------
+% 模版定制相关代码
+% ----------------------------------------------
+
+\usepackage{bookmark}
+
+\newcommand{\mybookmark}[1]{%
+  \bookmark[page=\thepage,level=3]{#1}%
+  \changenavibox
+}
+
+%\setbeamercovered{transparent=5}
+
+\setbeamersize{text margin left=4mm,text margin right=4mm}
+\mode<beamer>{\setbeamertemplate{background}[linear]}
+\setbeamertemplate{footline}[sectioning]
+\setbeamertemplate{footline right}[normal]
+\setbeamertemplate{theorem begin}[simple]
+\setbeamertemplate{theorem end}[simple]
+\setbeamertemplate{proof begin}[simple]
+\setbeamertemplate{proof end}[simple]
+
+% 段间距在 block 中也许无效 http://tex.stackexchange.com/q/6111/8956
+%\addtobeamertemplate{block begin}{}{\setlength{\parskip}{6pt plus 2pt minus 2pt}}
+
+%\mode<beamer>{\tikzset{every path/.style={color=black}}}
+
+% 在 amsfonts.sty 中已经废弃 \bold 命令，改用 \mathbf 命令
+\def\lead#1{\textcolor{accent1}{#1}}
+\def\bold#1{\textcolor{accent2}{#1}}
+\def\warn#1{\textcolor{accent3}{#1}}
+\def\clead{\color{accent1}}
+\def\cbold{\color{accent2}}
+\def\cwarn{\color{accent3}}
+
+\mode<handout>{
+  \colorlet{filler1}{filler1!40!white}
+  \colorlet{filler2}{filler2!40!white}
+  \colorlet{filler3}{filler3!40!white}
+  \colorlet{filler4}{filler4!40!white}
+  \colorlet{filler5}{filler5!40!white}
+  \colorlet{gray1}{gray1!60!white}
+  \colorlet{gray2}{gray2!60!white}
+  \colorlet{gray3}{gray3!60!white}
+  \colorlet{gray4}{gray4!60!white}
+  \colorlet{gray5}{gray5!60!white}
+}
+
+% 兼容性命令，在 beamer 中应该避免使用它们，而改用上面几个命令
+\let\textbf=\bold \def\pmb{\usebeamercolor[fg]{local structure}}
+\let\emph=\warn   \def\bm{\usebeamercolor[fg]{alerted text}}
+
+\newcommand{\vpause}{\pause\vskip 0pt plus 0.5fill\relax}
+\newcommand{\ppause}{\par\pause}
+
+\newcommand{\mybackground}{\setbeamertemplate{background}[lattice][4mm]}
+% 几个 \varxxx 命令是 arevmath 包提供的
+% $\heartsuit\varheart\diamondsuit\vardiamond$
+% $\varspade\spadesuit\varclub\clubsuit$
+% rframe 为例题解答，sframe 为练习解答，可以选择不包含它们
+\newenvironment{rframe}{\mybackground\begin{frame}}{\end{frame}}
+\newenvironment{sframe}{%
+  \mybackground
+  \colorlet{markcolor}{accent4}%
+  \backgroundmarklefttrue\backgroundmarkrighttrue
+  \begin{frame}
+}{\end{frame}}
+\ifdefined\slide
+  \setbeamertemplate{footline}[navigation]
+  \renewenvironment{rframe}{\begin{frame}<beamer:0>}{\end{frame}}%
+  \renewenvironment{sframe}{\begin{frame}<beamer:0>}{\end{frame}}%
+\fi
+\ifdefined\print
+  \renewenvironment{sframe}{\begin{frame}<handout:0>}{\end{frame}}%
+\fi
+% 用于标示只针对内招或外招的内容：iframe 为内招，oframe 为外招
+\newenvironment{iframe}{\backgroundmarklefttrue\begin{frame}}{\end{frame}}
+\newenvironment{oframe}{\backgroundmarkrighttrue\begin{frame}}{\end{frame}}
+\newenvironment{jframe}{\mybackground\backgroundmarklefttrue\begin{frame}}{\end{frame}}
+\newenvironment{pframe}{\mybackground\backgroundmarkrighttrue\begin{frame}}{\end{frame}}
+\def\myimode{i}
+\def\myomode{o}
+\ifx\slide\myimode
+  \renewenvironment{oframe}{\begin{frame}<presentation:0>}{\end{frame}}%
+  \renewenvironment{pframe}{\begin{frame}<presentation:0>}{\end{frame}}%
+  \renewenvironment{jframe}{\begin{frame}<presentation:0>}{\end{frame}}%
+\fi
+\ifx\slide\myomode
+  \renewenvironment{iframe}{\begin{frame}<presentation:0>}{\end{frame}}%
+  \renewenvironment{jframe}{\begin{frame}<presentation:0>}{\end{frame}}%
+  \renewenvironment{pframe}{\begin{frame}<presentation:0>}{\end{frame}}%
+\fi
+\ifx\print\myimode
+  \renewenvironment{oframe}{\begin{frame}<presentation:0>}{\end{frame}}%
+  \renewenvironment{pframe}{\begin{frame}<presentation:0>}{\end{frame}}%
+\fi
+\ifx\print\myomode
+  \renewenvironment{iframe}{\begin{frame}<presentation:0>}{\end{frame}}%
+  \renewenvironment{jframe}{\begin{frame}<presentation:0>}{\end{frame}}%
+\fi
+
+% 利用 tikzmark 作边注
+\newcommand{\imark}[1][gray]{%
+  \begin{tikzpicture}[overlay,remember picture]
+    \node[coordinate] (A) {};
+    \fill[color=#1] (current page.west |- A) rectangle +(1.2mm,0.6em);
+  \end{tikzpicture}%
+}
+\newcommand{\omark}[1][gray]{%
+  \begin{tikzpicture}[overlay,remember picture]
+    \node[coordinate] (A) {};
+    \fill[color=#1] (A -| current page.east) rectangle +(-1.2mm,0.6em);
+  \end{tikzpicture}%
+}
+\newcommand{\smark}{%
+  \imark[accent4]\omark[accent4]%
+}
+\newcommand{\itext}[1]{%
+  \ifx\slide\myomode\else
+    \ifx\print\myomode\else
+      #1%
+    \fi
+  \fi
+}
+\newcommand{\otext}[1]{%
+  \ifx\slide\myimode\else
+    \ifx\print\myimode\else
+      #1%
+    \fi
+  \fi
+}
+\newcommand{\stext}[1]{%
+  \ifdefined\slide\else
+    \ifdefined\print\else
+      #1%
+    \fi
+  \fi
+}
+
+% 选择题的答案
+\newcommand{\select}[1]{\qquad\stext{\llap{\makebox[2em]{\color{accent4}#1}}}}
+
+%% 内外招同编号的定理，例子或练习等，需要将编号减一
+\newcommand{\minusone}[1]{%
+  \ifdefined\slide\else
+    \ifdefined\print\else
+      \addtocounter{#1}{-1}%
+    \fi
+  \fi
+}
+
+%\mode<beamer>{
+%\def\mytoctemplate{
+%  \setbeamerfont{section in toc}{size=\normalsize}
+%  \setbeamerfont{subsection in toc}{size=\small}
+%  \setbeamertemplate{section in toc shaded}[default][100]
+%  \setbeamertemplate{subsection in toc}[subsections numbered]
+%  \setbeamertemplate{subsection in toc shaded}[default][100]
+%  \setbeamercolor{section in toc}{fg=structure.fg}
+%  \setbeamercolor{section in toc shaded}{fg=structure.fg!50!black}
+%  \setbeamercolor{subsection in toc}{fg=structure.fg}
+%  \setbeamercolor{subsection in toc shaded}{fg=normal text.fg}
+%  \begin{multicols}{2}
+%  \tableofcontents[sectionstyle=show/shaded,subsectionstyle=show/shaded]
+%  \end{multicols}
+%}
+%\AtBeginSection[]{\begin{frame}\frametitle{目录结构}\mytoctemplate\end{frame}}
+%\AtBeginSubsection[]{\begin{frame}\frametitle{目录结构}\mytoctemplate\end{frame}}
+%}
+
+\mode<presentation>
+
+\setbeamertemplate{section and subsection}[chinese]
+\usebeamertemplate{section and subsection}
+
+\mode
+<all>

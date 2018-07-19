@@ -1,0 +1,220 @@
+% -*- coding: utf-8 -*-
+% !TEX program = xelatex
+
+\documentclass[14pt,notheorems,leqno,xcolor={rgb}]{beamer} % ignorenonframetext
+
+\input{../common/theme.sty}
+\input{../common/share.sty}
+\input{../common/local.sty}
+
+\begin{document}
+
+\setbeamerfont{title}{size=\Huge}
+
+\occasion{高等数学课程}
+\title{补充：外微分形式}
+\author{\href{https://lvjr.bitbucket.io}{吕荐瑞}}
+\institute{暨南大学数学系}
+
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+\begin{frame}
+\frametitle{主要内容：斯托克斯定理}
+\tikzset{%
+  every path/.style={line width=6pt,stealth-,accent1!50!accent3},
+  every node/.style={line width=0.6pt,color=text1,draw,rectangle,
+                     rounded corners=0.5em,inner sep=0.5em,outer sep=0.3em}
+}
+\begin{tikzpicture}[thick]
+  \node[color=accent2] at (0,0) (stokes) {$\displaystyle\int_{\partial\Omega}\omega=\int_{\Omega}\d\omega$};
+  \draw (stokes) -- (30:4.5)  node[above] {牛顿－莱布尼茨公式};
+  \draw (stokes) -- (150:4.5) node[above] {格林公式};
+  \draw (stokes) -- (210:4.5) node[below] {高斯公式};
+  \draw (stokes) -- (330:4.5) node[below] {斯托克斯公式};
+\end{tikzpicture}
+\end{frame}
+
+\section{微分形式}
+
+\begin{frame}
+\frametitle{外积运算}
+\addtolength{\jot}{-0.3em}%
+\begin{definition*}
+在微分$\dx$，$\dy$，$\dz$之间引入\bold{外积}运算，用符号$\wedge$表示，运算规则是
+\begin{align*}
+  \dx\wedge\dx&=0, & \dx\wedge\dy&=-\dy\wedge\dx, \\
+  \dy\wedge\dy&=0, & \dy\wedge\dz&=-\dz\wedge\dy, \\
+  \dz\wedge\dz&=0, & \dz\wedge\dx&=-\dx\wedge\dy. 
+\end{align*}
+\end{definition*}
+\vpause
+\begin{remark*}
+对于三个微分作外积，规定可用结合律．比如
+\begin{align*}
+  &\phantom{={}}\dx\wedge\dy\wedge\dx = \dx\wedge(\dy\wedge\dx) \\
+  &= -\dx\wedge(\dx\wedge\dy) =-(\dx\wedge\dx)\wedge\dy = 0
+\end{align*}
+\end{remark*}
+\end{frame}
+
+\begin{frame}
+\frametitle{微分形式}
+%\addtolength{\jot}{-0.3em}%
+\begin{definition*}
+设$P$、$Q$、$R$是三元函数，定义\bold{微分形式}如下\par
+\centerline{\begin{tabular}{|l|l|}
+  \hline
+  次数 & 微分形式 \\
+  \hline
+  $0$次 &  $P$ \\
+  $1$次 & $P\dx + Q\dy + R\dz$ \\
+  $2$次 &  $P\dy\wedge\dz + Q\dz\wedge\dx + R\dx\wedge\dy$ \\
+  $3$次 &  $P\dx\wedge\dy\wedge\dz$ \\
+  \hline
+\end{tabular}}\par 
+微分形式可分别简称为$0$次、$1$次、$2$次、$3$次\bold{形式}．
+\end{definition*}
+\vpause
+\begin{remark*}
+微分形式作外积运算时，规定可用分配律．
+\end{remark*}
+\end{frame}
+
+\begin{frame}
+\frametitle{微分形式}
+%\addtolength{\jot}{-0.6em}%
+\begin{example}
+计算微分形式的外积$\omega\wedge\theta$，其中
+\begin{align*}
+  \omega &= f\dx + g\dy + h\dz \\
+  \theta &= P\dx + Q\dy + R\dz
+\end{align*}
+\end{example}
+\vpause
+\begin{solution}
+展开$\omega\wedge\theta$后共有$9$项，其中$3$项为零，故有
+\[\omega\wedge\theta = \!\!\!\!\begin{aligned}[t]
+   &\phantom{+{}}(gR-hQ)\dy\wedge\dz \\ &+ (hP-fR)\dz\wedge\dx  \\ &+ (fQ-gP)\dx\wedge\dy
+\end{aligned}\]
+\end{solution}
+\end{frame}
+
+\begin{frame}
+\frametitle{微分形式}
+%\addtolength{\jot}{-0.6em}%
+\begin{example}
+计算微分形式的外积$\omega\wedge\theta$，其中
+\begin{align*}
+  \omega &= f\dx + g\dy + h\dz \\
+  \theta &= P\dy\wedge\dz + Q\dz\wedge\dx + R\dx\wedge\dy
+\end{align*}
+\end{example}
+\vpause
+\begin{solution}
+展开$\omega\wedge\theta$后共有$9$项，其中$6$项为零，故有
+\[ \omega\wedge\theta = (fP+gQ+hR)\dx\wedge\dy\wedge\dz. \]
+\end{solution}
+\end{frame}
+
+\section{外微分运算}
+
+\begin{frame}
+\frametitle{外微分运算}
+\begin{definition*}
+$0$次形式$f$的\bold{外微分}为$1$次形式（即\bold{全微分}）
+\[ \d f=\frac{\partial f}{\partial x}\dx+\frac{\partial f}{\partial y}\dy+\frac{\partial f}{\partial z}\dz \]
+$1$次形式$\omega=P\dx$的\bold{外微分}为$2$次形式
+\[ \d\omega = \d P\wedge\dx \]
+$2$次形式$\omega=P\dy\wedge\dz$的\bold{外微分}为$3$次形式
+\[ \d\omega = \d P\wedge\dy\wedge\dz \]
+\end{definition*}
+\vpause
+\begin{remark*}
+外微分运算规定$\d(\omega_1+\omega_2)=\d\omega_1+\d\omega_2$．
+\end{remark*}
+\end{frame}
+
+\def\totaldiff#1{%
+  \frac{\partial #1}{\partial x}\dx
+ +\frac{\partial #1}{\partial y}\dy
+ +\frac{\partial #1}{\partial z}\dz
+}%
+\begin{frame}
+%\frametitle{微分形式}
+%\addtolength{\jot}{-0.6em}%
+\begin{example}
+计算$1$次微分形式的外微分$\d\omega$，其中
+\[ \omega = P\dx + Q\dy + R\dz. \]
+\end{example}
+\vpause\let\displaystyle=\textstyle
+\begin{solution}
+$\!\!\!\begin{aligned}[t]
+\d\omega&=\d P\wedge\dx + \d Q\wedge\dy + \d R\wedge\dz \\
+&=\left(\totaldiff{P}\right)\wedge\dx \\
+&\qquad+\left(\totaldiff{Q}\right)\wedge\dy \\
+&\qquad+\left(\totaldiff{R}\right)\wedge\dz \\
+&=\left(\frac{\partial R}{\partial y}-\frac{\partial Q}{\partial z}\right)\dy\wedge\dz
+ +\left(\frac{\partial P}{\partial z}-\frac{\partial R}{\partial x}\right)\dz\wedge\dx \\
+&\qquad\qquad\qquad+\left(\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\right)\dx\wedge\dy
+\end{aligned}$
+\end{solution}
+\end{frame}
+
+\def\totaldiff#1{%
+  \frac{\partial #1}{\partial x}\dx
+ +\frac{\partial #1}{\partial y}\dy
+ +\frac{\partial #1}{\partial z}\dz
+}%
+\begin{frame}
+%\frametitle{微分形式}
+%\addtolength{\jot}{-0.6em}%
+\begin{example}
+计算$2$次微分形式的外微分$\d\omega$，其中
+\[ \omega = P\dy\wedge\dz + Q\dz\wedge\dx + R\dx\wedge\dy \]
+\end{example}
+\vpause\let\displaystyle=\textstyle
+\begin{solution}\newline
+\adjustbox{width=\textwidth}{$\begin{aligned}
+\d\omega&=\d P\wedge\dy\wedge\dz + \d Q\wedge\dz\wedge\dx + \d R\wedge\dx\wedge\dy \\
+&=\left(\totaldiff{P}\right)\wedge\dy\wedge\dz \\
+&\qquad+\left(\totaldiff{Q}\right)\wedge\dz\wedge\dx \\
+&\qquad+\left(\totaldiff{R}\right)\wedge\dx\wedge\dy \\
+&=\left(\frac{\partial P}{\partial x}+\frac{\partial Q}{\partial y}
+ +\frac{\partial R}{\partial z}\right)\dx\wedge\dy\wedge\dz
+\end{aligned}$}
+\end{solution}
+\end{frame}
+
+\section{斯托克斯定理}
+
+\begin{frame}
+\frametitle{斯托克斯定理}
+\begin{theorem*}[斯托克斯定理]
+利用第二节两个例子，可以将斯托克斯公式和高斯公式统一表示（$\partial\Omega$是$\Omega$的边界）
+$$\bold{\int_{\partial\Omega}\omega=\int_{\Omega}\d\omega}$$
+类似地，直线上的牛顿－莱布尼茨公式以及平面上的格林公式中也可以统一到上式．
+\end{theorem*}
+\vpause
+\begin{remark*}
+边界和外微分有性质$\partial(\partial\Omega)=\emptyset$，$\d(\d\omega)=0$．
+\end{remark*}
+\end{frame}
+
+\begin{frame}
+\frametitle{微分形式换元}
+在外微分形式中，积分换元运算变得非常自然．比如计算直角坐标到极坐标的换元：因为
+$x=\rho\cos\theta$，$y=\rho\sin\theta$，所以
+\begin{align*}
+&\bold{\dx\wedge\dy}
+= \left(\frac{\partial x}{\partial\rho}\d\rho+\frac{\partial x}{\partial\theta}\d\theta\right)
+          \wedge\left(\frac{\partial y}{\partial\rho}\d\rho+\frac{\partial y}{\partial\theta}\d\theta\right) \\
+&=\left(\frac{\partial x}{\partial\rho}\cdot\frac{\partial y}{\partial\theta}
+       -\frac{\partial x}{\partial\theta}\cdot\frac{\partial y}{\partial\rho}\right)\d\rho\wedge\d\theta \\
+&=\left[\cos\theta\cdot(\rho\cos\theta)-(-\rho\sin\theta)\cdot\sin\theta\right]\d\rho\wedge\d\theta \\
+&\bold{=\rho\d\rho\wedge\d\theta}.
+\end{align*}
+\end{frame}
+
+\end{document}

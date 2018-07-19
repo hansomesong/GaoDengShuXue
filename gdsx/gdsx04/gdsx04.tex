@@ -1,0 +1,1050 @@
+% -*- coding: utf-8 -*-
+% !TEX program = xelatex
+
+\documentclass[14pt,notheorems,leqno,xcolor={rgb}]{beamer} % ignorenonframetext
+
+\input{../common/theme.sty}
+\input{../common/share.sty}
+\input{../common/local.sty}
+
+\begin{document}
+
+\occasion{高等数学课程}
+\title{第四章·不定积分}
+\author{\href{https://lvjr.bitbucket.io}{吕荐瑞}}
+\institute{暨南大学数学系}
+
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+\section{不定积分的概念}
+
+\subsection{原函数与不定积分}
+
+\begin{frame}
+一般地，已知函数$y=f(x)$, 容易求出$y'=f'(x)$。\ppause
+反过来，如果已知 $y'=f'(x)$, 如何找出 $y=f(x)$？
+\pause
+%\begin{example}
+\begin{multicols}{2}
+\begin{itemize}[<+->]
+  \item $(?)'=2x$
+  \item $(?)'=\sin x$
+  \item $(?)'=\e^x$
+  \item $(?)'=\ln x$
+\end{itemize}
+\end{multicols}
+%\end{example}
+\end{frame}
+
+\begin{frame}
+\begin{definition*}
+设$f(x)$是定义在区间$I$上的函数, 如果存在函数$F(x)$, 使得对于$I$中每一点$x$都满足$F'(x)=f(x)$, 
+则称函数 $F(x)$ 是 $f(x)$ 在$I$上的一个\bold{原函数}.
+\end{definition*}
+\vpause
+\begin{remark*}
+函数的原函数不止一个. 例如，$(x^2)'=2x$, 而且 $(x^2+2)'=2x$, 因此 $x^2$ 和 $x^2+2$ 都是 $2x$ 的原函数.
+\end{remark*}
+\vpause
+\begin{property*}
+$f(x)$ 的任何两个原函数一定只差一个常数$C$.
+\end{property*}
+\vpause
+\begin{fact*}
+连续函数$f(x)$的原函数一定存在（见下一章）。
+\end{fact*}
+\end{frame}
+
+\begin{frame}
+\begin{definition*}
+函数$f(x)$的带有任意常数项的原函数,称为 $f(x)$ 的\bold{不定积分}, 记为
+\[ \cbold \int f(x)\d x = F(x)+C\]
+\end{definition*}\pause
+在上面定义中, 我们称 $\int$ 为积分号, $f(x)$ 为被积函数, $f(x)\d{x}$ 为被积表达式, $x$ 为积分变量.
+\ppause%\pause\vfill\dotfill\vfill
+\[ \boxed{\cbold\quad F'(x)=f(x) \quad\Longleftrightarrow\quad \int f(x)\d x = F(x) + C\quad} \]
+\end{frame}
+
+\begin{frame}
+\begin{example}
+求函数 $f(x)=3x^2$ 的不定积分.
+\end{example}
+\vpause
+\begin{example}
+求函数 $f(x)=\sin x$ 的不定积分.
+\end{example}
+\vpause
+\begin{exercise}
+求不定积分.
+\begin{enumlite}
+  \item $\int x \d{x}$
+  \item $\int x^2 \d{x}$
+  \item $\int \sqrt x \d{x}$
+\end{enumlite}
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+求函数$f(x)=\dfrac{1}{x}$的不定积分.
+\end{example}
+\vpause
+\begin{example}
+求过点$(1,3)$, 且其切线斜率为 $2x$ 的曲线方程.
+\end{example}
+\end{frame}
+
+\subsection{不定积分的性质}
+
+\begin{frame}
+\begin{property}
+导数运算与不定积分运算互为逆运算： %即有
+\begin{enumerate}
+  \item $\left(\int f(x)\d x\right)'=f(x)$\pause
+  \item $\int F'(x)\d x = F(x)+C$
+\end{enumerate}
+\pause 类似地，微分运算与不定积分运算互为逆运算：
+\begin{enumerate}
+  \item $\d\left(\int f(x)\d x\right)=f(x)\d{x}$
+  \item $\int \d{\big(F(x)\big)} = F(x)+C$
+\end{enumerate}
+\end{property}
+\end{frame}
+
+\begin{frame}
+\begin{property}
+非零的常数因子,可以移到积分号前面.即有
+\[\int af(x)\d{x}= a\int f(x)\d{x}\]
+\end{property}
+\vpause
+\begin{property}
+两个函数的和/差的积分, 等于函数积分的和/差. 即有
+\[\int (f(x)\pm g(x)) \d{x} = \int f(x) \d{x} \pm \int g(x)\d{x} \]
+\end{property}
+\end{frame}
+
+
+\subsection{基本积分公式}
+
+% http://tex.stackexchange.com/q/55000
+\newcounter{saveenumi}
+\newcommand{\seti}{\setcounter{saveenumi}{\value{enumi}}}
+\newcommand{\conti}{\setcounter{enumi}{\value{saveenumi}}}
+\resetcounteronoverlays{saveenumi}
+
+\begin{frame}[label=intformula1]
+\frametitle{基本积分公式I}
+\begin{enumerate}[<+->]
+  \item $\displaystyle\int 1\d{x} = x+C$
+  \item $\displaystyle\int x^a \d{x} = \frac{1}{a+1}x^{a+1}+C$
+  \item $\displaystyle\int \frac1x \d{x} = \ln|x|+C$
+  \seti
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+求不定积分
+\begin{enumlite}
+\item $\int (2x+5x^2+7x^3) \d{x}$
+\item $\int (2-\sqrt{x}) \d{x}$
+\item $\int (2x+1)^2 \d{x}$
+\end{enumlite}
+\end{example}
+\end{frame}
+
+\begin{frame}
+\begin{exercise}
+求不定积分
+\begin{enumlite}
+  \item $\int (1-2x^2) \d{x}$
+  \item $\int (\frac{x}2+\frac2{x}+\frac3{x^2})\d{x}$
+  \pause
+  \item $\int (\sqrt[3]{x}-\frac1{\sqrt{x}})\d{x}$
+\end{enumlite}
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\begin{exercise}
+求不定积分
+\begin{enumlite}
+  \item $\int \sqrt{x}(x-3) \d{x}$
+  \item $\int \frac{(x+1)^2}{x}\d{x}$
+  %\item $\int \frac{x^2+\sqrt{x^3}+3}{\sqrt{x}}\d{x}$
+\end{enumlite}
+\end{exercise}
+\end{frame}
+
+\begin{frame}[label=intformula2]
+\frametitle{基本积分公式II}
+\begin{enumerate}[<+->]
+  \conti
+  \item $\displaystyle\int e^x \d{x} = e^x + C$
+  \item $\displaystyle\int a^x \d{x} = \frac{a^x}{\ln a} + C$
+  \seti
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+求不定积分：
+\begin{enumlite}
+  \item $\int (4\e^x-x^\e)\dx$
+  \item $\Int \dfrac{\e^{2x}-1}{\e^x-1}\dx$
+  \itext{\item \imark$\int 2^x\,\e^x\dx$}
+\end{enumlite}
+\end{example}
+\vpause
+\begin{exercise}
+求不定积分：
+\begin{enumlite}
+  \item $\int (x^2+2^x) \d{x}$
+\end{enumlite}
+\end{exercise}
+\end{frame}
+
+\begin{frame}[label=intformula3]
+\frametitle{基本积分公式III}
+\begin{enumerate}[<+->]
+  \conti
+  \item $\displaystyle\int \sin x \d{x}= - \cos x + C$
+  \item $\displaystyle\int \cos x \d{x}= \sin x + C$
+  \item $\displaystyle\int \sec^2 x \d{x}= \tan x + C$
+  \item $\displaystyle\int \csc^2 x \d{x}= -\cot x + C$
+  \seti
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+求不定积分
+\begin{enumlite}
+  \item $\int (\sin x + 2\cos x) \d{x}$
+  %\item $\int \cos^2\frac{x}2 \d{x}$
+  \item $\int \tan^2x \d{x}$
+\end{enumlite}
+\end{example}
+\vpause
+\begin{exercise}
+求不定积分
+\begin{enumlite}
+  %\item $\int \sin^2\frac{x}2 \d{x}$
+  \item $\int \cot^2 x \d{x}$
+  \item $\int \frac{\cos 2x}{\cos x + \sin x} \d{x}$
+\end{enumlite}
+\end{exercise}
+\end{frame}
+
+\begin{frame}[label=intformula4]
+\frametitle{基本积分公式IV}
+\begin{enumerate}[<+->]
+  \conti
+  \item $\displaystyle\int \frac{\d{x}}{\sqrt{1-x^2}} = \arcsin x + C$
+  \item $\displaystyle\int \frac{\d{x}}{1+x^2} = \arctan x + C$
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+求不定积分：
+\begin{enumlite}
+  \item $\int \frac{x^4}{x^2+1} \d{x}$
+  \item $\int \frac{1}{x^2(x^2+1)} \d{x}$
+\end{enumlite}
+\end{example}
+\vpause
+\begin{exercise}
+求不定积分：
+\begin{enumlite}
+  \item $\int \frac{x^2}{1+x^2}\d{x}$
+\end{enumlite}
+\end{exercise}
+\end{frame}
+
+%\againframe{intformula1}
+%\againframe{intformula2}
+%\againframe{intformula3}
+%\againframe{intformula4}
+
+\begin{frame}
+\begin{example}求不定积分 $\int f(x)\d{x}$, 其中
+\[ f(x)=\left\{
+\begin{aligned}
+&2x+1, & x<0 \\
+&\e^x, & x\geq 0
+\end{aligned}\right.\]
+\end{example}
+\end{frame}
+
+\begin{frame}
+\begin{exercise}求不定积分 $\int f(x)\d{x}$, 其中
+\[ f(x)=\left\{
+\begin{aligned}
+&x^2+1, & x<1 \\
+&2x, & x\geq 1
+\end{aligned}\right.\]
+\end{exercise}
+\end{frame}
+
+\mybookmark{复习与提高}
+
+\begin{frame}
+\begin{review}
+求不定积分
+\begin{enumlite}
+  \item $\int(\sin x - 2 e^x)\d{x}$
+  \item $\int\frac{(2x+3)^2}{x}\d{x}$
+  \pause
+  \item $\int\frac{x^2-1}{x^2+1}\d{x}$
+\end{enumlite}
+\end{review}
+\end{frame}
+
+\begin{frame}
+\begin{review}求不定积分 $\int f(x)\d{x}$, 其中
+\[ f(x)=
+\begin{cases}
+x+1,  & x<1; \\
+2x^2, & x\geq1.
+\end{cases} \]
+\end{review}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{choice}
+在下列等式中，正确的结果是\dotfill(\qquad)
+\begin{choiceline}
+  \item $\int f'(x)\dx=f(x)$
+  \item $\int \d f(x)=f(x)$
+  \item $\frac{\d}{\dx}\big(\int f(x)\dx\big)=f(x)$
+  \item $\d\big(\int f(x)\dx\big)=f(x)$
+\end{choiceline}
+\end{choice}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{choice}
+设$f'(\ln x)=1+x$，则$f(x)$等于\dotfill(\qquad)
+\begin{choicehalf}
+  \item $x+\e^x+C$ ~
+  \item $\e^x+\frac12x^2+C$ ~
+  \item $\ln x+\frac12(\ln x)^2+C$ ~
+  \item $\e^x+\frac12\e^{2x}+C$ ~
+\end{choicehalf}
+\end{choice}
+\end{frame}
+
+\section{换元积分法}
+
+\subsection{第一类换元法}
+
+\begin{frame}
+\frametitle{第一类换元法引例}
+\begin{example}
+求不定积分$\int(2x+1)^{10}\dx$。
+\end{example}
+\end{frame}
+
+\begin{frame}
+\frametitle{第一类换元法}
+\large\cbold\noindent
+\begin{align*}
+\int f(\phi(x))\phi'(x)\d{x} &= \int f(\phi(x))\d{(\phi(x))} \\
+                          &= \left[\int f(u)\d{u}\right]_{u=\phi(x)}
+\end{align*}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+求不定积分
+\begin{enumlite}
+  \item $\int \frac{\d{x}}{2x+1}$
+  %\item $\int (x+3)^{10}\d{x}$
+  \item $\int \sin(3x+4)\d{x}$
+\end{enumlite}
+\end{example}
+\end{frame}
+
+\begin{frame}
+\begin{exercise}
+求不定积分
+\begin{enumlite}
+  \item $\int \frac{\d{x}}{(4x+5)^2}$
+  \item $\int \mathrm{e}^{-3x+2}\d{x}$
+  \pause
+  \item $\int \sqrt{3x-1}\d{x}$
+\end{enumlite}
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\frametitle{最常用的积分换元}
+一般地，如果 $\int f(x)\mathrm{d}x = F(x)+C$，则有 \pause
+$$\int f(ax+b)\d x = \wfrac1a \; F(ax+b)+C.$$
+\pause 这个公式利用换元 $u=ax+b$ 可以得到。
+\end{frame}
+
+\begin{frame}
+\begin{example}
+求不定积分
+\begin{enumlite}
+  \item $\int x \e^{x^2}\d x$
+  \item $\int \frac{\e^{1/x}}{x^2}\d x$
+  \pause
+  \item $\int x\sqrt{x^2-3}\d x$
+\end{enumlite}
+\end{example}
+\end{frame}
+
+\begin{frame}
+\begin{exercise}
+求不定积分
+\begin{enumlite}
+  %\item $\int xe^{3x^2} \d{x}$
+  \item $\int x^2(x^3+1)^9\d{x}$
+  \item $\int \frac{x}{x^2+3}\d{x}$
+\end{enumlite}
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+求不定积分（其中$a>0$）：
+\begin{enumlite}
+  \item $\displaystyle\int \dfrac{\d{x}}{a^2+x^2}$
+  \item $\displaystyle\int \dfrac{\d{x}}{a^2-x^2}$
+\end{enumlite}
+\end{example}
+\pause
+\begin{exercise}
+求不定积分：
+\begin{enumlite}
+  \item $\displaystyle\int \dfrac{\d{x}}{\sqrt{a^2-x^2}}$（$a>0$）.
+  \pause
+  \item $\displaystyle\int \dfrac{\d{x}}{(x+1)(x-2)}$.
+\end{enumlite}
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+求不定积分
+\begin{enumlite}
+  \item $\int \sin^2x\cos x \d{x}$
+  \item $\int \sin^3 x \d{x}$
+\end{enumlite}
+\end{example}
+\vpause
+\begin{exercise}
+求不定积分
+\begin{enumlite}
+  \item $\int \cos^6x \sin x \d{x}$
+  \item $\int \cos^5x \d{x}$
+\end{enumlite}
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+求不定积分 $\int \sin^2x \d{x}$。
+\end{example}
+\vpause
+\begin{exercise}
+求不定积分 $\int \cos^2 2x \d{x}$。
+\end{exercise}
+\end{frame}
+
+\begin{iframe}
+\frametitle{换元积分法}
+\begin{example}
+求不定积分
+\begin{enumlite}
+\item $\int \sec^4x\tan^2 x \d{x}$
+\item $\int \sec^3x\tan^3 x \d{x}$
+\end{enumlite}
+\end{example}
+\vpause
+\begin{exercise}
+求不定积分
+\begin{enumlite}
+\item $\int \sec^5x \tan^5 x \d{x}$
+\item $\int \sec^6x \tan^6 x \d{x}$
+\end{enumlite}
+\end{exercise}
+\end{iframe}
+
+\begin{frame}
+\begin{example}
+求不定积分
+\begin{enumlite}
+\item $\int \tan x \d{x}$
+\item $\int \csc x \d{x}$
+\end{enumlite}
+\end{example}
+\vpause
+\begin{exercise}
+求不定积分
+\begin{enumlite}
+\item $\int \cot x \d{x}$
+\item $\int \sec x \d{x}$
+\end{enumlite}
+\end{exercise}
+\end{frame}
+
+\subsection{第二类换元法}
+
+\begin{frame}
+\frametitle{第二类换元法}
+若$x=\phi(t)$是单调、可导的函数，而且$\phi'(t)\neq0$，则有\cbold\large
+\begin{align*}
+\int f(x)\d x &= \int f(\phi(t))\d{}(\phi(t)) \\
+                          &= \left[\int f(\phi(t))\phi'(t)\d t\right]_{t=\phi^{-1}(x)}
+\end{align*}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+求不定积分
+\begin{enumlite}
+  \item $\Int\dfrac{x}{\sqrt{x-3}}\d x$
+  \item $\Int\dfrac{\d x}{\sqrt{x}+\sqrt[3]{x^2}}$
+\end{enumlite}
+\end{example}
+\vpause
+\begin{exercise}
+求不定积分
+\begin{enumlite}
+  \item $\Int\dfrac{1}{1+\sqrt{x}}\d x$\pause
+  \item $\Int\dfrac{\d x}{\sqrt{x}+\sqrt[3]{x}}$
+\end{enumlite}
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\frametitle{换元积分法}
+\begin{example}
+求不定积分$\Int\dfrac1x\sqrt{\dfrac{1+x}{x}}\dx$．
+\end{example}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+求不定积分$\Int \dfrac{1}{\e^x+1}\d x$。
+\end{example}
+\vpause
+\begin{exercise}
+求不定积分$\Int\dfrac{1}{\e^x+\e^{-x}}\d x$。
+\end{exercise}
+\end{frame}
+
+\begin{iframe}
+\frametitle{第二类换元法}
+\begin{example}
+求不定积分$\Int \dfrac{1}{\sqrt{1+\e^x}}\d x$。
+\end{example}
+\vpause
+\begin{exercise}
+求不定积分$\int \sqrt{1+\e^x}\d x$。
+\end{exercise}
+\end{iframe}
+
+\begin{frame}
+\begin{example}
+求不定积分$\int \sqrt{a^2-x^2}\d x$，其中$a>0$.
+\end{example}
+\vpause
+\begin{exercise}
+求不定积分$\Int\dfrac{\d x}{\sqrt{(1-x^2)^3}}$.
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+求不定积分
+\begin{enumlite}
+  \item $\Int\dfrac{\d x}{\sqrt{x^2+a^2}}$
+  \item $\Int\dfrac{\d x}{\sqrt{x^2-a^2}}$
+\end{enumlite}
+\end{example}
+\pause
+\begin{exercise}
+求不定积分$\Int\dfrac{\d x}{x^2\sqrt{x^2-1}}$
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\frametitle{三角函数换元总结}
+\begin{enumerate}[<+->]
+  \item $\displaystyle\int f(x,\sqrt{a^2-x^2})\d x$，\\\hfill
+        令$x=a\sin t$，$t\in[-\frac{\pi}2,\frac{\pi}2]$
+  \item $\displaystyle\int f(x,\sqrt{x^2+a^2})\d x$，\\\hfill
+        令$x=a\tan t$，$t\in(-\frac{\pi}2,\frac{\pi}2)$
+  \item $\displaystyle\int f(x,\sqrt{x^2-a^2})\d x$，\\\hfill
+        令$x=a\sec t$，$t\in[0,\frac{\pi}2)\cup (\frac{\pi}2,\pi]$
+\end{enumerate}
+\end{frame}
+
+\begin{iframe}
+\frametitle{用万能公式换元}
+\begin{example}
+求不定积分$\Int\dfrac{1+\sin x}{\sin x(1+\cos x)} \d x$。
+\end{example}
+\pause
+\begin{solution}
+令$u=\tan\frac{x}2$，则$\sin x=\frac{2u}{1+u^2}$，$\cos x=\frac{1-u^2}{1+u^2}$。
+\end{solution}
+\end{iframe}
+
+\begin{frame}[shrink=4]
+\frametitle{积分公式大全}
+\noindent
+\begin{align}
+\int 1\d{x} &= x+C \\
+\int x^a \d{x} &= \frac{1}{a+1}x^{a+1}+C\\
+\int \frac1x \d{x} &= \ln|x|+C \\
+\int a^x \d{x} &= \frac{a^x}{\ln a} + C \\
+\int e^x \d{x} &= e^x + C
+\end{align}
+\end{frame}
+
+\begin{frame}
+\frametitle{积分公式大全}
+\noindent
+\begin{align}
+\int \sin x \d{x} &= - \cos x + C \\
+\int \cos x \d{x} &= \sin x + C \\
+\int \tan x \d{x} &= -\ln|\cos x| + C \\
+\int \cot x \d{x} &= \ln|\sin x| + C
+\end{align}
+\end{frame}
+
+\begin{frame}
+\frametitle{积分公式大全}
+\noindent
+\begin{align}
+\int \sec x \d{x} &= \ln|\sec x + \tan x| + C \\
+\int \csc x \d{x} &= \ln|\csc x - \cot x| + C \\
+\int \sec^2 x \d{x} &= \tan x + C \\
+\int \csc^2 x \d{x} &= -\cot x + C
+\end{align}
+\end{frame}
+
+\begin{frame}
+\frametitle{积分公式大全}
+\noindent
+\begin{align}
+ \int \frac{\d{x}}{a^2+x^2} &= \dfrac1a\arctan \dfrac{x}a + C \\
+ \int \frac{\d{x}}{a^2-x^2} &= \dfrac1{2a}\ln \left|\dfrac{a+x}{a-x}\right| + C\\
+ \int \frac{\d{x}}{\sqrt{a^2-x^2}} &= \arcsin \dfrac{x}a + C \\
+ \int \frac{\d{x}}{\sqrt{x^2 \pm a^2}} &= \ln|x+\sqrt{x^2 \pm a^2}| + C
+\end{align}
+\end{frame}
+
+\mybookmark{复习与提高}
+
+\begin{frame}
+\begin{review}
+求不定积分：
+\begin{enumlite}
+  \item $\int (2x+5)^9 \dx$
+  \item $\Int\dfrac{1}{(3x+4)^3}\dx$\pause
+  \item $\int \cos{(5x+3)}\dx$
+\end{enumlite}
+\end{review}
+\end{frame}
+
+\begin{frame}
+\begin{review}
+求不定积分：
+\begin{enumlite}
+  \item $\int (x+1)e^{x^2+2x} \d x$
+  \item $\Int\dfrac{x}{x^2+1}\d x$\pause
+  \item $\Int\dfrac{\sin(\ln x)}{x}\d x$
+\end{enumlite}
+\end{review}
+\end{frame}
+
+\begin{frame}
+\begin{review}
+求不定积分：
+\begin{enumlite}
+  \item $\int \sin^2(x+1) \d{x}$
+  \item $\int \sin^2x\cos^3 x \d{x}$
+  %\item $\int \sin^5x\cos^2 x \d{x}$
+\end{enumlite}
+\end{review}
+\end{frame}
+
+\begin{iframe}
+\frametitle{换元积分法}
+\begin{review}
+求不定积分：
+\begin{enumlite}
+\item $\int \sec^4x \tan^4 x \d{x}$
+\item $\int \sec^3x \tan^3 x \d{x}$
+\end{enumlite}
+\end{review}
+\end{iframe}
+
+\begin{frame}
+\begin{review}
+求不定积分：
+\begin{enumlite}
+\item $\Int\dfrac{1}{1-\sqrt{x}} \d x$\pause
+\item $\Int\dfrac{\d x}{\sqrt{x}-\sqrt[3]{x}}$
+\end{enumlite}
+\end{review}
+\end{frame}
+
+\begin{frame}
+\begin{review}
+求不定积分：
+\begin{enumlite}
+\otext{\item \omark$\Int\dfrac1{\e^x-2}\dx$}
+\itext{\item \imark$\Int\dfrac{\e^x-1}{\e^x+1}\dx$}
+\itext{\item \imark$\int\sqrt{\e^x-4}\dx$}
+\end{enumlite}
+\end{review}
+\end{frame}
+
+\begin{frame}
+\begin{review}
+求不定积分：
+\begin{enumlite}
+  \item $\Int\dfrac{1-x}{\sqrt{1-x^2}}\d x$\pause
+  \item $\Int\dfrac{\d x}{\sqrt{(1+x^2)^3}}$
+\end{enumlite}
+\end{review}
+\end{frame}
+
+\begin{iframe}
+\frametitle{换元积分法}
+\begin{review}
+求不定积分：
+\begin{enumlite}
+\item $\int x\sqrt{1-x}\d x$
+\item $\int x\sqrt{1-x^2}\d x$
+\end{enumlite}
+\end{review}
+\end{iframe}
+
+\begin{iframe}
+\frametitle{换元积分法}
+\begin{review}
+设$x>1$，求不定积分$\displaystyle\int\frac{\dx}{x\sqrt{x^2-1}}$．
+\end{review}
+\vpause
+\begin{solution}[方法1]
+令$x=\sec t$，$t \in (0,\pi/2)$．则有\par
+原式$=\int\!\frac{\sec t\,\tan t\,\dt}{\sec t\,\tan t}=t+C=\arccos\left(\frac1x\right)+C$
+\end{solution}
+\vpause
+\begin{solution}[方法2]
+令$u=\sqrt{x^2-1}$，则有\par
+原式$=\int\!\frac{\du}{u^2+1}=\arctan u+C=\arctan\sqrt{x^2-1}+C$
+\end{solution}
+\end{iframe}
+
+\section{分部积分法}
+
+\begin{frame}
+\frametitle{分部积分公式}
+\LARGE\noindent\[\cbold\int u \dv = uv - \int v \du\]
+\end{frame}
+
+\begin{frame}
+\begin{example}
+求不定积分$\int x\cos x \d x$.
+\end{example}
+\pause
+\begin{example}
+求不定积分$\int x\e^x \d x$.
+\end{example}
+\vpause
+\begin{exercise}求不定积分：
+\begin{enumlite}
+  \item $\int x\sin x \d x$\pause
+  \item $\int x\e^{2x} \d x$
+\end{enumlite}
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+求不定积分$\int x^2\cos x \d x$.
+\end{example}
+\pause
+\begin{example}
+求不定积分$\int x^2e^x \d x$.
+\end{example}
+\vpause
+\begin{exercise}
+求不定积分：
+\begin{enumlite}
+  \item $\int x^2\sin x \d x$\pause
+  \item $\int x^2e^{3x}\d x$
+\end{enumlite}
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+求不定积分$\int \ln x \d x$.
+\end{example}
+\pause
+\begin{example}
+求不定积分$\int x\arctan x \d x$.
+\end{example}
+\vpause
+\begin{exercise}求不定积分：
+\begin{enumlite}
+  \item $\int x\ln x \d x$\pause
+  \item $\int \arcsin x \d x$
+\end{enumlite}
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\frametitle{小结：分部积分}
+分部积分的关键在于选择合适的$\bold{u}$和$\d{v}$：
+\begin{itemize}
+  \item \makebox[8em][l]{$\int x\,\e^x \d x$} \onslide<2->{$=\int \bold{x}\d\,(\e^x)$}
+  \item \makebox[8em][l]{$\int x\,\cos x \d x$} \onslide<3->{$=\int \bold{x}\d\,(\sin x)$}
+  \item \makebox[8em][l]{$\int x\,\ln x \d x$} \onslide<4->{$=\int \bold{\ln x}\d\,\big(\frac12x^2\big)$}
+  \item \makebox[8em][l]{$\int x\,\arctan x \d x$} \onslide<5->{$=\int \bold{\arctan x}\d\,\big(\frac12x^2\big)$}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+求不定积分$\int e^x\sin x \d x$.
+\end{example}
+\vpause
+\begin{exercise}求不定积分$\int e^{2x}\cos x \d x$
+\end{exercise}
+\end{frame}
+
+\begin{iframe}
+\frametitle{分部积分法}
+\begin{example}
+求不定积分$\int \sec^3x \d x$.
+\end{example}
+\end{iframe}
+
+\mybookmark{复习与提高}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{review}求不定积分：
+\begin{enumlite}
+  \item $\int x^2\e^{-x}\dx$\pause
+  \item $\int x\cos 3x \dx$
+\end{enumlite}
+\end{review}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{review}求不定积分：
+\begin{enumlite}
+  \item $\Int \dfrac{\ln x}{x^2} \dx$\pause
+  \item $\int \arctan x\dx$
+\end{enumlite}
+\end{review}
+\end{frame}
+
+\begin{oframe}
+\frametitle{复习与提高}
+\begin{review}
+求不定积分$\int \e^{x}\sin 2x \dx$。
+\end{review}
+\end{oframe}
+
+\begin{iframe}
+\frametitle{分部积分法：先分后合}
+\begin{review}
+求不定积分$\displaystyle\int\e^{2x}\,(\tan x+1)^2\dx$。
+\end{review}
+\pause
+\begin{solution}
+原式$\displaystyle={\color{accent2}\int\e^{2x}\,\sec^2 x\dx}
+     \mathbin{\color{accent4}{}+2\int\e^{2x}\,\tan x\dx}$
+\pause
+\begin{align*}
+&\onslide<3->{={\color{accent2}\int\e^{2x}\,\d(\tan x)}
+  \mathbin{\color{accent4}{}+ 2\int\e^{2x}\,\tan x\dx}} \\
+&\onslide<4->{={\color{accent2}\e^{2x}\,\tan x - 2\int\e^{2x}\,\tan x\dx}
+  \mathbin{\color{accent4}{}+ 2\int\e^{2x}\,\tan x\dx}} \\
+&\onslide<5->{=\e^{2x}\,\tan x + C}
+\end{align*}
+\end{solution}
+\end{iframe}
+
+\section{有理分式的积分}
+
+\begin{frame}
+\begin{definition}
+如果$f(x)=\dfrac{P(x)}{Q(x)}$, 其中 $P(x)$ 和 $Q(x)$ 都是多项式，则称 $f(x)$ 为\bold{有理分式}。\pause
+\begin{itemize}
+  \item 如果 $P(x)$ 次数 $<$   $Q(x)$ 次数，则称它为\bold{真分式}；
+  \item 如果 $P(x)$ 次数 $\ge$ $Q(x)$ 次数，则称它为\bold{假分式}。
+\end{itemize}
+\end{definition}
+\vpause
+\begin{theorem}
+假分式 = 多项式 + 真分式
+\end{theorem}
+\end{frame}
+
+\begin{frame}
+\frametitle{情形1：分母为一次多项式}
+\begin{example}求不定积分：
+\begin{enumlite}
+  \item $\Int\dfrac{2x+3}{x+1} \d x$
+  \item $\Int\dfrac{x^2+1}{x+1} \d x$
+  \item $\Int\dfrac{x^3+2x^2+4}{x+1} \d x$
+\end{enumlite}
+\end{example}
+\end{frame}
+
+\begin{frame}
+\begin{exercise}求不定积分：
+\begin{enumlite}
+  \item $\Int\dfrac{x^2+3x+7}{x+1}\d x$
+  \item $\Int\dfrac{x^3+2x+4}{x-1}\d x$
+\end{enumlite}
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\frametitle{情形2：分母为二次多项式}
+若分母等于$x^2+px+q$，其判别式为$\Delta=p^2-4q$，此时
+\begin{enumerate}
+  \item 若$\Delta>0$，则$x^2+px+q=(x+a)(x+b)$；
+  \item 若$\Delta=0$，则$x^2+px+q=(x+a)^2$；
+  \item 若$\Delta<0$，则$x^2+px+q$是不可约的。
+\end{enumerate}
+\pause
+\begin{definition*}
+称一个多项式是\bold{不可约}的，如果它不能表示为两个非常数多项式的乘积。
+\end{definition*}
+\end{frame}
+
+\begin{frame}
+\frametitle{情形2：分母为二次多项式}
+若分母等于$x^2+px+q$，判别式为$\Delta=p^2-4q$。\pause
+\begin{enumerate}[<+->]
+  \item 若$\Delta>0$，则$\dfrac{rx+s}{x^2+px+q}=\dfrac{A}{x+a}+\dfrac{B}{x+b}$；
+  \item 若$\Delta=0$，则$\dfrac{rx+s}{x^2+px+q}=\dfrac{A}{x+a}+\dfrac{B}{(x+a)^2}$；
+  \item 若$\Delta<0$，则$$\dfrac{rx+s}{x^2+px+q}=\dfrac{A(2x+p)}{x^2+px+q}+\dfrac{B}{x^2+px+q}.$$
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\begin{example}求不定积分 $\Int\dfrac{2x-1}{x^2-5x+6}\d x$
+\end{example}
+\begin{example}求不定积分 $\Int\dfrac{2x+3}{x^2+2x+1}\d x$
+\end{example}
+\end{frame}
+
+\begin{frame}
+\begin{exercise}求不定积分 $\Int\dfrac{x+3}{x^2+5x+4}\d x$
+\end{exercise}
+\pause
+\begin{exercise}求不定积分 $\Int\dfrac{3x+2}{x^2-4x+4}\d x$
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\begin{example}求不定积分 $\Int\dfrac{4x+3}{x^2+2x+5}\d x$
+\end{example}
+\end{frame}
+
+\begin{frame}
+\begin{exercise}求不定积分 $\Int\dfrac{x+3}{x^2+4x+7}\d x$
+\end{exercise}
+\end{frame}
+
+\begin{iframe}
+\frametitle{情形3：分母为一般多项式}
+\begin{theorem}
+设多项式$Q(x)$不为常数，则有因式分解
+\[ Q(x)=Q_1(x)^{m_1}Q_2(x)^{m_2}\cdots Q_k(x)^{m_k}, \]
+其中各个$Q_i(x)$是一次多项式或二次不可约多项式。
+\end{theorem}
+\vpause
+\begin{theorem}
+假定上面任何两个$Q_i(x)$都无公因式，则有
+\[ \frac{P(x)}{Q(x)}=\frac{P_1(x)}{Q_1(x)^{m_1}}+\frac{P_2(x)}{Q_2(x)^{m_2}}
+   \cdots +\frac{P_k(x)}{Q_k(x)^{m_k}}. \]
+\pause
+若等式左边为真分式，等式右边也可以都取为真分式。
+\end{theorem}
+\end{iframe}
+
+\begin{iframe}
+\frametitle{分母为三次多项式}
+\begin{example}
+求不定积分 $\Int\dfrac{x^2-x+2}{(x+1)^3}\d x$。
+\end{example}
+\pause
+\begin{example}
+求不定积分 $\Int\dfrac{x^2+2x+3}{(x+1)(x^2+1)}\d x$。
+\end{example}
+\vpause
+\begin{exercise}
+求不定积分 $\Int\dfrac{2x+10}{(x+1)(x^2+2x+5)}\d x$。
+\end{exercise}
+\end{iframe}
+
+\begin{iframe}
+\frametitle{分母为四次多项式}
+\begin{example}
+求不定积分 $\Int\dfrac{1}{(x^2+1)^2}\d x$。
+\end{example}
+\end{iframe}
+
+\mybookmark{复习与提高}
+
+\begin{frame}
+\begin{review}
+求不定积分 $\Int\dfrac{x+7}{x^2+2x-3}\d x$。
+\end{review}
+\pause
+\begin{review}
+求不定积分 $\Int\dfrac{4x+7}{x^2-2x+1}\d x$。
+\end{review}
+\pause
+\begin{review}
+求不定积分 $\Int\dfrac{x^3+x^2}{x^2+4}\d x$。
+\end{review}
+\end{frame}
+
+\begin{iframe}
+\frametitle{有理分式的积分}
+\begin{review}
+求不定积分 $\Int\dfrac{\d x}{(x+1)(x^2-x+1)}$。
+\end{review}
+\end{iframe}
+
+\begin{iframe}
+\frametitle{有理分式的积分}
+\begin{review}
+求不定积分 $\Int\dfrac{\d x}{x(x^{10}+1)}$。
+\end{review}
+\end{iframe}
+
+\begin{iframe}
+\frametitle{初等函数的不定积分}
+\begin{remark*}
+初等函数的原函数未必都是初等函数。可以认为这些函数的不定积分是“积不出来的”，比如
+$$\int \e^{-x^2}\dx,\quad \int\frac{\sin x}x \dx,\quad \int\sqrt{1+x^4}\dx.$$
+\end{remark*}
+\end{iframe}
+
+\end{document}

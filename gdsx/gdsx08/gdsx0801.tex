@@ -1,0 +1,537 @@
+% -*- coding: utf-8 -*-
+% !TEX program = xelatex
+
+%\documentclass[14pt]{article}
+%\usepackage[notheorems]{beamerarticle}
+
+\documentclass[14pt,notheorems,leqno,xcolor={rgb}]{beamer} % ignorenonframetext
+
+\input{../common/theme.sty}
+\input{../common/share.sty}
+\input{../common/local.sty}
+
+% 用 subfiles 自动载入主文档的 preamble 时，生成的 pdf 上面有多余的空白
+% 和不使用 subfiles 相比，在 log 中少了读入 gdsx0801.log 的步骤
+%\documentclass[gdsx08]{subfiles}
+% 而且用 subfiles 时子文档导言区不能有 \usepackage 等内容，只能使用主文档的导言区
+
+% 因此我们改用 docmute，它更简单，只是忽略所包含文件的导言区内容
+% 但是注意 docmute 要求子文档必须有 \documentclass 和 \begin{docuement}，\end{document}
+% 因为它使用了 \long\def\docmute@gobblepreamble#1\begin#2{} \let\documentclass=\docmute@gobblepreamble
+
+\occasion{高等数学第八章}
+\title{第一节·向量及其线性运算}
+\author{\href{https://lvjr.bitbucket.io}{吕荐瑞}}
+\institute{暨南大学数学系}
+\renewcommand<>{\section}[1]{\begin{frame}[plain]\titlepage\end{frame}}
+
+\setbeamerfont{title}{size=\Large}
+
+\makeatletter
+\beamer@tocsectionnumber=1\relax
+\setcounter{section}{1}
+\makeatother
+
+\begin{document}
+%\ifxetex\else\heiti\fi
+
+\section{向量及其线性运算}
+
+\subsection{向量的概念}
+
+\begin{frame}
+\lead{向量}：既有大小，又有方向的量称为向量。
+% beamer 将会在各栏间自动插入空隙
+% 不用 onlytextwidth 选项时，如果各栏宽度和等于 \textwidth，加上空隙后整个宽度会超出 textwidth
+% 因此，要保证对齐，要么用 onlytextwidth，要么保证各栏宽度和小于 \textwidth
+\begin{columns}[onlytextwidth]%
+\column{.75\textwidth}
+\begin{itemize}
+  \item<2-> 向量的表示：$\overrightarrow{AB}$，或$\vec{a}$，或$\boldsymbol{a}$
+  \item<3-> 向量的相等：若$\vec a$和$\vec b$的大小和方向都相同，称两者相等，记为$\vec a=\vec b$
+\end{itemize}
+\column{.25\textwidth}
+\hfill\onslide<2->
+\tikz\draw[color=accent1,thick,->](0,0)node[left]{$A$}--(1,1)node[right]{$B$};
+\end{columns}
+\onslide<4->\lead{向量的模}：向量的大小称为向量的模，
+记为$|\overrightarrow{AB}|$，或$|\vec{a}|$，或$|\boldsymbol{a}|$
+\begin{itemize}
+  \item<5-> 单位向量：模为$1$的向量，常记为$\vec{e}$\pause
+  \item<6-> 零向量：模为$0$的向量，记为$\vec{0}$%，或$\mathbf{0}$
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\begin{description}[一二]
+  \item[平行] 若向量$\vec a$与$\vec b$的方向相同或相反，则称$\vec a$与$\vec b$ \CJKunderdot{平行}，
+        记为$\vec a\parallel\vec b$。\pause
+        \begin{itemize}
+        \item 规定零向量与任何向量都平行。
+        \end{itemize}\pause
+  \item[共线] 若两个向量可平移到一条直线上，则称它们\CJKunderdot{共线}。\pause
+        \begin{itemize}
+        \item 两向量平行等同于两向量共线。
+        \end{itemize}\pause
+  \item[共面] 若三个或更多个向量可平移到一个平面上，则称它们\CJKunderdot{共面}。
+\end{description}
+\end{frame}
+
+\subsection{向量的线性运算}
+
+\begin{frame}
+\frametitle{向量的加法}
+\begin{columns}[onlytextwidth,T]
+\column{.4\textwidth}
+三角形法则：
+\begin{flushleft}
+\begin{tikzpicture}[thick]
+\draw[->] (0,0) node[below,color=accent1] {$A$} -- node[below] {$\vec a$} (2,0) node[below,color=accent1] {$B$};
+\draw[->] (2,0) -- node[right] {$\vec b$} (3,2) node[right,color=accent1] {$C$};
+\draw[->,color=accent3] (0,0) -- node[above=.5em,color=normal text.fg] {$\vec a+\vec b$} (3,2);
+\end{tikzpicture}
+\end{flushleft}
+\pause
+\column{.4\textwidth}
+平行四边形法则：
+\begin{flushleft}
+\begin{tikzpicture}[thick]
+\draw[->] (0,0) node[below,color=accent1] {$A$} -- node[below] {$\vec a$} (2,0) node[below,color=accent1] {$B$};
+\draw[densely dashed] (1,2) -- (3,2) node[right,color=accent1] {$C$} ;
+\draw[->] (0,0) -- node[left] {$\vec b$} (1,2) node[left,color=accent1] {$D$};
+\draw[densely dashed] (2,0) -- (3,2);
+\draw[->,color=accent3] (0,0) -- node[color=normal text.fg] {$\vec a+\vec b$} (3,2);
+\end{tikzpicture}
+\end{flushleft}
+\end{columns}
+\pause\vspace{.5em}
+\begin{property}
+向量的加法满足下列运算定律：\pause
+\begin{itemize}
+  \item $\vec a+\vec b=\vec b+\vec a$\pause
+  \item $(\vec a+\vec b)+\vec c=\vec a+(\vec b+\vec c)\pause =\vec a+\vec b+\vec c$
+\end{itemize}
+\end{property}
+\end{frame}
+
+\begin{frame}
+\frametitle{向量的减法}
+与$\vec a$大小相同而方向相反的向量，称为$\vec a$的\bold{负向量}，记为$-\vec a$。\pause\par
+三角形法则：$\overrightarrow{AC}-\overrightarrow{AB}=\overrightarrow{BC}$\pause
+\begin{columns}[onlytextwidth]
+\column{.4\textwidth}
+%\begin{flushleft}
+\begin{tikzpicture}[thick]
+\draw[->] (0,0) node[below,color=accent1] {$A$} -- node[below] {$\vec a$} (2,0) node[below,color=accent1] {$B$};
+\draw[->] (0,0) -- node[above] {$\vec b$} (3,2);
+\draw[->,color=accent3] (2,0) -- node[right,color=normal text.fg] {$\vec b-\vec a$} (3,2) node[right,color=accent1] {$C$};
+\end{tikzpicture}
+%\end{flushleft}
+\pause
+\column{.5\textwidth}
+\begin{itemize}
+  \item $\vec a - \vec a = \vec 0$\pause
+  \item $|\vec a+\vec b| \le |\vec a| + |\vec b|$\pause
+  \item $|\vec a-\vec b| \le |\vec a| + |\vec b|$
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{向量的数乘}
+数$\lambda$与向量$\vec a$的乘积是一个新向量，记为$\lambda\vec a$。\pause 规定$|\lambda\vec a|=|\lambda|\cdot|\vec a|$，而且\pause
+\begin{itemize}[<+->]
+  \item 若$\lambda>0$，则$\lambda\vec a$与$\vec a$同向
+  \item 若$\lambda<0$，则$\lambda\vec a$与$\vec a$反向
+  \item 若$\lambda=0$，则$\lambda\vec a=\vec 0$
+\end{itemize}
+\pause
+\begin{property}
+向量的数乘满足下列性质：
+\begin{itemize}
+  \item $1\vec a=\vec a,\pause\ (-1)\vec a=-\vec a$\pause
+  \item $\lambda(\mu\vec a)=(\lambda\mu)\vec a=\mu(\lambda\vec a)$\pause
+  \item $(\lambda+\mu)\vec a=\lambda\vec a+\mu\vec a,\pause\ \lambda(\vec a+\vec b)=\lambda\vec a+\lambda\vec b$
+\end{itemize}
+\end{property}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+设$\vec a$为非零向量，则$\frac{\vec a}{|\vec a|}$为单位向量。
+\end{example}
+\pause
+\begin{example}
+设$M$为平行四边形$ABCD$对角线的交点，$\overrightarrow{AB}=\vec a$，$\overrightarrow{AD}=\vec b$，试用$\vec a$和$\vec b$ 表示向量$\overrightarrow{MA}$、$\overrightarrow{MB}$、$\overrightarrow{MC}$、$\overrightarrow{MD}$。
+\end{example}
+\end{frame}
+
+\begin{frame}
+\begin{theorem}
+设$\vec a$为非零向量，则有
+$$\vec b\parallel\vec a \Longleftrightarrow \vec b=\lambda \vec a$$
+其中实数$\lambda$是唯一的。
+\end{theorem}
+\end{frame}
+
+\subsection{空间直角坐标系}
+
+% \uncover<1-2>{text}   不显示的内容仍占用空间，可用 \setbeamercovered 让它用半透明样式显示
+% \visible<1-2>{text}   不显示的内容仍占用空间，但不可能用半透明方式显示出来
+% \only<1-2>{text}<1-2> 不显示的内容不占用空间，覆盖指令也可以放在后面
+%
+% \onslide<1-2>{text}   可以省略{text}；不省略时等同 \uncover<1-2>{text}
+% \onslide+<1-2>{text}  可以省略{text}；不省略时等同 \visible<1-2>{text}
+% \onslide*<1-2>{text}  不可省略{text}；不省略时等同 \only<1-2>{text}
+
+\begin{frame}
+\frametitle{空间直角坐标系}
+\begin{columns}[onlytextwidth]
+\column{.35\textwidth}
+\begin{itemize}
+  \onslide<2->{\item 三个坐标轴}
+  \onslide<4->{\item 三个坐标面}
+  \onslide<8->{\item 八个卦限}
+\end{itemize}
+\column{.65\textwidth}
+\begin{tikzpicture}[x={(-1.6cm,-1.2cm)},y={(2cm,0cm)},z={(0cm,2cm)},thick,scale=.6]
+\onslide*<5>{
+  \draw[fill=filler3] (1,1,0) -- (1,-1,0) -- (-1,-1,0) -- (-1,1,0) -- cycle;
+}
+\onslide*<6>{
+  \draw[fill=filler3] (1,1,0) -- (1,-1,0) -- (-1,-1,0) -- (-1,1,0) -- cycle;
+  \draw[fill=filler1] (0,1,1) -- (0,1,-1) -- (0,-1,-1) -- (0,-1,1) -- cycle;
+  \draw[fill=filler3] (1,1,0) -- (1,-1,0) -- (0,-1,0) -- (0,1,0) -- cycle;
+}
+\onslide+<7->{
+  \draw[fill=filler3] (0,1,0) -- (-1,1,0) -- (-1,-1,0) -- (0,-1,0) -- cycle;
+  \draw[fill=filler2] (0,0,1) -- (-1,0,1) -- (-1,0,-1) -- (0,0,-1) -- cycle;
+  \draw[fill=filler1] (0,1,1) -- (0,1,-1) -- (0,-1,-1) -- (0,-1,1) -- cycle;
+  \draw[fill=filler3] (0,0,0) -- (1,0,0) -- (1,-1,0) -- (0,-1,0) -- cycle;
+  \draw[fill=filler2] (0,0,1) -- (1,0,1) -- (1,0,-1) -- (0,0,-1) -- cycle;
+  \draw[fill=filler3] (0,0,0) -- (1,0,0) -- (1,1,0) -- (0,1,0) -- cycle;
+}
+\onslide+<3->{
+  \draw[->] (0,0,0) -- (2,0,0) node[below] {$x$};
+  \draw[->] (0,0,0) -- (0,2,0) node[right] {$y$};
+  \draw[->] (0,0,0) -- (0,0,2) node[above] {$z$};
+}
+%% Ⅰ \or Ⅱ \or Ⅲ \or Ⅳ \or Ⅴ \or Ⅵ \or Ⅶ \or Ⅷ \or Ⅸ \or Ⅹ \or Ⅺ \or Ⅻ
+\begin{scope}[font=\small]
+\onslide*<5-8,18>{\path (-1,1,0) node[above] {$xy$面};} % \node at 无法用三维坐标！
+\onslide*<6-8,18>{\path (0,-1,1) node[left] {$yz$面};}
+\onslide*<7-8,18>{\path (-1,0,1) node[above] {$zx$面};}
+\onslide+<10->{\draw[->,color=accent4] (.5,3,.7) node[right] {I} -- (.5,.7,.7);}
+\onslide+<11->{\draw[->,color=accent4] (-1,1.5,1) node[right] {II} -- (-.5,.5,.85);}
+\onslide+<12->{\draw[->,color=accent4] (-1,-2,1) node[left] {III} -- (-.5,-.6,.85);}
+\onslide+<13->{\draw[->,color=accent4] (.5,-1.5,.7) node[left] {IV} -- (.5,-.45,.7);}
+\onslide+<14->{\draw[->,color=accent5] (1,2,-1.5) node[below] {V} -- (.5,.7,-.5);}
+\onslide+<15->{\draw[->,color=accent5] (-.5,2,-1.4) node[right] {VI} -- (-.5,.8,-.5);}
+\onslide+<16->{\draw[color=accent5] (.8,-1.4,-.6) node[left] {VII} -- (0,-1,-.68);}
+\onslide+<17->{\draw[->,color=accent5] (1,-.7,-1.5) node[below] {VIII} -- (.5,-.5,-.5);}
+\end{scope}
+\end{tikzpicture}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+在空间直角坐标系中，我们有
+\[
+\text{点\ }M \longleftrightarrow \text{坐标\ }(x,y,z) \longleftrightarrow \text{向量\ }\vec r=\overrightarrow{OM}
+\]
+\begin{center}
+\begin{tikzpicture}[x={(-1.2cm,-1.2cm)},y={(3cm,0cm)},z={(0cm,2cm)},thick,font=\small,scale=.5]
+\draw[densely dashed] (0,0,0) -- (2,0,0); \draw[->] (2,0,0) -- (3,0,0) node[below] {$x$};
+\draw[densely dashed] (0,0,0) -- (0,2,0); \draw[->] (0,2,0) -- (0,3,0) node[right] {$y$};
+\draw[densely dashed] (0,0,0) -- (0,0,2); \draw[->] (0,0,2) -- (0,0,3) node[above] {$z$};
+\draw (2,0,0) -- (2,2,0) -- (0,2,0) (2,0,0) -- (2,0,2) -- (0,0,2) (0,2,0) -- (0,2,2) -- (0,0,2);
+\draw (2,2,0) -- (2,2,2) (0,2,2) -- (2,2,2) (2,0,2) -- (2,2,2);
+\draw[densely dashed,->,draw=accent3] (0,0,0) node[below] {$O$} -- node[left]{$\vec r$} (2,2,2) node[right] {$M$};
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\begin{columns}[onlytextwidth]
+\column{.5\textwidth}
+\begin{tikzpicture}[x={(-1.6cm,-1.2cm)},y={(2cm,0cm)},z={(0cm,2cm)},thick,scale=.5]
+\draw[fill=filler3] (0,1,0) -- (-1,1,0) -- (-1,-1,0) -- (0,-1,0) -- cycle;
+\draw[fill=filler2] (0,0,1) -- (-1,0,1) -- (-1,0,-1) -- (0,0,-1) -- cycle;
+\draw[fill=filler1] (0,1,1) -- (0,1,-1) -- (0,-1,-1) -- (0,-1,1) -- cycle;
+\draw[fill=filler3] (0,0,0) -- (1,0,0) -- (1,-1,0) -- (0,-1,0) -- cycle;
+\draw[fill=filler2] (0,0,1) -- (1,0,1) -- (1,0,-1) -- (0,0,-1) -- cycle;
+\draw[fill=filler3] (0,0,0) -- (1,0,0) -- (1,1,0) -- (0,1,0) -- cycle;
+\draw[->] (0,0,0) -- (2,0,0) node[below] {$x$};
+\draw[->] (0,0,0) -- (0,2,0) node[right] {$y$};
+\draw[->] (0,0,0) -- (0,0,2) node[above] {$z$};
+\begin{scope}[font=\small]
+\path (-1,1,0) node[above] {$xy$面};
+\path (0,-1,1) node[left] {$yz$面};
+\path (-1,0,1) node[above] {$zx$面};
+\end{scope}
+\end{tikzpicture}
+\column{.5\textwidth}
+坐标面上的点：
+\begin{itemize}
+  \item[] $xy$ 面 $\leftrightarrow$ $z=0$
+  \item[] $yz$ 面 $\leftrightarrow$ $x=0$
+  \item[] $zx$ 面 $\leftrightarrow$ $y=0$
+\end{itemize}
+\end{columns}
+\pause
+\begin{columns}[onlytextwidth]
+\column{.5\textwidth}
+坐标轴上的点：
+\begin{itemize}
+  \item[] $x$ 轴 $\leftrightarrow$ $y=z=0$
+  \item[] $y$ 轴 $\leftrightarrow$ $z=x=0$
+  \item[] $z$ 轴 $\leftrightarrow$ $x=y=0$
+\end{itemize}
+\column{.5\textwidth}
+\begin{tikzpicture}[thick,scale=.5]
+\begin{scope}[x={(-1cm,-1cm)},y={(2cm,0cm)},z={(0cm,2cm)}]
+  \draw[->] (0,0,0) -- (2,0,0) node[below] {$x$};
+  \draw[->] (0,0,0) -- (0,2.5,0) node[right] {$y$};
+  \draw[->] (0,0,0) -- (0,0,2) node[above] {$z$};
+\end{scope}
+\begin{scope}[font=\small,fill=accent3] % 颜色设置放在 scope 选项中似乎无效
+  \fill[fill=accent3] (-1.2,-1.2) node[right]{$(x,0,0)$} circle (.1);
+  \fill[fill=accent3] (3,0) node[above]{$(0,y,0)$} circle (.1);
+  \fill[fill=accent3] (0,3) node[right]{$(0,0,z)$} circle (.1);
+\end{scope}
+\end{tikzpicture}
+\end{columns}
+\end{frame}
+
+\subsection{利用坐标作向量的线性运算}
+
+\begin{frame}
+\frametitle{向量的坐标分解}
+\begin{columns}[onlytextwidth]
+\column{.5\textwidth}
+\begin{tikzpicture}[x={(-1.2cm,-1.2cm)},y={(2.5cm,0cm)},z={(0cm,2cm)},thick,scale=.5]
+\draw[->] (0,0,0) node[left]{$O$} -- (2.5,0,0) node[below] {$x$};
+\draw[->] (0,0,0) -- (0,2.5,0) node[right] {$y$};
+\draw[->] (0,0,0) -- (0,0,2.5) node[above] {$z$};
+\begin{scope}[font=\small]
+  \draw[->,draw=accent2] (0,0,0) -- (1.98,1.98,0) node[below]{$N$};
+  \draw[->,draw=accent2] (2,2,0) -- (2,2,1.98);
+  \draw[->,draw=accent3] (0,0,0) -- node[inner sep=2pt,above]{$\vec{r}$} (2,2,2) node[above]{$M$};
+  \draw[->,draw=accent1] (0,0,0) -- (2,0,0) node[above]{$P$};
+  \draw[->,draw=accent1] (0,0,0) -- (0,2,0) node[above]{$Q$};
+  \draw[->,draw=accent1] (0,0,0) -- (0,0,2) node[left]{$R$};
+  \draw[densely dashed] (0,0,2) -- (2,2,2) (2,0,0) -- (2,2,0) (0,2,0) -- (2,2,0);
+\end{scope}
+\end{tikzpicture}
+\pause
+\column{.5\textwidth}
+\begin{itemize}
+  \item $x$轴上单位向量$\vec i$
+  \item $y$轴上单位向量$\vec j$
+  \item $z$轴上单位向量$\vec k$
+\end{itemize}
+\end{columns}
+\pause
+\begin{align*}
+\vec{r}&=\overrightarrow{OM}=\overrightarrow{ON}+\overrightarrow{NM}=\overrightarrow{ON}+\overrightarrow{OR}\\
+&=\overrightarrow{OP}+\overrightarrow{OQ}+\overrightarrow{OR} = x\,\vec{i} + y\,\vec{j} + z\,\vec{k}=(x,y,z)
+\end{align*}
+\end{frame}
+
+\begin{frame}
+\frametitle{向量的坐标运算}
+设$\vec{a}=(a_x,a_y,a_z)$，$\vec{b}=(b_x,b_y,b_z)$，$\lambda$为实数。\pause 由向量的坐标分解可得
+\begin{align*}
+\vec a \pm \vec b &= (a_x \pm b_x,a_y \pm b_y,a_z \pm b_z)\\
+\lambda \vec a &= (\lambda a_x, \lambda a_y, \lambda a_z)
+\end{align*}
+\pause\vspace{-1em}\hrule\vspace{.5em}\pause
+当$\vec a\neq\vec0$时，
+$ \vec b\parallel \vec a \Leftrightarrow \vec b =\lambda \vec a
+   \Leftrightarrow \frac{b_x}{a_x}=\frac{b_y}{a_y}=\frac{b_z}{a_z}$
+\ppause \bold{平行向量对应坐标成比例}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+求解以向量为未知元的线性方程组
+% \usepackage{cases}
+\begin{numcases}{} % 此参数用于指定括号左边的内容
+  5\vec x-3\vec y=\vec a\\
+  3\vec x-2\vec y=\vec b
+\end{numcases}
+其中$\vec a=(2,1,2)$，$\vec b=(-1,1,-2)$。
+\end{example}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+已知两点$A(x_1,y_1,z_1)$，$B(x_2,y_2,z_2)$以及实数$\lambda\neq-1$，在直线$AB$上求点$M$，使得$\overrightarrow{AM}=\lambda\overrightarrow{MB}$.
+\end{example}
+\pause
+\begin{remark*}
+点$M$的坐标等于向量$\overrightarrow{OM}$的坐标。
+\end{remark*}
+\end{frame}
+
+\subsection{向量的模、方向角、投影}
+
+\begin{frame}
+\frametitle{向量的模·两点距离}
+\begin{columns}[onlytextwidth]
+\column{.4\textwidth}
+\begin{tikzpicture}[x={(-1.2cm,-1.2cm)},y={(2.5cm,0cm)},z={(0cm,2cm)},thick,scale=.35]
+\draw[->] (0,0,0) node[left]{$O$} -- (2.5,0,0) node[below] {$x$};
+\draw[->] (0,0,0) -- (0,2.5,0) node[right] {$y$};
+\draw[->] (0,0,0) -- (0,0,2.5) node[above] {$z$};
+\begin{scope}[font=\small]
+  \draw[->,draw=accent2] (0,0,0) -- (1.98,1.98,0) node[below]{$N$};
+  \draw[->,draw=accent2] (2,2,0) -- (2,2,1.98);
+  \draw[->,draw=accent3] (0,0,0) -- node[inner sep=2pt,above]{$\vec{r}$} (2,2,2) node[above]{$M$};
+  \draw[->,draw=accent1] (0,0,0) -- (2,0,0) node[above]{$P$};
+  \draw[->,draw=accent1] (0,0,0) -- (0,2,0) node[above]{$Q$};
+  \draw[->,draw=accent1] (0,0,0) -- (0,0,2) node[left]{$R$};
+  \draw[densely dashed] (0,0,2) -- (2,2,2) (2,0,0) -- (2,2,0) (0,2,0) -- (2,2,0);
+\end{scope}
+\end{tikzpicture}
+\pause
+\column{.6\textwidth}
+\begin{align*}
+\vec{r}&=\overrightarrow{OM}=\overrightarrow{OP}+\overrightarrow{OQ}+\overrightarrow{OR}\\
+       &=x\,\vec{i} + y\,\vec{j} + z\,\vec{k}=(x,y,z)
+\end{align*}
+\pause
+$\therefore\quad |\vec r|=\sqrt{x^2+y^2+z^2}$
+\end{columns}
+\pause
+设$A(x_1,y_1,z_1)$，$B(x_2,y_2,z_2)$，则有
+{\small
+\[ \overrightarrow{AB}=\overrightarrow{OB}-\overrightarrow{OA}=(x_2-x_1,y_2-y_1,z_2-z_1)\]
+\[ |AB|=|\overrightarrow{AB}|=\sqrt{(x_2-x_1)^2+(y_2-y_1)^2+(z_2-z_1)^2}\]
+}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+求证以$M_1(4,3,1)$，$M_2(7,1,2)$，$M_3(5,2,3)$为顶点的三角形是等腰三角形。
+\end{example}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+在$z$轴上求与两点$A(-4,1,7)$和$B(3,5,-2)$等距离的点。
+\end{example}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+已知两点$A(4,0,5)$和$B(7,1,3)$，求与$\overrightarrow{AB}$方向相同的单位向量$\vec e$。
+\end{example}
+\end{frame}
+
+\begin{frame}
+\frametitle{向量的夹角}
+设有非零向量$\vec{a}$和$\vec{b}$，\pause 任取空间中一点$O$，
+作$\overrightarrow{OA}=\vec a$，$\overrightarrow{OB}=\vec b$。
+\pause
+\begin{center}
+\begin{tikzpicture}[thick]
+\draw[->] (0,0) node[left]{$O$} -- node[above]{$\vec a$} (2,1) node[right]{$A$};
+\draw[->] (0,0) -- node[below]{$\vec b$} (2,-1) node[right]{$B$};
+\draw (.4,-.2) arc (-30:30:.4);
+\node at (.8,0) {$\theta$};
+\end{tikzpicture}
+\end{center}
+\pause
+称$\angle AOB=\theta$（$0\le\theta\le\pi$）为向量的$\vec a$和$\vec b$ 的\bold{夹角}，\pause 记为$\bold{\angle(\vec{a},\vec{b})=\theta}$。
+\end{frame}
+
+\begin{frame}
+\frametitle{方向角和方向余弦}
+给定$\vec r=\overrightarrow{OM}=(x,y,z)$，称$\vec r$与三个坐标轴的夹角$\alpha$，$\beta$，$\gamma$为\bold{方向角}。
+\pause 方向角的余弦称为\bold{方向余弦}。
+\begin{align*}
+  \cos\alpha&=\frac{x}{|\vec r|}=\frac{x}{\sqrt{x^2+y^2+z^2}}\\
+  \cos\beta&=\frac{y}{|\vec r|}=\frac{y}{\sqrt{x^2+y^2+z^2}}\\
+  \cos\gamma&=\frac{z}{|\vec r|}=\frac{z}{\sqrt{x^2+y^2+z^2}}
+\end{align*}
+\end{frame}
+
+\begin{frame}
+\frametitle{方向余弦}
+方向余弦满足下面性质：\pause
+\begin{itemize}
+  \item $\cos^2\alpha+\cos^2\beta+\cos^2\gamma=1$\pause
+  \item $(\cos\alpha,\cos\beta,\cos\gamma)=\dfrac{\vec r}{|\vec r|}=\vec e_{\vec r}$
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+已知两点$M_1(2,2,\sqrt2)$，$M_2(1,3,0)$，计算向量$\overrightarrow{M_1M_2}$的模、方向余弦和方向角。
+\end{example}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+设点$A$位于第I卦限，向量$\overrightarrow{OA}$与$x$轴、$y$轴的夹角依次为$\frac\pi3$ 和$\frac\pi4$，且$|\overrightarrow{OA}|=6$，求点$A$的坐标。
+\end{example}
+\end{frame}
+
+\begin{frame}
+\frametitle{向量的投影}
+若$\vec a\neq\vec 0$，$\angle(\vec a,\vec b)=\theta$，记$\vec b$在$\vec a$上的\bold{投影}为
+\begin{columns}[onlytextwidth]
+\column{.6\textwidth}
+\[ \bold{\Prj_{\vec a}\vec b}=|\vec b|\cos\theta \]
+\column{.4\textwidth}
+\pause
+\begin{tikzpicture}[thick,font=\small,scale=.7]
+\draw[densely dashed] (2,0) -- (2,2);
+\draw[->] (0,0) -- (3,0) node[right,color=accent1]{$\vec{a}$};
+\draw[->] (0,0) -- (2,2) node[right,color=accent1]{$\vec{b}$};
+\draw[draw=accent5] (.4,0) arc (0:45:.4); \node[above,inner sep=2pt,color=accent1] at (.8,0) {$\theta$};
+\draw[draw=accent2] (0,0) node[below]{$A$} -- (2,0) node[below]{$B$};
+\end{tikzpicture}
+\end{columns}
+\pause 同理，若$\vec b\neq\vec 0$，$\bold{\Prj_{\vec b}\vec a}\pause=|\vec a|\cos\theta$。\pause
+\begin{property}
+向量投影有线性运算：\pause
+\begin{enumerate}
+  \item $\Prj_{\vec c}(\lambda\vec a)=\lambda\Prj_{\vec c}{\vec a}$\pause
+  \item $\Prj_{\vec c}(\vec a+\vec b)=\Prj_{\vec c}{\vec a}+\Prj_{\vec c}{\vec b}$
+\end{enumerate}
+\end{property}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+设正方体的一条对角线为$OM$，一条棱为$OA$，且$|OA|=a$。求$\overrightarrow{OA}$在$\overrightarrow{OM}$方向上的投影$\Prj_{\overrightarrow{OM}}\overrightarrow{OA}$。
+\end{example}
+\end{frame}
+
+\mybookmark{复习与提高}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+设三角形$\triangle ABC$的三边$\ov{BC}=\va$, $\ov{CA}=\vb$, $\ov{AB}=\vc$，
+三边中点依次为$D$, $E$, $F$．证明
+\[ \ov{AD}+\ov{BE}+\ov{CF}=\vec0. \]
+\end{puzzle}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{choice}
+下列哪组角可作为空间向量的方向角\dotfill(\qquad)%(D)
+\begin{choicehalf}
+  \item $30^\circ,45^\circ,60^\circ$ ~
+  \item $45^\circ,60^\circ,90^\circ$ ~
+  \item $60^\circ,90^\circ,120^\circ$ ~
+  \item $45^\circ,90^\circ,135^\circ$ ~
+\end{choicehalf}
+\end{choice}
+\end{frame}
+
+\end{document}

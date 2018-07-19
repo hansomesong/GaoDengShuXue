@@ -1,0 +1,209 @@
+% -*- coding: utf-8 -*-
+% !TEX program = xelatex
+
+%\documentclass[14pt]{article}
+%\usepackage[notheorems]{beamerarticle}
+
+\documentclass[14pt,notheorems,leqno,xcolor={rgb}]{beamer} % ignorenonframetext
+
+\input{../common/theme.sty}
+\input{../common/share.sty}
+\input{../common/local.sty}
+
+\occasion{高等数学第十一章}
+\title{第六节·高斯公式}
+\author{\href{https://lvjr.bitbucket.io}{吕荐瑞}}
+\institute{暨南大学数学系}
+\renewcommand<>{\section}[1]{\begin{frame}[plain]\titlepage\end{frame}}
+
+\makeatletter
+\beamer@tocsectionnumber=6\relax
+\setcounter{section}{6}
+\makeatother
+
+\begin{document}
+
+\section{高斯公式}
+
+\begin{frame}
+\begin{theorem*}[高斯公式]
+设空间闭区域$\Omega$是由分片光滑的闭曲面$\Sigma$所围成，函数$P(x,y,z)$，$Q(x,y,z,)$
+和$R(x,y,z)$在$\Omega$上具有一阶连续偏导数，则有
+\begin{multline*}
+\iiint_{\Omega}\left(\frac{\partial P}{\partial x}+\frac{\partial Q}{\partial y}
+    +\frac{\partial R}{\partial z}\right)\dv \\
+=\iint_{\Sigma}P\dy\dz+Q\dz\dx+R\dx\dy \\
+=\iint_{\Sigma}(P\cos\alpha+Q\cos\beta+R\cos\gamma)\dS
+\end{multline*}
+其中有向曲面$\Sigma$是$\Omega$的整个边界曲面的\CJKunderdot{外侧}．
+\end{theorem*}
+\end{frame}
+
+\begin{frame}
+\begin{columns}[onlytextwidth,\stext{T}]
+\column{80mm}
+\begin{example}
+设有向曲面$\Sigma$是右边圆柱体$\Omega$的整个边界曲面的外侧．计算
+\[\iint_{\Sigma}(x-y)\dx\dy+(y-z)x\dy\dz\]
+\end{example}
+\column{40mm}
+\hfill
+\begin{tikzpicture}[thick,font=\small,inner sep=1pt]
+\def\a{1} 
+\def\b{0.3} 
+\def\c{3} 
+\def\d{1.5}
+% coordinates 
+\draw [-stealth,black!75,thin] (-1.5,0) -- (1.6,0) node [right, font={\footnotesize}] {$y$}; 
+\draw [-stealth,black!75,thin] (0,0) -- (0,3.7) node [left, font={\footnotesize}] {$z$}; 
+\draw [-stealth,black!75,thin] (35:1) -- (215:1) node [left, font={\footnotesize}] {$x$};
+% section 
+\draw[thick,densely dashed] (\a,\d) arc (0:180:{\a} and {\b}); 
+\draw[thick] (\a,\d) arc (0:-180:{\a} and {\b});
+\draw[black!75,thin] (0,\d) --++(0,\b);
+\draw[fill] (0,\d) circle (0.5pt);
+% cylinder 
+\draw[thick,densely dashed] (\a,0) arc (0:180:{\a} and {\b});
+\fill[lightgray,opacity=0.7] (0,0) ellipse ({\a} and {\b}); 
+\fill[lightgray,opacity=0.7] (0,\c) ellipse ({\a} and {\b});
+\shade[ball color=filler4,draw=black,thick,opacity=0.6]
+    ({\a},0) arc (0:-180:{\a} and {\b}) --
+	(-\a,0) -- (-\a,\c) --
+	(-\a,\c) arc (180:360:{\a} and {\b}) --
+	(\a,0) -- cycle;
+\draw[thick] (\a,\c) arc (0:180:{\a} and {\b});
+\draw[fill=black] (0,\c) circle (0.5pt) node[accent1,left] {$3$};
+\node[accent1,below right] at (245:{\a} and {\b}) {$1$}; 
+\node[accent1,below right] at (\a,0) {$1$};
+\end{tikzpicture}  
+\end{columns}
+\stext{\pause\vspace{-3em}
+\begin{solution}\smark
+用高斯公式化为三重积分\par
+$\!\begin{aligned}[t]\text{原式}
+ &=\iiint_{\Omega}(y-z)\dx\dy\dz \\
+ &\onslide<3->{=\iiint_{\Omega}(\rho\sin\theta-z)\rho\d\rho\d\theta\dz\quad\fbox{\cwarn 柱面坐标}}\\
+ &\onslide<4->{=\int_0^{2\pi}\d\theta\int_0^1\d\rho\int_0^3(\rho\sin\theta-z)\dz}
+  \onslide<5->{=-\frac{9\pi}{2}.}
+\end{aligned}$
+\end{solution}}
+\end{frame}
+
+\begin{frame}
+\begin{columns}[onlytextwidth,T]
+\column{70mm}
+\begin{example}
+设有向曲面$\Sigma$是抛物面$z=\frac12(x^2+y^2)$介于$z=0$及$z=2$部分的下侧，计算
+\[ \iint_{\Sigma}(z^2+x)\dy\dz-z\dx\dy. \]
+\end{example}
+\column{54mm}
+\hfil
+\begin{tikzpicture}[thick,inner sep=1pt]
+\def\a{1.5} 
+\def\b{0.3} 
+\pgfmathsetmacro{\c}{(\a)^2}
+%coordinates 
+\draw [-stealth,darkgray,thin] (-1.5,0) -- (1.5,0) node [right] {$y$};
+\draw [-stealth,darkgray,thin] (0,0) -- (0,{\c+1}) node [left] {$z$};
+\draw [-stealth,darkgray,thin] (35:1) -- (215:0.8) node [above left] {$x$};
+%suface 
+\draw [right color=gray4, left color=white, opacity=0.7]
+	plot[variable=\t,domain=-\a:\a,smooth] (\t,{\t*\t})--
+	(\a,\c) arc (0:-180:{\a} and {\b});
+\draw (0,\c) ellipse ({\a} and {\b});
+\node[below right] at({\a*0.75},{(\a*0.75)^2}) {$\Sigma$};
+\draw [fill=filler2, opacity=0.7] (0,\c) ellipse ({\a} and {\b});
+\draw (-0.05,\c) node[left] at (0,\c) {$2$} -- (0.05,\c);
+%normal vector 
+\draw[-stealth,accent1,] (-0.5,1)--++(225:0.7) node[left] {$\vn$};
+\visible<2->{
+  \node[above right] at({\a/2.5},{\c+\b}) {$\Sigma':z=2$};
+  \draw[-stealth,accent1] (-{\a/2},\c)--++(0,0.7) node[left] {$\vn$};
+}
+\end{tikzpicture} 
+\end{columns}
+\stext{\onslide<3->%\vspace{-3em}
+\begin{solution}\smark
+补充平面$\Sigma'$，则$\Sigma\cup\Sigma'$构成封闭曲面．
+\let\displaystyle=\textstyle\vspace{0.5em}
+\begin{align*}
+\iint\limits_{\Sigma\cup\Sigma'}\!(z^2\!+\!x)\dy\dz\!-\!z\dx\dy &= \iiint\limits_\Omega 0\dv=0 \\[-0.2em]
+\iint\limits_{\Sigma'}\!(z^2\!+\!x)\dy\dz\!-\!z\dx\dy &= \iint\limits_{D_{xy}}-2\dx\dy=-8\pi \\[-0.2em]
+\bold{\rightwhitearrow}\iint\limits_{\Sigma}(z^2\!+\!x)\dy\dz\!-\!z\dx\dy&=8\pi
+\end{align*}
+\[. \]
+\[. \]
+\end{solution}}
+\end{frame}
+
+\mybookmark{复习与提高}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+设$\Sigma:\,x^2+y^2+z^2=R^2$取外侧，$\Omega$为$\Sigma$所围立体，
+$r=\sqrt{x^2+y^2+z^2}$，判断下列演算是否正确？
+\begin{align*}
+&\phantom{={}}\iint_\Sigma \wfrac{x^3}{r^3}\dy\dz+\wfrac{y^3}{r^3}\dz\dx+\wfrac{z^3}{r^3}\dx\dy\\
+&\overset{\stext{\bold{\checkmark}\smark}}{=}\frac{1}{R^3}\iint_\Sigma x^3\dy\dz+y^3\dz\dx+z^3\dx\dy \\
+&=\frac{1}{R^3}\iiint_\Omega\!\!3(x^2+y^2+z^2)\dv
+ \overset{\stext{\warn{\times}\smark}}{=}\frac{3}{R}\iiint_\Omega\!\!\dv=4\pi R^2
+\end{align*}
+\end{puzzle}
+\stext{\pause%\vspace{-0.3em}
+\begin{remark*}\smark
+三元函数在$\Sigma$上恒为$R$，但在$\Omega$中不恒为$R$．
+\end{remark*}}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+设$\Sigma:\,x^2+y^2+z^2=R^2$取外侧，$\Omega$为$\Sigma$所围立体，
+$r=\sqrt{x^2+y^2+z^2}$，判断下列演算是否正确？
+\begin{align*}
+&\phantom{={}}\iint_\Sigma \wfrac{x^3}{r^3}\dy\dz+\wfrac{y^3}{r^3}\dz\dx+\wfrac{z^3}{r^3}\dx\dy\\
+&\overset{\stext{\warn{\times}\smark}}{=}
+ \iiint_\Omega\left[\frac{\partial}{\partial x}\left(\wfrac{x^3}{r^3}\right)
+                   +\frac{\partial}{\partial y}\left(\wfrac{y^3}{r^3}\right)
+                   +\frac{\partial}{\partial z}\left(\wfrac{z^3}{r^3}\right)\right]\dv \\
+&=\cdots
+\end{align*}
+\end{puzzle}
+\stext{\pause%\vspace{-0.3em}
+\begin{remark*}\smark
+各个函数在$\Sigma$上连续，但在$\Omega$中不处处连续．
+\end{remark*}}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+设$\Sigma$是球面$x^2+y^2+z^2=1$的外侧．计算
+$$\iint_{\Sigma}\dy\dz+y\dz\dx+z^2\dx\dy.$$
+\end{puzzle}
+\stext{\pause
+\begin{method*}\smark
+由高斯公式有\par
+原式$\displaystyle=\iiint_{\Omega}(0+1+2z)\dv=\iiint_{\Omega}1\dv=\frac{4\pi}{3}$．
+\end{method*}}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+设$\Sigma$是圆锥面$z=\sqrt{x^2+y^2}$位于$0\le z\le1$的外侧．计算
+$$I=\iint_{\Sigma}(x-y)\dy\dz+(y-z)\dz\dx+(z-x)\dx\dy.$$
+\end{puzzle}
+\stext{\pause
+\begin{method*}\smark
+补充平面$\Sigma':z=1$的上侧，则由高斯公式有\let\displaystyle=\textstyle
+\begin{align*}
+  I&=\iiint_{\Omega}3\dv-\iint_{\Sigma'}(z-x)\dx\dy \\
+   &=3\int_0^1\left[\iint_{D_z}\d\sigma\right]\dz-\iint_{D_{xy}}\!\!(1-x)\dx\dy \\
+   &=3\int_0^1\pi z^2\dz - \iint_{D_{xy}}\!\!1\dx\dy = \pi - \pi = 0.
+\end{align*}
+\end{method*}}
+\end{frame}
+
+\end{document}

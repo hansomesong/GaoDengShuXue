@@ -1,0 +1,911 @@
+%  -*- coding: utf-8 -*-
+% !TEX program = xelatex
+
+%\documentclass[14pt]{article}
+%\usepackage[notheorems]{beamerarticle}
+
+\documentclass[14pt,notheorems,leqno,xcolor={rgb}]{beamer} % ignorenonframetext
+
+\input{../common/theme.sty}
+\input{../common/share.sty}
+\input{../common/local.sty}
+
+%\transglitter[direction=90]
+%\transwipe[direction=270]
+%\transdissolve[duration=0.2]
+%\transduration{1}
+%\transboxin             \transboxout
+%\transblindshorizontal  \transblindsvertical
+%\transsplithorizontalin \transsplithorizontalout
+%\transsplitverticalin   \transsplitverticalout
+
+%\setCJKsansfont{手札体-简}
+
+\begin{document}
+
+\mode<presentation>{
+  \setbeamertemplate{section and subsection}[chinese][章]
+  \usebeamertemplate{section and subsection}
+  \setbeamertemplate{show sections in toc}[total]
+}
+
+\setbeamerfont{title}{size=\Huge}
+
+\occasion{高等数学课程}
+
+\title{高等数学2复习}
+%\includeonlylecture{semester 2}
+
+\author{吕荐瑞\kern0.1em(\href{https://lvjr.bitbucket.io}{lvjr.bitbucket.io})}
+\institute{暨南大学数学系}
+
+\begin{frame}[plain]
+\transboxout %盒状收缩（整页效果）
+\titlepage
+\end{frame}
+
+%\lecture{第二学期}{semester 2}
+%\part{第二学期}
+
+\makeatletter
+\beamer@tocsectionnumber=6\relax
+\setcounter{section}{6}
+\makeatother
+
+\section{微分方程}
+
+\begin{frame}
+\frametitle{微分方程的概念}
+\begin{definition}
+含有未知函数的导数或微分的方程，即形如下面形式的方程
+\[ F(x,y,y',y'',\cdots,y^{(n)})=0 \]
+称为\bold{微分方程}。其中微分方程中出现的导数的最高阶数$n$，称为微分方程的\bold{阶}。
+\end{definition}
+\end{frame}
+
+\begin{frame}
+\frametitle{一阶微分方程}
+\begin{enumerate}[<+->]
+  \item \bold{可分离变量微分方程} $f(x)\d x=g(y)\d y$
+  \begin{itemize}[<+->]
+    \item 两边积分得 $\int f(x)\d x=\int g(y)\d y$
+  \end{itemize}
+  \item \bold{齐次微分方程} $\frac{\d y}{\d x}=f(\frac{y}{x})$
+  \begin{itemize}[<+->]
+    \item 令$v=\frac{y}x$，得$x\frac{\d v}{\d x}+v=f(v)$
+    \item 分离变量，得到 $\frac{\d v}{f(v)-v}=\frac{\d x}{x}$
+  \end{itemize}
+  \item \bold{一阶线性微分方程} $y'+p(x)y=q(x)$
+  \begin{itemize}[<+->]
+    \item 先求 $r(x)=\e^{\int p(x)\d x}$
+    \item 再求 $y=r(x)^{-1}\left(\int q(x)r(x)\d x + C\right)$
+  \end{itemize}
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{一阶微分方程}
+\begin{example}
+判别一阶微分方程的类型并求通解：
+\begin{enumerate}
+  \item $(1+y^2)\d x+(x^2+1)\d y=0$
+  \item $(x+y)\d x+(x-y)\d y=0$
+  \item $(x+y)\d x+(x^2+x)\d y=0$
+\end{enumerate}
+\end{example}
+\pause
+\begin{solution}
+\begin{enumerate}
+  \item $\arctan x+\arctan y=C$
+  \item $y^2-2xy-x^2=C$
+  \item $y=\frac{x+1}x\left(-\ln|x+1|-\frac1{x+1}+C\right)$
+\end{enumerate}
+\end{solution}
+\end{frame}
+
+\begin{frame}
+\frametitle{二阶可降阶微分方程}
+\begin{enumerate}[<+->]
+  \item $\bold{y''=f(x)}$型
+  \begin{itemize}[<+->]
+    \item 对$x$积分，得$y'=F(x)+C$
+  \end{itemize}
+  \item $\bold{y''=f(x,y')}$型
+  \begin{itemize}[<+->]
+    \item 令$p=y'$，得$\frac{\d p}{\d x}=f(x,p)$
+  \end{itemize}
+  \item  $\bold{y''=f(y,y')}$型
+  \begin{itemize}[<+->]
+    \item 令$p=y'$，得$p\frac{\d p}{\d y}=f(y,p)$
+  \end{itemize}
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{二阶可降阶微分方程}
+\begin{example}
+求二阶微分方程的通解：
+\begin{enumerate}
+  \item $y''=\e^{2x}$
+  \item $y''=\frac1x\, y'$
+  \item $y''=\frac32 y^2$
+\end{enumerate}
+\end{example}
+\end{frame}
+
+\begin{frame}
+\frametitle{常系数线性微分方程}
+常系数线性微分方程
+\begin{enumerate}[<+->]
+  \item \bold{齐次情形}：$y''+py'+qy=0$
+    \begin{itemize}[<+->]
+      \item 写出特征方程 $r^2+pr+q=0$
+      \item 由特征方程的解写出齐次通解
+    \end{itemize}
+  \item \bold{非齐次情形}：$y''+py'+qy=f(x)$
+    \begin{itemize}[<+->]
+      \item 先求齐次通解
+      \item 再用待定系数法求非齐次特解
+    \end{itemize}
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{线性微分方程的叠加原理}
+\begin{tikzpicture}[thick,font=\small]
+\node[rectangle,draw=accent4,above right,align=center] at (0,2) (A)
+     {$y''+p(x)y'+q(x)y=f_1(x)$\\ \bold{特解} $\bold{y_1^*(x)}$};
+\node[rectangle,draw=accent4,below right,align=center] at (0,-2) (B)
+     {$y''+p(x)y'+q(x)y=f_2(x)$\\ \bold{特解} $\bold{y_2^*(x)}$};
+\onslide<2->{
+\node[rectangle,draw=accent4,left,align=center] at (\textwidth,0) (C)
+     {$y''+p(x)y'+q(x)y=f_1(x)+f_2(x)$\\ \bold{特解} $\bold{y^*(x)=y_1^*(x)+y_2^*(x)}$};
+\draw[->,draw=accent3,ultra thick] (1.5,2) .. controls (1.5,0) .. (C.west);
+\draw[->,draw=accent3,ultra thick] (1.5,-2) .. controls (1.5,0) .. (C.west);
+}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}
+\frametitle{线性微分方程}
+\begin{example}
+求微分方程$y''+y=x^2+\e^x$的通解。
+\end{example}
+\end{frame}
+
+\section{空间解析几何}
+
+\begin{frame}
+\frametitle{数量积与向量积}
+\begin{enumerate}
+  \item 数量积 $\vec a \cdot \vec b = |\vec a|\,|\vec b|\cos\theta$\pause
+  \begin{itemize}
+    \item $\bold{\vec a\cdot\vec b=0} \Longleftrightarrow \bold{\vec a\bot\vec b}$
+  \end{itemize}\pause
+  \item 向量积 $|\vec a \times \vec b|=|\vec a|\,|\vec b|\,\sin\theta$\pause
+  \begin{itemize}
+    \item $\bold{\vec a\times\vec b=0} \Longleftrightarrow \bold{\vec a\parallel\vec b}$
+  \end{itemize}\pause
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{旋转曲面}
+设在$yz$面上的曲线$C$的方程为$f(y,z)=0$。
+\begin{columns}[onlytextwidth]
+\column{.55\textwidth}
+它绕$z$轴旋转一周得到的旋转曲面方程为
+$$f(\pm\sqrt{x^2+y^2},z)=0.$$
+\column{.4\textwidth}
+\begin{tikzpicture}[thick]
+\draw[densely dashed] (0,0) -- (-.4,-.4) ; \draw[->] (-.45,-.45) -- (-1,-1) node[left]{$x$};
+\draw[densely dashed] (0,0) -- (0.95,0); \draw[->] (1.0,0) -- (2,0) node[right] {$y$};
+\draw[densely dashed] (0,0) -- (0,1.45); \draw[->] (0,1.5) -- (0,2.4) node[above] {$z$};
+\draw(-1,0) arc (180 : 360 : 1 and .5); \draw[densely dashed] (1,0) arc (0 : 180 : 1 and .5);
+\draw(0,1.5) ellipse (.6 and .3);
+\draw[thick,color=accent3] plot[smooth,tension=.8] coordinates {(1,0) (0.85,0.75) (0.6,1.5)};
+\node[right] at (0.85,0.75) {$C$};
+\draw plot[smooth,tension=.8] coordinates {(-1,0) (-0.85,0.75) (-0.6,1.5)};
+\end{tikzpicture}
+\end{columns}\pause
+它绕$y$轴旋转一周得到的旋转曲面方程为
+$$f(y,\pm\sqrt{x^2+z^2})=0.$$
+\end{frame}
+
+\begin{frame}
+\begin{example}
+直线$L$：$\frac{x}3=\frac{y}2=\frac{z-1}1$绕$z$轴旋转一周，求所得的旋转曲面的方程。
+\end{example}\pause
+\begin{solution}
+设$M_1(x_1,y_1,z_1)$为$L$上任一点，则有
+$$\frac{x_1}3=\frac{y_1}2=\frac{z_1-1}1\eqno{(1)}$$\pause
+设$M(x,y,z)$为$M_1$绕$z$轴旋转轨迹上任一点，则有
+$$x^2+y^2=x_1^2+y_1^2, \quad z=z_1\eqno{(2)}$$\pause
+由(1)解得$x_1=3(z_1-1)$，$y_1=2(z_1-1)$，\pause 代入(2)消去$z_1$\pause 得方程$x^2+y^2=13(z-1)^2$。
+\end{solution}
+\end{frame}
+
+\begin{frame}
+\frametitle{平面的方程}
+\begin{itemize}
+  \item \bold{一般式方程}：$$Ax+By+Cz+D=0$$
+  \item \bold{点法式方程}：$$A(x-x_0)+B(y-y_0)+C(z-z_0)=0$$
+  \item \bold{截距式方程}：$$\frac{x}a+\frac{y}b+\frac{z}c=1$$
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{直线的方程}
+\begin{itemize}
+  \item \bold{一般式方程}：
+    $\left\{\begin{aligned}
+    A_1x+B_1y+C_1z+D_1=0\\
+    A_2x+B_2y+C_2z+D_2=0
+    \end{aligned}\right.$
+  \item \bold{对称式方程}：
+    $\dfrac{x-x_0}m = \dfrac{y-y_o}n = \dfrac{z-z_0}p$
+  \item \bold{参数式方程}：
+    $\left\{\begin{aligned}
+      x &= x_0 + mt\\
+      y &= y_0 + nt\\
+      z &= z_0 + pt
+    \end{aligned}\right.$
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{平面直线间的夹角}
+\begin{itemize}
+  \item \bold{平面与平面的夹角}：$\cos\theta=\dfrac{|\vec{n}_1\cdot\vec{n}_2|}{|\vec{n}_1|\cdot|\vec{n}_2|}$
+  \item \bold{直线与直线的夹角}：$\cos\theta=\dfrac{|\vec s_1\cdot\vec s_2|}{|\vec s_1|\,|\vec s_2|}$
+  \item \bold{直线与平面的夹角}：$\sin\theta=\dfrac{|\vec s\cdot\vec n|}{\ |\vec s|\,|\vec n|\ }$
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{平面束的方程}
+\begin{columns}[onlytextwidth]
+\column{.6\textwidth}
+过直线
+\[ \left\{\begin{aligned}
+  A_1x+B_1y+C_1z+D_1=0\\
+  A_2x+B_2y+C_2z+D_2=0
+\end{aligned}\right.\]
+的平面束的方程为\pause
+\column{.3\textwidth}
+\begin{tikzpicture}[scale=.9]
+\draw[fill=filler1] (-.5,-1) -- (.5,1) -- (-.7,0) -- (-1.7,-2) -- cycle;
+\draw[fill=filler4] (-.5,-1) -- (.5,1) -- (1.1,0) -- (.1,-2) -- cycle;
+\draw[fill=filler5] (-2,-1) -- (-1,1) -- (2,1) -- (1,-1) -- cycle;
+\draw[fill=filler1] (-.5,-1) -- (.5,1) -- (1.7,2) -- (.7,0) -- cycle;
+\draw[fill=filler4] (-.5,-1) -- (.5,1) -- (-.1,2) -- (-1.1,0) -- cycle;
+\draw[thick,color=accent3] (-.5,-1) -- (.5,1);
+\end{tikzpicture}
+\end{columns}\pause
+\vspace{-.5em}
+\begin{multline*} \lambda_1(A_1x+B_1y+C_1z+D_1)\\+\lambda_2(A_2x+B_2y+C_2z+D_2)=0 \end{multline*}
+\vspace{-.5em}其中，$\lambda_1$，\!$\lambda_2$ 不全为零。
+\end{frame}
+
+\section{多元函数微分法}
+
+\tikzset{cross/.style={
+  postaction={decorate,decoration={
+     markings,mark=at position .5 with {
+       \draw[red,solid,thick,-] (-3pt,-3pt) -- (3pt,3pt); % mark 会使用原线条样式，因此需要重新设置
+       \draw[red,solid,thick,-] (3pt,-3pt) -- (-3pt,3pt);
+     }}}
+    %markings,mark=at position .5 with \node[red]{$\times$};}}
+}}
+\begin{frame}
+\frametitle{基本概念的关系图}
+%\begin{center}
+% http://tex.stackexchange.com/q/39826/8956
+% 连接 node 时不可在 \draw 中设置 shift，但可在 node 名称中设置
+% 但如果不是坐标 node，需要指明 node 方向
+% 或者用 calc 库，\draw[green] (i0) -- ($(i1)+(1,2)$);
+\begin{tikzpicture}[box/.style={draw=accent4},line/.style={draw=accent1},thick]
+\node[box] at (0,4) (A) {偏导数连续};
+\node[box] at (0,2) (B) {可微分};
+\node[box] at (-2,0)(C) {偏导数存在};
+\node[box] at (2,0) (D) {连续};
+\draw[line,->] ([xshift=-.2cm]A.south) -- ([xshift=-.2cm]B.north);
+\draw[dashed,->] ([xshift=.2cm]B.north) -- node[red] {$\times$} ([xshift=.2cm]A.south);
+\draw[line,->] ([xshift=-.6cm]B.south) -- ([xshift=-.6cm]C.north);
+\draw[dashed,->,cross] ([xshift=-.1cm]C.north) -- ([xshift=-.1cm]B.south);
+\draw[line,->] ([xshift=.1cm]B.south) -- ([xshift=-.1cm]D.north);
+\draw[dashed,->,cross] ([xshift=.4cm]D.north) -- ([xshift=.6cm]B.south);
+\draw[dashed,->,cross] ([yshift=.2cm]C.east) -- ([yshift=.2cm]D.west);
+\draw[dashed,->,cross] ([yshift=-.2cm]D.west) -- ([yshift=-.2cm]C.east);
+\end{tikzpicture}
+%\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{多元函数求导法}
+\begin{itemize}
+  \item 复合函数求导（链式法则）
+  \item 隐函数求导（按公式计算）
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{极值与最值问题}
+\begin{itemize}
+  \item 极值的必要条件和充分条件
+  \item 求条件极值的方法
+  \begin{enumerate}
+    \item 消元化为无条件极值
+    \item 拉格朗日乘数法
+  \end{enumerate}
+  \item 求解最值和条件最值问题
+\end{itemize}
+\end{frame}
+
+\section{重积分}
+
+\subsection{奇偶对称性}
+
+\begin{frame}
+\frametitle{二重积分的奇偶对称性}
+\begin{property*}[奇偶对称性]
+设闭区域$D$关于$x$轴对称，
+\begin{columns}[onlytextwidth]
+\column{84mm}
+\begin{itemize}
+  \item<2-> 若$f(x,y)$关于$y$是奇函数，则%（即：$f(x,-y)=-f(x,y)$）
+    \[ \iint_{D}f(x,y)\d\sigma=0 \]
+  \item<3-> 若$f(x, y)$关于$y$是偶函数，则%（即：$f(x,-y)=f(x, y)$）
+    \[ \iint_{D}f(x, y)\d\sigma=2\iint_{D_{1}}f(x, y)\d\sigma \]
+\end{itemize}
+\column{44mm}\hfil%\hfil
+\begin{tikzpicture}[thick,font=\small]
+\draw[fill=filler2] (-1.1,0) parabola bend(0,2) (1.1,0) parabola bend(0,-2) (-1.1,0) -- cycle; 
+\draw[thin,-stealth] (-1.3,0)--(1.4,0) node[below] {$x$};
+\node at (1,1.3) {$D$};
+\node at (0,1.3) {$D_1$}; 
+\node at (0,-1.3) {$D_2$};
+\draw[fill,blue] (-0.7,0.4) circle (0.6pt) node[right] {$(x,y)$}; 
+\draw[fill,blue] (-0.7,-0.4) circle (0.6pt) node[right] {$(x,-y)$};
+\end{tikzpicture}
+\end{columns}
+\end{property*}
+\end{frame}
+
+\begin{frame}
+\frametitle{二重积分的奇偶对称性}
+\begin{property*}[奇偶对称性]
+设闭区域$D$关于$y$轴对称，
+\begin{columns}[onlytextwidth,T]
+\column{80mm}
+\begin{itemize}
+  \item<2-> 若$f(x, y)$关于$x$是奇函数，则%（即：$f(-x, y)=-f(x, y)$）
+     \[ \iint_{D}f(x, y)\d\sigma=0 \]
+  \item<3-> 若$f(x, y)$关于$x$是偶函数，则%（即：$f(-x, y)=f(x, y)$）
+     \[ \iint_{D}f(x, y)\d\sigma=2\iint_{D_1}f(x, y)\d\sigma \]
+\end{itemize}
+\column{48mm}%\hfil%\hfil
+\begin{tikzpicture}[thick,font=\small]
+\draw[fill=filler2] (0,-1.3) to[out=5,in=-5] (0,1.3) to[out=185,in=175] (0,-1.3) -- cycle; 
+\draw[thin,-stealth] (0,-1.6)--(0,1.6) node[right] {$y$};
+\node at(0.8,-1) {$D$}; 
+\node at(0.35,-0.2) {$D_1$}; 
+\node at(-0.35,-0.2) {$D_2$};
+\draw[fill,blue] (0.5,0.4) circle (0.6pt) node[right] {$(x,y)$}; 
+\draw[fill,blue] (-0.5,0.4) circle (0.6pt) node[left] {$(-x,y)$}; 
+\end{tikzpicture}
+\end{columns}
+\end{property*}
+\end{frame}
+
+\ifligong % >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+\begin{frame}
+\frametitle{三重积分的奇偶对称性}
+\begin{property*}[奇偶对称性]\par
+设空间中三维闭区域$\Omega$关于$xy$坐标面对称，
+\begin{columns}[onlytextwidth,T]
+\column{84mm}
+\begin{enumzero}
+  \item<2-> 若$f(x,y,z)$关于$z$是奇函数，则%（即：$f(x,y,-z)=-f(x,y,z)$）
+    \[ \iiint_{\Omega}f(x,y,z)\dv=0 \]%
+    \vskip1em%
+  \item<3-> 若$f(x,y,z)$关于$z$是偶函数，则%（即：$f(x,y,-z)=f(x,y,z)$）
+    \[ \iiint_{\Omega}\negthickspace f(x,y,z)\dv=2\iiint_{\Omega_{1}}\negthickspace f(x,y,z)\dv \]
+\end{enumzero}
+\column{44mm}
+%\begin{center}
+\begin{tikzpicture}[scale=0.8,thick,font=\small]
+\def\a{1} 
+\def\b{1.5}
+\def\d{0.25}
+%coordinates 
+\draw[-stealth,gray] ({-\a*1.5},{\b*0.5})--++(225:{\a*1.2}) node[above]{$x$};
+\draw[-stealth,gray] ({-\a*1.5},{\b*0.5})--++({\a*2.6},0) node[right]{$y$};
+\draw[-stealth,gray] ({-\a*1.5},{-\b*0.8})--++(0,{\b*2.2}) node[left]{$z$};
+%3d body 
+\draw[fill=filler2] (0:{\a} and {\b*0.3}) arc (0:360:{\a} and {\b*0.3});
+\shade[draw,ball color=gray!20,opacity=0.7] (0,0) ellipse ({\a} and {\b}); 
+\draw[densely dashed] (0:{\a} and {\b*0.3}) arc (0:180:{\a} and {\b*0.3});
+\node[left=5pt] at (0:{\a*2} and {\b}) {$\Omega$};
+%points 
+\draw[fill,color=accent1] (90:{\b*0.7}) circle (0.9pt) node[above] {$(x,y,z)\in\Omega_1$}; 
+\draw[fill,color=accent1] (-90:{\b*0.7}) circle (0.9pt) node[below] {$(x,y,-z)\in\Omega_2$};
+\end{tikzpicture} 
+%\end{center}
+\end{columns}
+\end{property*}
+\end{frame}
+
+\fi % <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+\subsection{轮换对称性}
+
+\begin{frame}
+\frametitle{轮换对称性}
+\begin{example}
+设$D$是圆$x^2+y^2=1$围成的闭区域，求积分
+$$\iint_{D}(x^2+3y^2)\d\sigma.$$
+\end{example}
+\pause
+\begin{method*}
+由轮换对称性有$\iint_{D}x^2\d\sigma=\iint_{D}y^2\d\sigma$．从而
+\[ \iint_{D}(x^2+3y^2)\d\sigma = \iint_{D}(2x^2+2y^2)\d\sigma=\cdots \]
+\end{method*}
+\stext{\vpause\begin{puzzle}\smark
+$D$同上，求二重积分$\iint_{D}(x^2+2xy+3y^2)\d\sigma$．
+\end{puzzle}}
+\end{frame}
+
+\subsection{计算方法}
+
+\begin{frame}
+\frametitle{二重积分的计算方法}
+\begin{enumerate}
+  \item 确定积分区域（求曲面交线的投影曲线）
+  \item 选择合适的坐标系（直角坐标，极坐标）
+  \item 选择合适的积分次序（$X$型，$Y$型）
+  \item 利用对称性简化计算（可以分块积分）
+\end{enumerate}
+\end{frame}
+
+\ifligong % >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+\begin{frame}
+\frametitle{三重积分的计算方法}
+\begin{enumerate}
+  \item 选择合适的坐标系（直角坐标，柱面坐标）
+  \item 选择合适的积分次序（先一后二，先二后一）
+  \item 利用对称性简化计算（可以分块积分）
+\end{enumerate}
+\end{frame}
+
+\fi % <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+\subsection{几何应用}
+
+\begin{frame}
+\frametitle{立体的体积}
+设\bold{曲顶柱体}的底面为$xy$平面有界闭区域$D$，顶面为连续曲面$f(x,y)$，则它的体积为
+\[ \bold{V=\iint_{D}f(x, y)\d{\sigma}}. \]
+\ifligong % >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+\vpause 占有空间有界闭区域$\Omega$的立体的体积为
+\[ \bold{V=\iiint_{\Omega}\dx\dy\dz}. \]
+\fi % <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+\end{frame}
+
+\begin{frame}
+\frametitle{曲面的面积}
+设曲面$z=f(x,y)$在$xOy$面上的投影区域为$D$，且$f(x,y)$的偏导数连续，则曲面的面积为
+\[ \bold{S=\iint_{\Sigma}\dS=\iint_{D}\sqrt{1+f'_{x}(x,y)^{2}+f'_{y}(x,y)^{2}}\dx\dy} \]
+\end{frame}
+
+\ifligong % >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+\section{曲线积分与曲面积分}
+
+\subsection{奇偶对称性}
+
+\begin{frame}
+\frametitle{第一类曲线积分的奇偶对称性}
+\begin{property*}[奇偶对称性]
+设平面曲线$L$关于$x$轴对称
+\begin{columns}[onlytextwidth,T]
+\column{84mm}
+\begin{itemize}
+  \item<2-> 若$f(x,y)$关于$y$是奇函数，则%（即：$f(x,-y)=-f(x,y)$）
+  \[ \int_{L}f(x,y)\ds=0 \]
+  \item<3-> 若$f(x,y)$关于$y$是偶函数，则%（即：$f(x,-y)=f(x,y)$）
+  \[ \int_{L}f(x,y)\ds=2\int_{L_{1}}f(x,y)\ds \]
+\end{itemize}
+\column{44mm}
+%\begin{center} 
+\begin{tikzpicture}[thick,font=\small,scale=1]
+%coordinates 
+\draw[-stealth] (-0.4,0)--(3.1,0) node[below left]{$x$};
+\draw[-stealth] (0,-1.9)--(0,1.9) node[below left]{$y$};
+%curve
+\draw[accent4] (2.5,0) arc (0:180:1 and 2);
+\draw[accent2] (2.5,0) arc (0:-180:1 and 2);
+\node[right] at(2.4,1) {$L$};
+\node[below,accent1] at(0.5,2) {$L_1$};
+\node[above,accent3] at(0.5,-2) {$L_2$};
+%points 
+\draw[fill,color=accent1] (0.6,0.9) circle (0.8pt) node[right] {$(x,y)$}; 
+\draw[fill,color=accent3] (0.6,-0.9) circle (0.8pt) node[right] {$(x,-y)$};
+\end{tikzpicture} 
+%\end{center}
+\end{columns}
+\end{property*}
+\end{frame}
+
+\begin{frame}
+\frametitle{第一类曲线积分的奇偶对称性}
+\begin{property*}[奇偶对称性]
+设平面曲线$L$关于$y$轴对称
+\begin{columns}[onlytextwidth,T]
+\column{84mm}
+\begin{itemize}
+  \item<2-> 若$f(x,y)$关于$x$是奇函数，则%（即：$f(-x,y)=-f(x,y)$）
+  \[ \int_{L}f(x,y)\ds=0 \]
+  \item<3-> 若$f(x,y)$关于$x$是偶函数，则%（即：$f(-x,y)=f(x,y)$）
+  \[ \int_{L}f(x,y)\ds=2\int_{L_{1}}f(x,y)\ds \]
+\end{itemize}
+\column{44mm}
+%\begin{center} 
+\begin{tikzpicture}[thick,font=\small,scale=1]
+%coordinates 
+\draw[-stealth] (0.3,-2.2)--(2.8,-2.2) node[above left]{$x$};
+\draw[-stealth] (1.5,-2.4)--(1.5,2.4) node[below left]{$y$};
+%curve
+\draw[accent4] (1.5,2) arc (90:-90:1 and 2);
+\draw[accent2] (1.5,2) arc (90:270:1 and 2);
+\node[left] at(2.4,-1) {$L$};
+\node[below,accent1] at(2.5,2) {$L_1$};
+\node[below,accent3] at(0.5,2) {$L_2$};
+%points
+\draw[fill,color=accent1] (2.4,0.9) circle (0.8pt) node[below] {$(x,y)$};
+\draw[fill,color=accent3] (0.6,0.9) circle (0.8pt) node[below] {$(-x,y)$}; 
+\end{tikzpicture} 
+%\end{center}
+\end{columns}
+\end{property*}
+\end{frame}
+
+\begin{frame}
+\frametitle{第一类曲面积分的奇偶对称性}
+\begin{property*}[奇偶对称性]%\par
+设曲面$\Sigma$关于$xy$坐标面对称，
+\begin{columns}[onlytextwidth,T]
+\column{84mm}
+\begin{enumzero}
+  \item<2-> 若$f(x,y,z)$关于$z$是奇函数，则%（即：$f(x,y,-z)=-f(x,y,z)$）
+    \[ \iint_{\Sigma}f(x,y,z)\dS=0 \]%
+    \vskip1em%
+  \item<3-> 若$f(x,y,z)$关于$z$是偶函数，则%（即：$f(x,y,-z)=f(x,y,z)$）
+    \[ \iint_{\Sigma}\negthickspace f(x,y,z)\dS=2\iint_{\Sigma_{1}}\negthickspace f(x,y,z)\dS \]
+\end{enumzero}
+\column{44mm}
+%\begin{center}
+\begin{tikzpicture}[scale=0.8,thick,font=\small]
+\def\a{1} 
+\def\b{1.5}
+\def\d{0.25}
+%coordinates 
+\draw[-stealth,gray] ({-\a*1.5},{\b*0.5})--++(225:{\a*1.2}) node[above]{$x$};
+\draw[-stealth,gray] ({-\a*1.5},{\b*0.5})--++({\a*2.6},0) node[right]{$y$};
+\draw[-stealth,gray] ({-\a*1.5},{-\b*0.8})--++(0,{\b*2.2}) node[left]{$z$};
+%3d body 
+\draw[fill=filler2] (0:{\a} and {\b*0.3}) arc (0:360:{\a} and {\b*0.3});
+\shade[draw,ball color=gray!20,opacity=0.7] (0,0) ellipse ({\a} and {\b}); 
+\draw[densely dashed] (0:{\a} and {\b*0.3}) arc (0:180:{\a} and {\b*0.3});
+\node[left=5pt] at (0:{\a*2} and {\b}) {$\Sigma$};
+%points 
+\draw[fill,color=accent1] (90:{\b*0.7}) circle (0.9pt) node[above] {$(x,y,z)\in\Sigma_1$}; 
+\draw[fill,color=accent1] (-90:{\b*0.7}) circle (0.9pt) node[below] {$(x,y,-z)\in\Sigma_2$};
+\end{tikzpicture} 
+%\end{center}
+\end{columns}
+\end{property*}
+\end{frame}
+
+\subsection{轮换对称性}
+
+\begin{frame}
+\frametitle{轮换对称性}
+\begin{example}
+$\Gamma$为球面$x^2+y^2+z^2=1$被平面$x+y+z=0$所截的圆周，求曲线积分
+$\displaystyle\oint_{\Gamma}x^2\ds$.
+\end{example}
+\pause
+\begin{method*}
+由轮换对称性有
+$$\oint_{\Gamma}x^2\ds=\oint_{\Gamma}y^2\ds=\oint_{\Gamma}z^2\ds.$$\pause
+所以$\begin{aligned}[t]\oint_{\Gamma}x^{2}\ds&=\frac13\oint_{\Gamma}(x^2+y^2+z^2)\ds\\
+&=\frac13\oint_{\Gamma}1\ds=\frac13\cdot2\pi=\frac{2\pi}{3}.\end{aligned}$
+\end{method*}
+\end{frame}
+
+\begin{frame}
+\frametitle{轮换对称性}
+\begin{example}
+设$\Sigma$是球面$x^2+y^2+z^2=R^2$，求曲面积分
+$$\iint_{\Sigma}(x^{2}+y^{2})\dS.$$
+\end{example}
+\pause
+\begin{method*}
+由轮换对称性有
+$$\iint_{\Sigma}x^{2}\dS=\iint_{\Sigma}y^{2}\dS=\iint_{\Sigma}z^{2}\dS.$$\pause
+所以$\begin{aligned}[t]
+\iint_{\Sigma}(x^2+y^2)\dS
+&=\frac{2}{3}\iint_{\Sigma}(x^{2}+y^{2}+z^{2})\dS \\
+ =\frac{2}{3}\iint_{\Sigma}R^{2}\dS
+&=\frac{2}{3}R^{2}\cdot\text{Area}(\Sigma) %=\frac{2}{3}R^{2}\cdot4\pi R^2
+ =\frac{8}{3}\pi R^4.
+\end{aligned}$
+\end{method*}
+\end{frame}
+
+\begin{frame}
+\frametitle{轮换对称性}
+\begin{columns}[onlytextwidth]
+\column{0.7\textwidth}
+\begin{example}
+设$L$为逆时针方向的单位圆周$x^2+y^2=1$，求曲线积分
+$$\oint_{L}x\dy-y\dx.$$
+\end{example}
+\column{0.28\textwidth}
+\hfill\begin{tikzpicture}[thick,font=\small]
+\draw[-stealth] (-1.3,0) -- (1.4,0) node[right,inner sep=2pt]{$x$};
+\draw[-stealth] (0,-1.3) -- (0,1.4) node[above,inner sep=2pt]{$y$};
+\draw[decoration={markings, mark=at position 0.125 with {\arrow[accent1]{stealth}}},
+      decoration={markings, mark=at position 0.375 with {\arrow[accent1]{stealth}}},
+      decoration={markings, mark=at position 0.625 with {\arrow[accent1]{stealth}}},
+      decoration={markings, mark=at position 0.875 with {\arrow[accent1]{stealth}}},
+      postaction={decorate}] (0,0) circle (1);
+\end{tikzpicture}
+\end{columns}
+\pause
+\begin{method*}
+由轮换对称性有$\oint_{L}x\dy=\oint_{L}y\dx$，从而
+$$\oint_{L}x\dy-y\dx=\oint_{L}x\dy-\oint_{L}y\dx=0.$$
+说明上面这种解法的\warn{错误}之处．
+\end{method*}
+\end{frame}
+
+\begin{frame}
+\frametitle{轮换对称性}
+\begin{example}
+设$\Sigma$是球面$x^2+y^2+z^2=1$的外侧．计算
+$$\iint_{\Sigma}\dy\dz+y\dz\dx+z^2\dx\dy.$$
+\end{example}
+\pause
+\begin{method*}
+由轮换对称性有
+\[\iint_{\Sigma}\dy\dz=\iint_{\Sigma}\dx\dy,\
+  \iint_{\Sigma}y\dz\dx=\iint_{\Sigma}z\dx\dy.\]
+所以原式$\displaystyle=\iint_{\Sigma}\left(1+z+z^2\right)\dx\dy=\cdots=\frac{4\pi}{3}$．
+\end{method*}
+\end{frame}
+
+\subsection{积分联系}
+
+\begin{frame}
+\frametitle{区域与边界}
+闭区域上的积分与区域边界的积分有如下联系：\par
+\begin{tabularx}{\textwidth}{Xl<{\ }X}
+  \hline
+  \bold{积分的联系}  & \bold{$\rightsquigarrow$} & \bold{积分公式} \\
+  \hline
+  曲线积分与二重积分 & $\rightsquigarrow$ & 格林公式 \\
+  曲面积分与三重积分 & $\rightsquigarrow$ & 高斯公式 \\
+  曲线积分与曲面积分 & $\rightsquigarrow$ & 斯托克斯公式 \\
+  \hline
+\end{tabularx}
+\end{frame}
+
+\begin{frame}
+%\frametitle{格林公式}
+\begin{theorem*}[格林公式]
+设闭区域$D$由分段光滑的曲线$L$围成，函数$P(x,y)$及$Q(x,y)$在$D$上具有一阶连续偏导数，则有
+\[
+\bold{\iint_{D}\left(\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\right)\dx\dy
+  =\oint_{L}P\dx+Q\dy},
+\]
+其中$L$是$D$的\warn{取正向}的边界曲线．
+\end{theorem*}
+\end{frame}
+
+\begin{frame}
+\begin{theorem*}[高斯公式]
+设空间闭区域$\Omega$是由分片光滑的闭曲面$\Sigma$所围成，函数$P(x,y,z)$，$Q(x,y,z,)$
+和$R(x,y,z)$在$\Omega$上具有一阶连续偏导数，则有
+\begin{multline*}
+\iiint_{\Omega}\left(\frac{\partial P}{\partial x}+\frac{\partial Q}{\partial y}
+    +\frac{\partial R}{\partial z}\right)\dv \\
+=\iint_{\Sigma}P\dy\dz+Q\dz\dx+R\dx\dy \\
+=\iint_{\Sigma}(P\cos\alpha+Q\cos\beta+R\cos\gamma)\dS
+\end{multline*}
+其中有向曲面$\Sigma$是$\Omega$的整个边界曲面的\CJKunderdot{外侧}．
+\end{theorem*}
+\end{frame}
+
+\begin{frame}
+\begin{theorem*}[斯托克斯公式]
+设$\Gamma$为分段光滑的空间有向闭曲线，$\Sigma$是以$\Gamma$为边界的分片光滑的有向曲面，
+函数$P(x,y,z)$，$Q(x,y,z)$，$R(x,y,z)$在曲面$\Sigma$连同边界$\Gamma$上具有一阶连续偏导数，则有
+\setlength{\multlinegap}{0pt}%
+\begin{multline*}
+\iint_{\Sigma}\left(\frac{\partial R}{\partial y}-\frac{\partial Q}{\partial z}\right)\dy\dz
+   +\left(\frac{\partial P}{\partial z}-\frac{\partial R}{\partial x}\right)\dz\dx \\
+   +\left(\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\right)\dx\dy \\
+=\oint_{\Gamma}P\dx+Q\dy+R\dz
+\end{multline*}
+其中$\Gamma$的正向与$\Sigma$的侧符合\CJKunderdot{右手规则}．
+\end{theorem*}
+\end{frame}
+
+\begin{frame}
+\frametitle{格林公式}
+\begin{example}
+设$L$为从$O(0,0)$到$A(4,0)$的上半圆周$y=\sqrt{4x-x^2}$，计算曲线积分
+\[ I=\int_L (x^2+3y)\dx + (y^2-x)\dy. \]
+\end{example}
+\pause
+\begin{method*}
+为了使用格林公式，添加辅助线段$AO$，求得
+$$I = 4\iint_D\d\sigma - \int_{AO}x^2\dx = 8\pi + \frac{64}{3}.$$
+\end{method*}
+\end{frame}
+
+\begin{frame}
+\frametitle{高斯公式}
+\begin{example}
+设$\Sigma$是球面$x^2+y^2+z^2=1$的外侧．计算
+$$\iint_{\Sigma}\dy\dz+y\dz\dx+z^2\dx\dy.$$
+\end{example}
+\pause
+\begin{method*}
+由高斯公式有\par
+原式$\displaystyle=\iiint_{\Omega}(0+1+2z)\dv=\iiint_{\Omega}1\dv=\frac{4\pi}{3}$．
+\end{method*}
+\end{frame}
+
+\subsection{计算方法}
+
+\begin{frame}
+\frametitle{曲线积分的计算}
+对\bold{弧长}的曲线积分：$x=\phi(t)$, $y=\psi(t)$，$\warn{a\le t\le b}$
+$$\int_{L}f(x,y)\ds =\int_a^b f(\phi(t),\psi(t))\sqrt{\phi'(t)^{2}+\psi'(t)^{2}}\dt$$
+\pause\vspace{0.5em}\hrule\vspace{0.5em}
+对\bold{坐标}的曲线积分：$x=\phi(t)$, $y=\psi(t)$，\warn{$t$从$a$到$b$}
+\setlength{\multlinegap}{0pt}%
+\begin{multline*}
+\int_{L}P(x,y)\dx+Q(x,y)\dy \\[-0.2em]
+=\int_a^b\!\Big[P\big(\phi(t),\psi(t)\big)\phi'(t)+Q\big(\phi(t),\psi(t)\big)\psi'(t)\Big]\!\dt
+\end{multline*}
+\end{frame}
+
+\begin{frame}
+\frametitle{曲面积分的计算}
+对\bold{面积}的曲面积分：设曲面为$z=z(x,y)$（\warn{始终正号}）
+\begin{align*}
+   &\iint_{\Sigma}f(x,y,z)\dS \\
+ = &\iint_{D_{xy}}\!\!f\big(x,y,z(x,y)\big)\sqrt{1\!+\!z_{x}^{2}(x,y)\!+\!z_{y}^{2}(x,y)}\dx\dy
+\end{align*}
+\pause\vspace{0.5em}\hrule\vspace{0.5em}
+对\bold{坐标}的曲面积分：设曲面为$z=z(x,y)$（\warn{上正下负}）
+\[\iint_{\Sigma}R(x,y,z)\dx\dy=\bold{\pm}\iint_{D_{xy}}R(x,y,z(x,y))\dx\dy\]
+\end{frame}
+
+\fi % <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+\makeatletter
+\beamer@tocsectionnumber=11\relax
+\setcounter{section}{11}
+\makeatother
+
+\section{无穷级数}
+
+%\tikzset{box/.style={draw,thin}}
+
+\begin{frame}
+\frametitle{正项级数审敛法}
+%%\begin{center}
+% 在 tikz node 中不总是可以用 \\ 换行，下列方法可以做到
+% 1. 设定 align=center 等
+% 2. 设定 text width=3cm 等
+% 3. 载入 \usepackage{makecell} 后用 \makecell{foo\\bar}
+% 4. 用其它的表格类环境比如 tabular
+% ----------------------
+% left delimiter 选项依赖于 \usetikzlibrary{matrix}
+% 用 \usetikzlibrary{decorations} 也可以加花括号
+\begin{tikzpicture}[box/.style={draw=accent4,thin}]
+\node[box] at (0,3) (a) {必要条件$\bold{\lim\limits_{n\to\infty}u_n=0}$};
+\node at (5,3) (b) {发散};
+\node[box,align=left] at (0,0) (c)
+    {比值判别法$\bold{\lim\limits_{n\to\infty}\dfrac{u_{n+1}}{u_n}=\rho}$\\
+     根值判别法$\bold{\lim\limits_{n\to\infty}\sqrt[n]{u_n}=\rho}$};
+\node[align=left,inner sep=0pt,left delimiter=\{] at (6.4,0) (d) {比较判别法\\ 部分和极限}; % \\ 积分判别法};
+% \matrix 的 node 中，最后必须加上 \\
+% \matrix(d) [matrix of nodes,left delimiter=\{] at (6.3,0) {部分和极限\\ 比较判别法\\ 积分判别法\\};
+\draw[thick,->] (a) -- node[font=\small,above] {不满足} (b);
+\draw[thick,->] (a) -- node[font=\small,right] {满足} (c);
+% 用 left delimiter 加上的花括号不属于 node 内容，用箭头连接时会有错位问题
+\draw[thick,->] (c) -- node[font=\small,above] {$\bold{\rho=1}$} node[font=\small,below]{不定} (4.6,0);
+\draw[thick,->] (-1.5,-1.3) -- node[font=\small,right] {$\bold{\rho<1}$} (-1.5,-2.2) node[below] {收敛};
+\draw[thick,->] (1.5,-1.3) -- node[font=\small,right] {$\bold{\rho>1}$} (1.5,-2.2) node[below] {发散};
+\end{tikzpicture}
+%%\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{一般级数审敛法}
+\begin{tikzpicture}[box/.style={draw=accent4,thin}]
+\node[box] at (0,3) (a) {必要条件$\bold{\lim\limits_{n\to\infty}u_n=0}$};
+\node at (5,3) (b) {发散};
+\node[box,align=left] at (0,0) (c)
+    {比值判别法$\bold{\lim\limits_{n\to\infty}\dfrac{|u_{n+1}|}{|u_n|}=\rho}$\\
+     根值判别法$\bold{\lim\limits_{n\to\infty}\sqrt[n]{|u_n|}=\rho}$};
+\node[align=left,inner sep=0pt,left delimiter=\{] at (6.4,0) (d) {Leibniz定理\\ 部分和极限};
+\draw[thick,->] (a) -- node[font=\small,above] {不满足} (b);
+\draw[thick,->] (a) -- node[font=\small,right] {满足} (c);
+\draw[thick,->] (c) -- node[font=\small,above] {$\bold{\rho=1}$} node[font=\small,below]{不定} (4.6,0);
+\draw[thick,->] (-1.5,-1.4) -- node[font=\small,right] {$\bold{\rho<1}$} (-1.5,-2.2) node[below] {(绝对)收敛};
+\draw[thick,->] (1.5,-1.4) -- node[font=\small,right] {$\bold{\rho>1}$} (1.5,-2.2) node[below] {发散};
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}
+\frametitle{幂级数收敛域的求法}
+\begin{itemize}
+  \item 标准形式幂级数
+  \begin{enumerate}
+    \item 先求幂级数的收敛半径$R$
+    \item 再讨论在$x=\pm R$处的敛散性
+  \end{enumerate}
+  \item 非标准形式幂级数
+  \begin{itemize}
+    \item 通过换元转化为标准形式
+    \item 直接用比值法或者根值法
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{幂级数和函数的求法}
+\begin{itemize}
+  \item 初等变换法：分解和式并套用公式
+  \item 映射变换法：逐项求导或逐项积分
+\end{itemize}
+\begin{center}
+\begin{tikzpicture}[box/.style={draw=accent4},small/.style={font=\small}]
+\node[box] at (0,3) (A) {\bold{$\sum\limits_{n=0}^\infty a_nx^n$}};
+\node[box] at (6,3) (B) {$\sum\limits_{n=0}^\infty a_n^{*}x^n$};
+\node[box] at (0,0) (C) {$\bold{S(x)}$};
+\node[box] at (6,0) (D) {$S^*(x)$};
+\draw[->,thick] (A) -- node[small,color=accent4,above]{逐项求导或积分} (B);
+\draw[->,thick] (D) -- node[small,color=accent4,above]{对和式积分或求导} (C);
+\draw[->,thick] (B) -- node[small,color=accent4,right]{求和} (D);
+\draw[->,thick,densely dashed] (A) -- node[small,color=accent5,right]{难} (C);
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{常数项级数和的求法}
+\begin{description}
+  \item[直接求和] 求出级数的部分和，再求极限
+  \item[间接求和] 转换为求幂级数和，再代入值
+\end{description}
+\end{frame}
+
+\begin{frame}
+\frametitle{函数展开为幂级数的方法}
+\begin{description}
+  \item[直接展开法] 利用泰勒公式计算系数，并研究余项
+  \item[间接展开法] 利用已知的函数展开式，及幂级数性质
+\end{description}
+\end{frame}
+
+\end{document}

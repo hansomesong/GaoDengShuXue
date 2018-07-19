@@ -1,0 +1,1605 @@
+% -*- coding: utf-8 -*-
+% !TEX program = xelatex
+
+%\documentclass[14pt]{article}
+%\usepackage[notheorems]{beamerarticle}
+
+\documentclass[14pt,notheorems,leqno,xcolor={rgb}]{beamer} % ignorenonframetext
+
+\input{../common/theme.sty}
+\input{../common/share.sty}
+\input{../common/local.sty}
+
+\begin{document}
+%\ifxetex\else\heiti\fi
+
+\occasion{高等数学课程}
+\title{第十二章·无穷级数}
+\author{\href{https://lvjr.bitbucket.io}{吕荐瑞}}
+\institute{暨南大学数学系}
+
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+\begin{frame}
+\frametitle{无穷级数}
+\begin{itemize}[<+->]
+  \item $1+\dfrac12+\dfrac14+\dfrac18+\cdots+\dfrac1{2^{n-1}}+\cdots\onslide<+->{=2}$
+  \item $1+\dfrac12+\dfrac13+\dfrac14+\cdots+\dfrac1n+\cdots\onslide<+->{=+\infty}$
+  \item $1+\dfrac1{2^2}+\dfrac1{3^2}+\dfrac1{4^2}+\cdots+\dfrac1{n^2}+\cdots \onslide<+->{=\dfrac{\pi^2}6}$
+  \item $1-\dfrac12+\dfrac13-\dfrac14+\cdots+\dfrac{(-1)^{n+1}}{n}+\cdots\onslide<+->{=\ln 2}$
+  \item $1-\dfrac13+\dfrac15-\dfrac17+\cdots+\dfrac{(-1)^{n+1}}{2n-1}+\cdots\onslide<+->{=\dfrac{\pi}{4}}$
+\end{itemize}
+\end{frame}
+
+\section{常数项级数的概念和性质}
+
+\subsection{无穷级数的概念}
+
+\begin{frame}
+\frametitle{无穷级数}
+\begin{definition}
+给定数列：$u_1, u_2, u_3, \cdots, u_n, \cdots$，式子
+\[u_1+u_2+u_3+\cdots+u_n+\cdots\]
+称为\bold{无穷级数}（简称\bold{级数}），记为$\bold{\sum\limits_{n=1}^{\infty}u_n}$，\pause
+其中第$n$项称为级数的\bold{通项}。
+\end{definition}
+\end{frame}
+
+\begin{frame}
+\frametitle{级数的敛散性}
+级数$\sum\limits_{n=1}^{\infty}u_n$的前$n$项的和$S_n=u_1+u_2+\cdots+u_n$称为第$n$次\bold{部分和}，\pause
+各个部分和$S_1, S_2, \cdots, S_n, \cdots$ 构成一个数列。\pause
+\begin{itemize}[<+->]
+  \item 如果 $\limit_{n\to\infty}S_n=S$ 收敛，则称级数$\sum\limits_{n=1}^{\infty}u_n$ \bold{收敛}；
+  \begin{itemize}[<+->]
+    \item 此时称$S$为级数的\bold{和}，
+    \item 称$R_n=S-S_n=u_{n+1}+u_{n+2}+\cdots$为级数的\bold{余项}；
+  \end{itemize}
+  \item 如果 $\limit_{n\to\infty}S_n$ 发散，则称级数$\sum\limits_{n=1}^{\infty}u_n$ \bold{发散}。
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+讨论\bold{几何级数}（或称\bold{等比级数}）
+\[\sum\limits_{n=1}^{\infty}aq^{n-1}=a+aq+aq^2+\cdots+aq^{n-1}+\cdots\]
+的敛散性，其中$a\neq0$，而$q$称为级数的\bold{公比}。
+\end{example}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+讨论级数$\sum\limits_{n=1}^{\infty}\frac1{n(n+1)}$的敛散性。
+\end{example}
+\pause
+\begin{example}
+讨论级数$\sum\limits_{n=1}^{\infty}\ln\frac{n+1}{n}$的敛散性。
+\end{example}
+\end{frame}
+
+\subsection{收敛级数的性质}
+
+\begin{frame}
+\frametitle{无穷级数的运算：化正为负}
+\noindent\begin{align*}
+\cbold S&=1+\frac{1}2+\frac{1}4+\frac{1}8+\cdots
+    = 1+\left(\frac{1}2+\frac{1}4+\frac{1}8+\cdots\right) \\
+   &= 1 + \frac12\cdot(1+\frac{1}2+\frac{1}4+\cdots) = \bold{1+\frac12\,S}
+\end{align*}
+\onslide<2->{$\therefore\ \cbold S=2$}
+\onslide<3->{\quad 即 \quad\lead{$\displaystyle 1+\frac12+\frac14+\frac18+\cdots=2$}}
+\onslide<4->{\qquad\qquad\lead{\ding{51}}}
+\onslide<5->{\par$\dotfill$}
+\noindent\begin{align*}
+%\sum_{n=1}^{\infty}2^{n-1}
+\onslide<5->{\cbold T}
+   &\onslide<5->{=1+2+4+8+\cdots = 1 + (2+4+8+\cdots)}\\
+   &\onslide<5->{= 1 + 2\cdot(1+2+4+\cdots) = \bold{1+2T}}
+\end{align*}
+\noindent
+\onslide<6->{$\therefore\ \cbold T=-1$}
+\onslide<7->{\quad 即 \quad \cwarn{$1+2+4+8+\cdots=-1$}}
+\onslide<8->{\qquad\quad{\cwarn\ding{55}}}
+\end{frame}
+
+\begin{frame}
+\begin{property}
+如果级数$\sum\limits_{n=1}^{\infty}u_n$和$\sum\limits_{n=1}^{\infty}v_n$都收敛，
+则级数$\sum\limits_{n=1}^{\infty}(u_n\pm v_n)$也收敛，而且有
+\[\bold{\sum\limits_{n=1}^{\infty}(u_n\pm v_n) = \sum\limits_{n=1}^{\infty}u_n \pm \sum\limits_{n=1}^{\infty}v_n}.\]
+\end{property}
+\end{frame}
+
+\begin{frame}
+\begin{property}
+如果级数$\sum\limits_{n=1}^{\infty}u_n$收敛，则级数$\sum\limits_{n=1}^{\infty}au_n$也收敛，而且有
+\[\bold{\sum\limits_{n=1}^{\infty}au_n = a\sum\limits_{n=1}^{\infty}u_n}.\]
+\end{property}
+\pause
+\begin{corollary*}
+级数的每一项同乘以不为$0$的常数后，其敛散性不变。
+\end{corollary*}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+求级数$\sum\limits_{n=1}^{\infty}\frac1{3^n}+\frac2{5^n}$的和。
+\end{example}
+\pause
+\begin{example}
+判定级数$\sum\limits_{n=1}^{\infty}3\ln\frac{n+1}n$的敛散性。
+\end{example}
+\end{frame}
+
+\begin{frame}
+\begin{property}
+在一个级数前面加上（或者去掉）有限项，级数的敛散性不变。
+\end{property}
+\vpause
+\begin{example}
+设级数$\sum\limits_{n=1}^{\infty}u_n$的第$n$次部分和$S_n=\frac{n}{2n-1}$，
+判断级数$\sum\limits_{n=1}^{\infty}u_{n+2}$的敛散性。若级数收敛，求出它的和。
+\end{example}
+\end{frame}
+
+\begin{frame}
+\frametitle{无穷级数的运算：无中生有}
+\noindent\begin{align*}
+  0 &= 0 + 0 + 0 + \cdots \\
+    &= (1-1) + (1-1) + (1-1) + \cdots \\
+    &= 1 - 1 + 1 - 1 + 1 - 1 + \cdots \text{\hspace{7em}\onslide<2->{\Large\cwarn\ding{55}}}\\
+    &= 1 + (-1+1) + (-1+1) + (-1+1) + \cdots \\
+    &= 1 + 0 + 0 + 0 + \cdots \\
+    &= 1
+\end{align*}
+\end{frame}
+
+\begin{frame}
+\begin{property}[收敛级数的结合律]
+如果一个级数收敛，加括号后所成的级数也收敛，且与原级数有相同的和。
+\end{property}
+\vpause
+\begin{example}
+已知几何级数
+$$1+\dfrac12+\dfrac14+\dfrac18+\dfrac1{16}+\dfrac1{32}+\cdots=\dfrac1{1-1/2}=2.$$
+\pause 加括号后得到的新级数
+\begin{align*}
+&\phantom{=}\left(1+\dfrac12\right)+\left(\dfrac14+\dfrac18\right)+\left(\dfrac1{16}+\dfrac1{32}\right)+\cdots\\
+&\uncover<+->{=\frac32 + \frac38 + \frac3{32} + \cdots} \uncover<+->{= \frac{3/2}{1-1/4}=2.}
+\end{align*}
+\end{example}
+\vfill\uncover<+->{
+\begin{remark}
+发散级数加括号后，可能发散也可能收敛。
+\end{remark}}
+\end{frame}
+
+\begin{frame}
+\frametitle{收敛的必要条件}
+\begin{theorem}
+如果级数$\sum\limits_{n=1}^{\infty}u_n$收敛，则有$\limit_{n\to\infty}u_n=0$。
+\end{theorem}
+\pause\dotfill
+\begin{remark}
+若通项不趋于零，则级数一定发散．
+\end{remark}
+\pause
+\begin{example}
+级数$\sum\limits_{n=1}^{\infty}\frac{n+1}{n}$的通项趋于$1$，因此它发散． 
+\end{example}
+\pause\dotfill
+\begin{remark}
+若通项趋于零，则级数\warn{未必}收敛．
+\end{remark}
+\pause
+\begin{example}
+级数$\sum\limits_{n=1}^{\infty}\ln\frac{n+1}{n}$的通项趋于$0$，但是它发散。
+\end{example}
+\end{frame}
+
+\begin{frame}
+\begin{exercise}
+判断级数的敛散性．如果级数收敛，求出它的和。
+\begin{enumlite}
+  \item $\frac12+\frac34+\frac56+\frac78+\cdots+\frac{2n-1}{2n}+\cdots$
+  \item $(\frac32+\frac13)+(\frac34+\frac19)+(\frac38+\frac1{27})+\cdots$
+\end{enumlite}
+\end{exercise}
+\end{frame}
+
+\mybookmark{复习与提高}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+判断级数$\sum\limits_{n=1}^{\infty}\dfrac{n}{2^n}$的敛散性，若收敛求其和．
+\end{puzzle}
+\stext{\pause\begin{solution}\smark
+寻找$v_n$使得$\dfrac{n}{2^n}=v_n-v_{n+1}$．设$v_n=\dfrac{an+b}{2^n}$，
+用待定系数法可以确定$a=b=2$．从而$S_n=v_1-v_{n+1}=2-\dfrac{n+2}{2^n}$，级数的和为$2$．
+\end{solution}}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{choice}
+若级数$\sum\limits_{n=1}^{\infty}u_n$收敛，$\sum\limits_{n=1}^{\infty}v_n$发散，\vspace{-0.5em}%
+则对于级数$\sum\limits_{n=1}^{\infty}(u_n\pm v_n)$来说有\dotfill(\select{B})
+\begin{choicehalf}
+  \item 级数收敛 ~
+  \item 级数发散 ~
+  \item 级数敛散性不定 ~
+  \item 上述诸结论均不正确 ~
+\end{choicehalf}
+\end{choice}
+\end{frame}
+
+\section{常数项级数的审敛法}
+
+\subsection{正项级数及其审敛法}
+
+\begin{frame}
+\begin{definition}
+若级数$\sum\limits_{n=1}^{\infty}u_n$满足条件$u_n\ge0$（对所有$n$），则称它为\bold{正项级数}。
+\end{definition}
+\vpause
+\begin{property*}
+正项级数的部分和数列$\{S_n\}$是单调递增数列。
+\end{property*}
+\vpause
+\begin{theorem}
+正项级数收敛 $\Longleftrightarrow$ 它的部分和数列有界。
+\end{theorem}
+\vpause
+\begin{remark*}
+正项级数加括号后，其敛散性不变。
+\end{remark*}
+\end{frame}
+
+%\subsubsection{比较判别法}
+
+\begin{frame}
+\begin{theorem}[比较判别法]
+对于两个正项级数$\sum\limits_{n=1}^{\infty}u_n$和$\sum\limits_{n=1}^{\infty}v_n$，若有$c>0$使得$u_n\le cv_n$，
+对所有$n$，则有
+\begin{enumerate}
+  \item 当$\sum\limits_{n=1}^{\infty}v_n$收敛时，$\sum\limits_{n=1}^{\infty}u_n$也收敛；
+  \item 当$\sum\limits_{n=1}^{\infty}u_n$发散时，$\sum\limits_{n=1}^{\infty}v_n$也发散。
+\end{enumerate}
+\end{theorem}
+\end{frame}
+
+\begin{frame}
+\frametitle{比较判别法}
+\begin{example}
+\bold{调和级数} $\sum\limits_{n=1}^{\infty}\dfrac1n$发散。
+\end{example}
+\vpause
+\begin{example}
+判断 \bold{$p$级数} $\sum\limits_{n=1}^{\infty}\dfrac1{n^p}$的敛散性。
+\end{example}
+\vpause
+\begin{example}
+判断级数$\sum\limits_{n=1}^{\infty}\dfrac1{n^n}$的敛散性。
+\end{example}
+\end{frame}
+
+\begin{frame}
+\begin{theorem}[比较判别法]
+设$\sum\limits_{n=1}^{\infty}u_n$和$\sum\limits_{n=1}^{\infty}v_n$都为正项级数，
+且有$\limit_{n\to\infty}\dfrac{u_n}{v_n}=l$。
+\begin{enumerate}[<+->]
+  \item 若$0<l<+\infty$，则$\sum\limits_{n=1}^{\infty}u_n$和$\sum\limits_{n=1}^{\infty}v_n$同敛散；
+  \item 若$l=0$，则$\sum\limits_{n=1}^{\infty}v_n$收敛时，$\sum\limits_{n=1}^{\infty}u_n$也收敛；
+  \item 若$l=+\infty$，则$\sum\limits_{n=1}^{\infty}v_n$发散时，$\sum\limits_{n=1}^{\infty}u_n$也发散。
+\end{enumerate}
+\end{theorem}
+\end{frame}
+
+\begin{frame}
+\frametitle{比较判别法}
+\begin{example}
+判断级数$\sum\limits_{n=1}^{\infty}\dfrac1{2n-1}$的敛散性。
+\end{example}
+\vpause
+\begin{example}
+判断级数$\sum\limits_{n=1}^{\infty}\dfrac1{\sqrt{3n^2+n}}$的敛散性。
+\end{example}
+\vpause
+\begin{example}
+判断级数$\sum\limits_{n=1}^{\infty}\dfrac1{\sqrt{4n^3-3}}$的敛散性。
+\end{example}
+\vpause
+\begin{example}
+判断级数$\sum\limits_{n=1}^{\infty}\ln\left(1+\dfrac1{n^2}\right)$的敛散性。
+\end{example}
+\end{frame}
+
+\begin{frame}
+\frametitle{比较判别法}
+\begin{exercise}
+判断级数的敛散性。
+\begin{enumlite}
+  \item $\sum\limits_{n=1}^{\infty}\dfrac1{3n-2}$
+  \item $\sum\limits_{n=1}^{\infty}\dfrac1{n\sqrt{n+1}}$
+\end{enumlite}
+\end{exercise}
+\end{frame}
+
+%\subsubsection{比值判别法}
+
+\begin{frame}
+\begin{theorem}[比值判别法]
+如果正项级数$\sum\limits_{n=1}^{\infty}u_n$满足$\limit_{n\to\infty}\dfrac{u_{n+1}}{u_n}=l$，则有
+\begin{enumerate}[<+->]
+  \item 若$l<1$，则级数收敛；
+  \item 若$l>1$，则级数发散；
+  \item 若$l=1$，则级数可能收敛也可能发散。
+\end{enumerate}
+\end{theorem}
+\end{frame}
+
+\begin{frame}
+\frametitle{比值判别法}
+\begin{example}
+设$x>0$，判定级数$\sum\limits_{n=1}^{\infty}\dfrac{x^n}{n}$的敛散性。
+\end{example}
+\vpause
+\begin{example}
+判定级数$\sum\limits_{n=1}^{\infty}\dfrac{n\cos^2\frac{n\pi}3}{2^n}$的敛散性。
+\end{example}
+\end{frame}
+
+%\subsubsection{根值判别法}
+
+\begin{frame}
+\begin{theorem}[根值判别法]
+如果正项级数$\sum\limits_{n=1}^{\infty}u_n$满足$\limit_{n\to\infty}\sqrt[n]{u_n}=\rho$，则有
+\begin{enumerate}[<+->]
+  \item 若$\rho<1$，则级数收敛；
+  \item 若$\rho>1$，则级数发散；
+  \item 若$\rho=1$，则级数可能收敛也可能发散。
+\end{enumerate}
+\end{theorem}
+\end{frame}
+
+\begin{frame}
+\frametitle{根值判别法}
+\begin{example}
+设$a>0$，判定级数$\sum\limits_{n=1}^{\infty}\left(\dfrac{na}{n+1}\right)^n$的敛散性。
+\end{example}
+\end{frame}
+
+\begin{frame}
+\begin{exercise}
+判定级数的敛散性：
+\begin{enumlite}
+  \item $\sum\limits_{n=1}^{\infty}\dfrac{2^n}{n(n+1)}$
+  \item $\sum\limits_{n=1}^{\infty}\dfrac{3^n}{2^n(\arctan n)^n}$
+\end{enumlite}
+\end{exercise}
+\end{frame}
+
+\subsection{交错级数及其审敛法}
+
+\begin{frame}
+\frametitle{交错级数}
+\begin{definition}
+正负项相间的级数$\sum\limits_{n=1}^{\infty}(-1)^{n+1}u_n$，即
+$$u_1-u_2+u_3-u_4+\cdots+u_{2k-1}-u_{2k}+\cdots,$$
+其中每个$u_n>0$，称为\bold{交错级数}。
+\end{definition}
+\end{frame}
+
+\begin{frame}
+\frametitle{交错级数}
+\begin{theorem}[莱布尼兹定理]
+如果交错级数满足条件
+\begin{enumerate}
+  \item $u_{n+1}\le u_n$，$n=1,2,3,\cdots$；
+  \item $\limit_{n\to\infty}u_n=0$；
+\end{enumerate}
+则级数收敛，且其和$S\le u_1$，余项满足$|R_n|\le u_{n+1}$。
+\end{theorem}
+\vpause
+\begin{example}
+交错级数$\sum\limits_{n=1}^{\infty}\dfrac{(-1)^{n+1}}n$收敛。
+\end{example}
+\end{frame}
+
+\subsection{任意项级数的敛散性}
+
+\begin{frame}
+\frametitle{任意项级数}
+\begin{theorem}
+若$\sum\limits_{n=1}^{\infty}|u_n|$收敛，则$\sum\limits_{n=1}^{\infty}u_n$也收敛。
+\end{theorem}
+\pause
+\begin{definition}
+对任意项级数$\sum\limits_{n=1}^{\infty}u_n$，\pause
+\begin{enumerate}[<+->]
+  \item 称$\sum\limits_{n=1}^{\infty}u_n$ \bold{条件收敛}，
+        若$\sum\limits_{n=1}^{\infty}u_n$收敛，但$\sum\limits_{n=1}^{\infty}|u_n|$发散；
+  \item 称$\sum\limits_{n=1}^{\infty}u_n$ \bold{绝对收敛}，
+        若$\sum\limits_{n=1}^{\infty}u_n$ 和 $\sum\limits_{n=1}^{\infty}|u_n|$ 都收敛。
+\end{enumerate}
+\end{definition}
+\end{frame}
+
+\begin{frame}
+\frametitle{任意项级数}
+\begin{theorem}
+对于任意项级数$\sum\limits_{n=1}^{\infty}u_n$，若$\limit_{n\to\infty}\left|\dfrac{u_{n+1}}{u_n}\right|=l$，则有
+\begin{enumerate}
+  \item 当$l<1$时级数绝对收敛；
+  \item 当$l>1$时级数发散。
+\end{enumerate}
+\end{theorem}
+\end{frame}
+
+\begin{frame}
+\frametitle{任意项级数}
+\begin{example}
+判定级数是发散的，还是条件收敛的，还是绝对收敛的：
+\begin{multicols}{2}
+\begin{enumlite}[<+->]
+  \item $\sum\limits_{n=1}^{\infty}(-1)^n\dfrac{n!}{n^n}$；
+  \item $\sum\limits_{n=1}^{\infty}\dfrac{x^n}{n!}$；
+  \item $\sum\limits_{n=1}^{\infty}\dfrac{x^n}{n}$；
+  \item $\sum\limits_{n=1}^{\infty}nx^{n-1}$。
+\end{enumlite}
+\end{multicols}
+\end{example}
+\end{frame}
+
+\begin{frame}
+\frametitle{任意项级数}
+\begin{exercise}
+判定级数是发散的，还是条件收敛的，还是绝对收敛的：
+\begin{enumlite}[<+->]
+  \item $\sum\limits_{n=1}^{\infty}(-1)^{n+1}\dfrac{n}{2n-1}$；
+  \item $\sum\limits_{n=1}^{\infty}(-1)^{n+1}\dfrac{1}{2n-1}$；
+  \item $\sum\limits_{n=1}^{\infty}(-1)^{n+1}\dfrac{1}{n\cdot2^n}$。
+\end{enumlite}
+\end{exercise}
+\end{frame}
+
+\mybookmark{复习与提高}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+设正项级数$\sum\limits_{n=1}^{\infty}u_n$收敛，能否推出级数$\sum\limits_{n=1}^{\infty}u_n^2$也收敛？
+\end{puzzle}
+\stext{\pause\begin{solution}\smark
+$\limit_{n\to\infty}\dfrac{u_n^2}{u_n}=\limit_{n\to\infty}u_n=0$，用比较判别法知级数收敛．
+\end{solution}}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{choice}
+下列级数中收敛的是\dotfill(\select{C})
+\begin{choicehalf}
+  \item $\sum\limits_{n=1}^{\infty}\dfrac{1}{n^p}\ (0<p\le1)$  ~
+  \item $\sum\limits_{n=1}^{\infty}\bigg(\dfrac{1}{n^2}-1\bigg)$ ~
+  \item $\sum\limits_{n=1}^{\infty}\dfrac{1}{n(n+1)}$ ~
+  \item $\sum\limits_{n=1}^{\infty}\bigg(\!-\dfrac{5}{2}\bigg)^n$ ~
+\end{choicehalf}
+\end{choice}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{choice}
+设$u_n\neq0$ $(n=1,2,3,\cdots)$，且$\limit_{n\to\infty}\dfrac{n}{u_n}=1$，则级数
+$\sum\limits_{n=1}^{\infty}(-1)^{n+1}\left(\dfrac{1}{u_n}+\dfrac{1}{u_{n+1}}\right)$\dotfill(\select{C})
+\begin{choicehalf}
+  \item 发散 ~
+  \item 绝对收敛 ~
+  \item 条件收敛 ~
+  \item 收敛性不能由条件确定 ~
+\end{choicehalf}
+\end{choice}
+\end{frame}
+
+\section{幂级数的概念}
+
+\begin{frame}
+\begin{definition}
+形如$\sum\limits_{n=0}^{\infty}a_n(x-x_0)^n$的级数，即
+\[ a_0 + a_1(x-x_0) + a_2(x-x_0)^2 + \cdots + a_n(x-x_0)^n + \cdots \]
+称为 \bold{$x-x_0$的幂级数}。\ppause
+特别地，当$x_0=0$时，级数$\sum\limits_{n=0}^{\infty}a_nx^n$，即
+\[a_0+a_1x+a_2x^2+\cdots+a_nx^n+\cdots\]
+称为 \bold{$x$的幂级数}。
+\end{definition}
+\end{frame}
+
+\begin{frame}
+\frametitle{幂级数的收敛域}
+对于幂级数$\sum\limits_{n=0}^{\infty}a_nx^n$，
+\begin{itemize}
+  \item 若$x=x_0$时级数收敛，称$x_0$为幂级数的\bold{收敛点}\pause
+  \item 若$x=x_0$时级数发散，称$x_0$为幂级数的\bold{发散点}
+\end{itemize}
+\pause
+幂级数的全体收敛点构成的集合称为幂级数的\bold{收敛域}。
+\end{frame}
+
+\begin{frame}
+%\frametitle{幂级数的收敛域}
+\begin{theorem}
+对幂级数$\sum\limits_{n=0}^{\infty}a_nx^n$，设$\limit_{n\to\infty}\left|\dfrac{a_{n+1}}{a_n}\right|=\rho$，则
+\pause
+\begin{enumerate}[<+->]
+  \item 当$|x|<1/\rho$时，级数绝对收敛；
+  \item 当$|x|>1/\rho$时，级数发散；
+  \item 当$|x|=1/\rho$时，级数的敛散性未定。
+\end{enumerate}
+\end{theorem}
+\vpause
+\begin{definition*}
+称$R=1/\rho$为幂级数的\bold{收敛半径}，称$(-R,R)$为幂级数的\bold{收敛区间}。
+\end{definition*}
+\vpause
+\begin{remark*}
+当$\rho=0$时，规定$R=+\infty$；当$\rho=+\infty$时，规定$R=0$。
+\end{remark*}
+\end{frame}
+
+\begin{frame}
+\frametitle{幂级数的收敛域}
+\begin{problem*}
+给定幂级数$\sum\limits_{n=0}^{\infty}a_nx^n$，求出它的收敛域。
+\end{problem*}
+\begin{solution}
+首先求出收敛半径$R$；
+\begin{enumerate}[<+->]
+  \item 若$0<R<+\infty$，则收敛域有四种可能
+  \begin{multicols}{2}\begin{itemize}
+    \item $(-R,R)$
+    \item $[-R,R)$
+    \item $(-R,R]$
+    \item $[-R,R]$
+  \end{itemize}\end{multicols}
+  \item 若$R=0$，则收敛域为$\{0\}$；
+  \item 若$R=+\infty$，则收敛域为$(-\infty,+\infty)$。
+\end{enumerate}
+\end{solution}
+\end{frame}
+
+\begin{frame}
+\frametitle{幂级数的收敛域}
+\begin{example}
+求幂级数$\sum\limits_{n=0}^{\infty}\dfrac{(-1)^{n-1}x^n}n$的收敛域。
+\end{example}
+\vpause
+\begin{example}
+求幂级数$\sum\limits_{n=1}^{\infty}(-1)^{n-1}x^n$的收敛域。
+\end{example}
+\vpause
+\begin{example}
+求幂级数$\sum\limits_{n=0}^{\infty}\dfrac{x^n}{n!}$的收敛域。
+\end{example}
+\end{frame}
+
+\begin{frame}
+\frametitle{幂级数的收敛域}
+\begin{example}
+求幂级数$\sum\limits_{n=1}^{\infty}\dfrac{(2x+1)^n}n$的收敛域。
+\end{example}
+\pause
+\begin{solution}
+令$t=2x+1$。
+\end{solution}
+\vpause
+\begin{example}
+求幂级数$\sum\limits_{n=1}^{\infty}(-1)^{n-1}\dfrac{3^nx^{2n}}{n}$的收敛域。
+\end{example}
+\pause
+\begin{solution}
+令$t=x^2$或者令$t=3x^2$。
+\end{solution}
+\end{frame}
+
+\begin{frame}
+\frametitle{幂级数的收敛域}
+\begin{exercise}
+求幂级数$\sum\limits_{n=1}^{\infty}\dfrac{x^n}{(2n-1)(2n)}$的收敛域。
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\frametitle{幂级数的运算}
+\begin{theorem*}
+设$\sum\limits_{n=0}^{\infty}a_nx^n$和$\sum\limits_{n=0}^{\infty}b_nx^n$的收敛半径分别为$R_1$和$R_2$，
+$R=\min\{R_1,R_2\}$，则有
+\[ \bold{\big(\sum\limits_{n=0}^{\infty}a_nx^n\big)\pm
+         \big(\sum\limits_{n=0}^{\infty}b_nx^n\big)
+        =\sum\limits_{n=0}^{\infty}(a_n\pm b_n)x^n}, \]
+其中等式在$(-R,R)$中成立。
+\end{theorem*}
+\end{frame}
+
+\begin{frame}
+\frametitle{幂级数的运算}
+\begin{theorem*}
+设$\sum\limits_{n=0}^{\infty}a_nx^n$和$\sum\limits_{n=0}^{\infty}b_nx^n$的收敛半径分别为$R_1$和$R_2$，
+$R=\min\{R_1,R_2\}$，则有
+\[ \bold{\big(\sum\limits_{n=0}^{\infty}a_nx^n\big)\cdot
+         \big(\sum\limits_{n=0}^{\infty}b_nx^n\big)
+        =\sum\limits_{n=0}^{\infty}c_nx^n}, \]
+其中$c_n=\sum\limits_{k=0}^n a_kb_{n-k}$，等式在$(-R,R)$中成立。
+\end{theorem*}
+\end{frame}
+
+\begin{frame}
+\frametitle{幂级数的运算}
+\begin{theorem*}
+设$\sum\limits_{n=0}^{\infty}a_nx^n$和$\sum\limits_{n=0}^{\infty}b_nx^n$的收敛半径分别为$R_1$和$R_2$，
+$R=\min\{R_1,R_2\}$，则有
+\[ \bold{\big(\sum\limits_{n=0}^{\infty}a_nx^n\big)\Big/
+         \big(\sum\limits_{n=0}^{\infty}b_nx^n\big)
+        =\sum\limits_{n=0}^{\infty}d_nx^n}, \]
+其中等式在$(-R,R)$的某个子区间内成立。
+\end{theorem*}
+\end{frame}
+
+\begin{frame}
+\begin{property}
+幂级数$\sum\limits_{n=0}^{\infty}a_nx^n$的和函数$S(x)$在其收敛域上连续。
+\end{property}
+\vpause
+\begin{property}
+幂级数$\sum\limits_{n=0}^{\infty}a_nx^n$的和函数$S(x)$在其收敛域上可积，且有逐项积分公式
+\begin{align*}
+  \int_0^x S(x)\d x &=  \int_0^x \sum_{n=0}^{\infty}a_nx^n \d x \\
+  &= \sum_{n=0}^{\infty}\int_0^xa_nx^n \d x = \sum\limits_{n=0}^{\infty}\frac{a_n}{n+1}x^{n+1}
+\end{align*}
+逐项积分后得到的幂级数和原级数有相同的收敛半径。
+\end{property}
+\end{frame}
+
+\begin{frame}
+\begin{property}
+幂级数$\sum\limits_{n=0}^{\infty}a_nx^n$的和函数$S(x)$在其收敛区间$(-R,R)$上可导，且有逐项求导公式
+\begin{align*}
+  S'(x) &=  \big(\sum_{n=0}^{\infty}a_nx^n)' \\
+  &= \sum_{n=0}^{\infty}\big(a_nx^n)' = \sum\limits_{n=0}^{\infty}na_nx^{n-1}
+\end{align*}
+逐项求导后得到的幂级数和原级数有相同的收敛半径。
+\end{property}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+对几何级数$\sum\limits_{n=0}^{\infty}x^n$逐项求导和逐项积分。
+\end{example}
+\itext{\vpause\begin{exercise}\imark
+求无穷级数$\sum\limits_{n=1}^{\infty}\dfrac{n^2}{3^n}$的和．
+\end{exercise}}
+\end{frame}
+
+\mybookmark{复习与提高}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{choice}%[2011年数学一]
+设数列$\{a_n\}$单调减少，$\limit_{n\to\infty}a_n=0$，
+部分和数列$S_n=\sum\limits_{k=1}^n a_n$（$n=1,2,\cdots$）无界，
+则幂级数$\sum\limits_{n=1}^{\infty}a_n(x-1)^n$的收敛域为\dotfill(\select{C})
+\begin{choicehalf}
+  \item $(-1,1]$  ~
+  \item $[-1,1)$ ~
+  \item $[0,2)$ ~
+  \item $(0,2]$ ~
+\end{choicehalf}
+\end{choice}
+\stext{\pause
+\begin{solution}\smark
+由莱布尼兹判别法$x=0$时级数收敛．另外$x=2$时级数发散．
+\end{solution}}
+\end{frame}
+
+\section{函数展开成泰勒级数}
+
+\subsection{泰勒公式和泰勒级数}
+
+\begin{frame}
+\begin{theorem*}[泰勒公式]
+如果函数$f(x)$在包含$x_0$的区间$(a,b)$内有直到$n+1$阶的连续导数，
+则当$x\in(a,b)$时，$f(x)$可按$x-x_0$的方幂展开为
+\begin{align*}
+  f(x)=f(x_0)&+f'(x_0)(x-x_0)+\frac{f''(x_0)}{2!}(x-x_0)^2\\
+             &+\cdots+\frac{f^{(n)}(x_0)}{n!}(x-x_0)^n+R_n(x),
+\end{align*}
+\pause
+其中余项$R_n(x)=\dfrac{f^{(n+1)}(\xi)}{(n+1)!}(x-x_0)^{n+1}$，%=o\big((x-x_0)^n)\big)
+$\xi$介于$x_0$和$x$之间。
+\end{theorem*}
+\end{frame}
+
+\begin{frame}
+\frametitle{泰勒公式}
+当$x_0=0$时，泰勒公式称为\bold{麦克劳林公式}
+\begin{align*}
+  f(x)=f(0)&+f'(0)x+\frac{f''(0)}{2!}x^2\\
+             &+\cdots+\frac{f^{(n)}(0)}{n!}x^n+R_n(x),
+\end{align*}
+\pause
+其中$R_n(x)=\dfrac{f^{(n+1)}(\xi)}{(n+1)!}x^{n+1}$，$\xi$介于$0$和$x$之间。
+\ppause
+令$\xi=\theta x$，则$R_n(x)=\dfrac{f^{(n+1)}(\theta x)}{(n+1)!}x^{n+1}$, $0<\theta<1$。
+\end{frame}
+
+\begin{frame}
+%\frametitle{泰勒级数}
+如果$f(x)$在区间$(a,b)$内各阶导数都存在，而且当$n\to\infty$时$R_n(x)\to0$，则得
+\[f(x)=\sum\limits_{n=0}^{\infty}\frac{f^{(n)}(x_0)}{n!}(x-x_0)^n,\]
+该级数称为函数$f(x)$的\bold{泰勒级数}。
+\vpause
+特别地，当$x_0=0$时，上式变成
+\[f(x)=\sum\limits_{n=0}^{\infty}\frac{f^{(n)}(0)}{n!}x^n,\]
+该级数称为函数$f(x)$的\bold{麦克劳林级数}。
+\end{frame}
+
+\subsection{初等函数的幂级数展开式}
+
+\begin{frame}
+\frametitle{直接展开法}
+\begin{example}
+求初等函数的幂级数展开式。
+\begin{enumlite}[<+->]
+  \item $f(x)=\e^x$
+  \item $f(x)=\sin x$
+  \item $f(x)=(1+x)^{\alpha}$
+\end{enumlite}
+\end{example}
+\end{frame}
+
+\begin{frame}
+\frametitle{间接展开法}
+\begin{example}
+求初等函数的幂级数展开式。
+\begin{enumlite}[<+->]
+  \item $f(x)=\ln(1+x)$
+  \item $f(x)=\arctan x$
+  \item $f(x)=\cos x$
+\end{enumlite}
+\end{example}
+\end{frame}
+
+\begin{frame}[shrink=10]
+\frametitle{初等函数的幂级数展开式}
+\noindent\begin{align*}
+e^x &= 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \cdots + \frac{x^n}{n!} + \cdots \\
+\ln(1+x) &= x - \frac{x^2}2 + \frac{x^3}{3} - \frac{x^4}{4} + \cdots + (-1)^{n-1}\frac{x^n}{n} + \cdots \\
+\sin x &= x-\frac{x^3}{3!}+\frac{x^5}{5!}-\frac{x^7}{7!}+\cdots + (-1)^n\frac{x^{2n+1}}{(2n+1)!} + \cdots \\
+\cos x &= 1-\frac{x^2}{2!}+\frac{x^4}{4!}-\frac{x^6}{6!}+\cdots+(-1)^n\frac{x^{2n}}{(2n)!} + \cdots \\
+\arctan x  &=x-\frac{x^3}{3}+\frac{x^5}{5}-\frac{x^7}{7}+\cdots + (-1)^n\frac{x^{2n+1}}{(2n+1)} + \cdots \\
+(1+x)^{\alpha} &= 1 + C_\alpha^1x + C_\alpha^2x^2 + C_\alpha^3x^3 + \cdots + C_\alpha^n{x^n} + \cdots
+\end{align*}
+\end{frame}
+
+\begin{frame}
+\frametitle{初等函数的幂级数展开式}
+\begin{example}
+将函数$\e^{-x/3}$展成$x$的幂级数。
+\end{example}
+\vpause
+\begin{example}
+将函数$\sin^2x$展成$x$的幂级数。
+\end{example}
+\vpause
+\begin{example}
+将函数$\dfrac{x}{x+1}$展成$x$的幂级数。
+\end{example}
+\vpause
+\begin{example}
+将函数$\dfrac1{5-x}$展成$x-2$的幂级数。
+\end{example}
+\end{frame}
+
+\begin{frame}
+\frametitle{初等函数的幂级数展开式}
+\begin{exercise}
+将函数$\ln(1-x^2)$展成$x$的幂级数。
+\end{exercise}
+\pause
+\begin{exercise}
+将函数$\dfrac{x}{x+1}$展成$x-1$的幂级数。
+\end{exercise}
+\end{frame}
+
+\begin{iframe}
+\frametitle{初等函数的幂级数展开式}
+\begin{example}
+求$\arcsin x$的幂级数展开式。
+\end{example}
+\pause
+\begin{solution}
+由$(1+x)^\alpha$的幂级数展开式，可得
+\[\frac1{\sqrt{1+x}}=1-\frac12x+\frac{1\cdot3}{2\cdot4}x^2-\frac{1\cdot3\cdot5}{2\cdot4\cdot6}x^3+\cdots\]
+\pause
+\[\frac1{\sqrt{1-x^2}}=1+\frac12x^2+\frac{1\cdot3}{2\cdot4}x^4+\frac{1\cdot3\cdot5}{2\cdot4\cdot6}x^6+\cdots\]
+\pause
+等式两边从$0$到$x$积分，即有
+\[\arcsin x=x+\frac12\frac{x^3}3+\frac{1\cdot3}{2\cdot4}\frac{x^5}5
+             +\frac{1\cdot3\cdot5}{2\cdot4\cdot6}\frac{x^7}7+\cdots\]
+\end{solution}
+\end{iframe}
+
+\mybookmark{复习与提高}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+将函数$\ln(2+x-3x^2)$展开为$x$的幂级数．
+\end{puzzle}
+\vpause
+\begin{puzzle}
+将$f(x)=\arctan\dfrac{1+x}{1-x}$展开为$x$的幂级数．
+\end{puzzle}
+\stext{\pause\begin{solution}\smark
+$f'(x)=\dfrac1{1+x^2}=\sum\limits_{n=0}^{\infty}(-1)^nx^{2n}$，$x\in(-1,1)$．
+\[ f(x)-f(0) = \int_0^x \sum\limits_{n=0}^{\infty}(-1)^nx^{2n}\dx
+   = \sum\limits_{n=0}^{\infty}\dfrac{(-1)^n}{2n+1}x^{2n+1} \]
+另外$x=\pm1$时级数也收敛，故收敛区间为$[-1,1]$．
+\end{solution}}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+求幂级数$\sum\limits_{n=0}^{\infty}(-1)^n\dfrac{n+1}{(2n+1)!}x^{2n+1}$的和函数．
+\end{puzzle}
+\stext{\pause\begin{solution}\smark
+$\dfrac12\sin x+\dfrac{x}2\cos x$，$x\in(-\infty,+\infty)$．
+\end{solution}}
+\end{frame}
+
+\section{幂级数的应用}
+
+\begin{frame}
+\frametitle{幂级数的应用}
+\begin{example}
+计算$\e$的近似值。
+\end{example}
+\vpause
+\begin{example}
+计算$\pi$的近似值。
+\end{example}
+\vpause
+\begin{example}
+计算$\sqrt[5]{245}$的近似值。
+\end{example}
+\vpause
+\begin{example}
+计算$\int_0^{0.2}\e^{-x^2}\d x$的近似值。
+\end{example}
+\end{frame}
+
+\begin{iframe}
+\frametitle{幂级数的应用}
+\begin{theorem*}%[欧拉]
+$1+\dfrac{1}{3^2}+\dfrac{1}{5^2}+\cdots+\dfrac{1}{(2n-1)^2}+\cdots=\dfrac{\pi^2}8$。
+\end{theorem*}
+\pause
+\vspace{0.5em}\hrule
+%\begin{proof}
+由$\arcsin x$的展开式及$\int_0^{\pi/2}\sin^{2n-1}t\d{t}$的公式有：\pause
+\[\arcsin x=x+\frac12\frac{x^3}3+\frac{1\cdot3}{2\cdot4}\frac{x^5}5
+             +\frac{1\cdot3\cdot5}{2\cdot4\cdot6}\frac{x^7}7+\cdots\] \pause
+\[t=\sin t+\frac12\frac{\sin^3t}3+\frac{1\cdot3}{2\cdot4}\frac{\sin^5t}5
+             +\frac{1\cdot3\cdot5}{2\cdot4\cdot6}\frac{\sin^7t}7+\cdots\] \pause
+从$0$到$\dfrac{\pi}2$积分，得到
+$\displaystyle\frac{\pi^2}8=1+\dfrac{1}{3^2}+\dfrac{1}{5^2}+\dfrac{1}{7^2}+\cdots$。
+%\end{proof}
+\end{iframe}
+
+\begin{iframe}
+%\frametitle{幂级数的应用}
+\begin{theorem*}[欧拉]
+$1+\dfrac{1}{2^2}+\dfrac{1}{3^2}+\cdots+\dfrac{1}{n^2}+\cdots=\dfrac{\pi^2}6$。
+\end{theorem*}
+\pause
+\vspace{0.5em}\hrule
+%\begin{proof}
+\begin{align*}
+\sum_{n=1}^{\infty}\frac1{n^2}&=1+\frac{1}{2^2}+\frac{1}{3^2}+\frac{1}{4^2}+\cdots+\dfrac{1}{n^2}+\cdots\\
+&\uncover<3->{=\left(1+\frac{1}{3^2}+\frac{1}{5^2}+\cdots+\frac{1}{(2n-1)^2}+\cdots\right)}\\
+&\uncover<3->{\qquad+\left(\frac{1}{2^2}+\frac{1}{4^2}+\frac{1}{6^2}+\cdots+\frac{1}{(2n)^2}+\cdots\right)}\\
+&\uncover<4->{=\frac{\pi^2}8 + \frac14\sum_{n=1}^{\infty}\frac1{n^2}}
+\uncover<5->{\qquad\qquad\Rightarrow\displaystyle\sum_{n=1}^{\infty}\frac1{n^2}=\frac{\pi^2}6}
+\end{align*}
+%\end{proof}
+\end{iframe}
+
+\ifligong % >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+\makeatletter
+\beamer@tocsectionnumber=6\relax % 没有 \beamer@tocsubsectionnumber，修改 subsection 计数器时不用改
+\setcounter{section}{6}
+\makeatother
+
+\section{傅里叶级数}
+
+\begin{frame}
+\frametitle{认识声波信号}
+声音由物体的振动产生，如乐器演奏，声带振动．\pause
+\begin{itemize}
+  \item 基本的简谐振动产生正弦波$y=A\sin(\omega t+\varphi)$\pause
+  \begin{itemize}
+    \item 振幅\makebox[1.4em]{$A$}反映声音的\CJKunderdot{音量}%音强
+    \item 频率\makebox[1.4em]{$\omega$}反映声音的\CJKunderdot{音调}%音高
+  \end{itemize}\pause
+  \item 复杂的物体振动的声波由不同频率的正弦波组成\pause
+  \begin{itemize}
+    \item 各频率正弦波的比例反映声音的\CJKunderdot{音色}%音质
+  \end{itemize}
+\end{itemize}\pause
+人耳能感知的声音频率在20Hz至20000Hz之间，话音的频率在300Hz至3400Hz之间．\pause
+\begin{multicols}{3}
+\begin{itemize}
+  \item 记录声音？\pause
+  \item 压缩声音？\pause
+  \item 去除噪音？
+\end{itemize}
+\end{multicols}
+\end{frame}
+
+\begin{rframe}
+\frametitle{音频文件的波形}
+许多音乐播放器都可以在播放时显示音频文件的波形．以 Windows Media Player 为例：
+\begin{enumerate}
+  \item 在音频文件的右键菜单选择\newline
+        “打开方式 $\rightarrow$ Windows Media Player”
+  \item 在“Windows Media Player”的右键菜单选择\newline
+        “可视化效果 $\rightarrow$ 条形与波浪 $\rightarrow$ 波形”
+\end{enumerate}
+播放时可以随时暂停，并查看当前时刻的波形．
+\end{rframe}
+
+\subsection{三角级数与三角函数系}
+
+\begin{frame}
+%\frametitle{正弦函数}
+正弦函数$y=A\sin(\omega t+\varphi)$具有周期$T=\frac{2\pi}{\omega}$，即
+\[ A\sin(\omega t+\varphi)=A\sin(\omega(t+T)+\varphi) \]
+\centering
+\begin{tikzpicture}[scale=1.7,thick,font=\small]
+%y=Asin(at+b) 
+\def\A{0.8} 
+\pgfmathsetmacro{\a}{3} 
+\pgfmathsetmacro{\b}{pi/6}
+%define domain 
+\pgfmathsetmacro{\l}{2*pi/\a} 
+\pgfmathsetmacro{\n}{1.65}
+\pgfmathsetmacro{\d}{\l*\n}
+%coordinates 
+\draw[-stealth,thin,gray] (-\d,0)--(\d,0) node[above,color=text1] {$t$};
+\draw[-stealth,thin,gray] (0,{-\A-0.3})--(0,{\A+0.6});
+%help lines 
+\draw[densely dashed,thin,gray] (-\d,\A)--(\d,\A);
+\draw[fill] (0,\A) circle (0.02) node[below left,inner sep=1pt] {$A$}; 
+\draw[densely dashed,thin,gray] (-\d,-\A)--(\d,-\A);
+\draw[fill] (0,-\A) circle (0.02) node[below left,inner sep=1pt] {$-A$};
+%y=Asin(at+b) 
+\draw[thick] plot[variable=\t,domain=-\d:\d,samples=80,smooth] (\t,{\A*sin(\a*(\t+\b/\a) r)});
+%period
+\draw[blue,densely dashed] ({-\b/\a-3*pi/\a},-\A)--({-\b/\a-3*pi/\a},\A); 
+\draw[blue,densely dashed] ({-\b/\a-pi/\a},-\A)--({-\b/\a-pi/\a},\A); 
+\draw[blue,densely dashed] ({-\b/\a+pi/\a},-\A)--({-\b/\a+pi/\a},\A); 
+\draw[blue,densely dashed] ({-\b/\a+3*pi/\a},-\A)--({-\b/\a+3*pi/\a},\A);
+%
+\draw[blue,densely dashed] ({-\b/\a-3*pi/\a},\A)--++(0,0.3); 
+\draw[blue,densely dashed] ({-\b/\a-pi/\a},\A)--++(0,0.3); 
+\draw[blue,densely dashed] ({-\b/\a+pi/\a},\A)--++(0,0.3); 
+\draw[blue,densely dashed] ({-\b/\a+3*pi/\a},\A)--++(0,0.3);
+%
+\node[above,blue] at({-\b/\a+2*pi/\a},\A) (n1) {$T=\frac{2\pi}{\omega}$};
+\node[above,blue] at({-\b/\a+0*pi/\a},\A) (n2) {$T=\frac{2\pi}{\omega}$};
+\node[above,blue] at({-\b/\a-2*pi/\a},\A) (n3) {$T=\frac{2\pi}{\omega}$};
+%
+\node[above] at({-\b/\a+3*pi/\a},\A) (m1) {$\vphantom{T=\frac{2\pi}{\omega}}$};
+\node[above] at({-\b/\a+1*pi/\a},\A) (m2) {$\vphantom{T=\frac{2\pi}{\omega}}$};
+\node[above] at({-\b/\a-1*pi/\a},\A) (m3) {$\vphantom{T=\frac{2\pi}{\omega}}$};
+\node[above] at({-\b/\a-3*pi/\a},\A) (m4) {$\vphantom{T=\frac{2\pi}{\omega}}$};
+%
+\draw[-stealth,blue] (n1)--(m1); 
+\draw[-stealth,blue] (n1)--(m2); 
+\draw[-stealth,blue] (n2)--(m2); 
+\draw[-stealth,blue] (n2)--(m3);
+\draw[-stealth,blue] (n3)--(m3); 
+\draw[-stealth,blue] (n3)--(m4);
+\end{tikzpicture}\ppause
+设$n$为正整数，正弦函数$y=A_{n}\sin(n\omega t+\varphi_{n})$的最小正周期是$\frac{2\pi}{n\omega}$，
+显然$T=\frac{2\pi}{\omega}$也是周期．
+\end{frame}
+
+\begin{frame}
+\frametitle{周期函数}
+设$f(t)$是定义在$\mathbb{R}$上的周期函数，周期也是$T=\frac{2\pi}{\omega}$．\par
+{\centering
+\begin{tikzpicture}[scale=1.7,thick,font=\small]
+%y=Asin(at+b) 
+\def\A{0.8} 
+\pgfmathsetmacro{\a}{3} 
+\pgfmathsetmacro{\b}{pi/6}
+%define domain 
+\pgfmathsetmacro{\l}{2*pi/\a} 
+\pgfmathsetmacro{\n}{1.65}
+\pgfmathsetmacro{\d}{\l*\n}
+%coordinates 
+\draw[-stealth,thin,gray] (-\d,0)--(\d,0) node[above,text1] {$t$};
+\draw[-stealth,thin,gray] (0,{-\A})--(0,{\A+0.6});
+%f(t)  
+\draw[thick] plot[variable=\t,domain=-\d:\d,samples=80,smooth] (\t,{0.6*\A*sin(\a*(\t+\b/\a) r)+0.35*\A*sin(2*\a*\t r)});
+%period
+\draw[blue,densely dashed] ({-\b/\a-3*pi/\a},-\A)--({-\b/\a-3*pi/\a},\A); 
+\draw[blue,densely dashed] ({-\b/\a-pi/\a},-\A)--({-\b/\a-pi/\a},\A); 
+\draw[blue,densely dashed] ({-\b/\a+pi/\a},-\A)--({-\b/\a+pi/\a},\A); 
+\draw[blue,densely dashed] ({-\b/\a+3*pi/\a},-\A)--({-\b/\a+3*pi/\a},\A);
+%
+\draw[blue,densely dashed] ({-\b/\a-3*pi/\a},\A)--++(0,0.3); 
+\draw[blue,densely dashed] ({-\b/\a-pi/\a},\A)--++(0,0.3); 
+\draw[blue,densely dashed] ({-\b/\a+pi/\a},\A)--++(0,0.3); 
+\draw[blue,densely dashed] ({-\b/\a+3*pi/\a},\A)--++(0,0.3);
+%
+\node[above,blue] at({-\b/\a+2*pi/\a},\A) (n1) {$T=\frac{2\pi}{\omega}$};
+\node[above,blue] at({-\b/\a+0*pi/\a},\A) (n2) {$T=\frac{2\pi}{\omega}$};
+\node[above,blue] at({-\b/\a-2*pi/\a},\A) (n3) {$T=\frac{2\pi}{\omega}$};
+%
+\node[above] at({-\b/\a+3*pi/\a},\A) (m1) {$\vphantom{T=\frac{2\pi}{\omega}}$};
+\node[above] at({-\b/\a+1*pi/\a},\A) (m2) {$\vphantom{T=\frac{2\pi}{\omega}}$};
+\node[above] at({-\b/\a-1*pi/\a},\A) (m3) {$\vphantom{T=\frac{2\pi}{\omega}}$};
+\node[above] at({-\b/\a-3*pi/\a},\A) (m4) {$\vphantom{T=\frac{2\pi}{\omega}}$};
+%
+\draw[-stealth,blue] (n1)--(m1); 
+\draw[-stealth,blue] (n1)--(m2); 
+\draw[-stealth,blue] (n2)--(m2); 
+\draw[-stealth,blue] (n2)--(m3);
+\draw[-stealth,blue] (n3)--(m3); 
+\draw[-stealth,blue] (n3)--(m4);
+\end{tikzpicture}}%
+\ppause
+\begin{problem*}
+是否可将周期函数表示成正弦级数组成的级数
+\[ f(t)=A_{0}+\sum_{n=1}^{\infty}A_{n}\sin(n\omega t+\varphi_{n})\ \warn{?} \]
+\end{problem*}
+\end{frame}
+
+\begin{frame}
+设$T=\frac{2\pi}{\omega}=2l$，则$f(t)$有周期区间为$[-l,l]$，\pause
+%\begin{align*}
+%    & A_{n}\sin(n\omega t+\varphi_{n})=A_{n}\sin\left(\frac{n\pi t}{l}+\varphi_{n}\right) \\
+%={} & A_{n}\bigg[\sin\varphi_{n}\cos\frac{n\pi t}{l}+\cos\varphi_{n}\sin\frac{n\pi t}{l}\bigg] \\
+%={} & a_{n}\cos\frac{n\pi t}{l}+b_{n}\sin\frac{n\pi t}{l}
+%\end{align*}
+%从而
+\begin{align*}
+f(t)&=A_{0}+\negthickspace\sum_{n=1}^{\infty}A_{n}\sin(n\omega t+\varphi_{n}) \\
+&=\frac{a_{0}}{2}+\sum_{n=1}^{\infty}\bigg(\!a_{n}\cos\frac{n\pi t}{l}+b_{n}\sin\frac{n\pi t}{l}\bigg)
+\end{align*}
+\cdotfill\vpause
+若周期$T=2\pi$（$l=\pi$）．$f(x)$有周期区间为$[-\pi,\pi]$，
+\[
+f(x)=\frac{a_{0}}{2}+\sum_{n=1}^{\infty}\bigg(a_{n}\cos nx+b_{n}\sin nx\bigg)
+\]
+\end{frame}
+
+\begin{frame}
+\begin{property*}
+三角函数系 \bold{$1$, $\cos x$, $\sin x$, $\cos2x$, $\sin2x$, $\cdots$,
+$\cos nx$, $\sin nx$, $\cdots$} 在区间$[-\pi,\pi]$上正交．\pause
+即上述任何两个相异函数乘积，在$[-\pi,\pi]$上积分为零：
+\[
+\begin{array}{ll}
+\int_{-\pi}^{\pi}\cos nx\dx=0,\quad\int_{-\pi}^{\pi}\sin nx\dx=0\quad(n\in\mathbb{N})_{\vphantom{\big|_{\big|}}}\\
+\int_{-\pi}^{\pi}\sin kx\cdot\cos nx\dx=0\quad\hfill(k, n\in\mathbb{N},\ k\neq n)_{\vphantom{\big|_{\big|}}}\\
+\int_{-\pi}^{\pi}\sin kx\cdot\sin nx\dx=0\quad\hfill(k, n\in\mathbb{N},\ k\neq n)_{\vphantom{\big|_{\big|}}}\\
+\int_{-\pi}^{\pi}\cos kx\cdot\cos nx\dx=0\quad\hfill(k, n\in\mathbb{N},\ k\neq n)_{\vphantom{\big|_{\big|}}}
+\end{array}
+\]%
+\noindent
+\end{property*}
+\vspace{-1em}\cdotfill\ppause
+另外$\int_{-\pi}^{\pi}\sin^{2}nx\dx=\int_{-\pi}^{\pi}\cos^{2}nx\dx=\pi\quad(n\in\mathbb{N})$
+\end{frame}
+
+\subsection{函数展开为傅里叶级数}
+
+\begin{frame}
+\begin{theorem*}
+若周期为$2\pi$的函数$f(x)$能展开为三角级数 
+\[
+f(x)=\frac{a_{0}}{2}+\sum_{n=1}^{\infty}\bigg(a_{n}\cos nx+b_{n}\sin nx\bigg)
+\]
+则有
+\begin{align*}
+a_{n}&=\frac{1}{\pi}\int_{-\pi}^{\pi}f(x)\cos nx\dx\quad(n=0,1,2,3,\cdots)\\
+b_{n}&=\frac{1}{\pi}\int_{-\pi}^{\pi}f(x)\sin nx\dx\quad(n=1,2,3,\cdots)
+\end{align*}
+\end{theorem*}
+\end{frame}
+
+\begin{frame}
+\begin{definition*}
+$f(x)$的\bold{傅里叶级数}定义为
+\[ \frac{a_{0}}{2}+\sum_{n=1}^{\infty}\bigg(a_{n}\cos nx+b_{n}\sin nx\bigg) \]
+其中
+\begin{align*}
+a_{n}&=\frac{1}{\pi}\int_{-\pi}^{\pi}f(x)\cos nxdx\quad(n=0,1,2,3,\cdots)\\
+b_{n}&=\frac{1}{\pi}\int_{-\pi}^{\pi}f(x)\sin nxdx\quad(n=0,1,2,3,\cdots)
+\end{align*}
+\end{definition*}
+\begin{problem*}
+何时有$\displaystyle f(x)\overset{\warn?}{=}\frac{a_{0}}{2}+\sum_{n=1}^{\infty}\big(a_{n}\cos nx+b_{n}\sin nx\big)$
+\end{problem*}
+\end{frame}
+
+\begin{frame}
+\begin{theorem*}[收敛定理]
+设$f(x)$是周期为$2\pi$的周期函数，如果它满足：
+\begin{enumerate}
+  \item 在一个周期内连续或只有有限个第一类间断点
+  \item 在一个周期内至多只有有限个极值点
+\end{enumerate}
+那么$f(x)$的傅里叶级数收敛，\pause 并且
+\begin{enumerate}
+  \item 当$x$是$f(x)$的连续点时，级数收敛于$f(x)$\pause
+  \item 当$x$是$f(x)$的间断点时，级数收敛于\newline\hspace*{13em}
+        $\frac{1}{2}\big[f(x^{-})+f(x^{+})\big]$
+\end{enumerate}
+\end{theorem*}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+设$f(x)$是周期为$2\pi$的周期函数，在$[-\pi,\pi)$上的表达式为
+\[
+f(x)=\left\{\begin{array}{ll}
+-1, & \quad-\pi\leq x<0,\\
+1, & \quad0\leq x<\pi.
+\end{array}\right.
+\]
+求出$f(x)$的傅里叶级数。
+\end{example}
+\pause\centering
+\begin{tikzpicture}[scale=1.65,thick,font=\small]
+%height 
+\def\h{0.7}
+%coordinates 
+\draw[-stealth,thin,gray] (-3.1,0)--(3.1,0) node[right] {$x$}; 
+\draw[-stealth,thin,gray] (0,-1)--(0,1) node[above] {$y$};
+%f(t) 
+\draw[fill] (0,\h) circle (0.5pt);
+\draw (1,\h) circle (0.5pt);	
+\draw[thick] (0,\h)--(1,\h);
+\draw[fill] (-1,-\h) circle (0.5pt);
+\draw (0,-\h) circle (0.5pt);
+\draw[thick] (-1,-\h)--(0,-\h);
+\node[below left] at(1,0) {$\pi$};
+\node[below left] at(-1,0) {$-\pi$};
+\node[below left] at(0,0) {$0$}; 
+\node[left] at(0,\h) {$1$};
+\node[below left] at(0,-\h) {$-1$};
+\draw[densely dashed,thin,gray] (-1,-\h+0.05)--(-1,\h-0.05);
+\draw[densely dashed,thin,gray] (1,-\h+0.05)--(1,\h-0.05);
+\foreach \k in {-2,0,2}{
+	\draw[fill] (\k,\h) circle (0.5pt);
+	\draw (\k+1,\h) circle (0.5pt);
+	\draw[thick] (\k,\h)--(\k+1,\h);
+}
+\foreach \k in {-3,-1,1}{ 
+	\draw[fill] (\k,-\h) circle (0.5pt);
+	\draw (\k+1,-\h) circle (0.5pt);
+	\draw[thick] (\k,-\h)--(\k+1,-\h) ;
+}
+\foreach \k in {-3,-2,2,3} { 
+	\node[below left] at(\k,0) {$\k\pi$};
+}
+%help lines 
+\foreach \k in {-3,-2,...,3} { 
+	\draw[densely dashed,thin,gray] (\k,-\h+0.05)--(\k,\h-0.05);
+}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}
+$f(x)$的傅里叶级数是$\displaystyle\frac{4}{\pi}\sum_{n=1}^{\infty}\frac{1}{2n-1}\sin\big[(2n-1)x\big]$\ppause
+考虑级数的部分和，即前$N$项之和：\ppause
+\centering 
+\begin{tikzpicture}[scale=1.65,thick,font=\small,declare function={ 
+	s1(\x)=4/pi*sin(\x r); 
+	s2(\x)=s1(\x)+4/(3*pi)*sin(3*\x r);
+	s3(\x)=s2(\x)+4/(5*pi)*sin(5*\x r);
+	s4(\x)=s3(\x)+4/(5*pi)*sin(7*\x r);
+	s5(\x)=s4(\x)+4/(9*pi)*sin(9*\x r);
+	s6(\x)=s5(\x)+4/(11*pi)*sin(11*\x r);
+	s7(\x)=s6(\x)+4/(13*pi)*sin(13*\x r);
+	s8(\x)=s7(\x)+4/(15*pi)*sin(15*\x r);}]
+%height 
+\def\h{0.7}
+%coordinates 
+\draw[-stealth,black,thin,gray] (-3.1,0)--(3.1,0) node[right] {$x$}; 
+\draw[-stealth,black,thin,gray] (0,-1)--(0,1) node[above] {$y$};
+%f(t) 
+\foreach \k in {-2,0,2}{
+	\draw[fill] (\k,\h) circle (0.5pt);
+	\draw (\k+1,\h) circle (0.5pt);
+	\draw[thick] (\k,\h)--(\k+1,\h);
+}
+\foreach \k in {-3,-1,1}{ 
+	\draw[fill] (\k,-\h) circle (0.5pt);
+	\draw (\k+1,-\h) circle (0.5pt);
+	\draw[thick] (\k,-\h)--(\k+1,-\h) ;
+}
+%help lines 
+\foreach \k in {-3,-2,...,3} { 
+	\draw[densely dashed,thin,gray] (\k,-\h+0.05)--(\k,\h-0.05);
+}
+\foreach \k in {-3,-2,2,3} { 
+	\node[below left] at(\k,0) {$\k\pi$};
+}
+\node[below left] at(1,0) {$\pi$};
+\node[below left] at(-1,0) {$-\pi$};
+\node[below left] at(0,0) {$0$}; 
+\node[left] at(0,\h) {$1$};
+\node[below left] at(0,-\h) {$-1$};
+%fourier series 
+\only<4|handout:0>{
+\node[blue] at (-1.5,\h+0.3) {$N=1$};
+\draw[thick,blue] plot[variable=\t,domain=-3:3,samples=100,smooth] (\t,{\h*s1(\t*pi)});
+}
+\only<5|handout:0>{
+\node[blue] at (-1.5,\h+0.3) {$N=2$};
+\draw[thick,blue] plot[variable=\t,domain=-3:3,samples=300,smooth] (\t,{\h*s2(\t*pi)});
+}
+\only<6|handout:0>{
+\node[blue] at (-1.5,\h+0.3) {$N=3$};
+\draw[thick,blue] plot[variable=\t,domain=-3:3,samples=300,smooth] (\t,{\h*s3(\t*pi)});
+}
+\only<7|handout:0>{
+\node[blue] at (-1.5,\h+0.3) {$N=4$};
+\draw[thick,blue] plot[variable=\t,domain=-3:3,samples=300,smooth] (\t,{\h*s4(\t*pi)});
+}
+\only<8|handout:0>{
+\node[blue] at (-1.5,\h+0.3) {$N=5$};
+\draw[thick,blue] plot[variable=\t,domain=-3:3,samples=300,smooth] (\t,{\h*s5(\t*pi)});
+}
+\only<9|handout:0>{
+\node[blue] at (-1.5,\h+0.3) {$N=6$};
+\draw[thick,blue] plot[variable=\t,domain=-3:3,samples=300,smooth] (\t,{\h*s6(\t*pi)});
+}
+\only<10|handout:0>{
+\node[blue] at (-1.5,\h+0.3) {$N=7$};
+\draw[thick,blue] plot[variable=\t,domain=-3:3,samples=300,smooth] (\t,{\h*s7(\t*pi)});
+}
+\only<11->{
+\node[blue] at (-1.5,\h+0.3) {$N=8$};
+\draw[thick,blue] plot[variable=\t,domain=-3:3,samples=300,smooth] (\t,{\h*s8(\t*pi)});
+}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+设$f(x)$是周期为$2\pi$的周期函数，在$[-\pi,\pi)$上的表达式为
+\[ f(x)=|x| \]
+求出$f(x)$的傅里叶级数。
+\end{example}
+\pause\centering
+\begin{tikzpicture}[scale=1.65,thick,font=\small]
+%height
+\def\h{1}
+%coordinates 
+\draw[-stealth,black,thin,gray] (-3.1,0)--(3.1,0) node[right] {$x$};
+\draw[-stealth,black,thin,gray] (0,-0.3)--(0,1.3) node[above] {$y$};
+%f(t) 
+\draw[thick] (-1,\h)--(0,0)--(1,\h);
+\node[below] at(1,0) {$\pi$};
+\node[below] at(-1,0) {$-\pi$};
+\node[below left] at(0,0) {$0$}; 
+\node[above left] at(0,\h) {$\pi$};
+\draw[densely dashed,thin,gray] (-3,\h)--(3,\h);
+\draw[densely dashed,thin,gray] (-1,0)--(-1,\h);
+\draw[densely dashed,thin,gray] (1,0)--(1,\h);
+\visible<3->{
+\foreach \k in {-3,-1,1}{  
+	\draw[thick] (\k,\h)--(\k+1,0)--(\k+2,\h);
+}
+\foreach \k in {-3,-2,2,3} { 
+	\node[below] at(\k,0) {$\k\pi$};
+}
+}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}
+$f(x)$的傅里叶级数是
+$\displaystyle\frac{\pi}{2}-\frac{4}{\pi}\sum_{n=1}^{\infty}\frac{\cos[(2n-1)x]}{(2n-1)^{2}}$\ppause
+考虑级数的部分和，即前$N$项之和：\ppause
+\centering 
+\begin{tikzpicture}[scale=1.65,thick,font=\small,declare function={
+ s1(\x)=pi/2-4/pi*cos(\x r);
+ s2(\x)=s1(\x)-4/(3*3*pi)*cos(3*\x r);
+ s3(\x)=s2(\x)-4/(5*5*pi)*cos(5*\x r); 	
+ s4(\x)=s3(\x)-4/(7*7*pi)*cos(7*\x r);
+ s5(\x)=s4(\x)-4/(9*9*pi)*cos(9*\x r);
+ s6(\x)=s5(\x)-4/(11*11*pi)*cos(11*\x r);
+ s7(\x)=s6(\x)-4/(13*13*pi)*cos(13*\x r);
+ s8(\x)=s7(\x)-4/(15*15*pi)*cos(15*\x r);}]
+%height
+\def\h{1}
+%coordinates 
+\draw[-stealth,black,thin,gray] (-3.1,0)--(3.1,0) node[right] {$x$};
+\draw[-stealth,black,thin,gray] (0,-0.3)--(0,1.3) node[above] {$y$};
+%f(t) 
+\foreach \k in {-3,-1,1}{  
+	\draw[thick] (\k,\h)--(\k+1,0)--(\k+2,\h);
+}
+\foreach \k in {-3,-2,2,3} { 
+	\node[below] at(\k,0) {$\k\pi$};
+}
+\node[below] at(1,0) {$\pi$};
+\node[below] at(-1,0) {$-\pi$}; 
+\node[below left] at(0,0) {$0$}; 
+%fourier series 
+\only<4|handout:0>{
+\node[blue] at (-1.5,\h+0.3) {$N=1$};
+\draw[thick,blue] plot[variable=\t,domain=-3:3,samples=100,smooth] (\t,{\h/pi*s1(\t*pi)});
+}
+\only<5>{
+\node[blue] at (-1.5,\h+0.3) {$N=2$};
+\draw[thick,blue] plot[variable=\t,domain=-3:3,samples=200,smooth] (\t,{\h/pi*s2(\t*pi)});
+}
+\only<6|handout:0>{
+\node[blue] at (-1.5,\h+0.3) {$N=3$};
+\draw[thick,blue] plot[variable=\t,domain=-3:3,samples=200,smooth] (\t,{\h/pi*s3(\t*pi)});
+}
+\only<7|handout:0>{
+\node[blue] at (-1.5,\h+0.3) {$N=4$};
+\draw[thick,blue] plot[variable=\t,domain=-3:3,samples=200,smooth] (\t,{\h/pi*s4(\t*pi)});
+}
+\only<8|handout:0>{
+\node[blue] at (-1.5,\h+0.3) {$N=5$};
+\draw[thick,blue] plot[variable=\t,domain=-3:3,samples=200,smooth] (\t,{\h/pi*s5(\t*pi)});
+}
+\end{tikzpicture}
+\end{frame}
+
+\subsection{正弦级数和余弦级数}
+
+\begin{frame}
+\frametitle{正弦级数和余弦级数}
+\begin{property*}
+设$f(x)$是周期为$2\pi$的周期函数，
+\begin{itemize}
+  \item 若$f(x)$是奇函数，则傅里叶级数为\bold{正弦级数}
+    \[ \sum_{n=1}^{\infty}b_{n}\sin nx,\quad b_{n}=\frac{2}{\pi}\int_{0}^{\pi}f(x)\sin nx\dx \]\pause
+  \item 若$f(x)$是偶函数，则傅里叶级数为\bold{余弦级数}
+    \[ \frac{a_{0}}{2}+\sum_{n=1}^{\infty}a_{n}\cos nx,\quad a_{n}=\frac{2}{\pi}\int_{0}^{\pi}f(x)\cos nx\dx \]
+\end{itemize}
+\end{property*}
+\end{frame}
+
+\begin{frame}
+\frametitle{周期延拓}
+设$f(x)$是定义在区间$[-\pi,\pi)$（或$(-\pi,\pi]$）上的函数，可以对其进行\bold{周期延拓}，
+从而得到定义在$\mathbb{R}$上的周期函数：\ppause{\centering
+\begin{tikzpicture}[scale=1.65,thick,font=\small,declare function={ 
+	f(\x)=0.8*(cos(pi/2*\x r)+1/4*cos(4*pi/2*\x r));}]
+%coordinates 
+\draw[-stealth,black,thin,gray] (-3.1,0)--(3.1,0) node[right] {$x$}; 
+\draw[-stealth,black,thin,gray] (0,-0.9)--(0,1.1) node[above] {$y$};
+%f(t) 
+\draw[thick] plot[variable=\x,domain=-1:1,samples=50,smooth](\x,{f(\x+1)});
+\draw[thin,gray,densely dashed] (-1,{f(0)})--(-1,{f(2)});
+\draw[thin,gray,densely dashed] (1,{f(0)})--(1,{f(2)});
+\draw[fill] (-1,{f(0)}) circle (0.5pt); 
+\draw (1,{f(2)}) circle (0.6pt);
+\node[below left] at(1,0) {$\pi$};
+\node[below left] at(-1,0) {$-\pi$}; 
+\node[below left] at(0,0) {$0$};
+\foreach \k in {-3,-1,1}{  
+	\draw[thick] plot[variable=\x,domain={\k}:{\k+2},samples=50,smooth](\x,{f(\x-\k)});
+}
+\foreach \k in {-3,3} { 
+	\node[below left] at(\k,0) {$\k\pi$}; 
+}
+\foreach \k in {-3,-1,1,3} { 
+	\draw[thin,gray,densely dashed] (\k,{f(0)})--(\k,{f(2)});
+}
+\foreach \k in {-3,-1,1} { 
+	\draw[fill] (\k,{f(0)}) circle (0.5pt); 
+}
+\foreach \k in {-1,1,3} { 
+	\draw (\k,{f(2)}) circle (0.6pt);
+}
+\end{tikzpicture}}
+\ppause 延拓后的周期函数仍记为$f(x)$，此时可作傅里叶展开。
+\end{frame}
+
+
+\begin{frame}
+\frametitle{奇延拓}
+设$f(x)$是定义在区间$(0,\pi]$上的函数，可以对其进行\bold{奇延拓}，
+从而得到定义在$\mathbb{R}$上的周期奇函数。\ppause
+\centering 
+\begin{tikzpicture}[scale=1.65,thick,font=\small,declare function={ 
+	f(\x)=0.6*0.8*sin(3*(\x+pi/18) r)+0.35*0.8*sin(2*3*\x r);}]
+%coordinates 
+\draw[-stealth,black,thin,gray] (-3.1,0)--(3.1,0) node[right] {$x$}; 
+\draw[-stealth,black,thin,gray] (0,-0.9)--(0,0.9) node[left] {$y$};
+%f(t) 
+\draw[thick] plot[variable=\x,domain=0:1,samples=50,smooth](\x,{f(\x)});
+\draw[thin,gray,densely dashed] (1,0)--(1,{f(1)});
+\draw[fill] (1,{f(1)}) circle (0.7pt); 
+\draw (0,{f(0)}) circle (0.7pt);
+\node[below left,inner sep=1pt] at(1,0) {$\pi$}; 
+\node[below left,inner sep=1pt] at(0,0) {$0$};
+\visible<3->{
+\draw[fill] (0,0) circle (0.7pt);
+}
+\visible<4->{
+\draw[thick] plot[variable=\x,domain=-1:0,samples=50,smooth](\x,{-f(-\x)});
+\draw[thin,gray,densely dashed] (-1,0)--(-1,{-f(1)});
+\node[below left,inner sep=1pt] at(-1,0) {$-\pi$};
+\draw (-1,{-f(1)}) circle (0.7pt); 
+\draw (0,{-f(0)}) circle (0.7pt);
+}
+\visible<5->{
+\foreach \k in {-3,-1,1}{  
+	\draw[thick] plot[variable=\x,domain=-1:0,samples=50,smooth](\x+\k+1,{-f(-\x)});
+	\draw (\k,{-f(1)}) circle (0.7pt); 
+	\draw (\k+1,{-f(0)}) circle (0.7pt);
+	\draw[thick] plot[variable=\x,domain=0:1,samples=50,smooth](\x+\k+1,{f(\x)});
+	\draw[fill] (\k+2,{f(1)}) circle (0.7pt); 
+	\draw (\k+1,{f(0)}) circle (0.7pt);
+	\draw[fill] (\k+1,0) circle (0.7pt);
+}
+\draw[thin,gray,densely dashed] (-3,{f(1)})--(-3,{-f(1)});
+\draw[thin,gray,densely dashed] (3,{f(1)})--(3,{-f(1)});
+\draw[thin,gray,densely dashed] (-1,0)--(-1,{f(1)});
+\draw[thin,gray,densely dashed] (1,0)--(1,{-f(1)});
+\foreach \k in {-3,3} { 
+	\node[below left,inner sep=1pt] at(\k,0) {$\k\pi$}; 
+}
+}
+\end{tikzpicture} 
+\end{frame}
+
+\begin{frame}
+\frametitle{偶延拓}
+设$f(x)$是定义在区间$[0,\pi]$上的函数，可以对其进行\bold{偶延拓}，
+从而得到定义在$\mathbb{R}$上的周期偶函数。\ppause
+\centering
+\begin{tikzpicture}[scale=1.65,thick,font=\small,declare function={ 
+	f(\x)=0.6*0.8*sin(3*(\x+pi/18) r)+0.35*0.8*sin(2*3*\x r);}]
+%coordinates 
+\draw[-stealth,black,thin,gray] (-3.1,0)--(3.1,0) node[right] {$x$}; 
+\draw[-stealth,black,thin,gray] (0,-0.9)--(0,0.9) node[left] {$y$};
+%f(t) 
+\draw[thick] plot[variable=\x,domain=0:1,samples=50,smooth](\x,{f(\x)});
+\draw[thin,gray,densely dashed] (1,0)--(1,{f(1)});
+\draw[fill] (1,{f(1)}) circle (0.7pt); 
+\draw[fill] (0,{f(0)}) circle (0.7pt);
+\node[above] at(1,0) {$\pi$}; 
+\node[below left] at(0,0) {$0$};
+\visible<3->{
+    \draw[thick] plot[variable=\x,domain=-1:0,samples=50,smooth](\x,{f(-\x)});
+    \draw[thin,gray,densely dashed] (-1,0)--(-1,{f(1)});
+    \node[above] at(-1,0) {$-\pi$};
+    \draw[fill] (-1,{f(1)}) circle (0.7pt); 
+    \draw[fill] (0,{f(0)}) circle (0.7pt);
+}
+\visible<4->{
+    \foreach \k in {-3,-1,1}{  
+    	\draw[thick] plot[variable=\x,domain=-1:0,samples=50,smooth](\x+\k+1,{f(-\x)});
+    	\draw[fill] (\k,{f(1)}) circle (0.7pt); 
+    	\draw[fill] (\k+1,{f(0)}) circle (0.7pt);
+    	\draw[thick] plot[variable=\x,domain=0:1,samples=50,smooth](\x+\k+1,{f(\x)});
+    	\draw[fill] (\k+2,{f(1)}) circle (0.7pt); 
+    	\draw (\k+1,{f(0)}) circle (0.7pt);
+    }
+    \draw[thin,gray,densely dashed] (-3,{f(1)})--(-3,{f(1)});
+    \draw[thin,gray,densely dashed] (3,{f(1)})--(3,{f(1)});
+    \draw[thin,gray,densely dashed] (-1,0)--(-1,{f(1)});
+    \draw[thin,gray,densely dashed] (1,0)--(1,{f(1)});
+    \foreach \k in {-3,3} { 
+    	\node[above] at(\k,0) {$\k\pi$}; 
+    }
+}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+将下面函数分别展开成正弦级数和余弦级数
+\[ f(x)=\left\{\begin{array}{ll}
+\cos x, & \quad 0 \leq x < \pi/2,\\
+0, & \quad \pi/2 \leq x \leq \pi.
+\end{array}\right.. \]
+\end{example}
+\end{frame}
+
+\begin{sframe}
+\frametitle{积化和差公式}
+\begin{align*}
+\sin x\cos y &= \phantom{-{}}\frac12\Big(\sin(x+y) + \sin(x-y)\Big) \\
+\cos x\sin y &= \phantom{-{}}\frac12\Big(\sin(x+y) - \sin(x-y)\Big) \\
+\cos x\cos y &= \phantom{-{}}\frac12\Big(\cos(x+y) + \cos(x-y)\Big) \\
+\sin x\sin y &= -\frac12\Big(\cos(x+y) - \cos(x-y)\Big)
+\end{align*}
+\end{sframe}
+
+\mybookmark{复习与提高}
+
+\begin{frame}
+\frametitle{复习与提高}
+\vspace{-1em}%
+\begin{choice}%[1999年数学一修改]
+将$f(x)=\begin{cases}
+  x, & 0\le x\le \frac{\pi}{2} \\
+  2-2x, & \frac{\pi}{2}<x<\pi
+\end{cases}$展开成傅里叶级数
+$S(x)=\dfrac{a_0}{2}+\sum\limits_{n=1}^{\infty}a_n\cos nx$（$-\infty<x<\infty$），
+其中$a_n=\frac{2}{\pi}\int_0^{\pi}f(x)\cos nx\dx$（$n=0,1,2,\cdots$），\vspace{0.5em}%
+则$S\big(\!-\frac{5\pi}2\big)$等于\dotfill(\select{C})
+\begin{choicequar}
+  \item $\dfrac{\pi}{2}$  ~
+  \item $-\dfrac{\pi}{2}$ ~
+  \item $\dfrac{3\pi}{4}$ ~
+  \item $-\dfrac{3\pi}{4}$ ~
+\end{choicequar}
+\end{choice}
+\stext{\pause
+\begin{solution}\smark
+偶延拓，$S\big(\!-\frac{5\pi}2\big)=S\big(\!-\frac{\pi}2\big)=S\big(\frac{\pi}2\big)$．
+\end{solution}}
+\end{frame}
+
+\section{一般周期函数的傅里叶级数}
+
+\begin{frame}
+假设$f(x)$是定义在$\mathbb{R}$上周期函数，周期为$T=2l$，其傅里叶级数为： 
+\[
+\frac{a_{0}}{2}+\sum_{n=1}^{\infty}\bigg(a_{n}\cos\frac{n\pi x}{l}+b_{n}\sin\frac{n\pi x}{l}\bigg)
+\]
+其中
+\begin{align*}
+ & a_{n}=\frac{1}{l}\int_{-l}^{l}f(x)\cos\frac{n\pi x}{l}\dx\quad(n=0,1,2,3,\cdots)\\
+ & b_{n}=\frac{1}{l}\int_{-l}^{l}f(x)\sin\frac{n\pi x}{l}\dx\quad(n=0,1,2,3,\cdots)
+\end{align*}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+设$f(x)$是周期为$4$的周期函数，它在$[-2,2]$上的表达式为
+\[ f(x)=\left\{\begin{array}{ll}
+0, & \quad -1 \leq x < 0,\\
+h, & \quad 0 \leq x \leq 2.
+\end{array}\right.. \]
+将$f(x)$展开成傅里叶级数．
+\end{example}
+\end{frame}
+
+\mybookmark{复习与提高}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+将$f(x)=2+|x|$（$-1\le x\le 1$）展开成以$2$为周期的傅里叶级数．
+\end{puzzle}
+\stext{\pause\begin{solution}\smark
+$b_n=0$，$a_0=5$，$a_n=\dfrac{2}{n^2\pi^2}\Big((-1)^n-1\Big)$．
+\end{solution}}
+\end{frame}
+
+\fi % <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+\end{document}

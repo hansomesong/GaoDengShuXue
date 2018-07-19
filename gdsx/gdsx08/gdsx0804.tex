@@ -1,0 +1,315 @@
+% -*- coding: utf-8 -*-
+% !TEX program = xelatex
+
+%\documentclass[14pt]{article}
+%\usepackage[notheorems]{beamerarticle}
+
+\documentclass[14pt,notheorems,leqno,xcolor={rgb}]{beamer} % ignorenonframetext
+
+\input{../common/theme.sty}
+\input{../common/share.sty}
+\input{../common/local.sty}
+
+\occasion{高等数学第八章}
+\title{第四节·空间直线及其方程}
+\author{\href{https://lvjr.bitbucket.io}{吕荐瑞}}
+\institute{暨南大学数学系}
+\renewcommand<>{\section}[1]{\begin{frame}[plain]\titlepage\end{frame}}
+
+\setbeamerfont{title}{size=\Large}
+
+\makeatletter
+\beamer@tocsectionnumber=4\relax
+\setcounter{section}{4}
+\makeatother
+
+\begin{document}
+%\ifxetex\else\heiti\fi
+
+\section{空间直线及其方程}
+
+\subsection{空间直线的方程}
+
+\begin{frame}
+\frametitle{1. 直线的一般式方程}
+空间直线可视为两平面的交线，其\bold{一般式方程}为
+\[ \left\{\begin{aligned}
+  A_1x+B_1y+C_1z+D_1=0\\
+  A_2x+B_2y+C_2z+D_2=0
+\end{aligned}\right.\]
+\begin{center}
+\begin{tikzpicture}[font=\small]
+\draw[fill=filler3] (0,0) -- (0,2) -- (2,3)-- (2,1) -- cycle;
+\draw[fill=filler2] (0,0) -- (0,2) -- (-2,3)-- (-2,1) -- cycle;
+\node at (-1.6,1.2) {$\Pi_1$}; \node at (1.6,1.2) {$\Pi_2$};
+\draw[draw=accent1,thick] (0,0) -- (0,2); \node[right,color=accent1,inner sep=2pt] at (0,1) {$L$};
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{2. 直线的对称式方程}
+已知直线上一点 $M_0(x_0,y_0,z_0)$ 和其\bold{方向向量} $\vec s=(m,n,p)$，则它的方程为\pause
+\[ \frac{x-x_0}m = \frac{y-y_o}n = \frac{z-z_0}p \]\pause
+此式称为直线的\bold{对称式方程}或\bold{点向式方程}。
+\end{frame}
+
+\begin{frame}
+\frametitle{3. 直线的参数式方程}
+在对称式方程中令
+\[ \frac{x-x_0}m = \frac{y-y_o}n = \frac{z-z_0}p=t \]\pause
+得到直线的\bold{参数式方程}：
+\[ \left\{\begin{aligned}
+  x &= x_0 + mt\\
+  y &= y_0 + nt\\
+  z &= z_0 + pt
+\end{aligned}\right. \]
+\end{frame}
+
+\begin{frame}
+\begin{example}
+用对称式方程及参数式方程表示直线
+\[ \left\{\begin{aligned}
+  &x+y+z+1=0\\
+  &2x-y+3z+4=0
+\end{aligned}\right.\]
+\end{example}
+\end{frame}
+
+\subsection{两直线的夹角}
+
+\begin{frame}
+\frametitle{两直线的夹角}
+两直线的夹角，是指两者的\bold{方向向量的夹角}（取锐角或直角）．\ppause
+设直线$L_1$和$L_2$的方向向量分别为$$\vec s_1=(m_1,n_1,p_1),\quad\vec s_2=(m_2,n_2,p_2),$$\pause 则有
+{%\small
+\[ \bold{\cos\theta=\frac{|\vec s_1\cdot\vec s_2|}{|\vec s_1|\,|\vec s_2|}}
+=\pause\frac{\big|m_1m_2+n_1n_2+p_1p_2\big|}{\sqrt{m_1^2+n_1^2+p_1^2}\,\sqrt{m_2^2+n_2^2+p_2^2}} \]
+}
+\end{frame}
+
+\begin{frame}
+\frametitle{两直线的夹角}
+\hrule
+$\begin{aligned}L_1:\quad&\vec{s}_1=(m_1,n_1,p_1)\\L_2:\quad&\vec{s}_2=(m_2,n_2,p_2)\end{aligned}$
+\hfill$\cos\theta=\dfrac{|\vec{s}_1\cdot\vec{s}_2|}{|\vec{s}_1|\cdot|\vec{s}_2|}$
+\hrule\pause%\vspace{0.5em}
+\begin{itemize}
+  \item[] $\begin{aligned}L_1\bot L_2 &\Longleftrightarrow \vec{s}_1\bot\vec{s}_2\\
+    &\Longleftrightarrow m_1m_2+n_1n_2+p_1p_2=0
+    \end{aligned}$\pause
+  \item[] $\begin{aligned}L_1\parallel L_2 &\Longleftrightarrow \vec{s}_1\parallel \vec{s}_2\\
+    &\Longleftrightarrow \frac{m_1}{m_2}=\frac{n_1}{n_2}=\frac{p_1}{p_2}
+    \end{aligned}$
+\end{itemize}
+\pause\vspace{-0.3em}
+\begin{remark*}
+在空间中，两条直线垂直时\CJKunderdot{未必}相交．
+\end{remark*}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+求直线$L_1$和$L_2$的夹角。
+\begin{align*}
+L_1:\quad &\frac{x-1}1=\frac{y}{-4}=\frac{z}1\\
+L_2:\quad &\frac{x}2=\frac{y+2}{-2}=\frac{z}{-1}
+\end{align*}
+%\[ L_1:\ \frac{x-1}1=\frac{y}{-4}=\frac{z+3}1 \quad
+%   L_2:\ \left\{\begin{aligned}&x+y+2=0\\&x+2z=0\end{aligned}\right. \]
+\end{example}
+\end{frame}
+
+\subsection{直线与平面的夹角}
+
+\begin{frame}
+\frametitle{直线与平面的夹角}
+\begin{columns}[onlytextwidth,T]
+\column{.6\textwidth}
+当直线和平面不垂直时，直线和它在平面上的\bold{投影直线} 所夹锐角$\theta$，称为\bold{直线和平面的夹角}。
+\onslide<2->{\[
+ \bold{\sin\theta}=\cos(\angle(\vec s,\vec n))
+ \onslide<3->{\bold{=\frac{|\vec s\cdot\vec n|}{|\vec s|\,|\vec n|}}}
+\]}%
+\column{.4\textwidth}
+\hfill
+\begin{tikzpicture}[font=\small]
+\draw[fill=filler2] (-2,-1) -- (1,-1) -- (2,1) -- (-1,1) -- cycle;
+\node at (.8,-.7) {$\Pi$};
+\draw[thick] (-1,-.5) -- (1,.5);
+\draw[->,thick] (0,0) -- (0,1.5) node[above]{$\vec n$};
+\draw[thick] (0,0) -- (1,2) node[above]{$L$};
+\draw[->,thick,color=accent3] (0,0) -- (.7,1.4) node[above]{$\vec s$};
+\draw[thick] (30:.25) arc (30:60:.25);
+\node[color=accent1] at (45:.55) {$\theta$};
+\draw[dashed] (1,.5) -- (1,2);
+\end{tikzpicture}
+\end{columns}
+\pause[4] 当直线和平面垂直时，规定它们的夹角为$\frac{\pi}2$。
+\end{frame}
+
+\begin{frame}
+\frametitle{直线与平面的夹角}
+设直线$L$的方向向量为$\vec s=(m,n,p)$，平面$\Pi$的法向量为$\vec n=(A,B,C)$，\pause 则两者夹角满足
+\[
+ \bold{\sin\theta=\frac{|\vec s\cdot\vec n|}{|\vec s|\,|\vec n|}\pause
+ =\frac{|Am+Bn+Cp|}{\sqrt{A^2+B^2+C^2}\sqrt{m^2+n^2+p^2}}}
+\]\pause
+\begin{itemize}
+  \item[] $\begin{aligned}L\bot\Pi &\Longleftrightarrow \vec{s}\parallel\vec{n}
+    &\Longleftrightarrow \frac{A}{m}=\frac{B}{n}=\frac{C}{p}
+    \end{aligned}$\pause
+  \item[] $\begin{aligned}L\parallel\Pi &\Longleftrightarrow \vec{s}\bot\vec{n}
+    &\Longleftrightarrow Am+Bn+Cp=0
+    \end{aligned}$
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+求过点$(1,-2,4)$且与平面$2x-3y+z-4=0$垂直的直线的方程。
+\end{example}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+求与两平面$x-4z=3$和$2x-y-5z=1$的交线平行，且过点$(-3,2,5)$的直线的方程。
+\end{example}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+求直线$\frac{x-2}{1}\!=\!\frac{y-3}1\!=\!\frac{z-4}2$与平面$2x+y+z-6\!=\!0$的交点。
+\end{example}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+求过点$(2,1,3)$且与直线$\frac{x+1}{3}=\frac{y-1}2=\frac{z}{-1}$垂直相交的直线的方程。
+\end{example}
+\end{frame}
+
+\begin{frame}
+\frametitle{平面束的方程}
+\begin{columns}[onlytextwidth]
+\column{.55\textwidth}
+过直线
+\[ \left\{\begin{aligned}
+  A_1x+B_1y+C_1z+D_1=0\\
+  A_2x+B_2y+C_2z+D_2=0
+\end{aligned}\right.\]
+的平面束的方程为\pause
+\column{.45\textwidth}
+\hfill
+\begin{tikzpicture}%[scale=.9]
+\draw[fill=filler1] (-.5,-1) -- (.5,1) -- (-.7,0) -- (-1.7,-2) -- cycle;
+\draw[fill=filler2] (-.5,-1) -- (.5,1) -- (1.1,0) -- (.1,-2) -- cycle;
+\draw[fill=filler4] (-2,-1) -- (-1,1) -- (2,1) -- (1,-1) -- cycle;
+\draw[fill=filler1] (-.5,-1) -- (.5,1) -- (1.7,2) -- (.7,0) -- cycle;
+\draw[fill=filler2] (-.5,-1) -- (.5,1) -- (-.1,2) -- (-1.1,0) -- cycle;
+\draw[thick,color=accent3] (-.5,-1) -- (.5,1);
+\end{tikzpicture}
+\end{columns}\pause
+\vspace{-.5em}
+\begin{multline*} \lambda_1(A_1x+B_1y+C_1z+D_1)\\+\lambda_2(A_2x+B_2y+C_2z+D_2)=0 \end{multline*}
+\vspace{-.5em}其中，$\lambda_1$，\!$\lambda_2$ 不全为零。
+\end{frame}
+
+\begin{frame}
+\frametitle{平面束的方程}
+在平面束方程（$\lambda_1$，\!$\lambda_2$ 不全为零）
+\begin{multline*} \lambda_1(A_1x+B_1y+C_1z+D_1)\\+\lambda_2(A_2x+B_2y+C_2z+D_2)=0 \end{multline*}
+中通常固定$\lambda_1=1$，$\lambda_2=\lambda$，得到简化写法
+\bold{\begin{multline*}
+  A_1x+B_1y+C_1z+D_1 \\+\lambda(A_2x+B_2y+C_2z+D_2)=0
+\end{multline*}}% %FIXME
+\pause\vspace{-0.5em}\begin{remark*}
+简化写法缺少平面$A_2x+B_2y+C_2z+D_2=0$．
+\end{remark*}%
+\end{frame}
+
+\begin{frame}
+\begin{example}
+求直线$\left\{\begin{array}{@{}l@{}}x+y-z-1=0\\x-y+z+1=0\end{array}\right.$在平面$x\!+\!y\!+\!z\!=\!0$的投影直线的方程。
+\end{example}
+\end{frame}
+
+\mybookmark{复习与提高}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+一直线过点$A(1,2,1)$且垂直于直线$$L_1:\ \frac{x-1}{3}=\wfrac{y}{2}=\frac{z+1}{1}$$
+又和直线$$L_2:\ \wfrac{x}{2}=\wfrac{y}{1}=\frac{z}{-1}$$相交，求此直线方程． 
+\end{puzzle}
+\vpause
+\begin{answer}
+$\dfrac{x-1}{3}=\dfrac{y-2}{-2}=\dfrac{z-1}{-5}$．
+\end{answer}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+求过点$M_0(1,1,1)$且与两直线
+$L_1:\left\{\begin{array}{@{}l@{}}
+y=2x \\ z=x-1
+\end{array}\right.$和
+$L_2:\left\{\begin{array}{@{}l@{}}
+y=3x-4 \\ z=2x-1
+\end{array}\right.$
+都相交的直线$L$．
+\end{puzzle}
+\pause
+\begin{answer}
+$\dfrac{x-1}{1}=\dfrac{y-1}{1}=\dfrac{z-1}{2}$．
+\end{answer}
+\end{frame}
+
+\begin{sframe}
+\frametitle{复习与提高}
+利用参数式方程，可以设$L$与$L_1$、$L_2$的交点分别为$M_1(t_1,2t_1,t_1-1)$和$M_2(t_2,3t_2-4,2t_2-1)$．\par
+由$M_0$，$M_1$，$M_2$三点共线有$\overrightarrow{M_0M_1}\parallel\overrightarrow{M_0M_2}$，从而
+\[ \frac{t_1-1}{t_2-1} = \frac{2t_1-1}{3t_2-5} = \frac{t_1-2}{2t_2-2} \]
+解得$t_1=0$，$t_2=2$．即$M_1(0,0,-1)$，$M_2(2,2,3)$．\par
+所求直线方程为$$\dfrac{x-1}{1}=\dfrac{y-1}{1}=\dfrac{z-1}{2}.$$
+\end{sframe}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+求过直线$L:\ \left\{\begin{array}{l}
+x+5y+z=0 \\ x-z+4=0
+\end{array}\right.$
+且与平面\newline $x-4y-8z+12=0$
+夹成$\dfrac{\pi}{4}$角的平面方程．
+\end{puzzle}
+\pause
+\begin{answer}
+$x+20y+7z-12=0$ \warn{？}%以及$x-z+4=0$．
+\end{answer}
+\end{frame}
+
+\begin{sframe}
+\frametitle{复习与提高}
+\begin{solution}
+过直线$L$的平面束的方程为\warn{（忽略一个平面）}
+\[ (1+\lambda)x + 5y + (1-\lambda)z + 4\lambda = 0. \]
+\pause
+由两个平面夹角为$\frac{\pi}{4}$得
+\[ \textstyle
+   \frac{\sqrt{2}}{2} = \cos\frac{\pi}{4} %= \frac{|\vn\cdot\vn'|}{|\vn||\vn'|}
+   =\frac{|9\lambda-27|}{\sqrt{81\vphantom{1^2}}\,\sqrt{2\lambda^2+27}}=\frac{|\lambda-3|}{\sqrt{2\lambda^2+27}}. \]
+\pause
+平方得$2\lambda^2+27=2\lambda^2-12\lambda+18$，解得$\lambda=-\frac{3}{4}$．
+\pause
+即平面$\bold{x+20y+7z-12=0}$满足题目要求．\pause 另外，
+\[ \textstyle
+   \cos\theta = \frac{|1\cdot1+0\cdot(-4)+(-1)\cdot(-8)|}{\sqrt{2}\,\sqrt{81}}
+   = \frac{9}{9\sqrt2} = \frac{\sqrt{2}}{2}, \]
+\pause
+故平面$\bold{x-z+4=0}$也满足题目要求．
+\end{solution}
+\end{sframe}
+
+\end{document}

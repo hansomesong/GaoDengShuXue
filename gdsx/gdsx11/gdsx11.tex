@@ -1,0 +1,83 @@
+% -*- coding: utf-8 -*-
+% !TEX program = xelatex
+
+%\documentclass[14pt]{article}
+%\usepackage[notheorems]{beamerarticle}
+
+\documentclass[14pt,notheorems,leqno,xcolor={rgb}]{beamer} % ignorenonframetext
+
+\usepackage{docmute}
+
+\input{../common/theme.sty}
+\input{../common/share.sty}
+\input{../common/local.sty}
+
+\begin{document}
+
+\setbeamerfont{title}{size=\Large}
+
+\occasion{高等数学课程}
+\title{第十一章·曲线积分与曲面积分}
+\author{\href{https://lvjr.bitbucket.io}{吕荐瑞}}
+\institute{暨南大学数学系}
+
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+%\begin{frame}
+%\bold{积分域 $\rightsquigarrow$ 积分学}\hspace{7em}\bold{}
+%%% \vcenter 里面需要包含一个 hbox
+%%\begin{enumerate}[$\vcenter{\hbox{\scriptsize$\bullet$}}$]
+%\begin{itemize}
+%  \item 直线区间\quad$\rightsquigarrow$\quad 定积分
+%  \item 平面区域\quad$\rightsquigarrow$\quad 二重积分
+%  \item 空间区域\quad$\rightsquigarrow$\quad 三重积分
+%  \item 曲线弧段\quad$\rightsquigarrow$\quad 曲线积分
+%  \item 曲面区域\quad$\rightsquigarrow$\quad 曲面积分
+%\end{itemize}
+%%\end{enumerate}
+%\vpause
+%\bold{积分关系 $\rightsquigarrow$ 积分公式}
+%%\begin{enumerate}[$\vcenter{\hbox{\scriptsize$\blacktriangleright$}}$]
+%\begin{itemize}
+%  \item 曲线积分与二重积分\quad$\rightsquigarrow$\quad $\S3$格林公式
+%  \item 曲面积分与三重积分\quad$\rightsquigarrow$\quad $\S6$高斯公式
+%  \item 曲线积分与曲面积分\quad$\rightsquigarrow$\quad $\S7$斯托克斯公式
+%\end{itemize}
+%%\end{enumerate}
+%\end{frame}
+
+\begin{frame}
+\begin{tabularx}{\textwidth}{|Xl<{\ }X|}
+  \hline
+  \bold{积分域} & \bold{$\rightsquigarrow$} & \bold{积分学}\hfill\lead{章节} \\
+  \hline
+  直线区间      & $\rightsquigarrow$ & 定积分  \hfill 第五章\\
+  平面区域      & $\rightsquigarrow$ & 二重积分\hfill 第十章\\
+  空间区域      & $\rightsquigarrow$ & 三重积分\hfill 第十章\\
+  曲线弧段      & $\rightsquigarrow$ & 曲线积分\hfill $\S1$, $\S2$ \\
+  曲面区域      & $\rightsquigarrow$ & 曲面积分\hfill $\S4$, $\S5$ \\
+  \hline
+\end{tabularx}
+\pause\vskip 0pt plus 1fill
+\begin{tabularx}{\textwidth}{|Xl<{\ }X|}
+  \hline
+  \bold{积分关系}    & \bold{$\rightsquigarrow$} & \bold{积分公式}\hfill\lead{章节} \\
+  \hline
+  曲线积分与二重积分 & $\rightsquigarrow$ & 格林公式 \hfill $\S3$ \\
+  曲面积分与三重积分 & $\rightsquigarrow$ & 高斯公式 \hfill $\S6$ \\
+  曲线积分与曲面积分 & $\rightsquigarrow$ & 斯托克斯公式 \hfill $\S7$ \\
+  \hline
+\end{tabularx}
+\end{frame}
+
+\input{gdsx1101}
+\input{gdsx1102}
+\input{gdsx1103}
+\input{gdsx1104}
+\input{gdsx1105}
+\input{gdsx1106}
+\input{gdsx1107}
+
+\end{document}

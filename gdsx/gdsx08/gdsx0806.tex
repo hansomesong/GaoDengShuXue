@@ -1,0 +1,306 @@
+% -*- coding: utf-8 -*-
+% !TEX program = xelatex
+
+%\documentclass[14pt]{article}
+%\usepackage[notheorems]{beamerarticle}
+
+\documentclass[14pt,notheorems,leqno,xcolor={rgb}]{beamer} % ignorenonframetext
+
+\input{../common/theme.sty}
+\input{../common/share.sty}
+\input{../common/local.sty}
+
+\occasion{高等数学第八章}
+\title{第六节·空间曲线及其方程}
+\author{\href{https://lvjr.bitbucket.io}{吕荐瑞}}
+\institute{暨南大学数学系}
+\renewcommand<>{\section}[1]{\begin{frame}[plain]\titlepage\end{frame}}
+
+\setbeamerfont{title}{size=\Large}
+
+\makeatletter
+\beamer@tocsectionnumber=6\relax
+\setcounter{section}{6}
+\makeatother
+
+\begin{document}
+%\ifxetex\else\heiti\fi
+
+\section{空间曲线及其方程}
+
+\subsection{空间曲线的一般方程}
+
+\begin{frame}
+\frametitle{空间曲线的一般方程}
+\begin{columns}[onlytextwidth]
+\column{.62\textwidth}
+空间曲线可视为两个曲面的交线。\pause
+\column{.35\textwidth}
+\begin{tikzpicture}[thick,smooth,tension=.8]
+\def\xaa{(-.1,1.4)}  \def\xab{(1.5,1.2)}  \def\xac{(3,1.5)}
+\def\xba{(-.5,0.4)}  \def\xbb{(1.1,0.2)}  \def\xbc{(2.6,0.5)}
+\draw plot coordinates {\xaa (.7,1.6)  \xab}; \draw[color=red!90!black] plot coordinates {\xab (1.2,0.7) \xbb};
+\draw plot coordinates {\xaa (-.4,0.9) \xba} plot coordinates {\xba (.4,0.6) \xbb};
+\node at (0.5,1) {$S_1$};
+\draw plot coordinates {\xab (2.2,1.6) \xac} plot coordinates {\xac (2.6,1) \xbc};;
+\draw plot coordinates {\xbb (2.0,0.6) \xbc};
+\node at (2,1) {$S_2$};
+\node at (1.5,1.6) {$C$};
+\end{tikzpicture}
+\end{columns}
+\pause
+\begin{columns}[onlytextwidth]
+\column{.6\textwidth}
+其一般方程为方程组\pause
+\column{.4\textwidth}
+\[\left\{\begin{aligned}
+F(x,y,z)&=0\\
+G(x,y,z)&=0
+\end{aligned}\right.\]
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\begin{columns}[onlytextwidth]
+\column{.6\textwidth}
+\begin{example}
+方程组
+\[\left\{\begin{aligned}
+x^2+y^2&=1\\
+2x+3z&=6
+\end{aligned}\right.\]
+\pause 表示圆柱面和平面的交线。
+\end{example}
+\pause
+\column{.4\textwidth}
+\begin{center}
+\begin{tikzpicture}[x={(-.2cm,-.2cm)},y={(1cm,0cm)},z={(0cm,1cm)},samples=40]
+\drawline{densely dashed}{}{(0,0,0),(1,0,0),(4,0,0)};   \draw[->] (1,0,0) -- (4,0,0) node[left,below] {$x$};
+\drawline{densely dashed}{}{(0,0,0),(0,1,0),(0,1.5,0)}; \draw[->] (0,1,0) -- (0,1.5,0) node[right] {$y$};
+\drawline{densely dashed}{}{(0,0,0),(0,0,2),(0,0,3.5)}; \draw[->] (0,0,2) -- (0,0,3.5) node[above] {$z$};
+\drawplot[thick]{}{densely dashed}{0,pi,2*pi}{({sin(\x r)},{cos(\x r)},0)}
+\draw[thick] (0,1,0) -- (0,1,2) (0,-1,0) -- (0,-1,2);
+\draw[thick,color=accent3] plot[domain=0:2*pi] ({sin(\x r)},{cos(\x r)},{2-(2/3)*sin(\x r)});
+\draw[densely dashed] (0,-1,2) -- (0,1,2);
+\draw[densely dashed] plot[domain=-1:1] (\x,0,{2-(2/3)*(\x)});
+\end{tikzpicture}
+\end{center}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\begin{columns}[onlytextwidth]
+\column{.5\textwidth}
+\begin{example}
+方程组
+\[\left\{\begin{aligned}
+&z=\sqrt{a^2-x^2-y^2}\\
+&x^2+y^2-ax=0
+\end{aligned}\right.\]
+\pause 表示上半球面和圆柱面的交线。
+\end{example}
+\pause
+\column{.5\textwidth}
+\begin{center}
+\begin{tikzpicture}[x={(-.2cm,-.5cm)},y={(1cm,0cm)},z={(0cm,1cm)},samples=40,scale=1.5]
+\drawline{densely dashed}{}{(0,0,0),(1,0,0),(2,0,0)};   \draw[->] (1,0,0) -- (2,0,0) node[left,below] {$x$};
+\drawline{densely dashed}{}{(0,0,0),(0,1,0),(0,1.5,0)}; \draw[->] (0,1,0) -- (0,1.5,0) node[right] {$y$};
+\drawline{densely dashed}{}{(0,0,0),(0,0,1),(0,0,1.5)}; \draw[->] (0,0,1) -- (0,0,1.5) node[above] {$z$};
+\draw[densely dashed,color=accent2] plot[domain=0:2*pi] ({(1/2)*cos(\x r)+(1/2)},{(1/2)*sin(\x r)},0);
+\draw[densely dashed,color=accent2] plot[domain=0:2*pi] ({(1/2)*cos(\x r)+(1/2)},{(1/2)*sin(\x r)},.7);
+\draw[densely dashed,color=accent2] (.5,.5,0) -- (.5,.5,.7) (.5,-.5,0) -- (.5,-.5,.7);
+\drawplot[thick]{}{densely dashed}{0,pi,2*pi}{({sin(\x r)},{cos(\x r)},0)}
+\draw[thick] plot[domain=0:pi] (0,{cos(\x r)},{sin(\x r)});
+\draw[thick,color=accent3] plot[domain=0:2*pi]
+     ({(1/2)*cos(\x r)+(1/2)},{(1/2)*sin(\x r)},{sqrt((1-cos(\x r))/2)});
+\end{tikzpicture}
+\end{center}
+\end{columns}
+\end{frame}
+
+\subsection{空间曲线的参数方程}
+
+\begin{frame}
+\frametitle{空间曲线的参数方程}
+将曲线 $C$ 上动点的坐标 $x$，$y$，$z$ 表示为参数 $t$ 的函数\pause
+\[\left\{\begin{gathered}
+  x=x(t)\\
+  y=y(t)\\
+  z=z(t)
+\end{gathered}\right.\]\pause
+称它为空间曲线的\bold{参数方程}。
+\end{frame}
+
+\begin{frame}
+\begin{columns}[onlytextwidth]
+\column{.7\textwidth}
+\begin{example}
+螺旋线
+\[\left\{\begin{aligned}
+  x&=a\cos\omega t\\
+  y&=a\sin\omega t\\
+  z&=vt
+\end{aligned}\right.\]\pause
+\begin{itemize}
+  \item 以角速度$\omega$围绕$z$轴旋转\pause
+  \item 以线速度$v$平行$z$轴上升
+\end{itemize}
+\end{example}
+\pause
+\column{.3\textwidth}
+\begin{center}
+\begin{tikzpicture}[x={(-2cm,-1cm)},y={(2cm,-1cm)},z={(0cm,3cm)},samples=80,scale=.3,thick]
+\drawline{densely dashed}{}{(0,0,0),(1,0,0),(2,0,0)}; \draw[->] (1,0,0) -- (2,0,0) node[left,below] {$x$};
+\drawline{densely dashed}{}{(0,0,0),(0,1,0),(0,2,0)}; \draw[->] (0,1,0) -- (0,2,0) node[right] {$y$};
+\drawline{densely dashed}{}{(0,0,0),(0,0,4),(0,0,5)}; \draw[->] (0,0,4) -- (0,0,5) node[above] {$z$};
+\drawplot[color=accent2]{}{densely dashed}{-.25*pi,.75*pi,1.75*pi}{({cos(\x r)},{sin(\x r)},0)}
+\draw[color=accent2] plot[domain=0:2*pi] ({cos(\x r)},{sin(\x r)},4);
+\draw[color=accent2] (-.707,.707,0) -- (-.707,.707,4) (.707,-.707,0) -- (.707,-.707,4);
+\drawplot[thick,color=accent3]{}{densely dashed}{0,.75*pi,1.75*pi,2.75*pi,3.75*pi,4.75*pi}
+                                  {({cos(\x r)},{sin(\x r)},{.268*(\x)})};
+\end{tikzpicture}
+\end{center}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+将下列曲线化为参数方程表示：
+\[
+(1)\left\{\begin{aligned}
+x^2+y^2&=1\\
+2x+3z&=6
+\end{aligned}\right.\pause\quad
+(2)\left\{\begin{aligned}
+&z=\sqrt{a^2-x^2-y^2}\\
+&x^2+y^2-ax=0
+\end{aligned}\right.
+\]
+\end{example}
+\end{frame}
+
+\subsection{空间曲线在坐标面上的投影}
+
+\begin{frame}
+\frametitle{空间曲线的投影曲线}
+\begin{columns}[onlytextwidth]
+\column{.6\textwidth}
+\centering
+设空间曲线 C 的一般方程为
+$$\left\{\begin{aligned}
+F(x,y,z)&=0\\
+G(x,y,z)&=0
+\end{aligned}\right.$$
+\pause
+\column{.4\textwidth}
+\begin{tikzpicture}[tension=.8]
+\draw[densely dashed] (0,0) -- (-.5,-.5); \draw[->] (-.5,-.5) -- (-1,-1) node[left,below] {$x$};
+\draw[densely dashed] (0,0) -- (1,0); \draw[->] (1,0) -- (1.5,0) node[right] {$y$};
+\draw[densely dashed] (0,0) -- (0,1.5); \draw[->] (0,1.5) -- (0,2) node[above] {$z$};
+\draw[thick,densely dashed] (-.5,-1) -- (-.5,.5) (1,-.5) -- (1,2);
+\draw[thick,color=accent2] plot[smooth] coordinates {(-.5,-1)(0,-.5)(.5,-.7)(1,-.5)};
+\draw[thick,color=accent3] plot[smooth] coordinates {(-.5,.5)(0,1.5)(.5,1.3)(1,2)};
+\end{tikzpicture}
+\end{columns}
+\pause
+\par 消去$z$得到投影柱面$H(x,y)=0$，\pause
+\par 则$C$在$xy$面上的投影曲线为
+$\left\{\begin{gathered}
+H(x,y)=0\\
+z=0
+\end{gathered}\right.$
+\end{frame}
+
+% \jot 公式各行之间的空隙，默认为 3pt（amsmath 中的 align gather 等）
+% \arraystretch 使用 array 或 tabular 的环境各行的空隙比例，默认为 1（amsmath 中的 vmatrix，pmatrix 等）
+%
+% TODO：arev 字体导致左边的 \left 括号太大，下面的 gathered 就正常 % 但下面的 gathered 括号大小却正常？
+% 若改用 amsmath 的 \bigl \bigr，\Bigl \Bigr，\biggl \biggr，\Biggl \Biggr 却需要手动选择大小
+\begin{frame}
+\frametitle{空间曲线的投影曲线}
+设空间曲线 C 的一般方程为
+$\left\{\begin{aligned}
+F(x,y,z)&=0\\
+G(x,y,z)&=0
+\end{aligned}\right.$
+\pause
+\begin{columns}[onlytextwidth,c]
+\column{.55\textwidth}
+消去$x$得到$R(y,z)=0$，则$C$在$yz$面上的投影曲线为
+\column{.45\textwidth}
+$$\left\{\begin{gathered}
+R(y,z)=0\\
+x=0
+\end{gathered}\right.$$
+\end{columns}
+\pause
+\begin{columns}[onlytextwidth,c]
+\column{.55\textwidth}
+消去$y$得到$T(x,z)=0$，则$C$在$xz$面上的投影曲线为
+\column{.45\textwidth}
+$$\left\{\begin{gathered}
+T(x,z)=0\\
+y=0
+\end{gathered}\right.$$
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+已知两球面的方程分别为
+\[x^2+y^2+z^2=1 \text{\ 和\ } x^2+(y-1)^2+(z-1)^2=1\]\pause
+求它们的交线 $C$ \pause 在$xy$面上的投影曲线方程。
+\end{example}
+\pause
+\begin{center}
+\begin{tikzpicture}[x={(-.3cm,-.4cm)},y={(2cm,0cm)},z={(0cm,2cm)},samples=40,scale=.6]
+\draw[fill=filler2] plot[domain=.5*pi:2*pi] (0,{cos(\x r)},{sin(\x r)});
+\drawplot[fill=filler2]{}{densely dashed}{0,pi,2*pi}{({sin(\x r)},{cos(\x r)},0)};
+\draw[densely dashed] (0,0,0) -- (4,0,0); \draw[->] (4,0,0) -- (6,0,0) node[left,below] {$x$};
+\draw[densely dashed] (0,0,0) -- (0,1,0); \draw[->] (0,1,0) -- (0,2,0) node[right] {$y$};
+\draw[densely dashed] (0,0,0) -- (0,0,1); \draw[->] (0,0,1) -- (0,0,2) node[above] {$z$};
+\draw[fill=filler3] plot[domain=-.5*pi:pi] (0,{cos(\x r)+1},{sin(\x r)+1}); %cycle;
+\draw[thick,densely dashed,color=accent3] plot[domain=0:2*pi] ({.707*cos(\x r)},{.5*sin(\x r)+.5},0);
+\begin{scope}[thick,color=text1]
+  \draw plot[domain=-.5*pi:.5*pi] ({.707*cos(\x r)},{.5*sin(\x r)+.5},{-.5*sin(\x r)+.5});
+  \draw[densely dashed] plot[domain=.5*pi:1.5*pi] ({.707*cos(\x r)},{.5*sin(\x r)+.5},{-.5*sin(\x r)+.5});
+  \path[draw=none,fill=filler4] plot[domain=0:2*pi]
+                                     ({.707*cos(\x r)},{.5*sin(\x r)+.5},{-.5*sin(\x r)+.5});
+\end{scope}
+%\drawplot[fill=gray!80!white,opacity=.5]{}{densely dotted}{0,pi,2*pi}{({sin(\x r)},{cos(\x r)+1},1)};
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+设立体由上半球面$z=\sqrt{4-x^2-y^2}$和锥面$z=\sqrt{3(x^2+y^2)}$围成。\pause 求它在$xy$面上的投影区域。
+\end{example}
+\pause
+\begin{center}
+\begin{tikzpicture}[x={(-.3cm,-.2cm)},y={(2cm,0cm)},z={(0cm,2cm)},samples=40,scale=.6]
+\draw[color=accent3,fill=filler2] plot[domain=0:2*pi] ({cos(\x r)},{sin(\x r)},0);
+\drawplot[thick]{}{densely dashed}{-.5*pi,.5*pi,1.5*pi}{({2*cos(\x r)},{2*sin(\x r)},0)};
+\draw[densely dashed] (2,0,0) -- (0,0,0); \draw[->] (2,0,0) -- (5,0,0) node[right,below] {$x$};
+\draw[densely dashed] (0,0,0) -- (0,2,0); \draw[->] (0,2,0) -- (0,2.5,0) node[right] {$y$};
+\draw[densely dashed] (0,0,0) -- (0,0,2); \draw[->] (0,0,2) -- (0,0,2.5) node[above] {$z$};
+\draw[thick] plot[domain=0:pi] (0,{2*cos(\x r)},{2*sin(\x r)});
+\drawplot[thick,color=accent1]{}{densely dashed}{-.5*pi,.5*pi,1.5*pi}{({cos(\x r)},{sin(\x r)},1.732)};
+\draw[thick] (0,0,0) -- (0,-1,1.732) (0,0,0) -- (0,1,1.732);
+\draw[densely dashdotted] (0,1,0) -- (0,1,1.732) (0,-1,0) -- (0,-1,1.732);
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\mybookmark{复习与提高}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+求曲线$\left\{\begin{array}{@{}l@{}}z=y^2\\x=0\end{array}\right.$绕$z$轴旋转所得的曲面与平面
+$x+y+z=1$的交线在$xy$ 面上的投影曲线方程。
+\end{puzzle}
+\end{frame}
+
+\end{document}
+

@@ -1,0 +1,248 @@
+% -*- coding: utf-8 -*-
+% !TEX program = xelatex
+
+\documentclass[14pt,notheorems,leqno,xcolor={rgb}]{beamer} % ignorenonframetext
+
+\input{../common/theme.sty}
+\input{../common/share.sty}
+\input{../common/local.sty}
+
+\begin{document}
+
+\setbeamerfont{title}{size=\Huge}
+
+\occasion{高等数学课程}
+\title{补充：差分与和式}
+\author{\href{https://lvjr.bitbucket.io}{吕荐瑞}}
+\institute{暨南大学数学系}
+
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+\section{差分}
+
+\begin{frame}
+\frametitle{差分的概念}
+\begin{definition*}
+设$f(x)$为数列，其中$x$为\CJKunderdot{非负整数}，定义数列的\bold{差分}为
+$$\Delta(f(x))=f(x+1)-f(x).$$
+数列的差分依然是一个数列．
+\end{definition*}
+\cdotfill\ppause
+\begin{example*}
+$\Delta(x^2)=(x+1)^2-x^2=2x+1$．
+\end{example*}
+\end{frame}
+
+\begin{frame}
+\frametitle{微分与差分}
+\vskip-1em
+\begin{columns}[onlytextwidth]
+\column{.1\textwidth}
+微分\newline 公式
+\column{.9\textwidth}
+\begin{enumerate}
+  \item $\d(c)=0$
+  \item $\d(x)=1\cdot\d{x}$
+  \item $\d(x^a)=a\cdot x^{a-1}\cdot\d{x}$
+  \item $\d(a^x)=\ln{a}\cdot a^x\cdot\d{x}$\pause\quad
+        $\rightwhitearrow$ $\clead\d(\e^x)=\e^x\d{x}$
+\end{enumerate}
+\end{columns}
+\pause\vskip0.2em\hrule\vskip-0.3em
+\begin{columns}[onlytextwidth]
+\column{.1\textwidth}
+差分\newline 公式
+\column{.9\textwidth}
+\begin{enumerate}
+  \item $\Delta(c)=0$
+  \item $\Delta(x)=1$
+  \item $\Delta(x^{\underline{a}})=a\cdot x^{\underline{a-1}}$
+  \item $\Delta(a^x)=(a-1)\cdot a^x$\pause\quad
+        $\rightwhitearrow$ $\lead{\Delta(2^x)=2^x}$
+\end{enumerate}
+\end{columns}
+\pause\vskip-0.2em
+\begin{remark*}
+下降幂$x^{\underline{a}}$的定义见下页．
+\end{remark*}
+\end{frame}
+
+\begin{frame}
+\frametitle{下降幂}
+\begin{definition*}
+设$a$为正整数，则正指数下降幂定义为
+$$\bold{x^{\underline{a}}=x(x-1)(x-2)\cdots(x-a+1)}.$$
+而负指数下降幂定义为
+$$\bold{x^{\underline{-a}}=1/(x+1)(x+2)\cdots(x+a)}.$$
+\end{definition*}
+\end{frame}
+
+\begin{frame}
+\frametitle{微分与差分}
+\vskip-1em
+\begin{columns}[onlytextwidth]
+\column{.1\textwidth}
+微分\newline 性质
+\column{.9\textwidth}
+\begin{enumerate}
+  \item $\d{(cu)}=c\d{u}$
+  \item $\d{(u \pm v)}=\d{u}\pm\d{v}$
+  \item $\d{(uv)}=v\d{u}+u\d{v}$
+  \item $\d\left(\wfrac{u}{v}\right)
+         =\frac{v\d{u}-u\d{v}}{v^2}$  
+\end{enumerate}
+\end{columns}
+\pause\vskip0.2em\hrule\vskip-0.3em
+\begin{columns}[onlytextwidth]
+\column{.1\textwidth}
+差分\newline 性质
+\column{.9\textwidth}
+\begin{enumerate}
+  \item $\Delta(cu)=c\Delta{u}$
+  \item $\Delta\big(u\pm v\big)=\Delta{u}\pm\Delta{v}$
+  \item $\Delta\big(uv\big)=v\Delta{u}+\warn{E{u}}\Delta{v}=u\Delta{v}+\warn{E{v}}\Delta{u}$
+  \item $\Delta\left(\wfrac{u}{v}\right)
+    =\frac{v\Delta{u}-u\Delta{v}}{v\,\warn{E{v}}}$  
+\end{enumerate}
+\end{columns}
+\vskip-0.2em
+其中\bold{移位算子} $E(f(x))=f(x+1)$．
+\end{frame}
+
+\section{不定和式}
+
+\begin{frame}
+\frametitle{连续与离散}
+\begin{itemize}
+  \item 差分的运算性质与微分很相似。\pause
+  \item 差分可以认为是离散的微分。\pause
+  \item 是否可以定义离散的积分呢？
+\end{itemize}
+\vpause
+$\rightwhitearrow$ 微分的逆运算是积分，而差分的逆运算是\bold{和式}．
+\end{frame}
+
+\begin{frame}
+\frametitle{积分与和式}
+如果$\d{(F(x))}=f(x)\d{x}$，则定义$f(x)$的\bold{不定积分}为
+\[ \int f(x)\d{x} = F(x) + C.\]\pause
+例如，由$\d(x^2)=2x\d{x}$可知$\int 2x \d{x} = x^2 + C$．
+\vfill\hrule\vfill\pause
+如果$\Delta(F(x))=f(x)$，则定义$f(x)$的\bold{不定和式}为
+\[ \sum f(x) = F(x) + C. \]\pause
+例如，由$\Delta(x^2)=2x+1$可知$\sum(2x+1)=x^2+C$.
+\end{frame}
+
+\begin{frame}
+\frametitle{不定积分与不定和式}
+\vskip-1em
+\begin{columns}[onlytextwidth]
+\column{.1\textwidth}
+积分\newline 公式
+\column{.9\textwidth}
+\begin{enumerate}
+  \item $\int1\d{x}=x+C$
+  \item $\int x^a\d{x}=\frac{1}{a+1}x^{a+1}+C$
+  \item $\int a^x \d{x}=\frac{1}{\ln{a}}a^x+C$\pause\quad
+        $\rightwhitearrow$ $\lead{\int \e^x \d{x}=\e^x+C}$
+\end{enumerate}
+\end{columns}
+\pause\vfill\hrule\vfill
+\begin{columns}[onlytextwidth]
+\column{.1\textwidth}
+和式\newline 公式
+\column{.9\textwidth}
+\begin{enumerate}
+  \item $\sum 1=x+C$
+  \item $\sum x^{\underline{a}}=\frac1{a+1}x^{\underline{a+1}}+C$
+  \item $\sum a^x=\frac1{a-1}a^x+C$\pause\quad
+        $\rightwhitearrow$ $\lead{\sum(2^x)=2^x+C}$
+\end{enumerate}
+\end{columns}
+\end{frame}
+
+\section{定和式}
+
+\begin{frame}
+\frametitle{积分与和式}
+如果$\d{(F(x))}=f(x)\d{x}$，则$f(x)$的\bold{定积分}等于
+\[ \int_a^b f(x)\d{x} = [F(x)]_a^b = F(b)-F(a).\]\pause
+其中\bold{定积分} $\int_a^b f(x)\d{x}$表示对应的曲边梯形的面积．
+\vfill\hrule\vfill\pause
+如果$\Delta(F(x))=f(x)$，则$f(x)$的\bold{定和式}等于
+\[ \sum\nolimits_a^b f(x) = [F(x)]_a^b = F(b)-F(a). \]\pause
+其中\bold{定和式} $\sum_a^b f(x)$表示有限和$\sum\limits_{k=a}^{\warn{b-1}}f(k)$．
+\end{frame}
+
+\begin{frame}
+\frametitle{积分与和式}
+如果$\d{(F(x))}=f(x)\d{x}$，则$f(x)$的\bold{广义积分}
+\[ \int_a^{+\infty} f(x)\d{x} = \big[F(x)\big]_a^{+\infty} = F(+\infty)-F(a).\]\pause
+其中\bold{广义积分} $\int_a^{+\infty} f(x)\d{x}$表示对应的图形的面积．
+\vfill\hrule\vfill\pause
+如果$\Delta(F(x))=f(x)$，则$f(x)$的\bold{无限和式}
+\[ \sum\nolimits_a^{+\infty} f(x) = \big[F(x)\big]_a^{+\infty} = F(+\infty)-F(a). \]\pause
+其中\bold{无限和式} $\sum_a^{+\infty} f(x)$表示无限和$\sum\limits_{k=a}^{+\infty}f(k)$．
+\end{frame}
+
+\begin{frame}
+\frametitle{有限和式}
+利用不定和式的公式，我们可以计算出平方和：
+\begin{align*}
+\sum_{k=1}^n k^2 &= \sum\nolimits_1^{n+1} x^2 = \sum\nolimits_1^{n+1} \big(x(x-1) + x \big)\\[-1em]
+&= \sum\nolimits_1^{n+1} \big(x^{\underline{2}} + x^{\underline{1}} \big)
+ = \left[\frac13x^{\underline{3}} + \frac12x^{\underline{2}}\right]_1^{n+1} \\
+&= \frac{(n+1)\,n\,(n-1)}{3} + \frac{(n+1)\,n}{2} - 0 \\
+&= \frac{n(n+1)(2n+1)}{6}
+\end{align*}\pause
+类似地，也可以计算出高次方和．
+\end{frame}
+
+\section{分部求和}
+
+\begin{frame}
+\frametitle{分部积分与分部求和}
+不定积分的\bold{分部积分}公式为
+\[ \int u\d{v} = uv - \int v\d{u} .\]
+\vfill\hrule\vfill\pause
+不定和式的\bold{分部求和}公式为
+\[ \sum u\Delta{v} = uv - \sum \warn{E{v}}\Delta{u}. \]
+\end{frame}
+
+\begin{frame}
+\frametitle{分部积分与分部求和}
+定积分的\bold{分部积分}公式为
+\[ \int_a^b u\d{v} = [uv]_a^b - \int_a^b v\d{u} .\]
+\vfill\hrule\vfill\pause
+定和式的\bold{分部求和}公式为
+\[ \sum\nolimits_a^b u\Delta{v} = [uv]_a^b - \sum\nolimits_a^b \warn{E{v}}\Delta{u}. \]
+\end{frame}
+
+\begin{frame}
+\frametitle{分部求和}
+在分部求和公式中令$u=x$，$\Delta{v}=\frac1{2^x}$，得到
+\begin{align*}
+\sum \frac{x}{2^x} &= -2 \sum x\cdot\Delta\bigg(\frac1{2^x}\bigg)\\
+&= -2x\cdot\frac{1}{2^x} + 2 \sum\frac{1}{2^{x+1}}\cdot\Delta{x} \\
+&= -2x\cdot\frac{1}{2^x} + \sum\frac{1}{2^x} \\
+&= -2x\cdot\frac{1}{2^x} -2 \frac{1}{2^x} + C= -\frac{2x+2}{2^x} + C
+\end{align*}
+\end{frame}
+
+\begin{frame}
+\frametitle{分部求和}
+由上页不定和式的结果，可以得到定和式
+\begin{align*}
+\sum_{k=1}^n \frac{k}{2^k} = \sum\nolimits_1^{n+1} \frac{x}{2^x} &= \left[-\frac{2x+2}{2^x}\right]_1^{n+1} \\
+&= 2-\frac{n+2}{2^n}
+\end{align*}\pause
+以及无限和式
+\begin{align*}
+\sum_{k=1}^{\infty} \frac{k}{2^k} = \sum\nolimits_1^{\infty} \frac{x}{2^x} &= \left[-\frac{2x+2}{2^x}\right]_1^{\infty} \\
+&= 2-0 = 2
+\end{align*}
+\end{frame}
+
+\end{document}

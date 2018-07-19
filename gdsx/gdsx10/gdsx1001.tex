@@ -1,0 +1,469 @@
+% -*- coding: utf-8 -*-
+% !TEX program = xelatex
+
+%\documentclass[14pt]{article}
+%\usepackage[notheorems]{beamerarticle}
+
+\documentclass[14pt,notheorems,leqno,xcolor={rgb}]{beamer} % ignorenonframetext
+
+\input{../common/theme.sty}
+\input{../common/share.sty}
+\input{../common/local.sty}
+
+\occasion{高等数学第十章}
+\title{第一节·二重积分}
+\author{\href{https://lvjr.bitbucket.io}{吕荐瑞}}
+\institute{暨南大学数学系}
+\renewcommand<>{\section}[1]{\begin{frame}[plain]\titlepage\end{frame}}
+
+\makeatletter
+\beamer@tocsectionnumber=1\relax
+\setcounter{section}{1}
+\makeatother
+
+\begin{document}
+%\ifxetex\else\heiti\fi
+
+\section{二重积分}
+
+\subsection{二重积分的概念}
+
+\begin{frame}
+%\frametitle{曲顶柱体}
+\begin{columns}[onlytextwidth]
+\column{.6\textwidth}
+\bold{曲顶柱体}\par\vspace{0.5em}
+底面：在$xOy$面中的闭区域$D$\par
+侧面：母线平行于$z$轴的柱面\par
+顶面：在$D$之上的曲面$f(x,y)$\par\vspace{2.5em}
+\onslide<2>{\begin{problem*}
+如何求曲顶柱体的体积？
+\end{problem*}}
+\column{.38\textwidth}
+\begin{tikzpicture}[thick]
+\draw[thin,->] (0,0) -- (-1.2,-1.3) node[right] {$x$};
+\draw[thin,->] (0,0) -- (3.3,0) node[below left] {$y$};
+\draw[thin,->] (0,0) -- (0,3.9) node[below right] {$z=f(x,y)$};
+\draw[fill=filler4] (1.5,-1) node{$D$} ellipse (1 and 0.5);
+\draw (0.5,-1) -- (0.5,2) (2.5,-1) -- (2.5,2);
+\draw[dashed] (2.5,2) arc (0 : 180 : 1 and 0.5);
+\draw (0.5,2) arc (180 : 360 : 1 and 0.5);
+\draw plot[smooth,tension=0.8] coordinates {(0.5,2) (1,2.8) (2,2.8) (2.5,2)};
+\end{tikzpicture}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+%\frametitle{曲顶柱体}
+\begin{tikzpicture}[x=(215:2em/sqrt 2),y=(0:2em),z=(90:2em),
+        declare function={f(\x,\y)=((\x-3)^2+(-\y+3)^3)/8+3;},line join=round] 
+%coordinates
+\draw [-stealth, black!75, thin] (0,0,0) -- (5,0,0) node [below left, font={\small}] {$x$}; 
+\draw [-stealth, black!75, thin] (0,0,0) -- (0,5,0) node [right, font={\small}] {$y$}; 
+\draw [-stealth, black!75, thin] (0,0,0) -- (0,0,5) node [right, font={\small}] {$z$};
+%domain 
+\draw (1,1,0)--(1,5,0)--(5,5,0)--(5,1,0)--cycle;
+\draw[very thin](1,1,0)--(1,1,{f(1,1)}); 
+\draw[very thin](1,5,0)--(1,5,{f(1,5)}); 
+\draw[very thin](5,1,0)--(5,1,{f(5,1)}); 
+\draw[very thin](5,5,0)--(5,5,{f(5,5)});
+\node[below right,font={\small}] at (3,5,0) {$D$};
+%
+\visible<3|handout:0>{
+\foreach \x in {1,...,4}{ 
+\foreach \y in {1,...,4} { 
+\draw[domain=0:1,variable=\t,smooth]
+  plot (\x+\t,\y,{f(\x+\t,\y}) -- plot (\x+1,\y+\t,{f(\x+1,\y+\t)}) --
+  plot (\x+1-\t,\y+1,{f(\x+1-\t,\y+1)}) -- plot (\x,\y+1-\t,{f(\x,\y+1-\t)})--cycle;
+\draw[very thin](\x,\y,0)--(\x,\y,{f(\x,\y)});
+\draw[very thin](\x+1,\y,0)--(\x+1,\y,{f(\x+1,\y)});
+\draw[very thin](\x,\y+1,0)--(\x,\y+1,{f(\x,\y+1)});
+\draw[very thin](\x+1,\y+1,0)--(\x+1,\y+1,{f(\x+1,\y+1)}); 
+} 
+}
+}
+%one cylinder 
+\def\px{2} 
+\def\py{2} 
+\pgfmathsetmacro{\pz}{f(\px+0.5,\py+0.5)}
+%
+\uncover<7->{
+\draw[fill=gray!30,opacity=0.8] (\px,\py,0)--(\px+1,\py,0)--(\px+1,\py+1,0)--(\px,\py+1,0)--cycle; 
+}
+\uncover<7->{
+\node[blue,below,font={\small}] at (\px+0.8,\py+0.1,0) {$\Delta\sigma_i$};}
+%
+\uncover<4->{
+\draw[thin](\px,\py,0)--(\px,\py,{f(\px,\py)}); 
+\draw[thin](\px+1,\py,0)--(\px+1,\py,{f(\px+1,\py)}); 
+\draw[thin](\px,\py+1,0)--(\px,\py+1,{f(\px,\py+1)}); 
+\draw[thin](\px+1,\py+1,0)--(\px+1,\py+1,{f(\px+1,\py+1)});
+\draw[domain=0:1,variable=\t,smooth] 	
+	plot (\px+\t,\py,{f(\px+\t,\py})-- 	
+	plot (\px+1,\py+\t,{f(\px+1,\py+\t)})-- 	
+	plot (\px+1-\t,\py+1,{f(\px+1-\t,\py+1)})-- 	
+	plot (\px,\py+1-\t,{f(\px,\py+1-\t)})--cycle;
+}
+%
+\uncover<5->{
+\draw[red,fill] (\px+0.5,\py+0.5,0) circle (0.5pt) node[right,font={\small}] {$(\xi_i,\eta_i)$}; 
+}
+\uncover<6->{
+\draw[red,very thin, densely dashed] (\px+0.5,\py+0.5,0)--(\px+0.5,\py+0.5,\pz); 
+\draw[red,fill] (\px+0.5,\py+0.5,\pz) circle (0.5pt) node[above right=4pt and 0pt,font={\small}] {$f(\xi_i,\eta_i)$}; 
+\draw[very thin](\px,\py,0)--(\px,\py,\pz); 
+\draw[very thin](\px+1,\py,0)--(\px+1,\py,\pz); 
+\draw[very thin](\px,\py+1,0)--(\px,\py+1,\pz);
+\draw[very thin](\px+1,\py+1,0)--(\px+1,\py+1,\pz);
+\draw[very thin](\px,\py,\pz)--(\px+1,\py,\pz)--(\px+1,\py+1,\pz)--(\px,\py+1,\pz)--cycle;
+}
+%patition of domain 
+\uncover<2->{
+\foreach \x in {2,...,4}{ 	
+	\draw[densely dashed,thin] (\x,1)--(\x,5); 
+	\draw[densely dashed,thin] (1,\x)--(5,\x);
+} 
+}
+%surfaces 
+\draw [black,thick,fill=black,fill opacity=0.125,domain=0:4,smooth,variable=\t]      	
+	plot (1+\t, 1, {f(1+\t,1)}) --      	
+	plot (5, 1+\t, {f(5,1+\t)}) --      
+	plot (5-\t, 5, {f(5-\t,5)}) --     
+	plot (1, 5-\t, {f(1,5-\t)}) -- cycle; 
+%
+\node[font={\small}] at (1,-1,{f(1,2)}) {$z=f(x,y)$};
+\end{tikzpicture} 
+\only<8->{\begin{bblock}[accent2]{11}(18,3)
+\centering
+$V_i \approx f(\xi_{i},\eta_{i})\Delta\sigma_{i}$
+\end{bblock}}
+\end{frame}
+
+\begin{frame}
+\begin{tikzpicture}[x=(215:2em/sqrt 2), y=(0:2em), z=(90:2em),
+    declare function={f(\x,\y)=((\x-3)^2+(-\y+3)^3)/8+3;}, line join=round] 
+%coordinates
+\draw [-stealth, black!75, thin] (0,0,0) -- (5,0,0) node [below left, font={\small}] {$x$}; 
+\draw [-stealth, black!75, thin] (0,0,0) -- (0,5,0) node [right, font={\small}] {$y$}; 
+\draw [-stealth, black!75, thin] (0,0,0) -- (0,0,5) node [right, font={\small}] {$z$};
+%domain 
+\draw (1,1,0)--(1,5,0)--(5,5,0)--(5,1,0)--cycle;
+\draw[very thin](1,1,0)--(1,1,{f(1,1)});
+\node[below right,font={\small}] at (3,5,0) {$D$};
+%cylinders 1
+\only<1>{
+\def\d{1} %length of a step 
+\pgfmathsetmacro{\secondnumber}{\d+1} 
+\pgfmathsetmacro{\lastnumber}{5-\d} 
+\foreach \x in {1,\secondnumber,...,\lastnumber}   
+  \foreach \y [evaluate={\j=\x+.5*\d; \i=\y+.5*\d; \k=f(\j,\i);}] in {1,\secondnumber,...,\lastnumber}{
+    \path [fill=filler1!40!gray, draw=white, thin] (\x, \y+\d, 0) -- (\x+\d, \y+\d, 0)
+              -- (\x+\d, \y+\d, \k) -- (\x, \y+\d, \k) -- cycle;     
+    \path [fill=filler1!70!gray, draw=white, thin] (\x+\d, \y, 0) -- (\x+\d, \y+\d, 0)
+              -- (\x+\d, \y+\d, \k) -- (\x+\d, \y, \k) -- cycle;     
+    \path [fill=filler1!90!gray, draw=white, thin] (\x, \y, \k)  -- (\x+\d, \y, \k)
+              --  (\x+\d, \y+\d, \k) -- (\x, \y+\d, \k) -- cycle;   
+  } 
+}
+\only<2|handout:0>{
+\def\d{0.5} %length of a step 
+\pgfmathsetmacro{\secondnumber}{\d+1} 
+\pgfmathsetmacro{\lastnumber}{5-\d} 
+\foreach \x in {1,\secondnumber,...,\lastnumber}   
+  \foreach \y [evaluate={\j=\x+.5*\d; \i=\y+.5*\d; \k=f(\j,\i);}] in {1,\secondnumber,...,\lastnumber}{
+    \path [fill=filler1!40!gray, draw=white, thin] (\x, \y+\d, 0) -- (\x+\d, \y+\d, 0)
+                -- (\x+\d, \y+\d, \k) -- (\x, \y+\d, \k) -- cycle;     
+    \path [fill=filler1!70!gray, draw=white, thin] (\x+\d, \y, 0) -- (\x+\d, \y+\d, 0)
+                -- (\x+\d, \y+\d, \k) -- (\x+\d, \y, \k) -- cycle;     
+    \path [fill=filler1!90!gray, draw=white, thin] (\x, \y, \k)  -- (\x+\d, \y, \k)
+                -- (\x+\d, \y+\d, \k) -- (\x, \y+\d, \k) -- cycle;  
+  } 
+}
+\only<3|handout:0>{
+\def\d{0.25} %length of a step 
+\pgfmathsetmacro{\secondnumber}{\d+1} 
+\pgfmathsetmacro{\lastnumber}{5-\d} 
+\foreach \x in {1,\secondnumber,...,\lastnumber}   
+  \foreach \y [evaluate={\j=\x+.5*\d; \i=\y+.5*\d; \k=f(\j,\i);}] in {1,\secondnumber,...,\lastnumber}{
+    \path [fill=filler1!40!gray, draw=white, thin] (\x, \y+\d, 0) -- (\x+\d, \y+\d, 0)
+             -- (\x+\d, \y+\d, \k) -- (\x, \y+\d, \k) -- cycle;     
+    \path [fill=filler1!70!gray, draw=white, thin] (\x+\d, \y, 0) -- (\x+\d, \y+\d, 0)
+             -- (\x+\d, \y+\d, \k) -- (\x+\d, \y, \k) -- cycle;     
+    \path [fill=filler1!90!gray, draw=white, thin] (\x, \y, \k)  -- (\x+\d, \y, \k)
+             -- (\x+\d, \y+\d, \k) -- (\x, \y+\d, \k) -- cycle;  
+	}
+}
+%domain
+\draw (1,5,0)--(5,5,0)--(5,1,0);
+\draw[very thin](1,5,0)--(1,5,{f(1,5)});
+\draw[very thin](5,1,0)--(5,1,{f(5,1)});
+\draw[very thin](5,5,0)--(5,5,{f(5,5)});
+%surfaces 
+\draw [black,thick,fill=black, fill opacity=0.125, domain=0:4, smooth, variable=\t]      	
+    plot (1+\t, 1, {f(1+\t,1)}) --      	
+    plot (5, 1+\t, {f(5,1+\t)}) --      
+    plot (5-\t, 5, {f(5-\t,5)}) --     
+    plot (1, 5-\t, {f(1,5-\t)}) -- cycle; 
+\node[font={\small}] at (1,-1,{f(1,2)}) {$z=f(x,y)$};
+\end{tikzpicture}
+\only<1->{\begin{bblock}[accent2]{12}(17,2)
+\centering
+$V \approx \sum\limits_{i=1}^n f(\xi_{i},\eta_{i})\Delta\sigma_{i}$
+\end{bblock}}
+\end{frame}
+
+\begin{frame}
+\begin{columns}[onlytextwidth]
+\column{.54\textwidth}
+\begin{tikzpicture}[scale=1.2]
+%coordinates 
+\draw[->,thin,gray] (-2,-1.8)--(3,-1.8) node[right,font={\small}] {$x$};
+\draw[->,thin,gray] (-2,-1.8)--(-2,2.5) node[right,font={\small}] {$y$};
+%body 
+\draw[fill=gray!30] (-1,-1) to[bend left=135] node[pos=0.6,above left,font={\small}]{$D$} (2,1.2) to[bend right=-45] (-1,-1);
+%partition 2 
+\visible<8->{
+\draw[step=0.25,black!60,densely dashed,thin] (-1.5,-1.5) grid (2.5,2); 
+\draw[blue,fill=blue!40,opacity=0.5] (0,0) rectangle (0.25,0.25);
+}
+%partition 1 
+\visible<2->{
+\draw[step=0.5,black!60,densely dashed,thin] (-1.5,-1.5) grid (2.5,2); 
+}
+\visible<3-7>{
+\draw[blue,fill=blue!40,opacity=0.5] (0,0) rectangle (0.5,0.5); 
+}
+\coordinate (p) at (0.125,0.125); 
+\visible<4->{
+\fill[red] (p) circle (0.8pt); 
+\node[above left,red,font={\small}] {$(\xi_i,\eta_i)$}; 
+}
+\visible<5->{
+\node[above right=5.5pt and -2pt,blue,font={\small}] {$\Delta \sigma_i$};
+}
+\end{tikzpicture}
+\column{.46\textwidth}
+\begin{itemize}
+  \item $D$是有界闭区域
+  \item $f(x,y)$定义在$D$上
+\end{itemize}
+\begin{itemize}
+  \item<2-> \warn{任意}划分$D=\bigcup\limits_i D_i$\par
+  \item<4-> \warn{任取}点$(\xi_i,\eta_i)\in D_i$
+\end{itemize}
+\end{columns}
+\uncover<10->{定义\bold{二重积分}}$\displaystyle
+\uncover<10->{\iint\limits_{D}f(x, y)\d{\sigma}=}
+\uncover<9->{\lim_{\lambda\rightarrow0}}
+\uncover<7->{\sum_{i=1}^{n}}
+\uncover<6->{f(\xi_{i},\eta_{i})\Delta\sigma_{i}}$
+\end{frame}
+
+\begin{frame}
+\frametitle{二重积分}
+在二重积分的记号$\iint\limits_Df(x,y)\d\sigma$中：\pause
+\begin{itemize}[<+->]
+  \item $D$称为\bold{积分区域}
+  \item $f(x,y)$称为\bold{被积函数}
+  \item $\d\sigma$称为\bold{面积元素}
+\end{itemize}
+\vfill
+\uncover<5->{\begin{theorem*}
+若$f(x,y)$在有界闭区域$D$上连续，则二重积分$\iint\limits_{D}f(x,y)\d{\sigma}$存在。
+\end{theorem*}}
+\end{frame}
+
+\subsection{二重积分的性质}
+
+\begin{frame}
+\frametitle{二重积分的性质}
+\begin{property}[函数可加性]
+\begin{multline*}
+\iint_D \Big[af(x,y)+bg(x,y)\Big]\d\sigma\\[-0.5em]
+=a\iint_D f(x,y)\d\sigma + b\iint_D g(x,y)\d\sigma
+\end{multline*}
+\end{property}
+\vpause
+\begin{property}[区域可加性]
+设积分区域$D$可以划分为$D_1$和$D_2$，则有
+$$\iint_D f(x,y)\d\sigma=\iint_{D_1}f(x,y)\d\sigma+\iint_{D_2}f(x,y)\d\sigma$$
+\end{property}
+\end{frame}
+
+\begin{frame}
+\frametitle{二重积分的性质}
+\begin{property}
+若在$D$上$f(x,y)\equiv 1$，$D$的面积为$A$，则有
+$$\iint_D 1\d\sigma = A$$
+\end{property}
+\vpause
+\begin{property}
+若在$D$上有$f(x,y) \le g(x,y)$，则有
+$$\iint_D f(x,y)\d\sigma \le \iint_D g(x,y)\d\sigma$$
+\end{property}
+\end{frame}
+
+\begin{frame}
+\frametitle{二重积分的性质}
+\begin{property}
+设在$D$上$m \le f(x,y) \le M$，$D$的面积为$A$，则有
+$$mA \le \iint_D f(x,y)\d\sigma \le MA$$
+\end{property}
+\vpause
+\begin{example}
+设$D=\left\{(x,y) \,\big|\, |x|+|y|\le1 \right\}$，估计$\iint_D x\d\sigma$的大小．
+\end{example}
+\end{frame}
+
+\begin{frame}
+\frametitle{二重积分的性质}
+\begin{property}[积分中值定理]
+如果$f(x,y)$在闭区域$D$上连续，$D$的面积为$A$，则在$D$中至少存在一点$(\xi,\eta)$，使得
+$$\iint_D f(x,y)\d\sigma =f(\xi,\eta)\,A$$
+\end{property}
+\end{frame}
+
+\begin{frame}
+\frametitle{二重积分的对称性}
+\begin{property*}[奇偶对称性]
+设闭区域$D$关于$x$轴对称，
+\begin{columns}[onlytextwidth]
+\column{84mm}
+\begin{itemize}
+  \item<2-> 若$f(x,y)$关于$y$是奇函数，则%（即：$f(x,-y)=-f(x,y)$）
+    \[ \iint_{D}f(x,y)\d\sigma=0 \]
+  \item<3-> 若$f(x, y)$关于$y$是偶函数，则%（即：$f(x,-y)=f(x, y)$）
+    \[ \iint_{D}f(x, y)\d\sigma=2\iint_{D_{1}}f(x, y)\d\sigma \]
+\end{itemize}
+\column{44mm}\hfil%\hfil
+\begin{tikzpicture}[thick,font=\small]
+\draw[fill=filler2] (-1.1,0) parabola bend(0,2) (1.1,0) parabola bend(0,-2) (-1.1,0) -- cycle; 
+\draw[thin,-stealth] (-1.3,0)--(1.4,0) node[below] {$x$};
+\node at (1,1.3) {$D$};
+\node at (0,1.3) {$D_1$}; 
+\node at (0,-1.3) {$D_2$};
+\draw[fill,blue] (-0.7,0.4) circle (0.6pt) node[right] {$(x,y)$}; 
+\draw[fill,blue] (-0.7,-0.4) circle (0.6pt) node[right] {$(x,-y)$};
+\end{tikzpicture}
+\end{columns}
+\end{property*}
+\end{frame}
+
+\begin{frame}
+\frametitle{二重积分的对称性}
+\begin{property*}[奇偶对称性]
+设闭区域$D$关于$y$轴对称，
+\begin{columns}[onlytextwidth,T]
+\column{80mm}
+\begin{itemize}
+  \item<2-> 若$f(x, y)$关于$x$是奇函数，则%（即：$f(-x, y)=-f(x, y)$）
+     \[ \iint_{D}f(x, y)\d\sigma=0 \]
+  \item<3-> 若$f(x, y)$关于$x$是偶函数，则%（即：$f(-x, y)=f(x, y)$）
+     \[ \iint_{D}f(x, y)\d\sigma=2\iint_{D_1}f(x, y)\d\sigma \]
+\end{itemize}
+\column{48mm}%\hfil%\hfil
+\begin{tikzpicture}[thick,font=\small]
+\draw[fill=filler2] (0,-1.3) to[out=5,in=-5] (0,1.3) to[out=185,in=175] (0,-1.3) -- cycle; 
+\draw[thin,-stealth] (0,-1.6)--(0,1.6) node[right] {$y$};
+\node at(0.8,-1) {$D$}; 
+\node at(0.35,-0.2) {$D_1$}; 
+\node at(-0.35,-0.2) {$D_2$};
+\draw[fill,blue] (0.5,0.4) circle (0.6pt) node[right] {$(x,y)$}; 
+\draw[fill,blue] (-0.5,0.4) circle (0.6pt) node[left] {$(-x,y)$}; 
+\end{tikzpicture}
+\end{columns}
+\end{property*}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{columns}[onlytextwidth]
+\column{90mm}
+\begin{example}
+$D=\{(x,y) \mid x^2+y^2\leq1\}$，则
+\[
+\iint_{D}x^{2}+y^{2}\d\sigma=4\iint_{D_1}x^{2}+y^{2}\d\sigma
+\]
+\end{example}
+\column{34mm}
+\begin{center}
+\begin{tikzpicture}[thick,font=\small]
+\draw[fill=filler2] (0,0) circle (1);
+\draw[fill=filler1] (0,1) arc (90:0:1) -- (0,0)--cycle;
+\draw[-stealth](-1.2,0)--(1.3,0) node[above]{$x$};
+\draw[-stealth](0,-1.2)--(0,1.3) node[left]{$y$};
+\node[left] at (135:1) {$D$};
+\node[accent1] at (45:0.6) {$D_1$};
+\end{tikzpicture}
+\end{center}
+\end{columns}
+\vpause
+\begin{columns}[onlytextwidth]
+\column{90mm}
+\begin{example}
+$D=\{(x,y) \mid x^2+y^2\leq1\}$，则
+%\let\displaystyle=\textstyle
+\begin{align*}
+&\iint_{D}(2x+3y\sqrt{1-x^{2}})\d\sigma \\
+={}&2\iint_{D}x\d\sigma+3\iint_{D}y\sqrt{1-x^{2}}\d\sigma=0
+\end{align*}
+\end{example}
+\column{34mm}
+\begin{center}
+\begin{tikzpicture}[thick,font=\small]
+\draw[fill=filler2] (0,0) circle (1);
+\draw[-stealth](-1.2,0)--(1.3,0) node[above]{$x$};
+\draw[-stealth](0,-1.2)--(0,1.3) node[left]{$y$};
+\node[left] at (135:1) {$D$};
+\end{tikzpicture}
+\end{center}
+\end{columns}
+\end{frame}
+
+\mybookmark{复习与提高}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+比较下列积分的大小：%\let\displaystyle=\textstyle
+\begin{align*}
+  I_1 &= \iint\limits_{\smash{x^2+y^2\le1}} |xy| \d\sigma, \\
+  I_2 &= \iint\limits_{|x|+|y|\le1} |xy| \d\sigma, \\
+  I_3 &= \iint\limits_{\substack{-1\le x\le 1\\ -1\le y\le1}} |xy| \d\sigma.
+\end{align*}
+\end{puzzle}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+设$D=\{(x,y)\mid 0\le x\le 1,0\le y\le2 \}$，估计下面积分的大小：
+$$\iint_D\frac{\d\sigma}{\sqrt{x^2+y^2+2xy+16}}.$$
+\end{puzzle}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+设$D$由$y=4-x^2$, $y=-3x$, $x=1$所围成，求二重积分
+\[ \iint_D x\ln\left(y+\sqrt{1+y^2}\right)\dx\dy. \]
+\end{puzzle}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{choice}
+设有平面闭区域
+$$D=\{(x,y)\mid -a\le x\le a,\;x\le y\le a\},$$
+$$D_1=\{(x,y)\mid 0\le x\le a,\;x\le y\le a\}.$$
+则$\iint_D(xy+\cos x\sin y)\dx\dy=$\dotfill(\select{A})
+\begin{choiceline}
+  \item $2\iint_{D_1}\cos x\sin y\dx\dy$
+  \item $2\iint_{D_1}xy\dx\dy $
+  \item $4\iint_{D_1}(xy+\cos x\sin y)\dx\dy$
+  \item $0$
+\end{choiceline}
+\end{choice}
+\end{frame}
+
+\end{document}

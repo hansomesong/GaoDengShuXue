@@ -1,0 +1,1069 @@
+% -*- coding: utf-8 -*-
+% !TEX program = xelatex
+
+\documentclass[14pt,notheorems,leqno,xcolor={rgb}]{beamer} % ignorenonframetext
+
+\input{../common/theme.sty}
+\input{../common/share.sty}
+\input{../common/local.sty}
+
+\begin{document}
+
+\occasion{高等数学课程}
+\title{第二章·导数与微分}
+\author{\href{https://lvjr.bitbucket.io}{吕荐瑞}}
+\institute{暨南大学数学系}
+
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+\section{导数的概念}
+
+\subsection{导数的引例}
+
+\begin{frame}
+\frametitle{导数引例：瞬时速度}
+\begin{example}
+物体作变速直线运动，经过的路程$s$是时刻$t$的函数，$s=f(t)$。求在$t_0$时刻物体的瞬时速度。
+\end{example}\pause
+\begin{itemize}[<+->]
+  \item 从$t_0$到$t_0+\Delta t$的平均速度为
+  $$\dfrac{\Delta s}{\Delta t}=\dfrac{f(t_0+\Delta t)-f(t_0)}{\Delta t}$$
+  \item 在$t_0$时刻的瞬时速度为
+  $$\lim\limits_{\Delta t\to0}\dfrac{\Delta s}{\Delta t}=\lim\limits_{\Delta t\to0}\dfrac{f(t_0+\Delta t)-f(t_0)}{\Delta t}$$
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{导数引例：切线斜率}
+\begin{example}
+求曲线$y=f(x)$在点$M(x_0,y_0)$处的切线斜率。
+\end{example}\pause
+\begin{itemize}[<+->]
+  \item 设$N$点在$M$点附近，则割线$MN$的斜率为
+  $$\dfrac{\Delta y}{\Delta x}=\dfrac{f(x_0+\Delta x)-f(x_0)}{\Delta x}$$
+  \item 让$N$点往$M$点跑，则切线$MT$的斜率为
+  $$\lim\limits_{\Delta x\to0}\dfrac{\Delta y}{\Delta x}=\lim\limits_{\Delta x\to0}\dfrac{f(x_0+\Delta x)-f(x_0)}{\Delta x}$$
+\end{itemize}
+\end{frame}
+
+%\begin{frame}
+%\frametitle{导数引例：切线斜率}
+%% https://commons.wikimedia.org/wiki/File:Derivative_-_geometric_meaning.svg
+%% 字符 _ 在文本中出现会出错，但可以作为图片文件名
+%\includegraphics[width=0.9\textwidth]{Derivative_-_geometric_meaning.svg.png}
+%\end{frame}
+
+\begin{frame}
+\frametitle{导数引例：切线斜率}
+\begin{tikzpicture}[thick,declare function={
+    f(\x)=0.3*(\x-2)^2+2;
+    g(\x)=0.6*(\x-2); % 导函数 
+}] % 定义函数后的分号不能省略
+%\useasboundingbox (-1,-1) rectangle (9,6.5);
+\draw[thin,-stealth] (-1.2,0) -- (9,0) node[below left] {$x$};
+\draw[thin,-stealth] (0,-1) -- (0,6.5) node[below left] {$y$};
+\draw[domain=0.7:5.7,samples=30] plot (\x,{f(\x)});
+\draw[domain=-1.2:7,color=accent3] plot (\x,{g(3)*(\x-3)+f(3)}) node[color=black,right] {$T$}; % 切线
+\draw[domain=0.8:6.3,color=accent1] plot (\x,{(f(5)-f(3))/(5-3)*(\x-3)+f(3)}); % 割线
+\fill (3,{f(3)}) node[above left]{$M$} circle (1.5pt);
+\fill (5,{f(5)}) node[above left] {$N$} circle (1.5pt);
+\draw[dashed] (3,0) node[below] {$x_0$} -- (3,{f(3)});
+\draw[dashed] (5,0) node[below] {$x_0+\Delta x$}-- (5,{f(3)});
+\draw[dashed,<->,color=accent2] (3.05,{f(3)}) -- node[below]{$\Delta x$} (4.99,{f(3)});
+\draw[dashed,<->,color=accent4] (5,{f(3.01)}) -- node[pos=0.4,right]{$\Delta y$} (5,{f(4.97)});
+\end{tikzpicture}
+\end{frame}
+
+\subsection{导数的定义}
+
+\begin{frame}
+\frametitle{导数的定义}
+\begin{definition}
+设$y=f(x)$在$x_0$的某邻域有定义。若极限
+$$\lim\limits_{\Delta x\to0}\dfrac{\Delta y}{\Delta x}
+ =\lim\limits_{\Delta x\to0}\dfrac{f(x_0+\Delta x)-f(x_0)}{\Delta x}$$
+存在，\pause 则称此极限为$f(x)$在$x_0$处的\bold{导数}（或\bold{微商}）。\pause
+记为$f'(x_0)$，$y'|_{x=x_0}$，$\dfrac{\d y}{\d x}\Big|_{x=x_0}$，或$\dfrac{\d}{\d x}f(x)\Big|_{x=x_0}$。
+\end{definition}
+\vpause
+\begin{remark*}
+导数$f'(x_0)$反映了$f(x)$在点$x_0$处的变化快慢，\pause 因此$f'(x_0)$又称为$f(x)$在$x_0$点的\bold{变化率}．
+\end{remark*}
+\end{frame}
+
+\begin{frame}
+\frametitle{导数的几种形式}
+\begin{itemize}[<+->]
+  \item $f'(x_0)=\lim\limits_{\Delta x\to0}\dfrac{f(x_0+\Delta x)-f(x_0)}{\Delta x}$（定义）
+  \item $f'(x_0)=\lim\limits_{h\to0}\dfrac{f(x_0+h)-f(x_0)}{h}$（令$h=\Delta x$）
+  \item $f'(x_0)=\lim\limits_{x\to x_0}\dfrac{f(x)-f(x_0)}{x-x_0}$（令$x=x_0+h$）
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{导数的定义}
+如果$f(x)$在$x_0$处有导数，则称函数$f(x)$在$x_0$点\bold{可导}．\pause 否则，称$f(x)$在$x_0$处\bold{不可导}。\pause\par
+如果$f(x)$在区间$(a,b)$内每一点都可导，则称$f(x)$在区间$(a,b)$内可导。
+\end{frame}
+
+\begin{frame}
+\frametitle{导函数的定义}
+如果$f(x)$在区间$(a,b)$内可导，则每个$x_0\in(a,b)$都有一个导数值$f'(x_0)$与之对应，\pause
+从而得到一个函数$f'(x)$：
+$$f': x_0 \longmapsto f'(x_0)$$\pause
+$f'(x)$称为$f(x)$在$(a,b)$内的\bold{导函数}（简称\bold{导数}），\pause
+记为$f'(x)$，或$y'$，或$\dfrac{\d y}{\d x}$，或 $\dfrac{\d}{\d x}f(x)$。\pause
+此时有
+$$f'(x_0)=f'(x)|_{x=x_0}.$$
+\end{frame}
+
+\begin{frame}
+\frametitle{导函数的几种形式}
+\begin{itemize}[<+->]
+  \item $f'(x)=\lim\limits_{\Delta x\to0}\dfrac{f(x+\Delta x)-f(x)}{\Delta x}$（定义）
+  \item $f'(x)=\lim\limits_{h\to0}\dfrac{f(x+h)-f(x)}{h}$（令$h=\Delta x$）
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+  求常值函数$f(x)=C$的导数。
+\end{example}
+\vpause
+\begin{example}
+  求幂函数$f(x)=x^n$的导数。
+\end{example}\pause
+\begin{itemize}[<+->]
+  \item $n=1$时，$(x)'=?$
+  \item $n=2$时，$(x^2)'=?$
+  \item $n=3$时，$(x^3)'=?$
+  \item $n=-1$时，$(\frac1x)'=?$
+  \item $n=1/2$时，$(\sqrt x)'=?$
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{基本导数公式I}
+\noindent
+\begin{align}
+(C)'   &=0 \\
+(x^a)' &= ax^{a-1}\\
+(e^x)'      &=e^x\\
+(a^x)'      &= a^x\cdot\ln a\\
+(\ln x)'    &= \frac1x\\
+(\log_a x)' &=\frac1{x\cdot\ln a}\\\notag
+\end{align}
+\end{frame}
+
+\subsection{导数的几何意义}
+
+\begin{frame}
+\frametitle{导数的几何意义}
+函数$f(x)$在$x_0$处的导数$f'(x_0)$，就是曲线$y=f(x)$在点$(x_0,y_0)$处的切线斜率。\pause \par 从而点$(x_0,y_0)$处的\bold{切线方程}为
+\[ y-y_0=f'(x_0)(x-x_0)\]
+\bold{法线方程}为
+\[ y-y_0=-\frac1{f'(x_0)}(x-x_0)\]
+\end{frame}
+
+\begin{frame}
+\frametitle{导数的几何意义}
+\begin{example}
+求$f(x)=x^2$在点$(1,1)$处的切线方程和法线方程．
+\end{example}\pause
+\begin{exercise}
+求$f(x)=\frac1x$在点$(2,\frac12)$处的切线方程和法线方程．
+\end{exercise}
+\end{frame}
+
+\subsection{分段函数的导数}
+
+\begin{frame}
+\frametitle{分段函数的导数}
+对于分段函数，我们有（假定$g(x)$和$h(x)$总可导）：
+$$f(x)=\left\{\begin{array}{ll}
+ g(x), & x \mathbin{\warn{\le}} a \\
+ h(x), & x>a
+\end{array}\right.\!\lead{\Longrightarrow}\,\,
+f'(x)=\left\{\begin{array}{ll}
+ g'(x), & x \mathbin{\warn{<}} a \\
+ h'(x), & x>a
+\end{array}\right.$$
+\pause
+\begin{remark*}
+$f'(a)$需要单独研究：\warn{未必}有$f'(a)=g'(a)$。
+\end{remark*}
+\end{frame}
+
+\begin{frame}
+\frametitle{连续性与可导性}
+\begin{property*}
+$f(x)$在$x_0$点可导$\Longrightarrow$ $f(x)$在$x_0$点连续。
+\end{property*}
+\vpause
+\begin{corollary*}
+$f(x)$在$x_0$点不连续$\Longrightarrow$ $f(x)$在$x_0$点不可导。
+\end{corollary*}
+\vpause
+\begin{example}
+判断$f(x)=\begin{cases}x^3, & x\le-1 \\x^2, & x>-1\end{cases}$，
+在点$x=-1$处的连续性与可导性。
+\end{example}
+\end{frame}
+
+\begin{frame}
+\frametitle{左导数和右导数}
+\begin{definition*}
+设$f(x)$在$(x_0-\delta,x_0]$上有定义，\pause 若左极限
+$$\lim\limits_{h\to0^{\warn{-}}}\dfrac{f(x_0+h)-f(x_0)}h$$ 存在，\pause
+则称它为$f(x)$ 在$x_0$ 处的\bold{左导数}，记为$f'_{\warn{-}}(x_0)$.
+\end{definition*}
+\vpause\hrule\vfill
+\begin{definition*}
+设$f(x)$在$[x_0,x_0+\delta)$上有定义，\pause 若右极限
+$$\lim\limits_{h\to0^{\warn{+}}}\dfrac{f(x_0+h)-f(x_0)}h$$ 存在，\pause
+则称它为$f(x)$ 在$x_0$ 处的\bold{右导数}，记为$f'_{\warn{+}}(x_0)$.
+\end{definition*}
+\end{frame}
+
+\begin{frame}
+\frametitle{导数与左右导数}
+\begin{property*}
+导数存在$\Longleftrightarrow$左导数和右导数都存在且相等。
+\end{property*}
+\pause
+\begin{align*}
+\text{导数：} f'(x_0)   &= \lim\limits_{h\to0}\dfrac{f(x_0+h)-f(x_0)}h\\
+\text{左导数：} f'_-(x_0) &= \lim\limits_{h\to0^-}\dfrac{f(x_0+h)-f(x_0)}h\\
+\text{右导数：} f'_+(x_0) &= \lim\limits_{h\to0^+}\dfrac{f(x_0+h)-f(x_0)}h
+\end{align*}
+%\pause
+%\begin{property}函数的可导性和连续性有如下关系：
+%\begin{itemize}[<+->]
+%  \item 可导$\Rightarrow$连续，反之未必；
+%  \item 左可导$\Rightarrow$左连续，反之未必；
+%  \item 右可导$\Rightarrow$右连续，反之未必。
+%\end{itemize}
+%\end{property}
+\end{frame}
+
+\begin{frame}
+\frametitle{分段函数的导数}
+\begin{property*}
+假定$g(x)$和$h(x)$总可导，分段函数
+$$f(x)=\left\{\begin{array}{ll}
+ g(x), & x \le a \\
+ h(x), & x>a
+\end{array}\right..$$
+如果$f(x)$在$x=a$点\CJKunderdot{连续}，则有
+$$\bold{f'_-(a)=g'(a),\qquad f'_+(a)=h'(a).}$$
+\end{property*}
+\end{frame}
+
+\begin{frame}
+\frametitle{分段函数的导数}
+\minusone{example}\vspace{-0.6em}%
+\begin{example}
+判断函数$f(x)=\begin{cases}x^3, & x\le-1 \\x^2, & x>-1\end{cases}$
+在点$x=-1$的连续性与可导性。\cdotfill\bold{不连续且不可导}
+\end{example}
+\vskip 0pt plus 0.5fill
+\begin{example}
+判断函数$f(x)=\begin{cases}x^3, & x\le1 \\x^2, & x>1\end{cases}$
+在点$x=1$处的连续性与可导性。\pause\cdotfill\bold{连续但不可导}
+\end{example}
+\vpause
+\begin{example}
+判断函数$f(x)=\begin{cases}x^3, & x\le0 \\x^2, & x>0\end{cases}$
+在点$x=0$处的连续性与可导性。\pause\cdotfill\bold{连续且可导}
+\end{example}
+\end{frame}
+
+\begin{oframe}
+\frametitle{分段函数的导数}
+\begin{exercise}
+判断函数在分段点处的连续性和可导性。
+\begin{enumlite}
+  \item $f(x)=\begin{cases}x^2, & x<-1; \\ 2  , & x\ge-1.\end{cases}$
+  \item $f(x)=\begin{cases}x^2, & x<1;  \\ 1/x, & x\ge1.\end{cases}$
+  \item $f(x)=\begin{cases}x^2, & x<0;  \\ 0  , & x\ge0.\end{cases}$
+\end{enumlite}
+\end{exercise}
+\end{oframe}
+
+\mybookmark{复习与提高}
+
+\begin{oframe}
+\frametitle{复习与提高}
+\begin{review}
+求$y=(1+2x)^2$在点$(1,9)$处的切线方程和法线方程。
+\end{review}
+\end{oframe}
+
+%\begin{frame}
+%\frametitle{复习与提高}
+%\begin{example}
+%判断函数在 $x=0$ 处的连续性和可导性。
+%\begin{enumlite}[<+->]
+%  \item $f(x)=\begin{cases}x+1, & x>0; \\-x, & x\le0.\end{cases}$
+%  \item $f(x)=|x|$.
+%  \item $f(x)=\begin{cases}x^2+x, & x\ge0; \\ -x^2+x, & x<0.\end{cases}$
+%\end{enumlite}
+%\end{example}
+%\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{review}
+判断函数在 $x=1$ 的连续性和可导性。
+\begin{enumlite}
+  \item $f(x)=\begin{cases}x+1, & x>1; \\-x, & x\le1.\end{cases}$
+  \item $f(x)=\begin{cases}x+1, & x>1; \\2x, & x\le1.\end{cases}$
+  \item $f(x)=\begin{cases}x^2+x+2, & x\ge1; \\ -x^2+5x, & x<1.\end{cases}$
+\end{enumlite}
+\end{review}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{example}
+设 $f(x)=\begin{cases}x^2+bx+c, & x\ge0 \\ 1, & x<0\end{cases}$ 在 $x=0$ 可导，求 $b$ 和 $c$。
+\end{example}
+\end{frame}
+
+\begin{iframe}
+\frametitle{复习与提高：导数的记号}
+\begin{choice}
+设$f(x)$在$x=a$的某邻域内有定义，则$f(x)$在$x=a$点可导的一个充分条件是\dotfill(\select{D})
+\begin{choiceline}
+  \item $\limit_{h\to+\infty}h\left[f(a+\frac1h)-f(a)\right]$存在
+  \item $\limit_{h\to0}\dfrac{f(a+2h)-f(a+h)}{h}$存在
+  \item $\limit_{h\to0}\dfrac{f(a+h)-f(a-h)}{2h}$存在
+  \item $\limit_{h\to0}\dfrac{f(a)-f(a-h)}{h}$存在
+\end{choiceline}
+\end{choice}
+\end{iframe}
+
+\section{导数的运算}
+
+\subsection{四则运算的导数}
+
+\begin{frame}
+\frametitle{四则运算的求导法则}
+\begin{theorem}
+设函数$u(x)$和$v(x)$在点$x$可导，则有
+\begin{align*}
+\tag{1}  [Cu(x)]'&=Cu'(x)\\
+\tag{2}  u(x)\pm v(x)]'&=u'(x)\pm v'(x) \\
+\tag{3}  \left(u(x)\cdot v(x)\right)'&=u'(x)\cdot v(x)+u(x)\cdot v'(x)\\
+\tag{4}  \left(\frac{u(x)}{v(x)}\right)'&=\frac{u'(x)\cdot v(x)-u(x)\cdot v'(x)}{v^2(x)}
+\end{align*}
+\end{theorem}
+\end{frame}
+
+\begin{frame}
+\frametitle{四则运算的求导法则}
+\begin{example}
+求下列函数的导数。
+\begin{enumlite}
+  \item $f(x)=2x^3-4x^2+x+2$
+  \item $f(x)=\dfrac{x^2-x+1}{x}$
+  \item $f(x)=x\cdot\ln x$
+  \item $f(x)=\dfrac{x^3+2x}{e^x}$
+\end{enumlite}
+\end{example}
+\end{frame}
+
+\begin{oframe}
+\frametitle{四则运算的求导法则}
+\begin{exercise}
+求下列函数的导数。
+\begin{enumlite}
+  \item $f(x)=x^5-4x^4+x^2+3x+\e$
+  \item $f(x)=(x+2)(3x^3+2x)$
+  \item $f(x)=e^x\cdot\ln x$
+  \item $f(x)=\dfrac{e^x}{x^2}$
+\end{enumlite}
+\end{exercise}
+\end{oframe}
+
+\begin{frame}
+\frametitle{基本导数公式II}
+\noindent
+\begin{align}
+(\sin x)'  &\onslide<2->{=\cos x}\\
+(\cos x)'  &\onslide<3->{=-\sin x}\\
+(\tan x)' &\onslide<4->{=\phantom{+}\sec^2 x}\\
+(\cot x)' &\onslide<5->{=-\csc^2 x}\\
+(\sec x)' &\onslide<6->{=\phantom{+}\sec x\cdot\tan x}\\
+(\csc x)' &\onslide<7->{=-\csc x\cdot\cot x}\\\notag
+\end{align}\vskip-2.5em
+\onslide<8->{其中，$\sec x=\dfrac1{\cos x}$，$\csc x=\dfrac1{\sin x}$。}
+\end{frame}
+
+\begin{frame}
+\frametitle{多个函数乘积的导数}
+\begin{theorem}
+由两个函数乘积的导数公式，可以得到多个函数乘积的导数公式，例如：
+\begin{align*}
+\Big(u(x)\cdot v(x)\cdot w(x)\Big)'=
+  \phantom{+}&u'(x)\cdot v(x) \cdot w(x)\\
+  +&u(x) \cdot v'(x)\cdot w(x)\\
+  +&u(x) \cdot v(x) \cdot w'(x)
+\end{align*}
+\end{theorem}\pause%\vspace{-2em}
+\begin{example}
+求 $f(x)=e^x\cdot x^2\cdot \sin x$ 的导数。
+\end{example}
+\end{frame}
+
+\subsection{反函数的导数}
+
+\begin{frame}
+\frametitle{反函数的导数}
+\begin{theorem}
+设$y=f(x)$在点$x$处有不等于$0$的导数$f'(x)$，并且其反函数$x=f^{-1}(y)$在相应点处连续，
+则$[f^{-1}(y)]'$存在，并且
+\[ [f(x)]'_x=\frac1{[f^{-1}(y)]'_y}.\]
+\end{theorem}
+\pause
+\begin{remark*}
+上式也可以写成$\displaystyle\frac{\d y}{\d x}=\wfrac[10pt]{1}{\dfrac{\d x}{\d y}}$。
+\end{remark*}
+\end{frame}
+
+\begin{frame}%[t]
+\frametitle{基本导数公式III}
+\noindent
+\begin{align}
+(\arcsin x)' &\onslide<2->{=\phantom{+}\frac1{\sqrt{1-x^2}}}\\
+(\arccos x)' &\onslide<3->{=-\frac1{\sqrt{1-x^2}}}\\
+(\arctan x)' &\onslide<4->{=\phantom{+}\frac1{1+x^2}}\\
+(\arccot x)' &\onslide<5->{=-\frac1{1+x^2}}\\\notag
+\end{align}
+\end{frame}
+
+\subsection{复合函数的导数}
+
+\begin{frame}
+\frametitle{复合函数的导数}
+\begin{example*}
+$[f(g(x))]'\overset{\warn\times}=f'[g(x)]$一般不成立。\pause 比如
+\[(\sin 2x)'\mathbin{\cwarn\neq}\cos 2x.\]\pause
+实际上，我们有
+\begin{align*}
+(\sin 2x)'&=(2\sin x\cos x)'=2(\sin x\cos x)'\\
+&\uncover<4->{=2\big[(\sin x)'\cdot\cos x +\sin x\cdot(\cos x)'\big]}\\
+&\uncover<5->{=2[\cos x\cdot\cos x +\sin x\cdot(-\sin x)]}\\
+&\uncover<6->{=2[\cos^2 x - \sin^2 x]}\\
+&\uncover<7->{=2\cos 2x}
+\end{align*}
+\end{example*}
+\end{frame}
+
+\begin{frame}
+\frametitle{复合函数的导数}
+\begin{theorem}
+设 $y=f(u)$，$u=g(x)$，则它们的复合函数 $y=f[g(x)]$ 的导数公式为：
+\[ y'_x = y'_u \cdot u'_x\]
+\pause 或者
+\[ \frac{\d y}{\d x}=\frac{\d y}{\d u}\cdot\frac{\d u}{\d x}.\]
+\pause 或者
+\[ [f(g(x))]'=f'(g(x))\cdot g'(x) \]
+\end{theorem}
+\end{frame}
+
+\begin{frame}
+\frametitle{复合函数的导数}
+\begin{example}
+求复合函数的导数：
+\begin{enumlite}[<+->]
+  \item $y=(1+2x)^6$
+  \item $y=e^{3x^2+1}$
+  \item $y=\ln(\sin x)$
+  \item $y=\sqrt{x^2+1}$
+\end{enumlite}
+\end{example}
+\end{frame}
+
+\begin{oframe}
+\frametitle{复合函数的导数}
+\begin{exercise}
+求复合函数的导数：
+\begin{enumlite}
+  \item $y=e^{2x^2-6x}$
+  \item $y=\sqrt{2x^2-4x+1}$\pause
+  \item $y=\dfrac{\sin 3x}{x^2}$
+\end{enumlite}
+\end{exercise}
+\end{oframe}
+
+\begin{frame}
+\frametitle{三重复合函数的导数}
+\begin{remark}
+设 $y=f(u)$，$u=g(v)$，$v=h(x)$。则复合函数 $y=f(g(h(x)))$ 的导数公式为：
+\[ y'_x = y'_u \cdot u'_v \cdot v'_x \]
+\pause 或者
+\[ \frac{\d y}{\d x}=\frac{\d y}{\d u}\cdot\frac{\d u}{\d v}\cdot\frac{\d v}{\d x}.\]
+\end{remark}
+\end{frame}
+
+\begin{frame}
+\frametitle{三重复合函数的导数}
+\begin{example}
+求三重复合函数的导数：
+\begin{enumlite}[<+->]
+  \item $y=e^{\sqrt{-2x+1}}$
+  \item $y=\ln(\cos(3x+1))$
+\end{enumlite}
+\end{example}
+\end{frame}
+
+\begin{oframe}
+\frametitle{三重复合函数的导数}
+\begin{exercise}
+求三重复合函数的导数：
+\begin{enumlite}
+  \item $y=e^{\sqrt{x^2-1}}$
+  \item $y=\tan^2(3x^2+1)$
+\end{enumlite}
+\end{exercise}
+\end{oframe}
+
+\mybookmark{复习与提高}
+
+\begin{oframe}
+\frametitle{复习：导数的运算}
+\begin{review}
+求函数的导数：
+\begin{enumlite}
+  \item $f(x)=5x^3+3x^2-7\sqrt{x}+\dfrac1x+5$；
+  \pause
+  \item $f(x)=2x^{\frac32}+4x^{\frac23}+1$.
+\end{enumlite}
+\end{review}
+\end{oframe}
+
+\begin{oframe}
+\frametitle{复习：导数的运算}
+\begin{review}
+求函数的导数：
+\begin{enumlite}
+  \item $y=\e^x\,(x^3-4x)$；
+  \item $y=\dfrac{\cos x}{x^2+1}$.
+\end{enumlite}
+\end{review}
+\vpause
+\begin{review}
+求函数的导数：
+\begin{enumlite}
+  \item $f(x)=\sqrt{x^2-2x+5}\cdot e^x$；
+  \item $f(x)=\dfrac{\e^{x^2}}{\cos 3x}$.
+\end{enumlite}
+\end{review}
+\end{oframe}
+
+\begin{iframe}
+\frametitle{复习与提高：导数的记号}
+\begin{example}
+判断$f'_+(x_0)$与$f'(x_0^+)$是否相同：
+\begin{enumlite}
+  \item $f(x)=\begin{cases}x, & x\neq0; \\ 1,& x=0. \end{cases}$
+  \item $f(x)=\begin{cases}x^2\sin\frac1x, & x\neq0; \\ 0,& x=0. \end{cases}$
+\end{enumlite}
+\end{example}
+\pause
+\begin{solution}
+(1) $f'_+(0)$不存在，但是$f'(0^+)$存在。\par
+(2) $f'_+(0)$存在，但是$f'(0^+)$不存在。
+\end{solution}
+\pause
+\begin{remark*}
+若导函数$f'(x)$在$x_0$点连续，则两者相等。
+\end{remark*}
+\end{iframe}
+
+\section{高阶导数}
+
+\begin{frame}
+%\frametitle{高阶导数}
+\begin{definition}
+假定函数$y=f(x)$可以多次求导，则
+\begin{itemize}[<+->]
+  \item $f''(x)=\big[f'(x)\big]'$称为\bold{二阶导数}，
+  \begin{itemize}
+      \item 也可记为 $y''$ 或 $\dfrac{\d{}^2y}{\d x^2}$。
+  \end{itemize}
+  \item$f'''(x)=\big[f''(x)\big]'$称为\bold{三阶导数}，
+  \begin{itemize}
+      \item 也可记为 $y'''$ 或 $\dfrac{\d{}^3y}{\d x^3}$。
+  \end{itemize}
+  \item $f^{(n)}(x)=\big[f^{(n-1)}(x)\big]'$称为 \bold{$n$阶导数}，
+  \begin{itemize}
+      \item 也可记为 $y^{(n)}$ 或 $\dfrac{\d{}^ny}{\d x^n}$。
+  \end{itemize}
+\end{itemize}
+\end{definition}
+\pause
+\begin{remark*}
+规定$f^{(0)}(x)=f(x)$，即$y^{(0)}=y$。
+\end{remark*}
+\end{frame}
+
+\begin{frame}
+\frametitle{高阶导数}
+\begin{example}
+求下列函数的$n$阶导数：\par
+(1) $y=x^4$ \qquad (2) $y=\e^x$ \qquad (3) $y=\sin x$
+\end{example}
+\end{frame}
+
+\begin{iframe}
+\frametitle{高阶导数}
+\begin{example}
+求下列函数的$n$阶导数：\par
+(1) $y=\dfrac1x$ \qquad (2) $y=x\e^x$ \qquad (3) $y=\dfrac1{x^2+x}$
+\end{example}
+\end{iframe}
+
+\begin{frame}
+\frametitle{高阶导数}
+\bold{莱布尼茨公式}\quad $(uv)^{(n)}=\sum\limits_{k=0}^n C_n^k\;u^{(n-k)}\,v^{(k)}$。
+\vpause
+\begin{example}
+求函数$y=x^2\e^x$的$n$阶导数。
+\end{example}
+\end{frame}
+
+\mybookmark{复习与提高}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{choice}
+已知$f'(x)=[f(x)]^2$，则$f^{(n)}(x)=$\dotfill(\select{A})
+\begin{choicehalf}
+  \item $n![f(x)]^{n+1}$ ~
+  \item $n[f(x)]^{n+1}$ ~
+  \item $[f(x)]^{2n}$ ~
+  \item $n![f(x)]^{2n}$ ~
+\end{choicehalf}
+\end{choice}
+\end{frame}
+
+\section{隐函数求导}
+
+\subsection{隐函数求导}
+
+\begin{frame}
+\frametitle{显函数与隐函数}
+\begin{itemize}
+  \item 显函数：由$y=f(x)$直接确定的函数关系。\pause
+  \item 隐函数：由$F(x,y)=0$隐式确定的函数关系。
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{隐函数的求导方法}
+\begin{problem*}
+设$F(x,y)=0$确定了隐函数$y=f(x)$，求$y'_x$。
+\end{problem*}
+\pause
+\begin{method*}
+将$y$看成$x$的函数，方程两边同时对$x$求导。
+$$\bold{(a(x))'_x = b(x)}\ \rightwhitearrow\ \bold{(a(y))'_x = b(y) \cdot y'_x}$$
+\end{method*}
+\hrule\pause
+\begin{example}
+求方程$x^2+y^2-1=0$确定的隐函数的导数。
+\end{example}
+\pause
+\begin{example}
+求方程$y=x\ln y$确定的隐函数的导数。
+\end{example}
+\vpause
+\begin{exercise}
+求由方程确定的隐函数的导数$y'_x$：
+\begin{enumlite}
+  \item $\e^y+\e^x-3x+4y^2=0$；
+  \item $x^3y+2x^2y^2+4=0$。
+\end{enumlite}
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+求曲线$x^2+xy+y^2=4$在点$(2,-2)$处的切线方程和法线方程。
+\end{example}
+\vpause
+\begin{exercise}
+\begin{enumlite}
+  \item 求曲线$y^3+y^2=2x$在点$(1,1)$处的切线方程。
+  \item 求曲线$\sin y+y^2-x^2+1=0$在点$(1,0)$处的法线方程。
+\end{enumlite}
+\end{exercise}
+\end{frame}
+
+\begin{iframe}
+\frametitle{隐函数的二阶导数}
+\begin{example}
+求方程$x^2+y^2=1$确定的隐函数的二阶导数。
+\end{example}
+\vpause
+\begin{exercise}
+求由方程$y^2=x^3+1$确定的隐函数的二阶导数$y''_x$。
+\end{exercise}
+\end{iframe}
+
+\subsection{幂指函数求导}
+
+\begin{frame}
+\frametitle{幂指函数求导}
+\begin{example}
+求下列幂指函数的导数：
+\begin{enumhalf}
+  \item $y=x^x$ ~\pause
+  \item $y=(\ln x)^x$ ~
+\end{enumhalf}
+\end{example}
+\vpause
+\begin{exercise}
+求下列幂指函数的导数：
+\begin{enumhalf}
+  \item $y=x^{\sin x}$ ~\pause
+  \item $y=(\sin x)^x$~
+\end{enumhalf}
+\end{exercise}
+\end{frame}
+
+\subsection{参数方程求导}
+
+\begin{frame}
+\frametitle{参数方程求导}
+设参数方程$\left\{\begin{array}{l}x=\phi(t)\\y=\psi(t)\end{array}\right.$确定了$x$和$y$的函数关系，则有
+\begin{align}
+\tag*{$(1)$}  &\bold{\frac{\dy}{\dx} = \frac{\psi'(t)}{\phi'(t)}} \\
+\tag*{$(2)$}  &\bold{\frac{\d^2y}{\dx^2} = \frac{\psi''(t)\phi'(t)-\psi'(t)\phi''(t)}{\phi'^3(t)}}
+\end{align}
+\end{frame}
+
+\begin{frame}
+\frametitle{参数方程求导}
+\begin{example}
+求由参数方程确定的函数$y=f(x)$的导数：
+\begin{enumhalf}
+  \item $\left\{\begin{array}{l}x=a\cos t\\y=a\sin t\end{array}\right.$ ~\pause
+  \item $\left\{\begin{array}{l}x=\arctan t\\y=\ln(1+t^2)\end{array}\right.$ ~
+\end{enumhalf}
+\end{example}
+\vpause
+\begin{exercise}
+求由参数方程确定的函数$y=f(x)$的导数：
+\begin{enumhalf}
+  \item $\left\{\begin{array}{l}x=2t-t^2\\y=3t-t^3\end{array}\right.$ ~\pause
+  \item $\left\{\begin{array}{l}x=\e^t\cos t\\y=\e^t\sin t\end{array}\right.$ ~
+\end{enumhalf}
+\end{exercise}
+\end{frame}
+
+\mybookmark{复习与提高}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{review}
+求方程$\e^x+\e^y=x^2y^2+2$确定的隐函数在点$(0,0)$处的导数。
+\end{review}
+\vpause
+\begin{review}
+求函数$y=(\ln x)^{\sin x}$的导数。
+\end{review}
+\end{frame}
+
+\section{微分的概念}
+
+\subsection{微分的引例}
+
+\begin{frame}
+\frametitle{函数的改变量}
+\begin{example*}
+一块正方形金属薄片受热后，其边长由 $x_0$ 增加到 $x_0+\Delta x$．
+求此薄片面积的改变量 $\Delta y$． 
+\end{example*}
+\pause
+\begin{solution}
+正方形面积为 $y=f(x)=x^2$．\pause 则面积改变量为
+$$\Delta y = (x_0+\Delta x)^2 - x_0^2 = \bold{2x_0\Delta x} + \warn{(\Delta x)^2}.$$
+\pause 比如，当 $x_0=1$, $\Delta x=0.1$ 时，
+$$\Delta y = 2\cdot1\cdot0.1 + 0.1^2 = \bold{0.2} + \warn{0.01}.$$
+\end{solution}
+\pause
+\begin{remark*}
+若 $\Delta x$ 很小，则 $\bold{2x_0\Delta x}$ 远比 $\warn{(\Delta x)^2}$ 大。\pause
+因此 $$\boxed{\cbold\Delta y\approx 2x_0\Delta x} \pause \quad\text{即}\quad
+\boxed{\cbold\Delta y\approx f'(x_0)\Delta x}$$
+\end{remark*}
+\end{frame}
+
+\begin{frame}
+\frametitle{函数的改变量}
+\begin{theorem}
+\begin{tabular}[t]{rl}
+&$y=f(x)$在点$x_0$处可导\\\llap{$\Longleftrightarrow$}
+&\bold{$\Delta y = f'(x_0)\Delta x + o(\Delta x)\quad(\Delta x\to0)$}
+\end{tabular}
+\end{theorem}
+\vpause
+\begin{theorem}
+设$y=f(x)$在点$x_0$处可导，则当$|\Delta x|$很小时，有近似公式
+\[ \bold{f(x_0+\Delta x)\approx f(x_0) + f'(x_0)\Delta x} .\]
+\end{theorem}
+\pause
+\begin{solution}
+$\begin{aligned}[t]
+&\Delta y = f'(x_0)\Delta x + o(\Delta x)\\
+\Longrightarrow\ &\Delta y \approx f'(x_0)\Delta x \\
+\Longrightarrow\ &f(x_0+\Delta x) - f(x_0) \approx f'(x_0)\Delta x
+\end{aligned}$
+\end{solution}
+\end{frame}
+
+\begin{frame}
+\frametitle{近似计算}
+\begin{example}
+计算$\sqrt{1.02}$的近似值。
+\end{example}
+\onslide+<2->{\begin{solution}}
+\onslide+<2->{取$f(x)=\sqrt{x}$，}
+\onslide+<3->{则$f'(x)=\frac1{2\sqrt{x}}$．}
+\onslide+<4->{再取$x_0=1$, $\Delta x=0.02$，}
+\onslide+<5->{则有
+\begin{align*}
+\sqrt{1.02} = f(1.02) &= f(1+0.02) \\
+&\approx f(1) + f'(1) \times 0.02=1.01
+\end{align*}}%
+\onslide+<2->{\dotfill\end{solution}}%
+\vfill
+\onslide+<6->{\begin{remark*}}
+\onslide+<6->{以后将会学到更准确的近似公式：}
+\onslide+<1->{\[\bold{f(x_0+\Delta x)\approx f(x_0) + f'(x_0)\Delta x}}
+\onslide+<6->{\cwarn+\frac{f''(x_0)}{2}(\Delta x)^2}
+\onslide+<1->{\]}
+\onslide+<6->{\end{remark*}}
+\end{frame}
+
+\begin{rframe}
+\frametitle{近似计算}
+取$f(x)=\sqrt{x}$，则$f'(x)=\frac1{2\sqrt{x}}$, $f''(x)=-\frac1{4(\sqrt{x})^3}$．\pause
+再取$x_0=1$, $\Delta x=0.02$，则有\pause
+\begin{align*}
+\sqrt{1.02} &= f(1.02) = f(1+0.02) \\
+&\approx f(1) + f'(1) \times 0.02 + \frac{f''(1)}{2}\times0.02^2\\
+&=1+ \frac12 \times 0.02 - \frac{1}{8} \times 0.02^2 = 1.00995
+\end{align*}\pause
+而准确值为$\sqrt{1.02}=1.0099505\cdots$．
+\end{rframe}
+
+\subsection{微分的定义}
+
+\begin{oframe}
+\frametitle{微分的概念}
+对于函数$y=f(x)$。若自变量从$x$变为$x+\Delta x$，
+则$y$的相应改变量为$\Delta y=f(x+\Delta x)-f(x)$。
+\vpause
+\begin{theorem*}
+若$y=f(x)$可导，则$\Delta y$一定可以表示为
+\[ \Delta y = f'(x)\Delta x + o(\Delta x) \qquad (\Delta x \to 0) \]
+\end{theorem*}
+\vpause
+\begin{definition*}
+若$y=f(x)$可导，则称$y=f(x)$ \bold{可微}，并将$f'(x)\d x$称为函数$y=f(x)$
+在点$x$处的\bold{微分}，记为$$\bold{\d y = f'(x) \Delta x}.$$\pause
+我们约定$\clead\d x=\Delta x$，则有$\cbold\d y = f'(x) \d x$．
+\end{definition*}
+\end{oframe}
+
+\begin{iframe}
+\frametitle{微分的概念}
+\begin{definition}
+对于自变量在点$x$处的改变量$\Delta x$，如果函数$y=f(x)$的相应改变量$\Delta y$可以表示为
+\[ \Delta y = A\Delta x + o(\Delta x) \qquad (\Delta x \to 0) \]
+其中$A$与$\Delta x$无关，则称$y=f(x)$在点$x$处\bold{可微}，并称$A\Delta x$为函数$y=f(x)$
+在点$x$处的\bold{微分}，记为$$\d y = A \Delta x.$$
+\end{definition}
+\pause
+\begin{theorem}
+$y=f(x)$在点$x$处可微 $\Longleftrightarrow$ $y=f(x)$在点$x$处可导，且此时有
+$ \d y = f'(x) \Delta x.$
+\end{theorem}
+\pause
+\begin{remark*}
+从$y=x$可以得到$\clead\d x = \Delta x$，故定理中的等式可以写为$\bold{\d y = f'(x) \d x}.$
+\end{remark*}
+\end{iframe}
+
+\begin{frame}
+\frametitle{微分的几何意义：以直代曲}
+\begin{tikzpicture}[thick,inner sep=2pt,declare function={
+    f(\x)=0.3*(\x-2)^2+2;
+    g(\x)=0.6*(\x-2); % 导函数
+}] % 定义函数后的分号不能省略
+%\useasboundingbox (-1,-1) rectangle (9,6.5);
+\draw[thin,-stealth] (-1.2,0) -- (9,0) node[below left] {$x$};
+\draw[thin,-stealth] (0,-0.6) -- (0,6.5) node[below left] {$y$};
+\draw[domain=0.7:5.7,samples=30,color=accent1] plot (\x,{f(\x)});
+\draw[domain=-1.2:7,color=accent3] plot (\x,{g(3)*(\x-3)+f(3)}) node[color=black,right] {$T$}; % 切线
+\fill (3,{f(3)}) node[above left]{$M$} circle (1.5pt);
+\fill (5,{f(5)}) node[above left] {$N$} circle (1.5pt);
+\draw[densely dashed] (3,0) node[below] {$x_0$} -- (3,{f(3)});
+\draw[densely dashed] (5,0) node[below] {$x_0+\Delta x$}-- (5,{f(5)});
+\draw[densely dashed,stealth-stealth,] (3.05,{f(3)}) -- node[below]{$\Delta x$} (4.99,{f(3)});
+\draw[stealth-stealth,color=accent3] (5,{f(3.01)}) -- node[pos=0.5,fill=back1]{$\dy$} (5,{g(3)*(5-3)+f(3)});
+\draw (4.85,{g(3)*(5-3)+f(3)}) -- (5.15,{g(3)*(5-3)+f(3)});
+\draw (5,{f(3)}) -- (6,{f(3)}) (5,{f(5)}) -- (6,{f(5)});
+\draw[stealth-stealth,color=accent1] (5.85,{f(3)}) -- node[pos=0.45,fill=back1]{$\Delta y$} (5.85,{f(5)});
+\end{tikzpicture}
+\end{frame}
+
+\begin{sframe}
+\frametitle{微分的现代定义}
+若$f(x_0+\Delta x)-f(x_0)=A\Delta x + o(\Delta x)$，则线性函数
+\[\d f(x_0): \quad \Delta x \longmapsto A\Delta x \tag{a}\]
+称为$f(x)$在$x_0$点的\bold{微分}．此时$A=f'(x_0)$．
+\ppause\dotfill\par 对于$f(x)=\sin x$，我们有
+$$\d\sin x(x_0): \quad \Delta x \longmapsto \cos(x_0)\Delta x$$
+对于$f(x)=x$，我们有
+\[\d x(x_0): \quad \Delta x \longmapsto 1\Delta x \tag{b}\]
+由(a)和(b)可以得到 $\cbold\d f(x_0) = f'(x_0) \d x(x_0)$．
+\end{sframe}
+
+\begin{frame}
+\frametitle{微分的计算}
+\begin{example}
+求$y=x^2$当$x=2$，$\Delta x=0.01$时的微分．
+\end{example}
+\pause
+\begin{solution}
+$\d y = (x^2)'\,\Delta x=2x\Delta x$，\pause
+所以$$\d y\left|_{\begin{subarray}{l}x=2\\\Delta x=0.01\end{subarray}}\right.
+=2\times 2 \times 0.01 = 0.04.$$
+\end{solution}
+\vpause
+\begin{example}
+求微分：(1) $y=x\e^x$；(2) $y=\sin(3x+2)$．
+\end{example}
+\unskip\pause
+\begin{solution}
+(1) $\d y=y'_x\d x = (x\e^x)'_x\d x = (x+1)\e^x\d x$．\ppause
+(2) $\begin{aligned}[t]\d y=y'_x\d x &= \big(\sin(3x+2)\big)'_x\d x \\&= 3\cos(3x+2)\d x\end{aligned}$．
+\end{solution}
+\end{frame}
+
+\begin{oframe}
+\frametitle{微分的计算}
+\begin{exercise}
+求下列函数的微分：
+\begin{enumhalf}
+  \item $y=\ln x/x$ ~
+  \item $y=\sqrt{x^2+1}$ ~
+\end{enumhalf}
+\end{exercise}
+\end{oframe}
+
+\subsection{形式不变性}
+
+\begin{frame}[shrink=5]
+\frametitle{微分法则}
+基本初等函数的微分：
+\begin{multicols}{2}
+\begin{enumerate}
+  \item $\d{}(C)=0$
+  \item $\d{}(x^a)=ax^{a-1}\d x$
+  \item $\d{}(\ln x)=\frac1x\d x$
+  \item $\d{}(\e^x)=\e^x\d x$
+  \item $\d{}(\sin x)=\cos x\d x$
+  \item $\d{}(\cos x)=-\sin x\d x$
+\end{enumerate}
+\end{multicols}
+\vpause
+微分的四则运算：
+\begin{multicols}{2}
+\begin{enumerate}%\setcounter{enumi}{6}
+  \item $\d{}(u\pm v)=\d u\pm \d v$
+  \item $\d{}(Cu) = C\d u$
+  \newpage
+  \item $\d{}(uv) = v\d u + u\d v$
+  \item $\d{}\left(\dfrac{u}v\right) = \dfrac{v\d u - u\d v}{v^2}$
+\end{enumerate}
+\end{multicols}
+\end{frame}
+
+\begin{frame}
+\fbox{\parbox{.96\textwidth}{\bold{微分的形式不变性}
+\begin{itemize}
+  \item 若$y=f(u)$，则有$\d y = f'(u) \d u$；
+  \item 若$y=f(u),u=g(x)$，则仍有$\d y = f'(u) \d u$。
+\end{itemize}}}
+\vpause
+\begin{example*}
+$[\sin x]' = \cos x$，但是 $[\sin 2x]'\mathbin{\cwarn\neq}\cos 2x$．\ppause 
+$\d{}(\sin x)=\cos x\d{}x$ $\Longrightarrow$ $\d{}(\sin 2x)\mathbin{\cbold=}\cos2x\d{}(2x)$．
+\end{example*}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+用微分的形式不变性求微分$\dy$：\par
+\begin{enumhalf}
+  \item $y=\sin(2x+3)$ ~\pause
+  \item $y=\frac{x^2+2x}{x+1}$ ~
+\end{enumhalf}
+%(1) $y=\e^{x+2x^2}$；(2) $y=\sin(2x+3)$；\pause (3) $y=\frac{x^2+2x}{x+1}$。
+\end{example}
+\vpause
+\begin{exercise}
+用微分的形式不变性求微分$\dy$：\par
+\begin{enumhalf}
+  \item $y=\e^{x^2}\ln x$ ~\pause
+  \item $y=\frac1{\cos(2x)}$ ~
+\end{enumhalf}
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\frametitle{微分的形式不变性}
+\begin{example}
+用微分法求隐函数的导数$y'_x$：\\
+\begin{enumhalf}
+  \item $x^2+y^2=1$ ~
+  \item $\e^{x+y}+xy=1$ ~
+\end{enumhalf}
+\end{example}
+\vpause
+\begin{exercise}
+用微分法求$\sin x +\sin y = xy$确定的隐函数的导数$y'_x$。
+\end{exercise}
+\end{frame}
+
+\begin{oframe}
+\frametitle{函数的微分}
+\begin{review}
+已知$y=\e^{2x^2}\cos 3x$，求$\d y$。
+\end{review}
+\end{oframe}
+
+\mybookmark{复习与提高}
+
+\begin{iframe}
+\frametitle{复习与提高}
+\begin{choice}
+若函数$y=f(x)$有$f'(x_0)=\frac12$，则当$\Delta x\to0$时，该函数在$x=x_0$处的微分$\dy$是\dotfill(\select{B})
+\begin{choicehalf}
+  \item 与$\Delta x$等价的无穷小 ~
+  \item 与$\Delta x$同阶的无穷小 ~
+  \item 比$\Delta x$低阶的无穷小 ~
+  \item 比$\Delta x$高阶的无穷小 ~
+\end{choicehalf}
+\end{choice}
+\end{iframe}
+
+\end{document}

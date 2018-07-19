@@ -1,0 +1,677 @@
+%  -*- coding: utf-8 -*-
+% !TEX program = xelatex
+
+%\documentclass[14pt]{article}
+%\usepackage[notheorems]{beamerarticle}
+
+\documentclass[14pt,notheorems,leqno,xcolor={rgb}]{beamer} % ignorenonframetext
+
+\input{../common/theme.sty}
+\input{../common/share.sty}
+\input{../common/local.sty}
+
+%\transglitter[direction=90]
+%\transwipe[direction=270]
+%\transdissolve[duration=0.2]
+%\transduration{1}
+%\transboxin             \transboxout
+%\transblindshorizontal  \transblindsvertical
+%\transsplithorizontalin \transsplithorizontalout
+%\transsplitverticalin   \transsplitverticalout
+
+%\setCJKsansfont{手札体-简}
+
+\begin{document}
+
+\mode<presentation>{
+  \setbeamertemplate{section and subsection}[chinese][章]
+  \usebeamertemplate{section and subsection}
+  \setbeamertemplate{show sections in toc}[total]
+}
+
+\setbeamerfont{title}{size=\Huge}
+
+\occasion{高等数学课程}
+
+\title{高等数学1复习}
+\includeonlylecture{semester 1}
+
+\author{\href{https://lvjr.bitbucket.io}{吕荐瑞}}
+\institute{暨南大学数学系}
+
+\begin{frame}[plain]
+\transboxout %盒状收缩（整页效果）
+\titlepage
+\end{frame}
+
+%\lecture{第一学期}{semester 1}
+%\part{第一学期}
+
+\section{极限与连续}
+
+\begin{frame}{函数极限}\transdissolve[duration=0.2] %溶解
+\tikzset{
+  box/.style =
+  { rectangle, rounded corners=5pt,
+    minimum width=40pt, minimum height=20pt, inner sep=5pt,
+    draw=accent2, %fill=lightgray
+  }
+}
+\begin{center}
+\begin{tikzpicture}[thick]
+\node[box] (0to0) at (1,6)  {$0^0$型};
+\node[box] (ito0) at (4,6)  {$\infty^0$型};
+\node[box] (1toi) at (7,6)  {$1^\infty$型};
+\node[box] (i-i)  at (0,4)  {$\infty-\infty$型};
+\node[box] (0*i)  at (4,4)  {$0\cdot\infty$型};
+\node[box] (i/i)  at (0,2)  {$\frac{\infty}{\infty}$型};
+\node[box] (0/0)  at (4,2)  {$\frac{0}{0}$型};
+\node[box] (definite) at (2,0)  {确定型};
+\draw[->] (0to0) -- (0*i);
+\draw[->] (ito0) -- (0*i);
+\draw[->] (1toi) -- (0*i);
+\draw[-]  (i-i) .. controls (2,3.5) .. (0*i);
+\draw[->] (2,3.5) -- (2,2.5);
+\draw[->] (0/0) .. controls (6,3) and (6,1) .. (0/0);
+\draw[-]  (i/i) .. controls (2,2.5) .. (0/0);
+\draw[-]  (0/0) .. controls (2,1.5) .. (i/i);
+\draw[->] (2,1.5)  -- (definite);
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{关于$1^\infty$型极限}
+\begin{example}
+求极限$\limit_{x\to\infty}\left(\dfrac{x+1}{x-1}\right)^x$．
+\end{example}
+\vpause
+\begin{theorem}
+若$x\to\Box$时，$a(x)\to0$，$b(x)\to\infty$，则有%\large
+$$\boxed{\cbold\lim_{x\to\Box}\big(1+a(x)\big)^{b(x)}=\e^{\limit_{x\to\Box}a(x)b(x)}}$$
+\end{theorem}
+\end{frame}
+
+\begin{frame}{极限的四则运算}\transblindshorizontal %百叶窗水平
+各种极限都有四则运算法则：
+\begin{align}
+\lim(f(x) \pm g(x)) &= \lim f(x) \pm \lim g(x) \\
+\lim(f(x) \cdot g(x)) &= \lim f(x) \cdot \lim g(x) \\
+\lim\frac{f(x)}{g(x)} &= \frac{\lim f(x)}{\lim g(x)}
+\end{align}
+\end{frame}
+
+\begin{frame}{等价无穷小代换}\transblindsvertical %百叶窗竖直
+\begin{example}求下列极限：
+\begin{align}
+&\lim_{x\to0}\frac{\e^{x^2}-1}{1-\cos x} \\
+&\lim_{x\to0}\frac{\sin 2x}{\tan 5x}
+\end{align}
+\pause
+\begin{fact*}
+等价无穷小代换有如下特点：
+\begin{itemize}[<+->]
+\item 我们只有对$x\to0$的代换公式；
+\item 只能对乘除因子代换，不能对加减项代换。
+\end{itemize}
+\end{fact*}
+\end{example}
+\end{frame}
+
+\begin{frame}{洛必达法则}\transsplithorizontalin %上下合上（整页效果）
+\begin{example}求下列极限：
+\begin{align}
+&\lim_{x\to0}\frac{x-\sin x}{\tan^3x} \\
+&\lim_{x\to\frac{\pi}{2}}\frac{\cos x\sin x}{\cos 3x}
+\end{align}
+\pause
+\begin{fact*}
+洛必达法则有如下特点：
+\begin{itemize}[<+->]
+\item 如果能用等价无穷小代换，优先使用它；
+\item 如果某个乘除因子的极限不为零，可以先求出该因子极限。
+\end{itemize}
+\end{fact*}
+\end{example}
+\end{frame}
+
+\begin{sframe}
+\frametitle{利用泰勒公式求极限}
+\begin{example}
+求极限$\limit_{x\to0}\dfrac{\sqrt{4+3x}+\sqrt{4-3x}-4}{x^2}$。
+\end{example}
+\pause
+\begin{solution}
+利用$\sqrt{1+x}$的$2$阶麦克劳林公式，求得极限等于$-\dfrac{9}{32}$．
+\end{solution}
+\end{sframe}
+
+\begin{frame}
+\frametitle{闭区间上连续函数}
+设$f(x)$在闭区间$[a,b]$上连续．\vpause
+\begin{description}
+  \item[最值定理] $f(x)$在该区间上有界，而且一定能取到最大值$M$和最小值$m$．\vpause
+  \item[零值定理] 若$f(a)$和$f(b)$异号，则在开区间$(a,b)$内至少存在一点$\xi$，使得$f(\xi)=0$.\vpause
+  \item[介值定理] 若$f(a)=A$和$f(b)=B$不相等，则对于$A$与$B$之间的任何数$C$，
+在开区间$(a,b)$内至少存在一点$\xi$，使得$f(\xi)=C$.
+\end{description}
+\end{frame}
+
+\section{导数与微分}
+
+\begin{frame}{导数公式}\transsplithorizontalout %上下拉开（整页效果）
+\begin{itemize}[<+->]
+\item $(C)'=0$
+\item $(x^\alpha)'=\alpha x^{\alpha-1}$
+\item $(a^x)'=a^x \ln a$
+\item $(\log_a x)'=\frac{1}{x\ln a}$
+\item $(\sin x)'=\cos x$
+\item $(\arcsin x)'=\frac{1}{\sqrt{1-x^2}}$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{导数的四则运算}\transsplitverticalin %左右合上（整页效果）
+导数有如下四则运算法则：
+\begin{itemize}[<+->]
+\item $(u \pm v)' = u' \pm v'$
+\item $(Cu)' = Cu'$
+\item $(u \cdot v)'=u'\cdot v+u\cdot v'$
+\item $\displaystyle\left(\frac{u}{v}\right)'=\frac{u'\cdot v-u\cdot v'}{v^2}$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{复合函数求导}\transsplitverticalout %左右拉开（整页效果）
+\begin{example}
+求下列函数的导数：
+\begin{enumlite}
+  \item $f(x)=\e^{x^2}$；
+  \item $f(x)=\sqrt{x^2+1}$；
+  %\item $f(x)=\cos(\ln x)$。
+\end{enumlite}	
+\end{example}
+\vpause
+\begin{theorem*}
+设$y=f(u)$, $u=g(x)$，则有
+\[ y'_x=y'_u\cdot u'_x \]
+\end{theorem*}
+\vpause
+\begin{example}
+已知$f(u)$可导，求$f(\ln x)$的导数和二阶导数．
+\end{example}
+\end{frame}
+
+\begin{frame}
+\frametitle{隐函数求导}
+\begin{example}
+对下面的方程求导数$y'_x$：
+\[ x^2+y^2=xy+1 \]	
+\end{example}\pause
+对于隐函数求导，要注意
+\begin{itemize}
+  \item $(\phi(x))'_x=\phi'(x)$；
+  \item $(\phi(y))'_x=\phi'(y) y'_x$。
+\end{itemize}
+\vpause
+\begin{example}
+求幂指函数$f(x)=\left(1+\frac1x\right)^x$的导数．
+\end{example}
+\end{frame}
+
+\begin{frame}
+\frametitle{参数方程求导}
+设参数方程$\left\{\begin{array}{l}x=\phi(t)\\y=\psi(t)\end{array}\right.$确定了$x$和$y$的函数关系，则有
+\begin{align}
+\tag*{$(1)$}  &\bold{\frac{\dy}{\dx} = \frac{\psi'(t)}{\phi'(t)}} \\
+\tag*{$(2)$}  &\bold{\frac{\d^2y}{\dx^2} = \frac{\psi''(t)\phi'(t)-\psi'(t)\phi''(t)}{\phi'^3(t)}}
+\end{align}
+\end{frame}
+
+\section{导数的应用}
+
+\begin{frame}{罗尔中值定理}
+\begin{theorem*}
+如果函数$f(x)$满足下列条件：
+\begin{enumerate}
+\item 在闭区间$[a,b]$上连续，
+\item 在开区间$(a,b)$内可导，
+\item $f(a)=f(b)$，
+\end{enumerate}
+则至少存在一点$\xi\in(a,b)$使得$f'(\xi)=0$.
+\end{theorem*}
+\pause
+\begin{fact*}该定理可用于证明存在性等式。\end{fact*}
+\end{frame}
+
+\begin{frame}{拉格朗日中值定理}
+\begin{theorem*}
+如果函数$f(x)$满足下列条件：
+\begin{enumerate}
+\item 在闭区间$[a,b]$上连续，
+\item 在开区间$(a,b)$内可导，
+\end{enumerate}
+则至少存在一点$\xi\in(a,b)$使$f'(\xi)=\frac{f(b)-f(a)}{b-a}$.
+\end{theorem*}
+\pause
+\begin{fact*}该定理可用于证明恒等式和不等式。\end{fact*}
+\end{frame}
+
+\begin{frame}{柯西中值定理}
+\begin{theorem*}
+如果函数$f(x)$和$g(x)$满足下列条件：
+\begin{enumerate}
+\item 在闭区间$[a,b]$上都连续，
+\item 在开区间$(a,b)$内都可导，
+\item 在开区间$(a,b)$内$g'(x)\neq0$,
+\end{enumerate}
+则至少存在一点$\xi\in(a,b)$使$\frac{f'(\xi)}{g'(\xi)}=\frac{f(b)-f(a)}{g(b)-g(a)}$.
+\end{theorem*}
+\end{frame}
+
+\ifligong
+\begin{frame}
+\frametitle{泰勒公式}
+\begin{example}
+求函数$f(x)=\ln(2+x)$的带有佩亚诺余项的$4$阶麦克劳林公式．
+\end{example}
+\vpause
+\begin{remark*}
+求函数$f(x)$的泰勒公式有两种方法：
+\begin{enumerate}
+  \item 直接计算法\cdotfill 依次求$f(x)$的$n$阶导数
+  \item 间接计算法\cdotfill 利用已知函数的泰勒公式
+\end{enumerate}
+\end{remark*}
+\end{frame}
+\fi
+
+\begin{frame}{单调区间与极值}
+\begin{example}
+求下列函数的单调区间与极值：
+\begin{enumerate}
+\item $f(x)=x^3-3x^2+7$;
+\item $f(x)=\frac{2x}{1+x^2}$.
+\end{enumerate}
+\end{example}
+\pause
+\begin{fact*}
+对于单调区间与极值，有如下基本结果：
+\begin{itemize}
+\item $f'(x)>0$ 的区间为单调增加区间；
+\item $f'(x)<0$ 的区间为单调减少区间；
+\item $f'(x)=0$或者不存在的点很可能为极值点。
+\end{itemize}
+\end{fact*}
+\end{frame}
+
+\begin{frame}{函数的最值}
+\begin{fact*}
+一般地，对于函数在闭区间$[a,b]$上的最值，我们只需考虑下述这些可疑点：
+\begin{itemize}
+\item 导数为零的点；
+\item 导数不存在的点；
+\item 区间的端点。
+\end{itemize}
+\end{fact*}
+\pause
+\begin{fact*}
+特殊地，若函数在区间（开或闭，有限或无限）上可导，且在区间内只有一个驻点，则有
+\begin{itemize}
+\item 如果该驻点为极大值，则它也是最大值；
+\item 如果该驻点为极小值，则它也是最小值。
+\end{itemize}
+\end{fact*}
+\end{frame}
+
+\begin{frame}{凹凸区间与拐点}
+\begin{example}
+求下列曲线的凹凸区间与拐点：
+\begin{enumerate}
+\item $f(x)=x^4-2x^3+1$;
+\item $f(x)=(x-2)^{\frac{5}{3}}$.
+\end{enumerate}
+\end{example}
+\pause
+\begin{fact*}
+对于凹凸区间与拐点，有如下基本结果：
+\begin{itemize}
+\item $f''(x)>0$ 的区间为凹区间；
+\item $f''(x)<0$ 的区间为凸区间；
+\item $f''(x)=0$或者不存在的点很可能为拐点。
+\end{itemize}
+\end{fact*}
+\end{frame}
+
+\begin{frame}
+\frametitle{证明不等式的方法}
+\begin{example}
+证明：当$x>0$时，有$\ln(1+x)>x-\dfrac{x^2}{2}$。
+\end{example}
+\vpause
+\begin{remark*}
+证明不等式有如下这些方法：
+\begin{enumerate}
+  \item 拉格朗日中值定理\cdotfill 利用$1$阶导数
+  \ifligong\item 泰勒公式\cdotfill 利用$n$阶导数\fi
+  \item 函数的单调性\cdotfill 利用$1$阶导数
+  \item 曲线的凹凸性\cdotfill 利用$2$阶导数
+\end{enumerate}
+\end{remark*}
+\end{frame}
+
+\begin{frame}{曲线的渐近线}
+\begin{example}
+求曲线$f(x)=\frac{2x+3}{x-1}$的渐近线：
+\end{example}
+\pause
+\begin{fact*}
+对于曲线的渐近线，我们有如下定义：
+\begin{itemize}
+\item 若$\lim\limits_{x\to\infty}f(x)=b$，则$y=b$为水平渐近线；
+\item 若$\lim\limits_{x\to a}f(x)=\infty$，则$x=a$为垂直渐近线。
+\end{itemize}
+\end{fact*}
+\end{frame}
+
+\section{不定积分}
+
+\begin{frame}{不定积分}
+我们以第四章总习题作为例子，说明求不定积分的基本方法。
+\vpause
+这里只提供比较原始的做法，也许不够简单。\pause 但是比较自然，容易掌握。
+\end{frame}
+
+\subsection{有理分式的积分}
+
+\begin{frame}{有理分式1}
+有理分式可以先化为部分分式的和，再分别求积分。
+\vspace{0.8em}\hrule\vpause
+%\begin{example}
+(9) $\displaystyle\int\frac{\dx}{x(x^6+4)}=\int\frac14\left(\frac{1}{x}-\frac{x^5}{x^6+4}\right)\dx$\ppause
+(25) $\displaystyle\int\frac{\dx}{16-x^4}=\int\frac18\left(\frac{1}{4-x^2}+\frac{1}{4+x^2}\right)\dx$
+%\end{example}
+\vspace{0.8em}\hrule\vpause
+将有理分式分解为部分分式的时候，可以用待定系数法。但对于较简单的情形，可以直接凑出分子的系数。
+\end{frame}
+
+\begin{frame}{有理分式2}
+有理分式也可以用换元积分法化为简单的有理分式。
+\vspace{0.8em}\hrule\vspace{0.8em}\ppause
+%\begin{example}
+(3) $\displaystyle\int\frac{x^2\dx}{a^6-x^6}=\frac13\int\frac{\d(x^3)}{a^6-x^6}=\frac13\int\frac{\du}{a^6-u^2}$\ppause
+(23) $\displaystyle\int\frac{x^3\dx}{(1+x^8)^2}=\frac14\int\frac{\d(x^4)}{(1+x^8)^2}=\frac14\int\frac{\du}{(1+u^2)^2}$
+%\end{example}
+\end{frame}
+
+\subsection{换元积分法}
+
+\begin{frame}{换元积分法1}
+换元积分法的一般函数情形：\par\scalebox{0.94}{\parbox{\linewidth}{%
+\[ \bold{\int\phi(g(x))g'(x)\dx=\int\phi(g(x))\d(g(x))=\int\phi(u)\du} \]
+}}\vspace{0.8em}\hrule\vspace{0.8em}\ppause
+%\begin{example}
+(5) $\begin{aligned}[t]\int\frac{\ln\ln x\dx}{x}&=\int\ln(\ln x)\d(\ln x)
+  =\int\ln u\du\end{aligned}$
+%\end{example}
+\end{frame}
+
+\begin{frame}{换元积分法2}
+换元积分法的指数函数情形：对于$\int\phi(\e^x)\dx$，
+令$u=\e^x$，则有$\dx=\dfrac{\du}{u}$。
+\vspace{0.4em}\hrule\vspace{0.4em}\ppause
+%\begin{example}
+(1) $\displaystyle\int\frac{\dx}{\e^x-\e^{-x}}=\int\frac{\du}{u(u-u^{-1})}=\int\frac{\du}{u^2-1}$\vpause
+(31) $\begin{aligned}[t]\int\frac{(\e^{3x}+\e^x)\dx}{\e^{4x}-\e^{2x}+1}
+    &=\int\frac{(u^2+1)\du}{u^4-u^2+1}\\
+    &=\int\frac{(u^2+1)\du}{(u^2+1)^2-3u^2}\end{aligned}$
+%\end{example}
+\end{frame}
+
+\begin{frame}{换元积分法3}
+换元积分法的正切正割函数情形(令$u=\tan x$)：
+\[ \int\phi(\tan x)\sec^{2k} x\dx =\int\phi(u)(1+u^2)^{k-1}\du \]
+\vspace{0.8em}\hrule\vspace{0.8em}\ppause
+%\begin{example}\\
+% \enspace 处不会换行
+(7)\enspace$\int\tan^4 x\dx=\int \tan^2 x\sec^2 x\dx-\int \tan^2 x \dx$
+%\end{example}
+\end{frame}
+
+\begin{frame}{换元积分法4}
+换元积分法的正弦余弦函数情形($k$可为负整数)：
+\begin{align*}
+ \int\phi(\sin x)\cos^{2k+1} x\dx &=\int\phi(u)(1-u^2)^k\du \\
+ \int\phi(\cos x)\sin^{2k+1} x\dx &=-\!\int\phi(u)(1-u^2)^k\du
+\end{align*}
+\vspace{0.2em}\hrule\vspace{0.4em}\ppause
+%\begin{example}
+(37) $\displaystyle\int\frac{\cos x\dx}{\sin x(1+\sin x)}=\int\frac{\du}{u(1+u)}$\vpause
+(39) $\displaystyle\int\frac{\dx}{(2+\cos x)\sin x}=-\!\int\frac{\du}{(2+u)(1-u^2)}$
+%\end{example}
+\end{frame}
+
+\begin{frame}{换元积分法5}
+换元积分法的万能公式情形：\par\scalebox{0.92}{\parbox{\linewidth}{%
+\[
+ \int\!\phi(\sin x,\cos x)\dx=\!\int\!\phi\left(\frac{2u}{1+u^2},\frac{1-u^2}{1+u^2}\right)\frac2{1+u^2}\du
+\]}}
+\vspace{0.8em}\hrule\vspace{0.8em}\ppause
+%\begin{example}\par
+(37) $\displaystyle\int\frac{\cos x\dx}{\sin x(1+\sin x)}=\int\frac{1-u^2}{u(u^2+2u+1)}\du$\vpause
+(39) $\displaystyle\int\frac{\dx}{(2+\cos x)\sin x}=\int\frac{1+u^2}{u(u^2+3)}\du$
+%\end{example}
+\end{frame}
+
+\begin{frame}{换元积分法6}
+换元积分法的根号情形I：
+\begin{enumerate}
+  \item 若含有 $\sqrt{\frac{ax+b}{cx+d}}$，令 $u=\sqrt{\frac{ax+b}{cx+d}}$；
+  \item 若含有 $\sqrt{x}$ 和 $\sqrt[3]{x}$，令 $u=\sqrt[6]{x}$。
+\end{enumerate}
+\vspace{0.8em}\hrule\vspace{0.8em}\ppause
+%\begin{example}
+(21) $\displaystyle\int\arctan\sqrt x\dx=\int 2u\arctan u\du$\\ \pause
+(29) $\displaystyle\int\frac{\sqrt[3]x}{x(\sqrt x+\sqrt[3]x)}\dx=6\int\frac{1}{u^2+u}\du$
+%\end{example}
+\end{frame}
+
+\begin{frame}[shrink=4]
+\frametitle{换元积分法7}
+\vspace{-0.6em}
+换元积分法的根号情形II：
+\begin{enumerate}
+  \item 若含有 $\sqrt{a^2-x^2}$，令 $x=a\sin t$；
+  \item 若含有 $\sqrt{a^2+x^2}$，令 $x=a\tan t$；
+  \item 若含有 $\sqrt{x^2-a^2}$，令 $x=a\sec t$；
+\end{enumerate}
+\vspace{0.1em}\hrule\ppause
+%\begin{example}
+(11) $\int\frac{\dx}{\sqrt{x(1+x)}}=\int\frac{\d(x+\frac12)}{\sqrt{(x+\frac12)^2-(\frac12)^2}}$\\ \pause
+(15) $\int\frac{\dx}{x^2\sqrt{x^2-1}}=\int \cos t \dt$\\ \pause
+(17) $\int\frac{\dx}{x^4\sqrt{x^2+1}}=\int\frac{\cos^3t}{\sin^4t}\dt$\\ \pause
+(35)\nobreak\ $\int\sqrt{1-x^2}\arcsin x{\dx}=\int \cos t\cdot t\cdot\cos t \dt$
+%\end{example}
+\end{frame}
+
+\subsection{分部积分法}
+
+\begin{frame}
+\frametitle{分部积分法}
+分部积分公式：$\displaystyle\bold{\int u \dv =uv- \int v \du}$
+\pause\vskip0pt plus0.5fill\hrule\vskip0pt plus0.5fill
+分部积分的关键在于选择合适的$\bold{u}$和$\d{v}$：
+\begin{itemize}
+  \item \makebox[8em][l]{$\int x\,\e^x \d x$} \onslide<2->{$=\int \bold{x}\d\,(\e^x)$}
+  \item \makebox[8em][l]{$\int x\,\cos x \d x$} \onslide<3->{$=\int \bold{x}\d\,(\sin x)$}
+  \item \makebox[8em][l]{$\int x\,\ln x \d x$} \onslide<4->{$=\int \bold{\ln x}\d\,\big(\frac12x^2\big)$}
+  \item \makebox[8em][l]{$\int x\,\arctan x \d x$} \onslide<5->{$=\int \bold{\arctan x}\d\,\big(\frac12x^2\big)$}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{分部积分法1}
+%\begin{example}
+(5) $\displaystyle\int\ln u\du = u \ln u - \int u\,\frac1u\du$\ppause
+(19) $\displaystyle\int\ln(1+x^2)\dx=x\ln(1+x^2)-\int x \frac{2x}{1+x^2} \dx$\ppause
+(21) $\!\begin{aligned}[t]
+  &\int2u\arctan u\du = \int\arctan u \d(u^2) \\
+  &= u^2\arctan u-\int\left(\frac{u^2}{1+u^2}\right)\du
+\end{aligned}$
+%\end{example}
+\end{frame}
+
+\begin{frame}{分部积分法2}
+%\begin{example}
+(35)\hspace{-1em}$\begin{aligned}[t]
+&\int\cos^2 t \cdot t\dt = \int\frac{1+\cos 2t}2 t\dt \\ %\pause
+                                ={}& \frac14t^2 + \frac14\int t \d(\sin 2t) \\ %\pause
+                                ={}& \frac14t^2 + \frac14 t\sin 2t - \frac14 \int \sin 2t \dt
+\end{aligned}$
+%\end{example}
+\end{frame}
+
+\begin{frame}{分部积分法3}
+%\begin{example}
+(13) (仅考虑$a\neq0$且$b\neq0$情形)\par
+\scalebox{0.97}{\parbox{\textwidth}{\begin{align*}
+  &\phantom{=}\int\e^{ax}\cos bx\dx = \frac1b\int\e^{ax}\d(\sin bx) \\
+  &= \frac1b\e^{ax}\sin bx-\frac ab \int\e^{ax}\sin bx\dx \\
+  &= \frac1b\e^{ax}\sin bx+\frac a{b^2} \int\e^{ax}\d(\cos bx) \\
+  &= \frac1b\e^{ax}\sin bx+\frac a{b^2}\e^{ax}\cos bx-\frac{a^2}{b^2} \int\e^{ax}\cos bx\dx
+\end{align*}}}
+%\end{example}
+\end{frame}
+
+\begin{frame}{分部积分法4}
+%\begin{example}
+(23)$\hspace{-1em}\begin{aligned}[t]
+  &\phantom{=}\int\frac{\du}{(1+u^2)^2} = -\int\frac1{2u}\d\left(\frac1{1+u^2}\right)\\
+  &= -\frac{2u}{1+u^2}+\int \frac1{1+u^2} \d\left(\frac1{2u}\right)\\
+  &= -\frac{2u}{1+u^2}-\frac12 \int \frac1{(1+u^2)u^2} \du \\
+  &= -\frac{2u}{1+u^2}-\frac12 \int \left(\frac1{u^2}-\frac1{(1+u^2)}\right) \du
+\end{aligned}$
+%\end{example}
+\end{frame}
+
+\section{定积分}
+
+\begin{frame}%[shrink=10]
+\frametitle{微积分基本公式}
+\begin{theorem}设$f(x)$在$[a,b]$上连续，且$F(x)$是$f(x)$的一个原函数，则有
+\[\int_a^b f(x)\dx = [F(x)]_a^b = F(b)-F(a)\]\pause
+它称为\bold{微积分基本公式}或\bold{牛顿－莱布尼茨公式}。
+\end{theorem}
+\end{frame}
+
+\begin{frame}
+\frametitle{定积分的换元公式}
+定积分换元公式：令$x=\phi(t)$, 则有
+\[ \bold{\int_a^bf(x)\dx=\int_\alpha^\beta f(\phi(t))\phi'(t)\dt} \]
+其中，当 $x=a$ 时，$t=\alpha$；当 $x=b$ 时，$t=\beta$。\pause
+\begin{example}
+求下列定积分$\int_{-1}^{2}x\e^{x^2}\dx$。
+\end{example}
+\end{frame}
+
+\begin{frame}
+\frametitle{定积分的分部积分公式}
+分部积分公式：
+\[ \bold{\int_a^b u \dv = [uv]_a^b - \int_a^b v \du} \]\pause
+\begin{example}
+求下列定积分$\int_0^1 x\e^x \d x$。
+\end{example}
+\end{frame}
+
+\begin{frame}
+\frametitle{反常积分}
+反常积分有两种类型：
+\begin{enumerate}
+  \item 无限区间上的积分
+  \item 对无界函数的积分
+\end{enumerate}
+\vpause
+\begin{example}
+求反常积分$\displaystyle\int_0^{+\infty}\frac{\ln x+1}{\e^{x\ln x}}\dx$．
+\end{example}
+\end{frame}
+
+\section{定积分的应用}
+
+\begin{frame}
+\frametitle{计算面积的步骤}
+\pause
+\begin{enumerate}
+  \item 画出曲线草图\pause
+  \item 确定积分区间 \pause $\Longleftarrow$ 从曲线交点得到\pause
+  \item 确定被积函数 \pause $\Longleftarrow$ 从曲线方程得到\pause
+  \item 计算积分结果
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{直角坐标下的面积}
+由曲线 $y=f(x)$, $x$轴，直线$x=a$ 以及直线 $x=b$  所围成的曲边梯形的面积为
+\[ \bold{A=\int_a^b |f(x)|\dx} \]\pause
+由曲线 $x=f(y)$, $y$轴，直线$y=a$ 以及直线 $y=b$ 所围成的曲边梯形的面积为
+\[ A=\int_a^b |f(y)|\dy \]
+\end{frame}
+
+\begin{frame}
+\frametitle{直角坐标下的面积}
+由曲线 $y=f(x)$, $y=g(x)$，直线$x=a$ 以及直线 $x=b$ 所围成的曲边梯形的面积为
+\[ \bold{A=\int_a^b |f(x)-g(x)|\dx} \]\pause
+由曲线 $x=f(y)$, $x=g(y)$，直线$y=a$ 以及直线 $y=b$ 所围成的曲边梯形的面积为
+\[ A=\int_a^b |f(y)-g(y)|\d y \]
+\end{frame}
+
+\begin{frame}
+\frametitle{直角坐标下的面积}
+\begin{example}
+求由曲线$y=-x^2+x+2$ 与 $x$ 轴所围成的图形的面积。
+\end{example}
+\vpause
+\begin{example}
+求由曲线 $y^2=x$ 和 $y^2=2-x$ 所围成的图形的面积。
+\end{example}
+\end{frame}
+
+\begin{frame}
+\frametitle{极坐标下的面积}
+在极坐标中，由射线$\theta=\alpha$，$\theta=\beta$ 以及曲线 $\rho=\phi(\theta)$ 围成的曲边扇形的面积为
+$$\bold{A=\int_\alpha^\beta\frac12\,\phi^2(\theta)\d\theta}$$
+\begin{example}
+求曲线$\rho=2\cos\theta$围成的面积。
+\end{example}
+\end{frame}
+
+\begin{frame}
+\frametitle{旋转体的体积}
+由曲线 $y=f(x)$，直线 $x=a$, $x=b$ 及$x$轴所围成的平面图形，绕$x$轴旋转而成的旋转体的体积是
+\[ \bold{V_x =\int_a^b\pi y^2\dx=\pi\int_a^b[f(x)]^2\dx} \]
+\vpause
+由曲线 $x=f(y)$，直线 $y=c$, $y=d$ 及$y$轴所围成的平面图形，绕$y$轴旋转而成的旋转体的体积是
+\[ V_y =\int_c^d\pi x^2\dy=\pi\int_c^d[f(y)]^2\dy \]
+\end{frame}
+
+\begin{frame}
+\frametitle{旋转体的体积}
+\begin{example}
+求由曲线 $y=x^2$，$x=1$ 与$x$轴所围成的平面图形，分别绕$x$轴和$y$轴旋转而成的旋转体的体积。
+\end{example}
+\end{frame}
+
+\begin{frame}
+\frametitle{一般立体的体积}
+设立体在过点$x=a$、$x=b$且垂直于$x$轴的两个平面之间，过点$x$且垂直于$x$轴的截面面积为$A(x)$，
+则该立体的体积为
+\[ \bold{V=\int_a^b A(x)\dx} \]
+\end{frame}
+
+\begin{frame}
+\frametitle{平面曲线的弧长}
+\begin{enumerate}
+  \item 参数方程：$s=\int_\alpha^\beta\sqrt{\phi'(t)^2+\psi'(t)^2}\d t$
+  \item 直角坐标：$s=\int_a^b\sqrt{1+(y')^2}\d x$
+  \item 极坐标：$s=\int_\alpha^\beta\sqrt{\rho(\theta)^2+\rho'(\theta)^2}\d\theta$
+\end{enumerate}
+\end{frame}
+
+\end{document}

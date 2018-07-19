@@ -1,0 +1,384 @@
+% -*- coding: utf-8 -*-
+% !TEX program = xelatex
+
+%\documentclass[14pt]{article}
+%\usepackage[notheorems]{beamerarticle}
+
+\documentclass[14pt,notheorems,leqno,xcolor={rgb}]{beamer} % ignorenonframetext
+
+\input{../common/theme.sty}
+\input{../common/share.sty}
+\input{../common/local.sty}
+
+\occasion{高等数学第十一章}
+\title{第四节·对面积的曲面积分}
+\author{\href{https://lvjr.bitbucket.io}{吕荐瑞}}
+\institute{暨南大学数学系}
+\renewcommand<>{\section}[1]{\begin{frame}[plain]\titlepage\end{frame}}
+
+\setbeamerfont{title}{size=\Large}
+
+\makeatletter
+\beamer@tocsectionnumber=4\relax
+\setcounter{section}{4}
+\makeatother
+
+\begin{document}
+
+\section{对面积的曲面积分}
+
+\subsection{概念与性质}
+
+\begin{frame}
+\frametitle{引例：曲面型构件的质量}
+\begin{problem*}
+设有曲面型构件$\Sigma$，面密度为$f(x,y,z)$，计算此构件的质量．
+%\[ m=\lim_{\lambda\to0}\sum_{i=1}^{n}\mu(\xi_{i,}\eta_{i},\xi_{i})\Delta S_{i} \]
+\end{problem*}
+\end{frame}
+
+\begin{frame}%<99>
+%\frametitle{对面积的曲面积分的定义}
+\begin{columns}[onlytextwidth]
+\column{60mm}
+\begin{tikzpicture}[x=(215:2em/sqrt 2), y=(-15:2em), z=(75:2em), declare function={
+    f(\x,\y)=((\x-3)^2+(-\y+3)^3)/8+3;
+    fx(\x,\y)=(\x-3)/4;
+    fy(\x,\y)=-3*(3-\y)^2/8;
+  }, line join=round,font=\small]
+\visible<2->{
+%partitions of surface
+\foreach \x in {1,...,4}{
+   \foreach \y in {1,...,4} {
+      \draw[domain=0:1,variable=\t,smooth]
+         plot (\x+\t,\y,{f(\x+\t,\y})--
+         plot (\x+1,\y+\t,{f(\x+1,\y+\t)})--
+         plot (\x+1-\t,\y+1,{f(\x+1-\t,\y+1)})--
+         plot (\x,\y+1-\t,{f(\x,\y+1-\t)})--cycle;
+      }
+   }
+}
+%one piece  
+\def\a{2}  
+\def\b{2}  
+\pgfmathsetmacro{\c}{f(\a,\b)}
+\visible<3->{
+\draw[blue,very thick,domain=0:1,variable=\t,smooth,fill=black, fill opacity=0.125]
+    plot (\a+\t, \b, {f(\a+\t,\b)}) --
+    plot (\a+1, \b+\t, {f(\a+1,\b+\t)}) --
+    plot (\a+1-\t, \b+1, {f(\a+1-\t,\b+1)}) --
+    plot (\a, \b+1-\t, {f(\a,\b+1-\t)}) -- cycle;
+}
+\coordinate (q) at ({\a+0.5},{\b+1.5},{\c+1.3});  
+\coordinate (p) at ({\a+0.5},{\b+0.5},{\c-0.2}); 
+\coordinate (r) at ({\a+0.16},{\b-0.02},{\c-0.2});
+\visible<3->{
+\draw[fill] (p) circle (0.5pt); 
+\draw[<-] ($(p)+(0,0,0.1)$) to[out=80,in=190] (q); 
+\node[right] at (q) {$(\xi_i,\eta_i,\zeta_i)$}; 
+}
+\visible<4->{
+\node[above left] at (r) {$\Delta S_i$};
+}
+%surfaces  
+\draw [black,thick,fill=black, fill opacity=0.125, domain=0:4, smooth, variable=\t]
+    plot (1+\t, 1, {f(1+\t,1)}) --
+    plot (5, 1+\t, {f(5,1+\t)}) --
+    plot (5-\t, 5, {f(5-\t,5)}) --
+    plot (1, 5-\t, {f(1,5-\t)}) -- cycle;
+\node[right] at (1,1,{f(1,1)}) {$\Sigma$};
+\end{tikzpicture}  
+\column{60mm}
+\begin{itemize}
+  \item $\Sigma$在空间中分片光滑
+  \item $f(x,y,z)$在$\Sigma$上有界
+\end{itemize}
+\begin{itemize}
+  \item<2-> \warn{任意}划分$\Sigma=\bigcup\limits_i \Sigma_i$
+  \item<3-> \warn{任取}点$(\xi_{i},\eta_{i},\zeta_{i})\in \Sigma_i$
+\end{itemize}
+\end{columns}
+\uncover<9->{定义$f(x,y,z)$在$\Sigma$上\bold{对面积的曲面积分}}
+\[\uncover<5->{
+  \uncover<8->{\iint_{\Sigma}f(x,y,z)\dS=}
+  \uncover<7->{\lim\limits_{\lambda\rightarrow0}}
+  \uncover<6->{\sum\limits_{i=1}^{n}}
+  f(\xi_{i},\eta_{i},\zeta_{i})\Delta S_{i}
+}\]
+\uncover<10->{其中$\Sigma$称为\bold{积分曲面}，$\dS$称为\bold{面积元素}。}
+\end{frame}
+
+\begin{frame}
+\frametitle{对面积的曲面积分}
+\begin{remark*}
+对面积的曲面积分又称为\bold{第一类曲面积分}．
+\end{remark*}
+%\vpause
+%\begin{remark*}
+%若$L$是闭曲面，记$$\iint_{\Sigma}f(x,y,z)\dS=\bold{\oiint_{\Sigma}f(x,y)\dS}.$$
+%\end{remark*}
+\vpause
+\begin{remark*}
+若$\Sigma$是分片光滑曲面，$f(x,y,z)$在$\Sigma$上连续，
+则$\iint_{\Sigma}f(x,y,z)\dS$存在。
+\end{remark*}
+\vpause
+\begin{remark*}
+$\bold{\iint_{\Sigma}1\dS=\text{Area}(\Sigma)}$，即曲面$\Sigma$的面积．
+\end{remark*}
+\end{frame}
+
+\begin{frame}
+%\frametitle{对面积的曲面积分的性质}
+\begin{property}[线性和]
+设$\alpha$和$\beta$为常数，则有
+$$\iint_{\Sigma}(\alpha f+\beta g)\dS=\alpha\iint_{\Sigma}f\dS+\beta\iint_{\Sigma}g\dS$$
+\end{property}
+\vpause
+\begin{property}[分片和]
+将积分曲面$\Sigma$分成$\Sigma_1$和$\Sigma_2$，则有
+$$\iint_{\Sigma}f\dS=\iint_{\Sigma_{1}}f\dS+\iint_{\Sigma_{2}}f\dS$$
+\end{property}
+\vpause
+\begin{property}[保号性]
+若在$\Sigma$上$f(x,y,z)\geq g(x,y,z)$，则有
+$$\iint_{\Sigma}f(x,y,z)\dS \geq \iint_{\Sigma}g(x,y,z)\dS$$
+\end{property}
+\end{frame}
+
+\subsection{计算方法}
+
+\begin{frame}
+\frametitle{第一类曲面积分的计算}
+设曲面$\Sigma$的方程为$z=z(x,y)$，它在$xOy$面的投影区域为$D_{xy}$．则对曲面的面积积分可以化为二重积分：
+\cbold\begin{align*}
+   &\iint_{\Sigma}f(x,y,z)\dS \\
+ = &\iint_{D_{xy}}\!\!f\big(x,y,z(x,y)\big)\sqrt{1\!+\!z_{x}^{2}(x,y)\!+\!z_{y}^{2}(x,y)}\dx\dy
+\end{align*}
+\end{frame}
+
+\begin{frame}
+\begin{columns}[onlytextwidth,c]
+\column{64mm}
+\begin{example}
+计算$\displaystyle\iint_{\Sigma}\frac{1}{z}\dS$，\vspace{0.4em}
+其中$\Sigma$是球面$x^{2}+y^{2}+z^{2}=5^{2}$被平面$z=3$所截出的顶部．
+\end{example}
+\column{52mm}
+\hfill
+\begin{tikzpicture}[thick,scale=1.8,font=\small,inner sep=2pt]
+\def\a{0.3} %axis of the ellipse
+\def\myangle{33} 
+\pgfmathsetmacro{\h}{sin(\myangle)} %height of the plane z=h 
+\def\hb{0.18}  %axis of the ellipse 
+\pgfmathsetmacro{\ha}{sqrt(1-\h*\h)} %axis of the ellipse
+%coordinates 
+\draw[-stealth,black!75,thin] (0,0) -- (225:0.7) node[left,font={\footnotesize}] {$x$}; 
+\draw[-stealth,black!75,thin] (0,0) -- (1.3,0) node[right,font={\footnotesize}] {$y$}; 
+\draw[-stealth,black!75,thin] (0,0) -- (0,1.2) node[inner sep=4pt,left,font={\footnotesize}] {$z$};
+%section z=h 
+\draw[thick,densely dashed] ({-\ha},\h) arc (180:0:{\ha} and {\hb});
+\fill[filler1,opacity=0.5] (\ha,\h) arc (0:360:{\ha} and {\hb});
+\fill (0,\h) circle (0.5pt) node[right,font={\footnotesize}] {$z=3$};
+\visible<2->{
+%surface 
+\draw[blue,very thick, densely dashed] ({-\ha},\h) arc (180:0:{\ha} and {\hb});
+}
+\visible<6->{
+%projection 
+\draw[densely dashed] ({-\ha},\h)--({-\ha},0); 
+\draw[densely dashed] (\ha,\h)--(\ha,0);
+\fill[filler1,opacity=0.5] (\ha,0) arc (0:360:{\ha} and {\hb}); 
+\draw[thick,accent1,densely dashed] (\ha,0) arc (0:180:{\ha} and {\hb});
+\draw[thick,accent1] (\ha,0) arc (0:-180:{\ha} and {\hb});
+\node[left,font={\footnotesize}] at (0,0) {$D_{xy}$};
+}
+\visible<7->{
+%help line
+\draw[densely dashed] (0,0)--(\ha,\h);
+\draw[color=accent3,densely dashed] (0,0)--(\ha,0);
+\node[color=accent3,left] at (\ha,-0.45) {$r=4$};
+}
+%hemi-sphere  
+\draw[thick,densely dashed] (-1,0) arc (180:0:1 and {\a});
+\draw[thick] plot[variable=\t,domain=0:180,smooth]
+   ({cos(\t)},{sin(\t)})-- 	 (-1,0) arc (180:360:1 and {\a}); 
+%section z=h
+\draw[thick] ({-\ha},\h) arc (180:360:{\ha} and {\hb});
+\visible<2->{
+%surface 
+\draw[accent1,very thick] plot[variable=\t,domain=\myangle:{180-\myangle},smooth]
+  ({cos(\t)},{sin(\t)})-- 	({-\ha},\h) arc (180:360:{\ha} and {\hb});
+}
+\end{tikzpicture}
+\end{columns}
+\stext{
+%\begin{solution}
+\smark$\begin{aligned}[t]
+  \uncover<3->{\text{\lead{原式}}}
+ &\uncover<3->{=}
+  \uncover<6->{\iint_{D_{xy}}}
+  \uncover<4->{\frac{1}{\sqrt{5^2-x^{2}-y^{2}}}}
+  \uncover<5->{\cdot\sqrt{1+z_{x}^{2}+z_{y}^{2}}\dx\dy} \\
+ &\uncover<8->{=\iint_{D_{xy}}\frac{1}{\sqrt{5^2-x^2-y^2}}}
+  \uncover<8->{\cdot\sqrt{\frac{5^2}{5^2-x^2-y^2}}\dx\dy} \\
+ &\uncover<9->{=\iint_{D_{xy}}\frac{5}{5^2-x^2-y^2}\dx\dy}
+\end{aligned}$%\end{solution}
+}
+\end{frame}
+
+\begin{sframe}
+\noindent
+\begin{align*}
+ &\uncover<1->{\iint_{D_{xy}}\frac{5}{5^2-x^2-y^2}\dx\dy} 
+ &\uncover<2->{\clead\begin{array}{l}x=\rho\cos\theta \\ y=\rho\sin\theta\end{array}} \\
+  \uncover<3->{=}
+ &\uncover<3->{\iint_{D_{xy}}\frac{5}{5^2-\rho^{2}}\cdot\rho\d\rho\d\theta}
+ &\uncover<4->{\cbold\begin{array}{l}0 \le\theta\le 2\pi\\ 0 \le\rho\le 4\end{array}} \\
+  \uncover<5->{=}
+ &\uncover<5->{\int_0^{2\pi}\d\theta\cdot\int_0^4\frac{5}{5^2-\rho^2}\cdot\rho\d\rho}
+ &\uncover<6->{\cwarn u=5^2-\rho^{2}} \\
+  \uncover<7->{=}
+ &\uncover<10->{2\pi\cdot}
+  \uncover<9->{\int_{5^2}^{3^2}}
+  \uncover<7->{\frac{5}{u}}
+  \uncover<8->{\cdot\left(-\frac{1}{2}\right)\du} \\
+  \uncover<11->{=}
+ &\uncover<11->{2\pi\cdot\left[-\frac{5}{2}\ln u\right]_{5^2}^{3^2}}
+  \uncover<12->{=10\pi\ln\frac{5}{3}.}
+\end{align*}
+\end{sframe}
+
+\begin{frame}%<99>
+\begin{columns}[onlytextwidth,T]
+\column{66mm}
+\begin{example}
+计算$\iint_{\Sigma}xyz\dS$，其中$\Sigma$是由平面$x=0$，
+$y=0$，$z=0$和$x+y+z=1$所围成的四面体的整个边界曲面．
+\end{example}
+\column{54mm}
+\hfill\begin{tikzpicture}[thick,scale=1.4,font=\small,inner sep=0pt]
+%coordinates
+\coordinate (O) at (0,0);
+\coordinate (A) at (-0.5,-0.7);
+\coordinate (B) at (1.05,0);
+\coordinate (C) at (0,1);
+\draw [-stealth, black!75] (A) -- (-0.7,-0.98) node [above=6pt, font={\footnotesize}] {$x$};
+\draw [-stealth, black!75] (B) -- (1.3,0) node [above left=2pt and 2pt, font={\footnotesize}] {$y$};  
+\draw [-stealth, black!75] (C) -- (0,1.2) node [below left=2pt and 4pt, font={\footnotesize}] {$z$};
+\draw [accent2,thick,densely dashed] (O) -- (A) (O) -- (B) (O) -- (C); 
+\draw [accent2,thick] (A) -- (B) -- (C) -- cycle;
+\fill[fill=accent3] (O) node[left=1.5pt,font={\footnotesize}] {$O$} circle (0.6pt);
+\fill[fill=accent3] (A) node[color=accent1,below right] {$A(1,0,0)$} circle (0.6pt);
+\fill[fill=accent3] (B) node[color=accent1,below right=2pt and -3pt] at (B) {$B(0,1,0)$} circle (0.6pt);
+\fill[fill=accent3] (C) node[color=accent1,right=5pt] at (C) {$C(0,0,1)$} circle (0.6pt);
+%projection 
+\visible<4->{\fill[gray!30,opacity=0.7] (A) -- (B) -- (0,0);
+\node[font={\footnotesize}] at(0.18,-0.19) {$D_{xy}$};}
+\end{tikzpicture}
+\end{columns}
+\stext{\pause
+\begin{solution}\smark
+$\Sigma=\Delta OAB\bigcup\Delta OAC\bigcup\Delta OBC\bigcup\Delta ABC$，\pause 因此\newline
+$\text{原式}\begin{aligned}[t]
+ &=\iint_{\Delta ABC}xyz\dS \\
+ &\uncover<4->{=\iint_{D_{xy}}}
+  \uncover<5->{xy(1-x-y)}
+  \uncover<6->{\cdot\sqrt{1+z_{x}^{2}+z_{y}^{2}}\dx\dy}\\
+ &\uncover<7->{=\iint_{D_{xy}}xy(1-x-y)\cdot\sqrt{3}\dx\dy}
+  \uncover<8->{=\dfrac{\sqrt3}{120}.}
+\end{aligned}$
+\end{solution}}
+\end{frame}
+
+\mybookmark{复习与提高}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{property*}[奇偶对称性]%\par
+设曲面$\Sigma$关于$xy$坐标面对称，
+\begin{columns}[onlytextwidth,T]
+\column{84mm}
+\begin{enumzero}
+  \item<2-> 若$f(x,y,z)$关于$z$是奇函数，则%（即：$f(x,y,-z)=-f(x,y,z)$）
+    \[ \iint_{\Sigma}f(x,y,z)\dS=0 \]%
+    \vskip1em%
+  \item<3-> 若$f(x,y,z)$关于$z$是偶函数，则%（即：$f(x,y,-z)=f(x,y,z)$）
+    \[ \iint_{\Sigma}\negthickspace f(x,y,z)\dS=2\iint_{\Sigma_{1}}\negthickspace f(x,y,z)\dS \]
+\end{enumzero}
+\column{44mm}
+%\begin{center}
+\begin{tikzpicture}[scale=0.8,thick,font=\small]
+\def\a{1} 
+\def\b{1.5}
+\def\d{0.25}
+%coordinates 
+\draw[-stealth,gray] ({-\a*1.5},{\b*0.5})--++(225:{\a*1.2}) node[above]{$x$};
+\draw[-stealth,gray] ({-\a*1.5},{\b*0.5})--++({\a*2.6},0) node[right]{$y$};
+\draw[-stealth,gray] ({-\a*1.5},{-\b*0.8})--++(0,{\b*2.2}) node[left]{$z$};
+%3d body 
+\draw[fill=filler2] (0:{\a} and {\b*0.3}) arc (0:360:{\a} and {\b*0.3});
+\shade[draw,ball color=gray!20,opacity=0.7] (0,0) ellipse ({\a} and {\b}); 
+\draw[densely dashed] (0:{\a} and {\b*0.3}) arc (0:180:{\a} and {\b*0.3});
+\node[left=5pt] at (0:{\a*2} and {\b}) {$\Sigma$};
+%points 
+\draw[fill,color=accent1] (90:{\b*0.7}) circle (0.9pt) node[above] {$(x,y,z)\in\Sigma_1$}; 
+\draw[fill,color=accent1] (-90:{\b*0.7}) circle (0.9pt) node[below] {$(x,y,-z)\in\Sigma_2$};
+\end{tikzpicture} 
+%\end{center}
+\end{columns}
+\end{property*}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{choice}
+设$\Sigma$为上半球面$x^2+y^2+z^2=R^2$（$z\geq0$），而
+$\Sigma_1$为$\Sigma$在第一卦限的部分．则有\dotfill(\select{C})
+\begin{choiceline}
+  \item $\iint_{\Sigma}x\dS=4\iint_{\Sigma_1}x\dS$
+  \item $\iint_{\Sigma}y\dS=4\iint_{\Sigma_1}x\dS$
+  \item $\iint_{\Sigma}z\dS=4\iint_{\Sigma_1}x\dS$
+  \item $\iint_{\Sigma}xyz\dS=4\iint_{\Sigma_1}xyz\dS$
+\end{choiceline}
+\end{choice}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+设$\Sigma$是球面$x^2+y^2+z^2=R^2$，求曲面积分
+$$\iint_{\Sigma}(x^{2}+y^{2})\dS.$$
+\end{puzzle}
+\stext{\pause
+\begin{solution}\smark
+由对称性：$\iint_{\Sigma}x^{2}\dS=\iint_{\Sigma}y^{2}\dS=\iint_{\Sigma}z^{2}\dS$．
+\let\displaystyle=\textstyle
+\begin{align*}
+&\phantom{{}={}}\iint_{\Sigma}(x^2+y^2)\dS = 2\iint_{\Sigma}x^2\dS \\
+&\qquad=\frac{2}{3}\left[\iint_{\Sigma}x^{2}\dS+\iint_{\Sigma}y^{2}\dS+\iint_{\Sigma}z^{2}\dS\right] \\
+&\qquad=\frac{2}{3}\iint_{\Sigma}(x^{2}+y^{2}+z^{2})\dS \\
+&\qquad=\frac{2}{3}\iint_{\Sigma}R^{2}\dS
+ =\frac{2}{3}R^{2}\cdot\text{Area}(\Sigma) %=\frac{2}{3}R^{2}\cdot4\pi R^2
+ =\frac{8}{3}\pi R^4
+\end{align*}
+\end{solution}}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{review}
+计算曲面积分$\iint_{\Sigma}xz\dS$，其中$\Sigma$是由平面
+$x=0$，$y=0$，$z=0$和$x+y+z=1$所围成四面体的整个边界曲面．
+\end{review}
+\stext{\vpause
+\begin{solution}\smark
+在$x=0$和$z=0$平面上的两部分积分
+$$\iint_{\Sigma_{1}}xz\dS=\iint_{\Sigma_{3}}xz\dS=0.$$
+在$y=0$和$x+y+z=1$平面上的两部分积分$\iint_{\Sigma_{2}}xz\dS$和
+$\iint_{\Sigma_{4}}xz\dS$,可以都投影到$xOz$平面以简化计算．
+\end{solution}}
+\end{frame}
+
+\end{document}
+

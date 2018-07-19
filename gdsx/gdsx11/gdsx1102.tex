@@ -1,0 +1,518 @@
+% -*- coding: utf-8 -*-
+% !TEX program = xelatex
+
+%\documentclass[14pt]{article}
+%\usepackage[notheorems]{beamerarticle}
+
+\documentclass[14pt,notheorems,leqno,xcolor={rgb}]{beamer} % ignorenonframetext
+
+\input{../common/theme.sty}
+\input{../common/share.sty}
+\input{../common/local.sty}
+
+\occasion{高等数学第十一章}
+\title{第二节·对坐标的曲线积分}
+\author{\href{https://lvjr.bitbucket.io}{吕荐瑞}}
+\institute{暨南大学数学系}
+\renewcommand<>{\section}[1]{\begin{frame}[plain]\titlepage\end{frame}}
+
+\setbeamerfont{title}{size=\Large}
+
+\makeatletter
+\beamer@tocsectionnumber=2\relax
+\setcounter{section}{2}
+\makeatother
+
+\begin{document}
+
+\section{对坐标的曲线积分}
+
+\subsection{概念与性质}
+
+\begin{frame}
+\frametitle{引例：变力沿曲线所作的功}
+\begin{problem*}
+设一个质点在$xy$面内受到力$$\vec{F}(x,y)=P(x,y)\,\vi+Q(x,y)\,\vj$$的作用，
+从点$A$沿光滑曲线弧$L$移动到点$B$．计算在此过程中变力$\vec{F}(x,y)$所做的功$W$．
+\end{problem*}
+\end{frame}
+
+\begin{frame}%<99>
+\begin{columns}[onlytextwidth]
+\column{65mm}
+\begin{tikzpicture}[thick,declare function={f(\x)=0.7*(\x-0.3)^2+0.2;},scale=3.2,font={\small}]
+%coordinates 
+\draw[-stealth,gray] (0,0)--(1.8,0) node[above,font={\scriptsize}] {$x$}; 
+\draw[-stealth,gray] (0,0)--(0,1.6) node[right,font={\scriptsize}] {$y$};
+%curve 
+\def\a{0.3}
+\def\b{1.7}
+\draw[variable=\t,domain=\a:\b,smooth,postaction={decorate},
+   decoration={markings, mark=at position 0.27 with {\arrow{stealth}}},
+   decoration={markings, mark=at position 0.49 with {\arrow{stealth}}},
+   decoration={markings, mark=at position 0.88 with {\arrow{stealth}}}]
+     plot (\t,{f(\t)});
+\draw[fill] (\a,{f(\a)}) circle (0.5pt) node[left] {$A$}; 
+\draw[fill] (\b,{f(\b)}) circle (0.5pt) node[right] {$B$};
+\node at({\b-0.3},{f(\b-0.3)+0.5}) {$L$};
+%partition of curve
+\visible<2->{
+\draw[fill,blue] (0.5,{f(0.5)}) circle (0.4pt) node[below] {$M_1$}; 
+\draw[fill,blue] (0.7,{f(0.7)}) circle (0.4pt) node[below] {$M_2$}; 
+\draw[fill,blue] (0.9,{f(0.9)}) circle (0.4pt);
+\draw[fill,blue] (1.05,{f(1.05)}) circle (0.4pt);
+\draw[fill,blue] (1.2,{f(1.2)}) coordinate (p) circle (0.4pt) node[left] {$M_{i-1}$};
+\draw[fill,blue] (1.4,{f(1.4)}) coordinate (q) circle (0.4pt) node[above left] {$M_{i}$};
+\draw[fill,blue] (1.48,{f(1.48)}) circle (0.4pt);
+\draw[fill,blue] (1.52,{f(1.52)}) circle (0.4pt);
+\draw[fill,blue] (1.62,{f(1.62)}) circle (0.4pt) node[below right] {$M_{n-1}$};
+}
+%one piece
+\visible<3->{
+\draw[fill,accent3] (1.28,{f(1.28)}) circle (0.4pt) node[above left] {$(\xi_i,\eta_i)$};
+}
+\visible<4->{
+\draw[fill,accent3] (1.2,{f(1.2)}) -- node[below] {$\Delta x_i$} (1.4,{f(1.2)});
+\draw[fill,accent3] (1.4,{f(1.2)}) -- node[right] {$\Delta y_i$} (1.4,{f(1.4)});
+}
+\end{tikzpicture}
+\column{55mm}
+\begin{itemize}
+  \item 有向曲线弧$L$光滑
+  \item $P(x,y)$在$L$上有界
+\end{itemize}
+\begin{itemize}
+  \item<2-> \warn{任意}划分$L=\bigcup\limits_i L_i$
+  \item<3-> \warn{任取}点$(\xi_{i},\eta_{i})\in L_i$
+\end{itemize}
+\end{columns}
+\uncover<9->{定义$P(x,y)$在$L$上的\bold{对坐标$x$的曲线积分}}
+\[\uncover<5->{
+  \uncover<8->{\int_{L}P(x,y)\dx=}
+  \uncover<7->{\lim\limits_{\lambda\rightarrow0}}
+  \uncover<6->{\sum\limits_{i=1}^{n}}
+  P(\xi_{i},\eta_{i})\Delta x_{i}
+}\]
+\uncover<10->{其中$L$称为\bold{积分弧段}。}
+\end{frame}
+
+\begin{frame}<99>
+\begin{columns}[onlytextwidth]
+\column{65mm}
+\begin{tikzpicture}[thick,declare function={f(\x)=0.7*(\x-0.3)^2+0.2;},scale=3.2,font={\small}]
+%coordinates 
+\draw[-stealth,gray] (0,0)--(1.8,0) node[above,font={\scriptsize}] {$x$}; 
+\draw[-stealth,gray] (0,0)--(0,1.6) node[right,font={\scriptsize}] {$y$};
+%curve 
+\def\a{0.3}
+\def\b{1.7}
+\draw[variable=\t,domain=\a:\b,smooth,postaction={decorate},
+   decoration={markings, mark=at position 0.27 with {\arrow{stealth}}},
+   decoration={markings, mark=at position 0.49 with {\arrow{stealth}}},
+   decoration={markings, mark=at position 0.88 with {\arrow{stealth}}}]
+     plot (\t,{f(\t)});
+\draw[fill] (\a,{f(\a)}) circle (0.5pt) node[left] {$A$}; 
+\draw[fill] (\b,{f(\b)}) circle (0.5pt) node[right] {$B$};
+\node at({\b-0.3},{f(\b-0.3)+0.5}) {$L$};
+%partition of curve
+\visible<2->{
+\draw[fill,blue] (0.5,{f(0.5)}) circle (0.4pt) node[below] {$M_1$}; 
+\draw[fill,blue] (0.7,{f(0.7)}) circle (0.4pt) node[below] {$M_2$}; 
+\draw[fill,blue] (0.9,{f(0.9)}) circle (0.4pt);
+\draw[fill,blue] (1.05,{f(1.05)}) circle (0.4pt);
+\draw[fill,blue] (1.2,{f(1.2)}) coordinate (p) circle (0.4pt) node[left] {$M_{i-1}$};
+\draw[fill,blue] (1.4,{f(1.4)}) coordinate (q) circle (0.4pt) node[above left] {$M_{i}$};
+\draw[fill,blue] (1.48,{f(1.48)}) circle (0.4pt);
+\draw[fill,blue] (1.52,{f(1.52)}) circle (0.4pt);
+\draw[fill,blue] (1.62,{f(1.62)}) circle (0.4pt) node[below right] {$M_{n-1}$};
+}
+%one piece
+\visible<3->{
+\draw[fill,accent3] (1.28,{f(1.28)}) circle (0.4pt) node[above left] {$(\xi_i,\eta_i)$};
+}
+\visible<4->{
+\draw[fill,accent3] (1.2,{f(1.2)}) -- node[below] {$\Delta x_i$} (1.4,{f(1.2)});
+\draw[fill,accent3] (1.4,{f(1.2)}) -- node[right] {$\Delta y_i$} (1.4,{f(1.4)});
+}
+\end{tikzpicture}
+\column{55mm}
+\begin{itemize}
+  \item 有向曲线弧$L$光滑
+  \item $Q(x,y)$在$L$上有界
+\end{itemize}
+\begin{itemize}
+  \item<2-> \warn{任意}划分$L=\bigcup\limits_i L_i$
+  \item<3-> \warn{任取}点$(\xi_{i},\eta_{i})\in L_i$
+\end{itemize}
+\end{columns}
+\uncover<9->{定义$Q(x,y)$在$L$上的\bold{对坐标${\color{accent5}y}$的曲线积分}}
+\[\uncover<5->{
+  \uncover<8->{\int_{L}Q(x,y)\mathop{\color{accent5}\dy}=}
+  \uncover<7->{\lim\limits_{\lambda\rightarrow0}}
+  \uncover<6->{\sum\limits_{i=1}^{n}}
+  Q(\xi_{i},\eta_{i}){\color{accent5}\Delta y_{i}}
+}\]
+\uncover<10->{其中$L$称为\bold{积分弧段}。}
+\end{frame}
+
+\begin{frame}
+\frametitle{对坐标的曲线积分}
+\begin{remark}
+对坐标的曲线积分又称为\bold{第二类曲线积分}．
+\end{remark}
+\vpause
+\begin{remark}
+规定\let\displaystyle=\textstyle
+$\!\!\!\!\!\!\begin{aligned}[t]
+&\phantom{={}}\int_{L}P(x,y)\dx+\int_{L}Q(x,y)\dy \\
+&=\bold{\int_{L}P(x,y)\dx+Q(x,y)\dy}
+\end{aligned}$
+\end{remark}
+\vpause
+\begin{remark}
+若$L$是分段光滑曲线，$f(x,y)$在$L$上连续，则
+$\int_{L}P(x,y)\dx$和$\int_{L}Q(x,y)\dy$存在。
+\end{remark}
+\vpause
+\begin{remark}
+设有向曲线弧$L$的起点为$A(x_A,y_A)$，终点为$B(x_B,y_B)$，则
+$\bold{\int_{L}1\dx=x_B-x_A}$，$\bold{\int_{L}1\dy=y_B-y_A}$．
+\end{remark}
+\end{frame}
+
+\begin{frame}
+%\frametitle{对坐标的曲线积分的性质}
+\begin{property}[线性和]
+设$\alpha$和$\beta$为常数，则
+$$\int_{L}(\alpha P_1+\beta P_2)\dx=\alpha\int_{L}P_1\dx+\beta\int_{L}P_2\dx$$
+\end{property}
+\pause
+\begin{property}[分段和]
+将有向曲线弧$L$分成$L_1$和$L_2$，则
+$$\int_{L}P(x,y)\dx=\int_{L_{1}}P(x,y)\dx+\int_{L_{2}}P(x,y)\dx$$
+\end{property}
+\pause
+\begin{property}[方向性]
+设$L^-$是$L$的反向曲线弧，则
+$$\int_{L^-}P(x,y)\dx=-\int_{L}P(x,y)\dx$$
+\end{property}
+\pause
+\begin{remark}
+前两个性质与第一类曲线积分类似．
+\end{remark}
+\end{frame}
+
+\subsection{计算方法}
+
+\begin{frame}%<99>
+\frametitle{第二类曲线积分的计算}
+\begin{remark*}
+设有向曲线弧$L$的参数方程为
+$\left\{\begin{array}{l}x=\phi(t)\\y=\psi(t)\end{array}\right.$，
+其中$\bold{t:a\rightarrowtail b}$，则\vspace{0.3em}
+\[ \dx=\phi'(t)\dt,\qquad \dy=\psi'(t)\dt. \]
+\end{remark*}
+\ppause\cdotfill
+\setlength{\multlinegap}{0pt}%
+\begin{multline*}
+\cbold \int_{L}P(x,y)\dx+Q(x,y)\dy \\[-0.2em]
+\cbold=\int_a^b\!\Big[P\big(\phi(t),\psi(t)\big)\phi'(t)+Q\big(\phi(t),\psi(t)\big)\psi'(t)\Big]\!\dt
+\end{multline*}
+\end{frame}
+
+\begin{sframe}
+\frametitle{第二类曲线积分的计算}
+\begin{theorem*}
+设$P(x,y)$, $Q(x,y)$在有向曲线弧$L$上有定义且连续，$L$的参数方程为
+\[
+\left\{ \begin{array}{c}
+x=\phi(t),\\
+y=\psi(t)
+\end{array}\ (t:a\rightarrowtail b),\right.
+\]
+$\phi'(t)$和$\psi'(t)$的导数连续，且$\phi'(t)^{2}+\psi'(t)^{2}\neq0$，则曲线积分存在，而且
+\setlength{\multlinegap}{0pt}%
+\begin{multline*}
+ \int_{L}P(x,y)\dx+Q(x,y)\dy \\[-0.2em]
+=\int_a^b\!\Big[P\big(\phi(t),\psi(t)\big)\phi'(t)+Q\big(\phi(t),\psi(t)\big)\psi'(t)\Big]\!\dt
+\end{multline*}
+\end{theorem*}
+\end{sframe}
+
+\begin{frame}
+%\frametitle{第二类曲线积分的计算}
+\setlength{\multlinegap}{0pt}%
+特别地，若有向曲线弧为$\bold{y=\psi(x)}$（$x:a\rightarrowtail b$），则
+\begin{multline*}
+ \int_{L}P(x,y)\dx+Q(x,y)\dy \\[-0.6em]
+=\int_a^b\!\Big[P\big(x,\psi(x)\big)+Q\big(x,\psi(x)\big)\psi'(x)\Big]\!\dx
+\end{multline*}
+\vspace{-1em}\pause\vfill\cdotfill\vfill
+若有向曲线弧为$\bold{x=\phi(y)}$（$y:a\rightarrowtail b$），则
+\begin{multline*}
+ \int_{L}P(x,y)\dx+Q(x,y)\dy \\[-0.6em]
+=\int_a^b\!\Big[P\big(\phi(y),y\big)\phi'(y)+Q\big(\phi(y),y\big)\Big]\!\dy
+\end{multline*}
+\end{frame}
+
+\begin{frame}
+\frametitle{第二类曲线积分：平面曲线}
+\begin{columns}[onlytextwidth,c]
+\column{7cm}
+\begin{example}
+计算$\int_L xy\dx$，其中$L$如右图所示．
+\end{example}
+\vspace{2em}
+\stext{\begin{remark*}\smark
+对比$\int_L xy\ds=0$．
+\end{remark*}}
+\column{5cm}
+\hfill
+\begin{tikzpicture}[thick,scale=2]
+%coordinates 
+\draw[-stealth,gray] (-0.15,0)--(1.5,0) node[below] {$x$};
+\draw[-stealth,gray] (0,-1.1)--(0,1.1) node[left] {$y$}; 
+\node[below left] at(0,0) {$o$};
+%curve 
+\draw[thick,accent1,decoration={markings, mark=at position 0.2 with {\arrow{stealth}}},
+      decoration={markings, mark=at position 0.8 with {\arrow{stealth}}},postaction={decorate}]
+          plot[variable=\t,domain=-1:1,smooth] ({\t*\t},\t);
+\node[thick,accent1,right=5pt] at({0.4^2},0.4) {$L:x=y^2$};
+\fill[fill=accent3] (1,-1) circle (0.5pt) (1,1) circle (0.5pt);
+\node[below] at(1,-1) {$A(1,-1)$};
+\node[above] at(1,1) {$B(1,1)$};
+\end{tikzpicture} 
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{第二类曲线积分：平面曲线}
+\begin{columns}[onlytextwidth,c]
+\column{5.5cm}
+\begin{example}
+求$I_{i}=\int_{L_{i}}y^2\dx$，\newline
+其中$L_{i}$如右图所示．
+\end{example}
+\column{6.5cm}
+\begin{tikzpicture}[thick,scale=2]
+%coordinates 
+\draw[-stealth,gray] (-1.3,0)--(1.3,0) node[right] {$x$};
+\draw[-stealth,gray] (0,-0.3)--(0,1.2) node[left] {$y$};
+\node[thick,below] at(1,0) {$A(a,0)$};
+\node[thick,below] at(-1,0) {$B(-a,0)$};
+%curve L1 
+\draw[very thick,blue,decoration={markings, mark=at position 0.35 with {\arrow{stealth}}},
+      decoration={markings, mark=at position 0.65 with {\arrow{stealth}}},postaction={decorate}]
+         (1,0) arc (0:180:1);
+\node[blue,thick,right] at(40:1) {$L_1$};
+%curve L2 
+\draw[very thick,red,decoration={markings, mark=at position 0.35 with {\arrow{stealth}}},
+      decoration={markings, mark=at position 0.65 with {\arrow{stealth}}},postaction={decorate}]
+         (1,0) -- (-1,0); 
+\node[red,thick,below] at(0.3,0) {$L_2$};
+\end{tikzpicture}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\begin{columns}[onlytextwidth,c]
+\column{5.5cm}
+\begin{example}
+计算
+\[
+I_{i}=\int_{L_{i}}2xy\dx+x^{2}\dy
+\]
+其中$L_{i}$如右图所示．
+\end{example}
+\vspace{2em}
+\column{6.5cm}
+\begin{tikzpicture}[thick,font=\small,scale=4]
+%coordinates 
+\draw[-stealth,gray] (0,0)--(1.2,0) node[right] {$x$};
+\draw[-stealth,gray] (0,0)--(0,1.0) node[left] {$y$}; 
+\node[below left] at(0,0) {$o$};
+%curve 
+%curve L2 
+\draw[thick,accent5,decoration={markings, mark=at position 0.5 with {\arrow{stealth}}},postaction={decorate}]
+    plot[variable=\t,domain=0:1,smooth] ({\t*\t},\t);
+\node[thick,accent5,left=5pt] at({0.9^2},0.9) {$L_2:x=y^2$};
+%curve L3 
+\draw[thick,accent4,decoration={markings, mark=at position 0.5 with {\arrow{stealth}}},postaction={decorate}]
+    (0,0)--(1,0);
+\draw[thick,accent4,decoration={markings, mark=at position 0.4 with {\arrow{stealth}}},postaction={decorate}]
+    (1,0)--(1,1);
+\node[thick,accent4,right=-1pt] at(1,0.35) {$L_3$};
+\node[below] at(1,0) {$A(1,0)$};
+\node[right] at(1,1) {$B(1,1)$};
+%curve L1 
+\draw[thick,blue,decoration={markings, mark=at position 0.5 with {\arrow{stealth}}},postaction={decorate}] plot[variable=\t,domain=0:1,smooth] (\t,{\t*\t});
+\node[thick,blue,right=-1pt] at(0.85,{0.85^2}) {$L_1:y=x^2$};
+\end{tikzpicture} 
+\end{columns}
+\stext{\vspace{-1.5em}
+\onslide<2->{\begin{solution}\smark
+\begin{align*}
+ \uncover<3->{I_{1}}&\uncover<3->{=\!\int_{0}^{1}\!\bigg[2x\cdot x^{2}+x^2\cdot(x^2)'\bigg]\!\dx}
+ \uncover<4->{=4\!\int_0^1\! x^{3}\dx}
+ \uncover<5->{=1}\\
+ \uncover<6->{I_{2}}&\uncover<6->{=\!\int_{0}^{1}\!\bigg[2y^2\cdot y\cdot(y^2)'+(y^2)^2\bigg]\!\dy}
+ \uncover<7->{=5\!\int_0^1\! y^4\dy}
+ \uncover<8->{=1}
+\end{align*}\end{solution}}}
+\end{frame}
+
+\begin{sframe}
+\begin{columns}[onlytextwidth,c]
+\column{5.5cm}
+\addtocounter{example}{-1}
+\begin{example}
+计算
+\[
+I_{i}=\int_{L_{i}}2xy\dx+x^{2}\dy
+\]
+其中$L_{i}$如右图所示．
+\end{example}
+\vspace{2.5em}
+\column{6.5cm}
+\begin{tikzpicture}[thick,font=\small,scale=4]
+%coordinates 
+\draw[-stealth,gray] (0,0)--(1.2,0) node[right] {$x$};
+\draw[-stealth,gray] (0,0)--(0,1.0) node[left] {$y$}; 
+\node[below left] at(0,0) {$o$};
+%curve 
+%curve L2 
+\draw[thick,accent5,decoration={markings, mark=at position 0.5 with {\arrow{stealth}}},postaction={decorate}]
+    plot[variable=\t,domain=0:1,smooth] ({\t*\t},\t);
+\node[thick,accent5,left=5pt] at({0.9^2},0.9) {$L_2:x=y^2$};
+%curve L3 
+\draw[thick,accent4,decoration={markings, mark=at position 0.5 with {\arrow{stealth}}},postaction={decorate}]
+    (0,0)--(1,0);
+\draw[thick,accent4,decoration={markings, mark=at position 0.4 with {\arrow{stealth}}},postaction={decorate}]
+    (1,0)--(1,1);
+\node[thick,accent4,right=-1pt] at(1,0.35) {$L_3$};
+\node[below] at(1,0) {$A(1,0)$};
+\node[right] at(1,1) {$B(1,1)$};
+%curve L1 
+\draw[thick,blue,decoration={markings, mark=at position 0.5 with {\arrow{stealth}}},postaction={decorate}] plot[variable=\t,domain=0:1,smooth] (\t,{\t*\t});
+\node[thick,blue,right=-1pt] at(0.85,{0.85^2}) {$L_1:y=x^2$};
+\end{tikzpicture} 
+\end{columns}
+\vspace{-2.5em}
+\begin{solution}
+\begin{align*}
+&I_3\uncover<2->{=\int_{OA}(2xy\dx+x^{2}\dy)+\int_{AB}^{\vphantom{\big|}}(2xy\dx+x^{2}\dy)}\\
+&\uncover<3->{\!=\int_{0}^{1}\bigg[2x\cdot0+x^{2}\cdot0'\bigg]\dx+}
+ \uncover<4->{\int_{0}^{1}\bigg[2y\cdot1'+1^{2}\bigg]\dy}\\
+&\uncover<5->{\!=1.}
+\end{align*}
+\end{solution}
+\end{sframe}
+
+\begin{frame}
+\frametitle{第二类曲线积分：空间曲线}
+设空间有向曲线弧$\Gamma$的参数方程是
+$$x=\phi(t),\ y=\psi(t),\ z=\zeta(t)\quad (t:a\rightarrowtail b)$$
+\pause 则有
+\setlength{\fboxsep}{3pt}\cbold
+\begin{align*}
+ &\int_{L}P(x,y,z)\dx+Q(x,y,z)\dy+R(x,y,z)\dz \\
+=&\int_a^b\Big\{P\big(\phi(t),\psi(t),\zeta(t)\big)\cdot
+       \only<2|handout:0>{\boxed{\phantom{\phi'(t)}}}\only<3->{\phi'(t)} \\
+ &\hspace{4em} +Q\big(\phi(t),\psi(t),\zeta(t)\big)\cdot
+       \only<2|handout:0>{\boxed{\phantom{\psi'(t)}}}\only<3->{\psi'(t)} \\
+ &\hspace{6em} +R\big(\phi(t),\psi(t),\zeta(t)\big)\cdot
+       \only<2|handout:0>{\boxed{\phantom{\zeta'(t)}}}\only<3->{\zeta'(t)}\Big\}\dt
+\end{align*}
+\end{frame}
+
+\begin{frame}
+\frametitle{第二类曲线积分：空间曲线}
+\begin{example}
+计算$\int_\Gamma x^3\dx+3zy^2\dy-x^2y\dz$，其中$\Gamma$是从点
+$A(3,2,1)$到点$B(0,0,0)$的直线段$AB$．
+\end{example}
+\end{frame}
+
+\subsection{两类曲线积分的联系}
+
+\begin{frame}
+\frametitle{两类曲线积分的联系}
+设有向曲线弧$L$的参数方程为
+$$x=\phi(t),\ y=\psi(t),\quad \text{$t$从$a$到$b$},\ \bold{a<b}.$$
+则有
+\begin{align*}
+ &\bold{\int_L P\dx+Q\dy} = \int_a^b \big[P\phi'(t)+Q\psi'(t)\big]\dt \\
+=&\int_a^b\left[\frac{P\cdot\phi'}{\sqrt{\phi'^2+\psi'^2}}
+             +\frac{Q\psi'}{\sqrt{\phi'^2+\psi'^2}}\right]\cdot\sqrt{\phi'^2+\psi'^2}\dt \\
+=&\bold{\int_L\big(P\cos\alpha+Q\cos\beta\big)\ds}
+\end{align*}
+\end{frame}
+
+\mybookmark{复习与提高}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+求$I=\int_{\Gamma}(z-y)\dx+(x-z)\dy+(x-y)\dz$，其中$\Gamma$是柱面
+$x^{2}+y^{2}=1$和平面$x-y+z=2$的交线，从$z$ 轴正向看为顺时针方向．
+\end{puzzle}
+\stext{\vpause
+\begin{solution}\smark
+$\Gamma$的参数方程为
+\[ \begin{cases}
+  x = \cos t \\
+  y = \sin t \\
+  z = 2 - \cos t + \sin t
+\end{cases}(t:2\pi\rightarrowtail 0) \]
+注意$\Gamma$的方向，以确定参数的正确上下限．$I=-2\pi$．
+\end{solution}}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+将积分$\int_{L}P(x,y)\dx+Q(x,y)\dy$化为对弧长的曲线积分，
+其中$L$沿上半圆周$x^{2}+y^{2}-2x=0$从$O(0,0)$到$B(2,0)$．
+\end{puzzle}
+\stext{\pause
+\begin{solution}[习题第7题]\smark
+上半圆周为$y=\sqrt{2x-x^2}$，且曲线方向与$x$增加方向一致．将切向量\vspace{-0.2em}
+$$\left(1,y'_x\right)=\left(1,\tfrac{1-x}{\sqrt{2x-x^2}}\right)$$\vskip-0.5em
+单位化，得到$(\cos\alpha,\cos\beta) = (\sqrt{2x-x^2},1-x)$．
+\end{solution}
+\pause
+\begin{remark*}
+若选取参数方程为$x=1+\cos t$，$y=\sin t$（$t:\pi\rightarrowtail0$），
+则要注意有向曲线弧的切向量方向．
+\end{remark*}}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{choice}%[2007数学一]
+设$f(x,y)$有连续偏导数，曲线$C:f(x,y)=1$过第二象限点$M$和第四象限点$N$，
+$L$为$C$上从点$M$到点$N$的一段弧，则下列积分\CJKunderdot{小于零}的是\dotfill(\select{B})
+\begin{choiceline}
+  \item $\int_{L}f(x,y)\dx$
+  \item $\int_{L}f(x,y)\dy$
+  \item $\int_{L}f(x,y)\ds$
+  \item $\int_{L}f'_x(x,y)\dx+f'_y(x,y)\dy$
+\end{choiceline}
+\end{choice}
+\end{frame}
+
+\begin{sframe}
+\frametitle{复习与提高}
+\begin{solution}
+以$f(x,y)=x^2+y^2$为例，先画图并计算．
+\begin{choiceline}
+  \item $\int_{L}f(x,y)\dx=\int_L 1\dx = x_N-x_M>0$
+  \item $\int_{L}f(x,y)\dy=\int_L 1\dy = y_N-y_M<0$
+  \item $\int_{L}f(x,y)\ds=\int_L 1\ds = \text{Length}(s) > 0$
+  \item $\int_{L}f'_x(x,y)\dx+f'_y(x,y)\dy = \int_L 0 = 0$
+\end{choiceline}
+其中在$L$上有$f'_x(x,y)\dx+f'_y(x,y)\dy=\d(f(x,y))\allowbreak=\d(1)=0$.
+\end{solution}
+\end{sframe}
+
+\end{document}

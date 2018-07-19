@@ -1,0 +1,354 @@
+% -*- coding: utf-8 -*-
+% !TEX program = xelatex
+
+\documentclass[14pt,notheorems,leqno,xcolor={rgb}]{beamer} % ignorenonframetext
+
+\input{../common/theme.sty}
+\input{../common/share.sty}
+\input{../common/local.sty}
+
+\begin{document}
+
+\setbeamerfont{title}{size=\Huge}
+
+\occasion{高等数学课程}
+\title{补充：连续性理论}
+\author{\href{https://lvjr.bitbucket.io}{吕荐瑞}}
+\institute{暨南大学数学系}
+
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+\section{实数的连续性}
+
+\begin{frame}
+\frametitle{实数集}
+\begin{problem*}
+$\bold{\mathbb{R}}$ 与$\mathbb{Z}$、$\mathbb{C}$、$\mathbb{Q}$分别有何区别？
+\end{problem*}
+\pause
+\begin{enumerate}[<+->]
+  \item 运算性：$\mathbb{R}$ 与 $\mathbb{Z}$ 的区别
+  \item 顺序性：$\mathbb{R}$ 与 $\mathbb{C}$ 的区别
+  \item 连续性：$\mathbb{R}$ 与 $\mathbb{Q}$ 的区别
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{实数集}
+\begin{definition*}
+实数集$\mathbb{R}$是包含$0$和$1$且满足下列三种性质的数集：
+\begin{enumerate}
+\item 运算性：任何两个实数作四则运算后还是实数，而且四则运算还满足交换律、结合律、分配律等运算定律．
+\item 顺序性：任何两个实数都可以比较大小，而且当 $x>0$, $y>0$ 时总有 $x+y>0$ 和 $xy>0$．
+\item 连续性：实数集满足\bold{确界原理}，即有上界（下界）的非空子集必有最小上界（最大下界）．
+\end{enumerate}
+\end{definition*}
+\end{frame}
+
+\begin{frame}
+\frametitle{确界原理}
+%\begin{definition}
+对于$\mathbb{R}$的非空子集$A$，如果对每个$x\in A$，都满足$x\le m$，
+则称$m$为 $A$的一个\bold{上界}．\ppause
+如果$m$是$A$的一个上界，而且任何小于$m$的数都不是$A$的上界，
+则称$m$为$A$的\bold{最小上界}，记为$\bold{\sup A}$．
+\ppause\vfill\hrule\vfill
+对于$\mathbb{R}$的非空子集$A$，如果对每个$x\in A$，都满足$x\ge m$，
+则称$m$为 $A$的一个\bold{下界}．\ppause
+如果$m$是$A$ 的一个下界，而且任何大于$m$的数都不是$A$ 的下界，
+则称$m$为$A$的\bold{最大下界}，记为$\bold{\inf A}$．
+%\end{definition}
+\end{frame}
+
+\begin{frame}
+\frametitle{确界原理}
+下面是确界原理的一些例子：
+\begin{enumerate}[<+->]
+  \item 若$A=\{1,2,3\}$，则$\sup A=3$。
+  \item 若$A=\{\frac12,\frac23,\frac34,\frac45,\cdots\}$，则$\sup A=1$。
+  \item 若$A=\{1,2,3,4,5,\cdots\}$，则$\sup A$不存在。
+  \item 若$A=\{x\,|\,0<x<1 \}$，则$\sup A=1$。
+  \item 若$A=\{x\,|\,x^2<2 \}$，则$\sup A=\sqrt2$。
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{确界原理}
+实数集$\mathbb{R}$满足确界原理：\pause 当全集为$\mathbb{R}$时，
+\begin{itemize}
+  \item $\{x \mid x^2<2\}$由所有平方小于$2$的实数组成，\pause
+  \item 它有最小上界$\sqrt2$。
+\end{itemize}
+\vpause
+有理数集$\mathbb{Q}$ \warn{不满足}确界原理：\pause 当全集为$\mathbb{Q}$时，
+\begin{itemize}
+  \item $\{x \mid x^2<2\}$由所有平方小于$2$的有理数组成，\pause
+  \item 它有上界$2$，但没有最小上界（因为$\sqrt2\notin\mathbb{Q}$）。
+\end{itemize}
+%\vpause
+%整数集$\mathbb{Z}$满足确界原理：\pause 当全集为$\mathbb{Z}$时，
+%\begin{itemize}
+%  \item $\{x \mid x^2<2\}$ 等于 $\{-1, 0, 1\}$，\pause
+%  \item 它有最小上界$1$。
+%\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{确界原理}
+\begin{example*}
+求数集$A=\{x\,|\,x^3+x<1 \}$的最小上界。
+\end{example*}
+\pause
+\begin{itemize}[<+->]
+  \item $1$为上界，$\warn{0}$不为上界
+  \item $0.7$为上界，$0\warn{.6}$不为上界
+  \item $0.69$为上界，$0.6\warn{8}$不为上界
+  \item $0.683$为上界，$0.68\warn{2}$不为上界
+  \item $0.6824$为上界，$0.682\warn{3}$不为上界
+  \item $0.68233$为上界，$0.6823\warn{2}$不为上界
+  \item $0.682328$为上界，$0.68232\warn{7}$不为上界
+\end{itemize}
+\onslide<+->{最小上界为$\warn{0.682327803828019327369483\cdots}$}
+\end{frame}
+
+\begin{rframe}
+\frametitle{确界原理}
+实际上，$A$的最小上界可以表示为
+\[m=\sqrt[3]{\frac{9+\sqrt{93}}{18}}-\sqrt[3]{\frac{2}{3(9+\sqrt{93})}}\]
+\end{rframe}
+
+\begin{frame}
+\frametitle{极限存在准则II}
+\begin{theorem*}[极限存在准则II]
+单调且有界的数列必定收敛．\pause\unskip
+\begin{enumerate}
+  \item 单调\bold{增加}且有\bold{上界}的数列必定收敛。
+  \item 单调\bold{减少}且有\bold{下界}的数列必定收敛。
+\end{enumerate}
+\end{theorem*}
+\pause
+\begin{proof}
+设数列 $\{x_n\}$ 单调增加而且有上界．由确界原理，集合 $\{x_n\}$ 有最小上界 $a$．我们断言该数列收敛于 $a$．
+实际上，对于任何 $\epsilon>0$, 由于 $a$ 为最小上界，$a-\epsilon$ 不是集合 $\{x_n\}$ 的上界．所以总存在 $N$，
+使得 $x_N > a-\epsilon$．再由数列是单调增加的，我们知道当 $n>N$ 时也有 $x_n > a-\epsilon$，从而
+$ |x_n-a| < \epsilon$．这样就证明了我们的断言．
+\end{proof}
+\pause
+\begin{remark*}
+单调增加有上界数列满足$\sup\{x_n\}=\limit_{n\to\infty}x_n$。
+\end{remark*}
+\end{frame}
+
+\section{指数函数的连续性}
+
+\begin{frame}
+\frametitle{指数函数的连续性}
+\begin{example*}
+$\limit_{n\to\infty}a^{\frac1n}=1$.
+\end{example*}
+\pause
+\begin{proof}
+假设$a>1$．令 $x_n=a^{\frac1n}-1$, 则 $a=(x_n+1)^n\ge1+nx_n$.
+即$x_n\le\frac{a-1}n$．$\forall \epsilon>0$, 取 $N=\frac{a-1}{\epsilon}$，则当$n>N$时有
+$$|x_n-0|=x_n\le\frac{a-1}{n}<\epsilon$$
+故 $\limit_{n\to\infty} x_n =0$, 即 $\limit_{n\to\infty}a^{\frac1n}=1$.
+如果$0<a<1$，我们可以由$(\frac1a)^{\frac1n}=\frac1{a^{1/n}}$ 和极限的运算法则得到结果．
+\end{proof}
+\end{frame}
+
+\begin{frame}
+\frametitle{指数函数的连续性}
+\begin{example*}
+证明$\limit_{x\to0}a^x=1$.
+\end{example*}
+\pause
+\begin{proof}
+我们只证明 $a>1$ 的情形，$0<a<1$ 的情形类似．\par
+$\forall \epsilon>0$, 由 $\limit_{n\to\infty}a^{\frac1n}=1$ 知道，
+$\exists N_1>0$ 使得当 $n>N_1$ 时有 $|a^{\frac1n}-1|<\epsilon$。
+因此，当 $0<x<\frac1{N_1}$ 有
+\[a^x-1<a^{\frac{1}{N_1}}-1<\epsilon.\]
+\end{proof}
+\end{frame}
+
+\begin{frame}
+\frametitle{指数函数的连续性}
+\begin{proof}[证明(续)]
+类似地，由 $\limit_{n\to\infty}(\frac1a)^{\frac1n}=\limit_{n\to\infty}a^{-\frac1n}=1$ 知道，
+$\exists N_2>0$ 使得当 $n>N_2$ 时有 $|a^{-\frac1n}-1|<\epsilon$. 
+因此，当 $-\frac1{N_2}<x<0$ 有
+\[a^x-1>a^{-\frac{1}{N_2}}-1>-\epsilon.\]
+\par
+取 $\delta=\min\{\frac1{N_1},\frac1{N_2}\}$，则当$|x-0|<\delta$时有
+\[|a^x-1|<\epsilon.\]
+从而 $\limit_{x\to0}a^x=1$.
+\end{proof}
+\end{frame}
+
+\begin{frame}
+\frametitle{指数函数的连续性}
+\begin{example*}
+证明$\limit_{x\to x_0}a^x= a^{x_0}$.
+\end{example*}
+\pause
+\begin{proof}
+由$a^x=a^{x_0}\cdot a^{x-x_0}$，根据极限的四则运算法则知道
+\[\lim_{x\to x_0}a^x=\lim_{x\to x_0}a^{x_0}\lim_{x\to x_0}a^{x-x_0}=a^{x_0}\lim_{t\to 0}a^t=a^{x_0},\]
+这样就证明了指数函数的连续性．
+\end{proof}
+\end{frame}
+
+\section{三角函数的连续性}
+
+\begin{frame}
+\frametitle{三角函数的连续性}
+\begin{example*}
+证明 $\limit_{x\to x_0}\sin x= \sin x_0$
+\end{example*}
+\pause
+\begin{proof}
+前面已经知道 $\sin x < x$（$0<x<\frac{\pi}{2}$），从而$|\sin x| < |x|$（$0<|x|<\frac{\pi}{2}$）。
+\ppause
+$\forall\epsilon>0$，取$\delta=\epsilon$，则当$0<|x-x_0|<\delta$时，有
+\begin{align*}
+  |\sin x - \sin x_0| &= \left| 2\sin\frac{x-x_0}2\cos\frac{x+x_0}{2} \right|\\
+  &\le 2 \left| \sin\frac{x-x_0}2 \right| \le 2 \left| \frac{x-x_0}2 \right| < \epsilon
+\end{align*}
+这就证明了正弦函数的连续性。
+\end{proof}
+\end{frame}
+
+\section{反函数的连续性}
+
+\begin{frame}
+\frametitle{反函数的连续性}
+\begin{theorem*}
+设$y=f(x)$ 在区间 $I_x$ 上单调增加（减少）且连续，
+则它的反函数 $x=f^{-1}(y)$  也是单调增加（减少）且连续的。
+\end{theorem*}
+\pause%\small
+\begin{proof}
+我们只证明反函数的连续性．也就是说，任取 $y_0\in I_y$，我们要证明
+$\limit_{y\to y_0}f^{-1}(y)=f^{-1}(y_0). $
+\ppause
+事实上，对任何 $\epsilon>0$，令$y_1=f(x_0-\epsilon)$, $y_2=f(x_0+\epsilon)$，则由反函数的单调性，知道当$y_1<y<y_2$时有
+$x_0-\epsilon<x<x_0+\epsilon$，即 $|x-x_0|=|f^{-1}(y)-f^{-1}(y_0)|<\epsilon$．取$\delta=\min\{y-y_1, y_2-y\}$，即可得到
+反函数$f^{-1}(y)$在点$y_0$的连续性．
+\end{proof}
+\end{frame}
+
+\section{初等函数的连续性}
+
+\begin{frame}
+\frametitle{初等函数的连续性}
+首先说明基本初等函数的连续性：
+\begin{itemize}
+  \item $y=c$连续
+  \item $y=\sin x$连续 $\Longrightarrow$ $y=\arcsin x$连续
+  \item $y=a^x$连续 $\Longrightarrow$ $y=\log_a x$连续
+  \item $y=x^\mu = a^{\mu\log_a x}$ 连续
+\end{itemize}
+再利用四则运算和复合运算的连续性，就得到初等函数的连续性。
+\end{frame}
+
+\section{闭区间上的连续函数}
+
+\begin{frame}%[plain]
+\frametitle{有界性定理}
+\small
+\begin{lemma*}
+设函数 $f(x)$ 在点 $x_0$ 处连续，则存在$\delta>0$，使得它在邻域 $(x-\delta,x+\delta)$ 内有界．
+\end{lemma*}
+%\begin{proof}
+%类似于函数极限的局部有界性，作为练习．
+%\end{proof}
+\pause
+\begin{theorem*}
+闭区间$[a,b]$上的连续函数$f(x)$在该区间上有界．
+\end{theorem*}
+\pause
+\begin{proof}
+设$S=\{x\ |\ a\le x \le b\ \text{而且}\ f(x)\ \text{在}\ [a,x]\ \text{有上界}\}$，
+则集合$S$非空而且有上界，由确界原理知$S$有最小上界$c$．
+\par
+我们先证明$c=b$．用反证法，假设 $c<b$，则由知道存在$\delta>0$使得$f(x)$在$(c-\delta,c+\delta)$内有界．
+由$c$ 为最小上界知道，存在$x_1\in S$使得$c-\delta<x_1<c$．这说明$f(x)$在$[a,x_1]$有上界．
+再任取$x_2$使得$c<x_2<c+\delta$，则$f(x)$在$[x_1,x_2]$有上界，从而$f(x)$在$[a,x_2]$有上界，
+即$x_2\in S$ 而且 $c<x_2$．这与$c$为上界矛盾，因此我们有$c=b$．
+\end{proof}
+\end{frame}
+
+\begin{frame}
+\frametitle{有界性定理}
+\small
+\begin{proof}[证明(续)]
+$f(x)$在$a$点连续说明$f(x)$在某个右邻域$[a,a+\delta_1)$上有界，因此$c>a$，从而上面的论述中的$\delta$是存在的．
+而$f(x)$在$b$点连续说明$f(x)$在某个左邻域$(b-\delta_2,b]$上有界，
+而由$S$的最小上界为$b$已经知道$f(x)$在$[a,b-\delta_2]$上有上界，从而$f(x)$在$[a.b]$上有上界．
+\par
+类似地，可以证明$f(x)$在$[a.b]$上有下界．
+\end{proof}
+\end{frame}
+
+\begin{frame}
+\frametitle{最值定理}
+\small
+\begin{theorem*}
+闭区间$[a,b]$上的连续函数$f(x)$在该区间上一定能取到最大值$M$和最小值$m$．
+\end{theorem*}
+\pause
+\begin{proof}
+已经知道$f(x)$在$[a,b]$上是有界的．令$S=\{f(x)|x\in[a.b]\}$，则由确界原理知道$S$有最小上界$M$．
+假设$f(x)$取不到值$M$，则对任何$x\in[a,b]$，恒有$f(x)<M$．
+\par
+令$g(x)=\dfrac1{M-f(x)}$，则$g(x)$在$[a,b]$上也是连续的，从而有上界$N>0$，使得 $g(x)\le N$．这等价于
+$f(x)\le M-\dfrac1N$，从而和$M$为最小上界矛盾．因此，$f(x)$在$[a,b]$上可以取到最大值$M$．
+\par
+类似地，可以证明$f(x)$在$[a,b]$上可以取到最小值$m$．
+\end{proof}
+\end{frame}
+
+\begin{frame}
+\frametitle{零值定理}
+\small
+\begin{theorem*}
+设$f(x)$在闭区间$[a,b]$上连续，且$f(a)$和$f(b)$异号，则在开区间$(a,b)$内至少存在一点$\xi$，使得$f(\xi)=0$.
+\end{theorem*}
+\pause
+\begin{proof}
+不妨设$f(a)<0<f(b)$．令$S=\{x\,|\,x\in[a,b], f(x)<0\}$，则由确界原理，集合$S$有最小上界$c$．我们断言$f(c)=0$．
+\par
+如果$f(c)<0$，由函数极限的局部保号性，存在$\delta>0$，使得当$x\in(c-\delta,c+\delta)$时总有$f(x)<0$．此时就有
+$c+\delta/2\in S$．这与$c$为上界矛盾．
+\par
+如果$f(c)>0$，有函数极限的局部保号性，存在$\delta>0$，使得当$x\in(c-\delta,c+\delta)$时总有$f(x)>0$．此时$S$ 就
+有比$c$更小的上界$c-\delta/2$．这与$c$为最小上界矛盾．
+\end{proof}
+\end{frame}
+
+\begin{frame}
+\frametitle{介值定理}
+\small
+\begin{theorem*}
+设$f(x)$在闭区间$[a,b]$上连续，且$f(a)=A$和$f(b)=B$不相等，则对于$A$与$B$之间的任何数$C$，
+在开区间$(a,b)$内至少存在一点$\xi$，使得$f(\xi)=C$.
+\end{theorem*}
+\pause
+\begin{corollary*}
+设$f(x)$是在区间$(a,b)$上单调增加的连续函数，
+$A=\limit_{x\to a^+}f(x)$，$B=\lim\limits_{x\to b^-}f(x)$，
+则该函数的值域为区间 $(A,B)$．
+\end{corollary*}
+\vpause
+\begin{remark}
+如果函数的定义区间为闭区间或无穷区间，或者函数单调减少，此推论作相应修改后仍然成立．
+\end{remark}
+\vpause
+\begin{remark}
+利用这个推论，我们才可以说明指数函数$a^x$的值域，即对数函数$\log_ax$的定义域确实为$(0,+\infty)$。
+\end{remark}
+\end{frame}
+
+\end{document}

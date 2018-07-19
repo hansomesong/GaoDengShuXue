@@ -1,0 +1,159 @@
+% -*- coding: utf-8 -*-
+% !TEX program = xelatex
+
+%\documentclass[14pt]{article}
+%\usepackage[notheorems]{beamerarticle}
+
+\documentclass[14pt,notheorems,leqno,xcolor={rgb}]{beamer} % ignorenonframetext
+
+\input{../common/theme.sty}
+\input{../common/share.sty}
+\input{../common/local.sty}
+
+\occasion{高等数学第十一章}
+\title{第七节·斯托克斯公式}
+\author{\href{https://lvjr.bitbucket.io}{吕荐瑞}}
+\institute{暨南大学数学系}
+\renewcommand<>{\section}[1]{\begin{frame}[plain]\titlepage\end{frame}}
+
+\makeatletter
+\beamer@tocsectionnumber=7\relax
+\setcounter{section}{7}
+\makeatother
+
+\begin{document}
+
+\section{斯托克斯公式}
+
+\begin{frame}
+\begin{theorem*}[斯托克斯公式]
+设$\Gamma$为分段光滑的空间有向闭曲线，$\Sigma$是以$\Gamma$为边界的分片光滑的有向曲面，
+函数$P(x,y,z)$，$Q(x,y,z)$，$R(x,y,z)$在曲面$\Sigma$连同边界$\Gamma$上具有一阶连续偏导数，则有
+\setlength{\multlinegap}{0pt}%
+\begin{multline*}
+\iint_{\Sigma}\left(\frac{\partial R}{\partial y}-\frac{\partial Q}{\partial z}\right)\dy\dz
+   +\left(\frac{\partial P}{\partial z}-\frac{\partial R}{\partial x}\right)\dz\dx \\
+   +\left(\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\right)\dx\dy \\
+=\oint_{\Gamma}P\dx+Q\dy+R\dz
+\end{multline*}
+其中$\Gamma$的正向与$\Sigma$的侧符合\CJKunderdot{右手规则}．
+\end{theorem*}
+\end{frame}
+
+\begin{frame}
+\frametitle{斯托克斯公式}
+利用行列式记号，斯托克斯公式可以写为
+\renewcommand{\arraystretch}{1.35}\narrowsep[6pt]%
+\begin{align*}
+&\oint_{\Gamma}P\dx+Q\dy+R\dz 
+= \iint_{\Sigma}\begin{vmatrix}
+   \dy\dz & \dz\dx & \dx\dy \\
+   \dfrac{\partial}{\partial x} & \dfrac{\partial}{\partial y} & \dfrac{\partial}{\partial z} \\
+   P & Q & R
+\end{vmatrix} \\[-.5em]
+&= \iint_{\Sigma}\begin{vmatrix}
+   \cos\alpha & \cos\beta & \cos\gamma \\
+   \dfrac{\partial}{\partial x} & \dfrac{\partial}{\partial y} & \dfrac{\partial}{\partial z} \\
+   P & Q & R
+\end{vmatrix}\dS
+\end{align*}
+\end{frame}
+
+\begin{frame}
+\begin{columns}[onlytextwidth,T]
+\column{70mm}
+\begin{example}
+用斯托克斯公式计算积分
+\[ \oint_{\Gamma}z\dx+x\dy+y\dz \]
+其中$\Gamma$由平面$x+y+z=1$被三个坐标面所截得．
+\end{example}
+\column{45mm}
+\hfill
+\begin{tikzpicture}[x=(215:2em/sqrt 2), y=(0:2em), z=(90:2em),
+                    inner sep=3pt,thick,font=\small,scale=2]
+%coordinates 
+\draw [-stealth,black!75] (0,0,0) -- (0,0,1.3) node [below right, font={\footnotesize}] {$z$}; 
+\draw [-stealth,black!75] (0,0,0) -- (0,1.3,0) node [above left, font={\footnotesize}] {$y$}; 
+\draw [-stealth,black!75] (0,0,0) -- (1.4,0,0) node [above=3pt, font={\footnotesize}] {$x$};
+%curve 
+\draw[-latex,blue,thick,postaction={decorate},
+      decoration={markings, mark=at position 0.16664 with {\arrow{stealth}}},
+      decoration={markings, mark=at position 0.5 with {\arrow{stealth}}},
+      decoration={markings, mark=at position 0.866664 with {\arrow{stealth}}}]
+    (1,0,0)--(0,1,0)--(0,0,1)--cycle;
+\node[below,accent1] at (1,0,0) {$1$};
+\node[below,accent1] at (0,1,0) {$1$};
+\node[left,accent1] at (0,0,1) {$1$};
+\node[below=3pt,accent1] at (0.5,0.5,0) {$\Gamma$};
+%surface 
+\fill[gray1,opacity=0.6] (1,0,0)--(0,1,0)--(0,0,1)--cycle;
+%normal 
+\draw[-latex,accent3,thick] ({1/3},{1/3},{1/3})--++(1,1,1) node[right] {$\vec{n}$};
+\end{tikzpicture}  
+\end{columns}
+\pause\vspace{-1.2em}
+\begin{solution}
+由斯托克斯公式有\newline
+$\begin{aligned}
+  \text{原式} & =\iint_{\Sigma}\dy\dz+\dz\dx+\dx\dy \\
+  & \onslide<3->{=\iint_{D_{yz}}\dy\dz + \iint_{D_{zx}}\dz\dx + \iint_{D_{xy}}\dx\dy} \\
+  & \onslide<4->{=\frac12 + \frac12 + \frac12}
+    \onslide<5->{=\frac32.}
+\end{aligned}$
+\end{solution}
+\end{frame}
+
+\mybookmark{复习与提高}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{columns}[onlytextwidth]
+\column{0.6\textwidth}
+\begin{puzzle}
+$\Gamma$为柱面$x^2+y^2=2y$与平面$y=z$的交线，从$z$轴正向看为顺时针，用斯托克斯公式求
+\[ I=\oint_\Gamma y^2\dx + xy\dy + xz\dz. \]
+\end{puzzle}
+\column{0.39\textwidth}
+\begin{tikzpicture}[thick]
+\draw[-stealth,thin] (0,0) -- (-1,-1) node[above] {$x$};
+\draw[-stealth,thin] (0,0) -- (3,0) node[below] {$y$};
+\draw[-stealth,thin] (0,0) -- (0,2.5) node[right] {$z$};
+\draw[fill=filler1] (0,0) arc (180:360:1.07 and 0.5) -- (2.14,0) -- (2.14,1.62) -- cycle;
+\draw[draw=accent1,fill=gray1,postaction={decorate},
+      decoration={markings, mark=at position 0.8 with {\arrowreversed[accent1,thick]{stealth}}}]
+     (0,0) to[bend right=110,looseness=0.8] (2,1.9) to[bend right=60,looseness=0.5] (0,0) -- cycle;
+\draw[densely dashed,thin] (0,0) -- (2.14,0);
+\draw[densely dashed,thin] (1.07,0) ellipse (1.07 and 0.5);
+\end{tikzpicture}
+\end{columns}
+\end{frame}
+
+\begin{sframe}
+设$\Sigma$为平面$z=y$上被$\Gamma$所围成椭圆域，且\CJKunderdot{取下侧}．
+\pause\let\displaystyle=\textstyle
+\begin{solution}[第一类曲面积分]
+$\Sigma$包含在平面$y=z$中，故其法线方向余弦\vspace{-0.5em}
+\[ \cos\alpha=0,\quad \cos\beta=\tfrac{\sqrt2}{2},\quad \cos\gamma=-\tfrac{\sqrt2}{2}. \]
+\pause 利用斯托克斯公式得
+\[ \textstyle I= \frac{\sqrt2}{2}\iint_\Sigma(y-z)\dS = \frac{\sqrt2}{2}\iint_\Sigma 0\dS = 0. \]
+\end{solution}
+\pause
+\begin{solution}[第二类曲面积分]
+利用斯托克斯公式得\setlength{\fboxsep}{4pt}%
+\begin{align*}
+  I &= \iint_{\Sigma}(-z\dz\dx -y\dx\dy) \\
+    &= \iint_{\Sigma}(-z\cdot(-1)-y)\dx\dy \quad\bold{\boxed{z'_y=1}} \\
+    &= \iint_{\Sigma}0\dx\dy = 0.
+\end{align*}
+\end{solution}
+%\begin{solution}[第二类曲面积分]
+%利用斯托克斯公式得\setlength{\fboxsep}{4pt}%
+%\begin{align*}
+%  I &= - \iint_\Sigma z\dz\dx - \iint_\Sigma y\dx\dy \\
+%    &= - \iint_{D_{zx}}z\dz\dx + \iint_{D_{xy}}y\dx\dy = 0.\quad\bold{\boxed{\text{对称性}}}
+%\end{align*}
+%其中$D_{zx}=\{x^2+z^2\le 2z\}$，$D_{xy}=\{x^2+y^2\le 2y\}$．
+%\end{solution}
+\end{sframe}
+
+\end{document}

@@ -1,0 +1,88 @@
+% -*- coding: utf-8 -*-
+% !TEX program = xelatex
+
+%\documentclass[14pt]{article}
+%\usepackage[notheorems]{beamerarticle}
+
+\documentclass[14pt,notheorems,leqno,xcolor={rgb}]{beamer} % ignorenonframetext
+
+% 用 subfiles 还是有问题，改用 docmute
+% \usepackage{subfiles}
+\usepackage{docmute}
+
+\input{../common/theme.sty}
+\input{../common/share.sty}
+\input{../common/local.sty}
+
+\begin{document}
+%\ifxetex\else\heiti\fi
+
+\setbeamerfont{title}{size=\Large}
+\setbeamertemplate{show sections in toc}[total]
+
+\occasion{高等数学课程}
+\title{第八章·空间解析几何与向量代数}
+\author{\href{https://lvjr.bitbucket.io}{吕荐瑞}}
+\institute{暨南大学数学系}
+
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+%\subfile{gdsx0801}
+%\subfile{gdsx0802}
+%\subfile{gdsx0803}
+%\subfile{gdsx0804}
+%\subfile{gdsx0805}
+%\subfile{gdsx0806}
+\input{gdsx0801}
+\input{gdsx0802}
+\input{gdsx0803}
+\input{gdsx0804}
+\input{gdsx0805}
+\input{gdsx0806}
+
+% http://blog.csdn.net/rumswell/article/details/8753460
+
+%\begin{frame}
+%  %\begin{center}
+%  \begin{animateinline}[%loop,poster=last,controls,
+%    begin={
+%    \begin{tikzpicture}[blue,scale=1,line width=2pt]
+%    \useasboundingbox[draw] (0,0)rectangle(4,4);
+%    },
+%    end={
+%     \end{tikzpicture}
+%     }
+%     ]{2}
+%
+%    \draw[->](0,0)--(1,1);\newframe
+%    \draw[->](0,0)--(2,2);\newframe
+%    \draw[->](0,0)--(3,3);\newframe
+%    \draw[->](0,0)--(4,4);
+%  \end{animateinline}
+%  %\end{center}
+%\end{frame}
+%
+%\newcommand{\plotsin}[2]{%
+% \draw[red,<->] plot[domain=#1:#2]
+%(\x,{sin(\x r)});
+%}
+%
+%\begin{frame}
+%绘制正弦函数的动画:\\
+%\begin{animateinline}[autoplay,palindrome,
+%     begin={\begin{tikzpicture}[scale=1,line width=1.5pt]
+%            \draw[line width=0.5pt,step=0.5,dashed,use as bounding box] (-4,-1.5)grid(4,1.5);
+%            \draw[->,blue] (-4,0)--(4,0) node[below left]{$x$};
+%            \draw[->,blue]  (0,-1.5)--(0,1.5)node[below left]{$y$}; },
+%     end={\end{tikzpicture}}]{10}
+%         \multiframe{20}{Rxa=-0.2+-0.2, Rxb=0.2+0.2}{%
+%         %Rxa=-0.2,-0.4,...,-4.0
+%         %Rxb=+0.2,+0.4,...,+4.0
+%         \plotsin{\Rxa}{\Rxb}%
+%    }%
+%\end{animateinline}
+%\end{frame}
+
+\end{document}

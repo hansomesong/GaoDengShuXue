@@ -1,0 +1,492 @@
+% -*- coding: utf-8 -*-
+% !TEX program = xelatex
+
+%\documentclass[14pt]{article}
+%\usepackage[notheorems]{beamerarticle}
+
+\documentclass[14pt,notheorems,leqno,xcolor={rgb}]{beamer} % ignorenonframetext
+
+\input{../common/theme.sty}
+\input{../common/share.sty}
+\input{../common/local.sty}
+
+\occasion{高等数学第十一章}
+\title{第一节·对弧长的曲线积分}
+\author{\href{https://lvjr.bitbucket.io}{吕荐瑞}}
+\institute{暨南大学数学系}
+\renewcommand<>{\section}[1]{\begin{frame}[plain]\titlepage\end{frame}}
+
+\setbeamerfont{title}{size=\Large}
+
+\makeatletter
+\beamer@tocsectionnumber=1\relax
+\setcounter{section}{1}
+\makeatother
+
+\begin{document}
+
+\section{对弧长的曲线积分}
+
+\subsection{概念与性质}
+
+\begin{frame}
+\frametitle{引例：曲线型构件的质量}
+\begin{problem*}
+设有曲线型构件$L$，其位置在$xy$平面内，两个端点是$A$和$B$,线密度为$f(x,y)$.
+计算此构件的质量．
+\end{problem*}
+\end{frame}
+
+\begin{frame}%<99>
+%\frametitle{对弧长的曲线积分}
+\begin{columns}[onlytextwidth]
+\column{65mm}
+\begin{tikzpicture}[thick,declare function={f(\x)=0.7*(\x-0.3)^2+0.2;},scale=3.2,font={\small}]
+%coordinates 
+\draw[-stealth,gray] (0,0)--(1.8,0) node[above,font={\scriptsize}] {$x$}; 
+\draw[-stealth,gray] (0,0)--(0,1.6) node[right,font={\scriptsize}] {$y$};
+%curve 
+\def\a{0.3}
+\def\b{1.7}
+\draw[variable=\t,domain=\a:\b,smooth] plot (\t,{f(\t)});
+\draw[fill] (\a,{f(\a)}) circle (0.5pt) node[left] {$A$}; 
+\draw[fill] (\b,{f(\b)}) circle (0.5pt) node[right] {$B$};
+\node at({\b-0.3},{f(\b-0.3)+0.5}) {$L$};
+%partition of curve
+\visible<2->{
+\draw[fill,blue] (0.5,{f(0.5)}) circle (0.4pt) node[below] {$M_1$}; 
+\draw[fill,blue] (0.7,{f(0.7)}) circle (0.4pt) node[below] {$M_2$}; 
+\draw[fill,blue] (0.9,{f(0.9)}) circle (0.4pt);
+\draw[fill,blue] (1.05,{f(1.05)}) circle (0.4pt);
+\draw[fill,blue] (1.2,{f(1.2)}) coordinate (p) circle (0.4pt) node[below right] {$M_{i-1}$};
+\draw[fill,blue] (1.33,{f(1.33)}) coordinate (q) circle (0.4pt) node[right] {$M_{i}$};
+\draw[fill,blue] (1.45,{f(1.45)}) circle (0.4pt);
+\draw[fill,blue] (1.55,{f(1.55)}) circle (0.4pt);
+\draw[fill,blue] (1.62,{f(1.62)}) circle (0.4pt) node[below right] {$M_{n-1}$};
+}
+%one piece
+\visible<3->{
+\draw[fill,red] (1.25,{f(1.25)}) circle (0.4pt) node[above left] {$(\xi_i,\eta_i)$};
+}
+\visible<4->{
+\draw[snake=brace,mirror snake,raise snake=3pt,red]
+    (p)--(q) node[pos=0.1,right=5pt] {$\Delta s_i$};
+}
+\end{tikzpicture}
+\column{55mm}
+\begin{itemize}
+  \item $L$在平面上分段光滑
+  \item $f(x,y)$在$L$上有界
+\end{itemize}
+\begin{itemize}
+  \item<2-> \warn{任意}划分$L=\bigcup\limits_i L_i$
+  \item<3-> \warn{任取}点$(\xi_{i},\eta_{i})\in L_i$
+\end{itemize}
+\end{columns}
+\uncover<9->{定义$f(x,y)$在$L$上的\bold{对弧长的曲线积分}}
+\[\uncover<5->{
+  \uncover<8->{\int_{L}f(x,y)\ds=}
+  \uncover<7->{\lim\limits_{\lambda\rightarrow0}}
+  \uncover<6->{\sum\limits_{i=1}^{n}}
+  f(\xi_{i},\eta_{i})\Delta s_{i}
+}\]
+\uncover<10->{其中$L$称为\bold{积分弧段}，$\d{s}$称为\bold{弧长元素}。}
+\end{frame}
+
+\begin{frame}
+\frametitle{对弧长的曲线积分}
+\begin{remark}
+对弧长的曲线积分又称为\bold{第一类曲线积分}．
+\end{remark}
+\vpause
+\begin{remark}
+对闭曲线$L$，记$\int_{L}f(x,y)\ds=\bold{\oint_{L}f(x,y)\ds}$．
+\end{remark}
+\vpause
+\begin{remark}
+若$L$是分段光滑曲线，$f(x,y)$在$L$上连续，则
+$\int_{L}f(x,y)\ds$存在。
+\end{remark}
+\vpause
+\begin{remark}
+$\bold{\int_{L}1\ds=\text{Length}(L)}$，即曲线弧$L$的长度．
+\end{remark}
+\end{frame}
+
+\begin{frame}
+\frametitle{对弧长的曲线积分的性质}
+\begin{property}[线性和]
+设$\alpha$和$\beta$为常数，则
+$$\int_{L}(\alpha f+\beta g)\ds=\alpha\int_{L}f\ds+\beta\int_{L}g\ds$$
+\end{property}
+\vpause
+\begin{property}[分段和]
+将积分弧段$L$分成$L_1$和$L_2$，则
+$$\int_{L}f(x,y)\ds=\int_{L_{1}}f(x,y)\ds+\int_{L_{2}}f(x,y)\ds$$
+\end{property}
+\vpause
+\begin{property}[保号性]
+若在$L$上$f(x,y)\geq g(x,y)$，则
+$$\int_{L}f(x,y)\ds \geq \int_{L}g(x,y)\ds$$
+\end{property}
+\end{frame}
+
+%\begin{frame}
+%\setbeamersize{description width=3em}
+%\begin{description}[<+->]%[一二三] % 加上此选项与上一行设置效果一样
+%  \item[线性和] $\int_{L}(\alpha f+\beta g)\d s=\alpha\int_{L}f\d s+\beta\int_{L}g\d s$
+%  \item[分段和] $\int_{L}f(x,y)\d s=\int_{L_{1}}f(x,y)\d s+\int_{L_{2}}f(x,y)\d s$
+%  \item[保号性] 若$f(x,y)\leq g(x,y)$，则$\int_{L}f\d s\leq\int_{L}g\d s$
+%\end{description}
+%\end{frame}
+
+\subsection{计算方法}
+
+\begin{frame}%<99>
+\frametitle{第一类曲线积分的计算}
+\begin{property*}
+设平面曲线$L$的参数方程为
+$\left\{\begin{array}{l}x=\phi(t)\\y=\psi(t)\end{array}\right.$，
+其中$a\le t\le b$，则弧长元素
+\[ \ds=\sqrt{\phi^{\prime}(t)^{2}+\psi^{\prime}(t)^{2}}\dt. \]
+\end{property*}
+\ppause\cdotfill
+$$\cbold
+\int_{L}f(x,y)\ds =\int_{a}^{b}f(\phi(t),\psi(t))\sqrt{\phi'(t)^{2}+\psi'(t)^{2}}\dt
+$$
+\end{frame}
+
+\begin{sframe}
+\frametitle{第一类曲线积分的计算}
+\begin{theorem*}
+设$f(x,y)$在曲线弧$L$上有定义且连续，$L$的参数方程为
+\[
+\left\{ \begin{array}{c}
+x=\phi(t),\\
+y=\psi(t)
+\end{array}(a\leq t\leq b),\right.
+\]
+$\phi'(t)$和$\psi'(t)$的导数连续，且$\phi'(t)^{2}+\psi'(t)^{2}\neq0$，则曲线积分存在，而且
+\[
+\int_{L}f(x,y)\ds=\int_{a}^{b}f[\phi(t),\psi(t)]\sqrt{\phi'(t)^{2}+\psi'(t)^{2}}\dt
+\]
+\end{theorem*}
+\end{sframe}
+
+\begin{frame}
+\frametitle{第一类曲线积分的计算}
+特别地，若曲线方程为$\bold{y=\psi(x)}$（$a\le x\le b$），则有
+\[
+\int_{L}f(x,y)\ds=\int_{a}^{b}f[x,\psi(x)]\sqrt{1+\psi'(x)^2}\dx
+\]
+\vspace{-1em}\pause\vfill\cdotfill\vfill
+若曲线方程为$\bold{x=\phi(y)}$（$a\le y\le b$），则有
+\[
+\int_{L}f(x,y)\ds=\int_{a}^{b}f[\phi(y),y]\sqrt{\phi'(y)^2+1}\dy
+\]
+\end{frame}
+
+\begin{frame}%<99>
+\begin{columns}[onlytextwidth]
+\column{80mm}
+\begin{example}
+求$\int_{L}y^{2}\ds$，其中$L$如右图．
+\end{example}
+\stext{\vspace{1em}%
+\uncover<2->{\begin{solution}\smark
+曲线$L$的参数方程可取为：
+\[
+\left\{\begin{array}{l}
+x=R\cos\theta \\ y=R\sin\theta
+\end{array}\right.\quad(-\alpha\leq\theta\leq\alpha)
+\]
+\end{solution}}}
+\column{40mm}
+\uncover<1->{\begin{tikzpicture}[scale=2,font={\small},thick]
+%coordinates 
+\draw[-stealth,gray] (-0.2,0)--(1.8,0) node[above left,font={\scriptsize}] {$x$}; 
+\draw[-stealth,gray] (0,-0.9)--(0,0.9) node[below left,font={\scriptsize}] {$y$}; 
+\node[below left,font={\scriptsize}] at(0,0) {$o$};
+% 
+\draw[densely dashed](0,0)--(45:1.3);
+\draw[densely dashed](0,0)--(-45:1.3); 
+\draw[thick,blue] (0:1.3) arc (0:45:1.3); 
+\draw[thick,blue] (0:1.3) arc (0:-45:1.3);
+\draw (0:0.3) arc (0:45:0.3);
+\node[right] at (30:0.3) {$\alpha$}; 
+\node[below right] at(0:1.3) {$R$}; 
+\node[right] at(30:1.3) {$L$};
+\end{tikzpicture}}
+\end{columns}
+\stext{\uncover<3->{$\begin{aligned}[T]&\text{原式} 
+ \uncover<3->{=\!\!\int_{-\alpha}^{\alpha}\!\!\!R^{2}\!\sin^{2}\!\theta}
+ \uncover<4->{\sqrt{\left[(R\cos\theta)'\right]^{2}\!+\!\left[(R\sin\theta)'\right]^{2}}\d\theta}\\
+&\uncover<5->{=\int_{-\alpha}^{\alpha}R^{2}\sin^{2}\theta\cdot R\d\theta}
+ \uncover<6->{=R^{3}\int_{-\alpha}^{\alpha}\frac{1}{2}\big(1-\cos2\theta\big)\d\theta}\\
+&\uncover<7->{=\frac{1}{2}R^{3}\Big(\theta-\frac{1}{2}\sin2\theta\Big)}
+ \uncover<8->{\bigg|_{-\alpha}^{\alpha}}
+ \uncover<9->{=R^{3}\Big(\alpha-\frac{1}{2}\sin 2\alpha\Big)}
+\end{aligned}$}}
+\end{frame}
+
+\begin{frame}
+\begin{columns}[onlytextwidth,\stext{T}]
+\column{60mm}
+\begin{example}
+计算$\int_{L}\sqrt{y}\ds$，其中$L$如右图所示．
+\end{example}
+\stext{\vspace{1em}
+\uncover<2->{\begin{solution}\smark
+曲线$L$的方程为：
+\[y=x^2\quad(0\leq x\leq1)\]
+\end{solution}}}
+\column{55mm}\hfill
+\begin{tikzpicture}[thick,font=\small,scale=3.5]
+%coordinates 
+\draw[-stealth,gray] (0,0)--(1.1,0) node[right] {$x$};
+\draw[-stealth,gray] (0,0)--(0,1.0) node[below left] {$y$};
+\node[below left] at(0,0) {$o$};
+%curve 
+\draw[thick,blue] plot[variable=\t,domain=0:1,smooth] (\t,{\t*\t});
+\draw[densely dashed] (1,1)--(1,0)node[below]{$1$};
+\node[right,blue] at(0.5,0.2) {$L:\:y=x^2$};
+\end{tikzpicture} 
+\end{columns}
+\stext{$\begin{aligned}
+&\uncover<3->{\text{原式}}
+ \uncover<3->{=\!\int_{0}^{1}\!\!\!\sqrt{x^{2}}}
+ \uncover<4->{\sqrt{1+[(x^2)']^2}\dx}
+ \uncover<5->{=\!\int_{0}^{1}\!\!x\sqrt{1\!+\!4x^2}\dx}\\
+&\uncover<6->{\!\xlongequal{u=1+4x^2}}
+ \uncover<7->{\!\!\int_{1}^{5}\!\!\sqrt{u}\cdot}
+ \uncover<8->{\frac{1}{8}\du}
+ \uncover<9->{=\frac{1}{8}\cdot\frac{2}{3}u^{\frac{3}{2}}}
+ \uncover<10->{\bigg|_{1}^{5}}
+ \uncover<11->{=\frac{1}{12}(5\!\sqrt{5}-1)}
+\end{aligned}$}
+\end{frame}
+
+%\subsection{空间曲线}
+
+\begin{frame}
+\frametitle{第一类曲线积分：空间曲线}
+\begin{columns}[onlytextwidth,T]
+\column{68mm}
+\onslide<2->{设空间曲线$L$的参数方程是
+$$\left\{\begin{array}{c}
+  x=\phi(t) \\ y=\psi(t) \\ z=\zeta(t)
+\end{array}\right.\ (a\leq t\leq b)$$}%
+\uncover<3->{则$\displaystyle\cbold\int_{L}f(x,y,z)\ds$}
+\column{52mm}
+\begin{tikzpicture}[x=(215:1cm/sqrt 2),y=(0:1cm),z=(90:1cm),scale=1,thick,font=\small]
+%coordinates 
+\draw[-stealth] (-1,0,0)--(2,0,0) node[left,font={\footnotesize}] {$x$};
+\draw[-stealth] (0,-2,0)--(0,2,0) node[right,font={\footnotesize}] {$y$};
+\draw[-stealth] (0,0,-1)--(0,0,3) node[left,font={\footnotesize}] {$z$};
+\draw[thick,blue] plot[variable=\t,domain=0:pi*3.5,smooth]
+    ({(0.01*\t*\t+1)*cos(\t r)},{(0.01*\t*\t+1)*sin(\t r)},{0.2*\t}); 
+\node at(0,2.5,2.5) {$L$};
+%\node[font=\normalsize] at(0,5,1.5) {$\int_{L}f(x,y,z)\ds$};
+\end{tikzpicture}
+\end{columns}
+\uncover<4->{$\displaystyle\cbold=\int_{a}^{b}\! f(\phi(t),\psi(t),\zeta(t))\sqrt{\phi'(t)^{2}\!+\!\psi'(t)^{2}\!+\!\zeta'(t)^{2}}\dt}$
+\end{frame}
+
+\begin{frame}
+\begin{columns}[onlytextwidth]
+\column{80mm}
+\begin{example}
+求$\int_{L}(x^{2}+y^{2}+z^{2})\ds$，其中$L$为螺旋线
+$$\left\{\begin{array}{l}
+x=a\cos t \\ y=a\sin t \\ z=bt
+\end{array}\right.\ (0\leq t\leq2\pi)$$
+\end{example}
+\column{40mm}
+\begin{tikzpicture}[x=(215:1cm/sqrt 2), y=(0:1cm), z=(90:1cm),scale=1]
+%coordinates 
+\draw[-stealth] (-1,0,0)--(2,0,0) node[above,font={\footnotesize}] {$x$};
+\draw[-stealth] (0,-1.5,0)--(0,2,0) node[right,font={\footnotesize}] {$y$};
+\draw[-stealth] (0,0,-0.9)--(0,0,3) node[below left,font={\footnotesize}] {$z$};
+\draw[thick,blue]
+  plot[variable=\t,domain=0:pi*2,smooth] ({cos(\t r)},{sin(\t r)},{0.2*\t}); 
+\draw[thin,gray]
+  plot[variable=\t,domain=pi*2:pi*4.5,smooth] ({cos(\t r)},{sin(\t r)},{0.2*\t}); 
+\node at(0,1.5,0.5) {$L$};
+\end{tikzpicture}
+\end{columns}
+\stext{\uncover<2->{\begin{solution}\smark
+$\uncover<2->{\int_{L}(x^{2}+y^{2}+z^{2})\ds}$\newline
+$\uncover<3->{\!=\int_{0}^{2\pi}\left[(a\cos t)^{2}+(a\sin t)^{2}+(bt)^{2}\right]\cdot}$\newline
+$\uncover<4->{\qquad\qquad\sqrt{\left[(a\cos t)'\right]^{2}\!+\!
+              \left[(a\sin t)'\right]^{2}\!+\!\left[(bt)^{\prime}\right]^{2}}\dt}$\par
+$\uncover<5->{\!=\int_{0}^{2\pi}\left[a^{2}+b^{2}t^{2}\right]\sqrt{a^{2}+b^{2}}\dt}
+ %\uncover<6->{\textstyle=\sqrt{a^{2}+b^{2}}\cdot\left(a^{2}t+\frac{1}{3}b^{2}t^{3}\right)\bigg|_{0}^{2\pi}}
+ $\par
+$\uncover<6->{\!=\frac{2}{3}\pi\sqrt{a^{2}+b^{2}}\cdot(3a^{2}+2b^{2}\pi^{2})}$
+\end{solution}}}
+\end{frame}
+
+\mybookmark{复习与提高}
+
+\begin{frame}%<99>
+\frametitle{复习与提高}
+\begin{review}
+计算$\int_{L}\e^{x+y}\ds$，其中$L$是直线$2x-y=2$在第四象限部分．
+\end{review}%
+\stext{\vpause\begin{columns}[onlytextwidth,T]
+\column{76mm}
+\begin{solution}
+\smark 直线方程是$y=2x-2$，则\par\vspace{0.5em}%
+$\!\!\begin{aligned}
+&\phantom{{}={}}\int_{L}\e^{x+y}\ds=\int_L\!\e^{3x-2}\ds \\
+&=\int_0^1\e^{3x-2}\sqrt{1^2+2^2}\dx \\
+&=\sqrt5\left[\frac13\e^{3x-2}\right]_{0}^1
+ =\frac{\sqrt5}{3}\left(\e-\e^{-2}\right)
+\end{aligned}$
+\end{solution}
+\column{48mm}
+\hfil\hfil
+\begin{tikzpicture}[scale=1.4,thick,font=\small]
+\draw[-stealth,gray] (-0.3,0)--(1.3,0) node[right] {$x$};
+\draw[-stealth,gray] (0,-2.2)--(0,0.3) node[left] {$y$};
+\node[below left] at(0,0) {$o$};
+\draw[thick,blue] (0,-2)--(1,0);
+\node[left] at(0,-2) {$-2$};
+\node[below] at(1,0) {$1$};
+\node[below right,color=accent1] at (0.3,-1.4) {$2x-y=2$};
+\end{tikzpicture}
+\end{columns}}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{property*}[奇偶对称性]
+设平面曲线$L$关于$x$轴对称
+\begin{columns}[onlytextwidth,T]
+\column{84mm}
+\begin{itemize}
+  \item<2-> 若$f(x,y)$关于$y$是奇函数，则%（即：$f(x,-y)=-f(x,y)$）
+  \[ \int_{L}f(x,y)\ds=0 \]
+  \item<3-> 若$f(x,y)$关于$y$是偶函数，则%（即：$f(x,-y)=f(x,y)$）
+  \[ \int_{L}f(x,y)\ds=2\int_{L_{1}}f(x,y)\ds \]
+\end{itemize}
+\column{44mm}
+%\begin{center} 
+\begin{tikzpicture}[thick,font=\small,scale=1]
+%coordinates 
+\draw[-stealth] (-0.4,0)--(3.1,0) node[below left]{$x$};
+\draw[-stealth] (0,-1.9)--(0,1.9) node[below left]{$y$};
+%curve
+\draw[accent4] (2.5,0) arc (0:180:1 and 2);
+\draw[accent2] (2.5,0) arc (0:-180:1 and 2);
+\node[right] at(2.4,1) {$L$};
+\node[below,accent1] at(0.5,2) {$L_1$};
+\node[above,accent3] at(0.5,-2) {$L_2$};
+%points 
+\draw[fill,color=accent1] (0.6,0.9) circle (0.8pt) node[right] {$(x,y)$}; 
+\draw[fill,color=accent3] (0.6,-0.9) circle (0.8pt) node[right] {$(x,-y)$};
+\end{tikzpicture} 
+%\end{center}
+\end{columns}
+\end{property*}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{property*}[奇偶对称性]
+设平面曲线$L$关于$y$轴对称
+\begin{columns}[onlytextwidth,T]
+\column{84mm}
+\begin{itemize}
+  \item<2-> 若$f(x,y)$关于$x$是奇函数，则%（即：$f(-x,y)=-f(x,y)$）
+  \[ \int_{L}f(x,y)\ds=0 \]
+  \item<3-> 若$f(x,y)$关于$x$是偶函数，则%（即：$f(-x,y)=f(x,y)$）
+  \[ \int_{L}f(x,y)\ds=2\int_{L_{1}}f(x,y)\ds \]
+\end{itemize}
+\column{44mm}
+%\begin{center} 
+\begin{tikzpicture}[thick,font=\small,scale=1]
+%coordinates 
+\draw[-stealth] (0.3,-2.2)--(2.8,-2.2) node[above left]{$x$};
+\draw[-stealth] (1.5,-2.4)--(1.5,2.4) node[below left]{$y$};
+%curve
+\draw[accent4] (1.5,2) arc (90:-90:1 and 2);
+\draw[accent2] (1.5,2) arc (90:270:1 and 2);
+\node[left] at(2.4,-1) {$L$};
+\node[below,accent1] at(2.5,2) {$L_1$};
+\node[below,accent3] at(0.5,2) {$L_2$};
+%points
+\draw[fill,color=accent1] (2.4,0.9) circle (0.8pt) node[below] {$(x,y)$};
+\draw[fill,color=accent3] (0.6,0.9) circle (0.8pt) node[below] {$(-x,y)$}; 
+\end{tikzpicture} 
+%\end{center}
+\end{columns}
+\end{property*}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{columns}[onlytextwidth]
+\column{76mm}
+\begin{puzzle}
+已知椭圆$L\;:\;\dfrac{x^2}{4}+\dfrac{y^2}{3}=1$的周长是$c$，计算
+\[ \int_{L}2xy+3x^2+4y^2\ds \]
+\end{puzzle}
+\column{52mm}
+\begin{center}
+\begin{tikzpicture}[thick,font=\small]
+\draw[-stealth] (-1.7,0)--(2,0) node[below left, inner sep=3pt] {$x$};
+\draw[-stealth] (0,-1.2)--(0,1.8) node[below left, inner sep=3pt] {$y$};
+\draw[thick,accent1] (0,0) ellipse (1.5 and 1);
+\node[below right,accent1] at(1.2,1) {$L$};
+\node[below left, inner sep=2pt] at(1.5,0) {$2$};
+\node[below left, inner sep=2pt] at(0,1) {$\sqrt{3}$};
+\end{tikzpicture} 
+\end{center}
+\end{columns}
+\stext{\vpause
+\begin{solution}\smark
+$\!\!\begin{aligned}[t]
+\text{原式} & =\int_{L}2xy\ds+\int_{L}12\left(\frac{x^2}{4}+\frac{y^2}{3}\right)\ds \\
+&=0+\int_{L}12\ds=12c.
+\end{aligned}$
+\end{solution}}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+计算$\oint_{\Gamma}x^2\ds$,其中$\Gamma$为球面$x^2+y^2+z^2=1$被平面$x+y+z=0$所截的圆周.
+\end{puzzle}
+\stext{\vpause
+\begin{method}\smark
+先将圆周的方程化成参数方程,然后利用公式进行计算.
+\end{method}
+\vpause
+\begin{method}\smark\let\displaystyle=\textstyle
+由对称性，有$\oint_{\Gamma}x^2\ds=\oint_{\Gamma}y^2\ds=\oint_{\Gamma}z^2\ds$.
+所以$\begin{aligned}[t]\oint_{\Gamma}x^{2}\ds&=\frac13\oint_{\Gamma}(x^2+y^2+z^2)\ds\\
+&=\frac13\oint_{\Gamma}1\ds=\frac13\cdot2\pi=\frac{2\pi}{3}\end{aligned}$\par
+其中由于平面过球心，所以圆周的半径为$1$．
+\end{method}}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+计算$I=\oint_{\Gamma}(x^{2}+y^{2}+z^{2})\ds$,其中$\Gamma$为球面
+$x^{2}+y^{2}+z^{2}=\frac{9}{2}$被平面$x+z=1$所截得的曲线. 
+\end{puzzle}
+\stext{\vpause
+\begin{solution}\smark
+可以利用参数方程来计算：
+\[ \begin{cases}
+  x = \frac12 + \sqrt2\cos\theta \\
+  y = 2\sin\theta \\
+  z = \frac12 - \sqrt2\cos\theta
+\end{cases}\]
+也可以仿照上题做法,只需用点到平面的距离公式求出$\Gamma$的半径为$2$，从而$I=\frac{9}{2}\cdot 4\pi=18\pi$.
+\end{solution}}
+\end{frame}
+
+\end{document}

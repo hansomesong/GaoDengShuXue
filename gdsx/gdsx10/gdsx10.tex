@@ -1,0 +1,39 @@
+% -*- coding: utf-8 -*-
+% !TEX program = xelatex
+
+%\documentclass[14pt]{article}
+%\usepackage[notheorems]{beamerarticle}
+
+\documentclass[14pt,notheorems,leqno,xcolor={rgb}]{beamer} % ignorenonframetext
+
+\input{../common/theme.sty}
+\input{../common/share.sty}
+\input{../common/local.sty}
+
+\usepackage{docmute}
+
+\begin{document}
+%\ifxetex\else\heiti\fi
+
+\occasion{高等数学课程}
+\title{第十章·重积分}
+\author{\href{https://lvjr.bitbucket.io}{吕荐瑞}}
+\institute{暨南大学数学系}
+
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+\input{gdsx1001}
+\input{gdsx1002}
+\ifligong
+\input{gdsx1003}
+\fi
+\makeatletter
+\beamer@tocsectionnumber=3\relax
+\setcounter{section}{3}
+\makeatother
+\input{gdsx1004}
+
+
+\end{document}

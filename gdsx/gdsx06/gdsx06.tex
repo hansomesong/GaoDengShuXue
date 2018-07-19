@@ -1,0 +1,332 @@
+% -*- coding: utf-8 -*-
+% !TEX program = xelatex
+
+%\documentclass[14pt]{article}
+%\usepackage[notheorems]{beamerarticle}
+
+\documentclass[14pt,notheorems,leqno,xcolor={rgb}]{beamer} % ignorenonframetext
+
+\input{../common/theme.sty}
+\input{../common/share.sty}
+\input{../common/local.sty}
+
+\begin{document}
+%\ifxetex\else\heiti\fi
+
+\occasion{高等数学课程}
+\title{第六章·定积分的应用}
+\author{\href{https://lvjr.bitbucket.io}{吕荐瑞}}
+\institute{暨南大学数学系}
+
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+\section{平面图形的面积}
+
+\subsection{直角坐标下的面积}
+
+\begin{frame}
+\frametitle{直角坐标下的面积}
+由曲线 $y=f(x)$, $x$轴，直线$x=a$ 以及直线 $x=b$  所围成的曲边梯形的面积为
+\[ A=\int_a^b |f(x)|\d x \]\pause
+由曲线 $x=f(y)$, $y$轴，直线$y=a$ 以及直线 $y=b$ 所围成的曲边梯形的面积为
+\[ A=\int_a^b |f(y)|\d y \]
+\end{frame}
+
+\begin{frame}
+\frametitle{计算面积的步骤}
+\pause
+\begin{enumerate}
+  \item 画出曲线草图\pause
+  \item 确定积分区间 \pause $\Longleftarrow$ 从曲线交点得到\pause
+  \item 确定被积函数 \pause $\Longleftarrow$ 从曲线方程得到\pause
+  \item 计算积分结果
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{直角坐标下的面积}
+\begin{example}
+求由直线$y=x+1$, $x$ 轴，$x=-2$ 和 $x=2$ 所围成的图形的面积。
+\end{example}
+\vpause
+\begin{exercise}
+求由曲线 $y=1-x^2$ 与 $x$ 轴所围成的图形的面积。
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\frametitle{直角坐标下的面积}
+由曲线 $y=f(x)$, $y=g(x)$，直线$x=a$ 以及直线 $x=b$ 所围成的图形的面积为
+\[ A=\int_a^b |f(x)-g(x)|\d x \]\pause
+由曲线 $x=f(y)$, $x=g(y)$，直线$y=a$ 以及直线 $y=b$ 所围成的图形的面积为
+\[ A=\int_a^b |f(y)-g(y)|\d y \]
+\end{frame}
+
+\begin{frame}
+\frametitle{直角坐标下的面积}
+\begin{example}
+求由抛物线 $y^2=x$ 和直线 $x=4$ 所围成的图形的面积。
+\end{example}
+\vpause
+\begin{exercise}
+求由抛物线 $y^2=x$ 和 $y^2=2-x$ 所围成的图形的面积。
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\frametitle{直角坐标下的面积}
+\begin{example}
+求椭圆$\dfrac{x^2}{a^2}+\dfrac{y^2}{b^2}=1$的面积。
+\end{example}
+\end{frame}
+
+\subsection{极坐标下的面积}
+
+\begin{frame}
+\frametitle{直角坐标与极坐标}
+直角坐标$(x,y)$ \onslide<2->{和极坐标$(\rho,\theta)$的关系为}
+\begin{columns}[onlytextwidth]
+\column{.4\textwidth}
+\begin{tikzpicture}[thick,font={\small}]
+%coordinates
+\visible<1->{
+\draw[-stealth] (-0.5,0) -- (3.2,0);
+\draw[-stealth] (0,-0.4) -- (0,2);
+%\node[below left=0pt and 0pt,darkgray] at (0,0){$O$};
+\coordinate (z) at ({3.2*cos(30)},{3.2*sin(30)});
+\draw[dashed] let \p1=(z) in (z) -- (\x1,0);
+\draw[dashed] let \p1=(z) in (z) -- (0,\y1);
+\draw[snake=brace,mirror snake,raise snake=3pt] let \p1=(z) in (0.05,0) -- (\x1,0)
+    node[midway,below=0.1] {$x$};
+\draw[snake=brace,raise snake=3pt] let \p1=(z) in (0,0.05) -- (0,\y1)
+    node[midway,left=0.1] {$y$};
+%\node[draw=none, above right, inner sep=-5pt] at (30:3.5) {$M$};
+\filldraw[fill=accent5] (z) circle[radius=1.2pt];
+}
+\visible<2->{
+\draw[-stealth] (0,0) -- ($(z)-(0.02,0.02)$);
+}
+\visible<2->{
+\draw[snake=brace,raise snake=2pt,blue](0.06,0) -- (z) node[midway,above left,blue]{$\rho$};
+}
+\visible<2->{
+\draw[<->,red] (0:0.8) arc (0:30:0.8);
+\node[red,right] at (20:0.8) {$\theta$}; % some bug in old tikz
+}
+\end{tikzpicture}
+\column{.6\textwidth}
+\visible<3->{
+$$\left\{\begin{gathered}x=\rho\cos\theta\\y=\rho\sin\theta\end{gathered}\right.
+%\Leftrightarrow\left\{\begin{aligned}\rho&=\sqrt{x^2+y^2}\\\theta&=\arctan(y/x)\end{aligned}\right.
+$$}
+\end{columns}
+\pause[4]\vskip0pt plus 0.5fill
+\begin{example*}
+圆心在原点，半径为$a$的圆
+\begin{itemize}
+  \item 它的直角坐标方程为$x^2+y^2=a^2$\pause
+  \item 它的极坐标方程为$\rho=a$
+\end{itemize}
+\end{example*}
+\end{frame}
+
+\begin{frame}
+\frametitle{极坐标下的面积}
+\begin{columns}[onlytextwidth]
+\column{0.47\textwidth}
+由曲线$\rho=\rho(\theta)$及射线$\theta=\alpha$，$\theta=\beta$
+所围成的\bold{曲边扇形}的面积\onslide<5->{为
+\[ \bold{A=\int_{\alpha}^{\beta} \frac12\big[\rho(\theta)\big]^2\d\theta} \]}
+\column{0.53\textwidth}
+\hfill
+\begin{tikzpicture}%[scale=0.85]
+% draw the curve
+\draw[thick,accent3,domain=-0.3333*pi:0.3333*pi,smooth,samples=50] plot ({\x r)}:{2*(1+cos(\x r))});
+\draw[thick,accent3] (-60:3) node[color=accent1,below]{$\theta=\alpha$} -- (0,0)
+    -- node[pos=0.7,color=accent1,left]{$\theta=\beta$} (60:3);
+\draw[->] (0,0) -- (4.5,0) node[right] {$x$}; 
+\fill (0,0) circle (0.8pt) node[left] {$O$};
+% split the area 
+\visible<2->{
+  \foreach \n in {-4,-3,...,3} {
+	\pgfmathsetmacro\mmrho{2*(1+cos(15*\n))}
+	\draw (0,0)--(15*\n:\mmrho); }
+}
+% approximated by sectors
+\visible<4->{
+  \foreach \n in {-4,-3,...,3} {
+	\pgfmathsetmacro\mmrho{2+2*cos(15*\n)}
+	\draw[thin,blue,fill=accent4,opacity=0.5] (0,0)--(15*\n:\mmrho)arc(15*\n:15*\n+15:\mmrho)--cycle; }
+}
+\visible<3->{
+% one sector
+\pgfmathsetmacro\mtheta{30}
+\pgfmathsetmacro\mrho{2+2*cos(\mtheta)}
+\draw[thin,blue, fill=accent4,opacity=0.6] (0,0)--(\mtheta:\mrho)arc(\mtheta:\mtheta+15:\mrho)
+     node[above,opacity=1]{$\visible<3->{\d A=\frac{1}{2}\rho^2 \d\theta}$}--cycle;
+% angle of the specific sector
+\draw[thin,blue, fill=green,opacity=0.9] (0,0)--(\mtheta:1)arc(\mtheta:\mtheta+15:1)--cycle;
+\node[above right] at(\mtheta+9:1){${\clead\d\theta}$};
+\visible<3>{\draw[snake=brace,mirror snake,raise snake=3pt,accent1,thick] (0,0)--(\mtheta:\mrho);
+\node at(\mtheta-14:0.5*\mrho){$\clead\rho$};}
+}
+\end{tikzpicture}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{极坐标下的面积}
+\begin{example}
+计算阿基米德螺线$\rho=a\theta$（$a>0$）上对应于$\theta$从$0$到$2\pi$的一段弧与极轴所围成的图形的面积．
+\end{example}
+\end{frame}
+
+\begin{frame}
+\frametitle{极坐标下的面积}
+\begin{example}
+计算心形线$\rho=a(1+\cos\theta)$（$a>0$）所围成的图形的面积．
+\end{example}
+\begin{center}
+\begin{tikzpicture}%[scale=0.85]
+% draw the curve
+\filldraw[thick,fill=filler3!20,draw=accent3,domain=0:2*pi,smooth,samples=50]
+    plot ({\x r)}:{2*(1+cos(\x r))});
+\node[right] at (20:4) {${\clead\rho=a(1+\cos\theta)}$};
+\draw[>->,>=stealth,very thick] (-1.5,0) -- (5.5,0) node[right]{$x$};
+\node[below] at (0,0) {$O$};
+\node[below right] at (4,0) {$2a$};
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\begin{oframe}
+\frametitle{复习与提高：平面图形的面积}
+\begin{review}
+(1) 求由曲线$y=-x^2+x+2$ 与 $x$ 轴所围成的图形的面积。\\\pause
+(2) 求由 $y=x^3$ 和 $y=\sqrt[3]x$ 所围成的图形的面积。
+\end{review}
+\end{oframe}
+
+\section{空间立体的体积}
+
+\subsection{旋转体的体积}
+
+\begin{frame}
+\frametitle{旋转体的体积}
+由曲线 $y=f(x)$，直线 $x=a$, $x=b$ 及$x$轴所围成的平面图形，绕$x$轴旋转而成的旋转体的体积是\pause
+\[ V_x =\int_a^b\pi y^2\d x\pause=\pi\int_a^b[f(x)]^2\d x \]
+\end{frame}
+
+\begin{frame}
+\frametitle{旋转体的体积}
+由曲线 $x=f(y)$，直线 $y=c$, $y=d$ 及$y$轴所围成的平面图形，绕$y$轴旋转而成的旋转体的体积是\pause
+\[ V_y =\int_c^d\pi x^2\d y\pause=\pi\int_c^d[f(y)]^2\d y \]
+\end{frame}
+
+\begin{frame}
+\frametitle{旋转体的体积}
+\begin{example}
+求椭圆$\displaystyle\frac{x^2}{a^2}+\frac{y^2}{b^2}=1$绕$x$轴旋转所得的旋转体的体积。
+\end{example}
+\vpause
+\begin{example}%\label{xzt}
+求由$y=x$，$x=a$, 及$x$轴所围成的平面图形，分别绕$x$轴和绕$y$轴旋转所得的旋转体的体积。
+\end{example}
+\end{frame}
+
+\begin{oframe}
+\frametitle{旋转体的体积}
+\begin{exercise}
+求由曲线 $y=\sqrt{x}$，直线 $x=1$, $x=4$ 以及$x$轴所围成的平面图形，绕$x$轴旋转而成的旋转体的体积。
+\end{exercise}
+\end{oframe}
+
+\subsection{一般立体的体积}
+
+\begin{frame}
+\frametitle{一般立体的体积}
+设立体在过点$x=a$、$x=b$且垂直于$x$轴的两个平面之间，过点$x$且垂直于$x$轴的截面面积为$A(x)$，
+则该立体的体积为
+\[ \bold{V=\int_a^b A(x)\dx} \]
+\end{frame}
+
+\begin{frame}
+\frametitle{一般立体的体积}
+\begin{example}
+一平面经过半径为$R$的圆柱体的底圆中心，且与底面的交角为$\alpha$，计算这平面截圆柱体所得立体的体积．
+\end{example}
+\vpause
+\begin{center}
+\begin{tikzpicture}[thick,x={(0.98cm,-0.98cm)},y={(1.4cm,0.98cm)},z={(0cm,1.4cm)},font={\small}]
+\draw[->] (-1.5,0,0) -- (1.5,0,0) node[left]{$x$};
+\draw[->] (0,1,0) -- (0,1.5,0) node[right]{$y$};
+\drawplot[samples=50,variable=\x,smooth]{}{densely dashed}{1,0.5,-1}{(\x,{sqrt(1-(\x)^2)},0)};
+\draw plot[domain=1:-1,samples=50,variable=\x,smooth] (\x,{sqrt(1-(\x)^2)},{sqrt(1-(\x)^2)});
+%FIXME 上面一行有缺口
+\draw plot[domain=-1:-0.9,samples=5,variable=\x,smooth] (\x,{sqrt(1-(\x)^2)},{sqrt(1-(\x)^2)});
+\draw[densely dashed] (0,0,0) node[inner sep=0pt,below left]{$O$} -- (0,1,0) -- (0,1,1);
+\draw[solid]  (0,1,1) -- (0,0,0);
+\draw plot[domain=0:pi/4,samples=40,variable=\t,smooth] (0,{0.2*cos(\t r)},{0.2*sin(\t r)});
+\node[inner sep=0pt,above right,font=\footnotesize,color=accent2]
+      at (0,{0.22*cos(pi/7 r)},{0.22*sin(pi/7 r)}){$\alpha$};
+\visible<3->{
+  \draw[draw=accent1,densely dashed] (0.5,0,0) -- (0.5,0.866,0);
+  \draw[draw=accent1,solid]  (0.5,0,0) -- (0.5,0.866,0.866) -- (0.5,0.866,0);
+  \draw plot[domain=0:pi/4,samples=40,variable=\t,smooth] (0.5,{0.2*cos(\t r)},{0.2*sin(\t r)});
+  \node[inner sep=0pt,above right,font=\footnotesize,color=accent2]
+      at (0.5,{0.22*cos(pi/7 r)},{0.22*sin(pi/7 r)}){$\alpha$};
+}
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高：旋转体的体积}
+\begin{review}
+求由曲线 $y=-x^2+1$ 与$x$轴所围成的平面图形，绕$x$轴旋转而成的旋转体的体积。
+\end{review}
+\end{frame}
+
+\section{平面曲线的弧长}
+
+\subsection{直角坐标下的弧长}
+
+\begin{frame}
+\frametitle{直角坐标下的弧长}
+设曲线弧由参数方程$\left\{\begin{array}{l}x=\phi(t)\\y=\psi(t)\end{array}\right.$（$\alpha\le t\le \beta$）给出，
+则它的长度为
+\[ \bold{s=\int_{\alpha}^{\beta}\sqrt{\phi'^2(t)+\psi'^2(t)}\dt} \]
+\pause
+\begin{example}
+求摆线$\left\{\begin{array}{l}x=a(t-\sin t)\\y=a(1-\cos t)\end{array}\right.$
+对应$0\le t\le 2\pi$的一拱的长度．
+\end{example}
+\end{frame}
+
+\begin{frame}
+\frametitle{直角坐标下的弧长}
+设曲线弧由直角坐标方程$y=f(x)$（$a\le x\le b$）给出，
+则它的长度为
+\[ \bold{s=\int_a^b\sqrt{1+y'^2}\dx} \]
+\pause
+\begin{example}
+计算曲线$y=\frac23x^{3/2}$上相应于$a\le x\le b$的一段弧的长度．
+\end{example}
+\end{frame}
+
+\subsection{极坐标下的弧长}
+
+\begin{frame}
+\frametitle{极坐标下的弧长}
+设曲线弧由极坐标方程$\rho=\rho(\theta)$（$\alpha\le\theta\le\beta$）给出，
+则它的长度为
+\[ \bold{s=\int_{\alpha}^{\beta}\sqrt{\rho^2(\theta)+\rho'^2(\theta)}\d\theta} \]
+\pause
+\begin{example}
+计算阿基米德螺线$\rho=a\theta$（$a>0$）相应于$0\le\theta\le2\pi$的一段弧长．
+\end{example}
+\end{frame}
+
+\end{document}

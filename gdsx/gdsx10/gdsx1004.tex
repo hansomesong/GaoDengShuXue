@@ -1,0 +1,291 @@
+% -*- coding: utf-8 -*-
+% !TEX program = xelatex
+
+%\documentclass[14pt]{article}
+%\usepackage[notheorems]{beamerarticle}
+
+\documentclass[14pt,notheorems,leqno,xcolor={rgb}]{beamer} % ignorenonframetext
+
+\input{../common/theme.sty}
+\input{../common/share.sty}
+\input{../common/local.sty}
+
+\occasion{高等数学第十章}
+\title{第四节·重积分的几何应用}
+\author{\href{https://lvjr.bitbucket.io}{吕荐瑞}}
+\institute{暨南大学数学系}
+\renewcommand<>{\section}[1]{\begin{frame}[plain]\titlepage\end{frame}}
+
+\setbeamerfont{title}{size=\Large}
+
+\makeatletter
+\beamer@tocsectionnumber=4\relax
+\setcounter{section}{4}
+\makeatother
+
+\begin{document}
+%\ifxetex\else\heiti\fi
+
+\section{重积分的几何应用}
+
+\subsection{立体的体积}
+
+\begin{frame}
+\frametitle{二重积分与立体体积}
+设\bold{曲顶柱体}的底面为$xy$平面有界闭区域$D$，顶面为连续曲面$f(x,y)$，则它的体积为
+\[ \bold{V=\iint_{D}f(x, y)\d{\sigma}}. \]
+\end{frame}
+
+\begin{frame}
+\frametitle{用直角坐标求立体体积}
+\begin{example}
+求两个底圆半径均为$R$的直交圆柱面所围成的立体体积．
+\end{example}
+\begin{columns}[onlytextwidth,b]
+\column{0.6\textwidth}
+\visible<2->{\begin{tikzpicture}[x=(215:2em/sqrt 2), y=(0:2em), z=(90:2em),thick,font=\small]   
+%coordinates
+\draw [-stealth, black!75, thin] (0,0,0) -- (2.6,0,0) node [above] {$x$}; 
+\draw [-stealth, black!75, thin] (0,0,0) -- (0,3.5,0) node [right] {$y$}; 
+\draw [-stealth, black!75, thin] (0,0,0) -- (0,0,3.5) node [left] {$z$};
+\def\R{1.5}
+%cyclinders 
+\draw[densely dashed] (\R,0,0)--(\R,0,2*\R)--(0,0,2*\R)--(0,\R,2*\R)--(0,\R,\R)--(0,2*\R,\R)--(0,2*\R,0)--(\R,2*\R,0)--cycle; 
+\draw[densely dashed] plot[variable=\t,domain=0:pi*0.5,smooth]({\R*cos(\t r)},{\R*sin(\t r)},2*\R); 
+\draw[densely dashed] plot[variable=\t,domain=0:pi*0.5,smooth]({\R*cos(\t r)},2*\R,{\R*sin(\t r)});
+\draw[densely dashed]  
+	plot[variable=\t,domain=0:pi*0.5,smooth]({\R*cos(\t r)},{\R*sin(\t r)},0)--
+	(0,\R,\R)--
+	plot[variable=\t,domain=0:pi*0.5,smooth]({\R*sin(\t r)},0,{\R*cos(\t r)});
+\node[above right] at(0,{\R/2},{2*\R}) {$x^2+y^2=R^2$}; 
+\node[below] at ({\R},{2*\R},0) {$x^2+z^2=R^2$};
+%domain1 
+\visible<5->{\draw[thick,accent3](\R,0,0)--(0,0,0)--(0,\R,0);}
+%intersection 
+\visible<3->{
+\shade[ball color=gray!50,opacity=0.6]  
+	plot[variable=\t,domain=0:pi*0.5,smooth]({\R*cos(\t r)},{\R*sin(\t r)},{\R*sin(\t r)})--
+	(0,0,\R)--
+	plot[variable=\t,domain=0:pi*0.5,smooth]({\R*sin(\t r)},0,{\R*cos(\t r)});
+\shade[ball color=gray!60,opacity=0.7]  
+	plot[variable=\t,domain=0:pi*0.5,smooth]({\R*cos(\t r)},{\R*sin(\t r)},{\R*sin(\t r)})--
+	(0,\R,0)--
+	plot[variable=\t,domain=0:pi*0.5,smooth]({\R*sin(\t r)},{\R*cos(\t r)},0);	 
+\draw[thick]
+	plot[variable=\t,domain=0:pi*0.5,smooth]({\R*cos(\t r)},{\R*sin(\t r)},{\R*sin(\t r)})--
+	(0,0,\R)--
+	plot[variable=\t,domain=0:pi*0.5,smooth]({\R*sin(\t r)},0,{\R*cos(\t r)})--
+	plot[variable=\t,domain=0:pi*0.5,smooth]({\R*cos(\t r)},{\R*sin(\t r)},0)--(0,\R,\R);
+}
+% 
+\visible<4->{
+\draw[<-] ({\R/2},{\R/2},{\R}) to[out=60,in=185] (0,{\R*1.5},{\R*1.5}) node[right] {$z=\sqrt{R^2-x^2}$};
+}
+%domain2 
+\visible<5->{
+\draw[thick,accent3] plot[variable=\t,domain=0:pi*0.5,smooth] ({\R*cos(\t r)},{\R*sin(\t r)},0); 
+\node[accent3,font=\footnotesize] at({0.5*\R*cos(40)},{0.5*\R*sin(40)},0) {$D$};
+}
+\end{tikzpicture}}
+\column{0.4\textwidth}
+\hfill
+\visible<6->{\begin{tikzpicture}[thick,font=\small]
+\def\R{1.5}
+%coordinates
+\draw [-stealth,color=text1!75,thin] (0,0) -- (3,0) node [right] {$x$}; 
+\draw [-stealth,color=text1!75,thin] (0,0) -- (0,3) node [left] {$y$}; 
+%domain
+\draw[opacity=0.7,accent3,fill=gray!30] 
+	plot[variable=\t,domain=0:pi*0.5,smooth] ({\R*cos(\t r)},{\R*sin(\t r)})--(0,\R)--(0,0)--(\R,0);
+\node[color=accent3] at ({0.4*\R},{0.4*\R}) {$D$};
+\node[below,color=text1!75] at (0,0) {$O$};
+\node[left,color=text1!75]  at (0,\R) {$R$};
+\node[below,color=text1!75] at (\R,0) {$R$};
+\visible<7->{\node[above right,color=accent1] at ({\R/3},{sqrt(8/9)*\R}) {$y=\sqrt{R^2-x^2}$};}
+\end{tikzpicture}}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{用极坐标求立体体积}
+\begin{example}
+求球体$x^{2}+y^{2}+z^{2}\leq 4a^2$被圆柱面$x^2+y^2=2ax$（$a>0$）所截得的立体的体积。
+\end{example}
+\begin{columns}[onlytextwidth,b]
+\column{7cm}
+\visible<2->{%
+\begin{tikzpicture}[x=(215:2em/sqrt 2), y=(0:2em), z=(90:2em),thick]    
+%coordinates 
+\draw [-stealth, black!75, thin] (0,0,0) -- (3,0,0) node [above] {$x$}; 
+\draw [-stealth, black!75, thin] (0,0,0) -- (0,3,0) node [above] {$y$}; 
+\draw [-stealth, black!75, thin] (0,0,0) -- (0,0,3.5) node [left] {$z$};
+\def\R{2} 
+\pgfmathsetmacro{\r}{\R/2} 
+\def\a{125} %angle
+%sphere 
+\draw  plot[variable=\t,domain=0:pi*0.5,smooth]({\R*cos(\t r)},{\R*sin(\t r)},0) --
+	plot[variable=\t,domain=0:pi*0.5,smooth](0,{\R*cos(\t r)},{\R*sin(\t r)}) --
+	plot[variable=\t,domain=0:pi*0.5,smooth]({\R*sin(\t r)},0,{\R*cos(\t r)}); 
+%\node[below right=-2pt and -3pt] at(\R,0,0) {$2a$}; 
+\node[below right=-2pt and -3pt] at(0,\R,0) {$2a$};
+%\node[below right] at({\R*cos(30)},{\R*sin(30)},0) {$x^2+y^2+z^2=4a^2$};
+%cylinder 
+\draw plot[variable=\t,domain=0:pi,smooth]({\r+\r*cos(\t r)},{\r*sin(\t r)},0);
+\draw plot[variable=\t,domain=0:pi,smooth]({\r+\r*cos(\t r)},{\r*sin(\t r)},{\R*1.5}); 
+\draw (\R,0,0)--(\R,0,{\R*1.5})--(0,0,{\R*1.5}); 
+\draw ({\r+\r*cos(\a)},{\r*sin(\a)},0)--({\r+\r*cos(\a)},{\r*sin(\a)},{\R*1.5});
+%\node[above right=-2pt and 5pt] at(0,0,{\R*1.5}) {$(x-a)^2+y^2=a^2$};
+%intersection
+\visible<3->{
+\draw[thick]  
+	plot[variable=\t,domain=0:pi,smooth]({\r+\r*cos(\t r)},{\r*sin(\t r)},{2*\r*sin(\t/2 r)})--
+	plot[variable=\t,domain=0:pi*0.5,smooth]({\R*sin(\t r)},0,{\R*cos(\t r)}); 
+\shade[ball color=gray!50,opacity=0.6]  
+	plot[variable=\t,domain=0:pi,smooth]({\r+\r*cos(\t r)},{\r*sin(\t r)},{2*\r*sin(\t/2 r)})--
+	plot[variable=\t,domain=0:pi*0.5,smooth]({\R*sin(\t r)},0,{\R*cos(\t r)})--cycle; 
+\draw[thick] 
+ plot[variable=\t,domain=0:\a,smooth]({\r+\r*cos(\t)},{\r*sin(\t)},{2*\r*sin(\t/2)})--
+		({\r+\r*cos(\a)},{\r*sin(\a)},0)--
+	  plot[variable=\t,domain=0:\a,smooth]({\r+\r*cos(\a-\t)},{\r*sin(\a-\t)},0);
+\shade[ball color=gray!60,opacity=0.7]
+	 plot[variable=\t,domain=0:\a,smooth]({\r+\r*cos(\t)},{\r*sin(\t)},{2*\r*sin(\t/2)})--
+	({\r+\r*cos(\a)},{\r*sin(\a)},0)--
+	 plot[variable=\t,domain=0:\a,smooth]({\r+\r*cos(\a-\t)},{\r*sin(\a-\t)},0); 
+}
+\visible<4->{
+\draw[<-] ({\r*0.5},0,{\R*0.5}) to[out=80,in=190] (0,{\r*1.5},{\R*1.25})
+    node[right] {$z=\sqrt{4a^2-x^2-y^2}$}; 
+}
+\visible<5->{
+\node[above] at({\r+\r*cos(50)},{\r*sin(50)},0) {$D$};
+}
+\end{tikzpicture}}
+\column{5cm}
+\def\R{2} 
+\pgfmathsetmacro{\r}{\R/2}
+\def\b{30}
+\visible<6->{\hfill
+\begin{tikzpicture}[scale=1.4,thick,font=\small]
+%coordinates 
+\draw [-stealth, black!75, thin] (0,0) -- (2.5,0) node [right] {$x$};
+\draw [-stealth, black!75, thin] (0,0) -- (0,1.5) node [below left] {$y$}; 
+\node[below left=-2pt and -2pt] at(0,0) {$o$};
+%domain 
+\fill[gray!20,opacity=0.6] plot[variable=\t,domain=0:pi,smooth] ({\r+\r*cos(\t r)},{\r*sin(\t r)}) -- cycle; 
+\draw[thick] plot[variable=\t,domain=0:pi,smooth] ({\r+\r*cos(\t r)},{\r*sin(\t r)}) -- cycle;
+\node[above left] at ({1.6*\r},0) {$D$};
+\node[below] at (\r,0) {$a$};
+\node[below] at ({2*\r},0) {$2a$}; 
+%\node[above right] at (\r,\r) {$x^2+y^2=2ax$};
+%%% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+%% 坐标后面留下空格，以绕过 PGF 2.10 的 bug
+%% 见 https://tex.stackexchange.com/q/41828/8956
+\node[above] at ({\b}:{2*\r*cos(\b)} ) {$\rho=2a\cos\theta$};
+\draw[accent1] (0,0)--(\b:{2*\r*cos(\b)} );
+%%% <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+%\draw[->,accent3] (0:0.5) arc (0:\b:0.5) node[pos=0.8,right,font={\scriptsize}] {$\theta$}; %FIXME
+\draw[->,accent3] (0:0.65) arc (0:\b:0.65);
+\node[below,accent3,inner sep=1pt,font=\footnotesize] at (\b:0.5) {$\theta$};
+\end{tikzpicture}}
+\end{columns}
+\end{frame}
+
+\ifligong % >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+\begin{frame}
+\frametitle{三重积分与立体体积}
+占有空间有界闭区域$\Omega$的立体的体积为
+\[ \bold{V=\iiint_{\Omega}\dx\dy\dz}. \]
+\end{frame}
+
+\begin{frame}
+\frametitle{用三重积分求立体体积}
+\begin{example}
+试计算椭球体$\dfrac{x^2}{a^2}+\dfrac{y^2}{b^2}+\dfrac{z^2}{c^2}=1$的体积$V$．
+\end{example}
+\pause\centering
+\begin{tikzpicture}[thick]
+\def\a{2} 
+\def\b{1.2} 
+\def\myangle{20} 
+\pgfmathsetmacro{\px}{\a*cos(\myangle)}
+\pgfmathsetmacro{\py}{\b*sin(\myangle)} 
+\def\bb{0.3}
+%coordinate
+\draw[-stealth,thin,gray] (225:{\a*0.5})--(225:{\a}) node[left] {$x$};
+\draw[-stealth,thin,gray] ({-\a-0.2},0)--({\a+0.4},0) node[below] {$y$};
+\draw[-stealth,thin,gray] (0,{-\b-0.5})--(0,{\b+1}) node[left] {$z$}; 
+\draw[thin,gray] (45:{\a})--(225:{\a*0.5});
+%section 
+\draw[densely dashed] (\px,\py) arc (0:180:{\px} and {\bb}); 
+\fill [accent2,opacity=0.7] (0,\py) ellipse ({\px} and {\bb}); 
+\node [above right,inner sep=0pt] at (\px,\py)
+  {$D_{z}=\left\{(x,y)\;\middle|\;\dfrac{x^2}{a^2}+\dfrac{y^2}{b^2}\leq1-\dfrac{z^2}{c^2}\right\}$};
+%domain 
+\shade [ball color=gray!20,opacity=0.7] (0,0) ellipse ({\a} and {\b});
+\draw (0,0) ellipse ({\a} and {\b});
+\draw [fill] (0,\b) circle (0.2pt) node[above left] {$c$}; 
+\draw [fill] (0,-\b) circle (0.2pt) node[below left] {$-c$}; 
+%section
+\draw (\px,\py) arc (0:-180:{\px} and {\bb});
+\draw [accent3,fill,thick] (0,\py) circle (0.8pt) node[left]{$z$};
+\end{tikzpicture} 
+\end{frame}
+
+\fi % <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+\subsection{曲面的面积}
+
+\begin{frame}
+\frametitle{曲面的面积}
+设$\Sigma$由$z=f(x,y)$给出，在$xOy$面投影区域为$D$，
+且$f(x,y)$在$D$上有连续偏导数，求曲面的面积$S$．\ppause\vspace{0.6em}
+对小块曲面$\dS$用\bold{切平面}区域$\Delta S$近似，其投影为$\Delta\sigma$．\ppause\vspace{0.6em}
+\begin{columns}[onlytextwidth]
+\column{0.3\textwidth}
+\begin{tikzpicture}[x={(30:2cm)},y={(135:2cm)},z={(90:1.7cm)},thick,font=\small]
+\draw[densely dashed,fill=filler2] (0,0,0) -- (0,1,0) -- (1,1,0) -- (1,0,0)
+         node[left=0.4em,inner sep=0pt]{$\Delta\sigma$} -- cycle;
+\draw[densely dashed] (1,0,0) -- (1,0,1) (1,1,0) -- (1,1,1);
+\draw[fill=filler1,fill opacity=0.7,text opacity=1]
+     (0,0,0) -- (0,1,0) -- (1,1,1) -- (1,0,1) node[left]{$\Delta S$} -- cycle;
+\draw[color=accent1] (0.15,0,0) to[bend right=50]
+         node[pos=0.5,above right,inner sep=0pt]{$\gamma$} (0.1,0,0.1);
+\end{tikzpicture}
+\column{0.69\textwidth}
+\pause $\Delta S =\dfrac{1}{\cos\gamma}\Delta\sigma\pause\ 
+        \lead{\rightwhitearrow}\ \!\dS=\dfrac{1}{\cos\gamma}\d\sigma$
+\ppause\vspace{0.5em}
+平面$\Delta S$的法向量$\vn=(-f'_x,-f'_y,1)$\par 平面$\Delta\sigma$的法向量$\vk=(0,0,1)$
+\ppause\vspace{0.5em}
+$\cos\gamma=\dfrac{1}{\sqrt{1+f'_{x}(x,y)^{2}+f'_{y}(x,y)^{2}}}$
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{曲面的面积}
+曲面的\CJKunderdot{面积元素}\ $\bold{\dS=\sqrt{1+f'_{x}(x,y)^{2}+f'_{y}(x,y)^{2}}\d\sigma}$．
+\vpause\hrule\vpause
+设曲面$z=f(x,y)$在$xOy$面上的投影区域为$D$，且$f(x,y)$的偏导数连续，则曲面的面积为
+\[ \bold{S=\iint_{\Sigma}\dS=\iint_{D}\sqrt{1+f'_{x}(x,y)^{2}+f'_{y}(x,y)^{2}}\dx\dy} \]
+\pause
+\begin{example}
+求半径为$a$的球的表面积．
+\end{example}
+\end{frame}
+
+\mybookmark{复习与提高}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+计算双曲抛物面$z=xy$被柱面$x^2+y^2=R^2$所截出的面积$S$．
+\end{puzzle}
+\stext{\vpause
+\begin{solution}\smark
+积分区域为$x^2+y^2\le R^2$．利用极坐标计算得
+$$S=\dfrac{2\pi}{3}\left[\left(1+R^2\right)^{3/2}-1\right].$$
+\end{solution}}
+\end{frame}
+
+\end{document}

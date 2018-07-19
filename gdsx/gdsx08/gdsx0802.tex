@@ -1,0 +1,319 @@
+% -*- coding: utf-8 -*-
+% !TEX program = xelatex
+
+%\documentclass[14pt]{article}
+%\usepackage[notheorems]{beamerarticle}
+
+\documentclass[14pt,notheorems,leqno,xcolor={rgb}]{beamer} % ignorenonframetext
+
+\input{../common/theme.sty}
+\input{../common/share.sty}
+\input{../common/local.sty}
+
+\occasion{高等数学第八章}
+\title{第二节·数量积与向量积}
+\author{\href{https://lvjr.bitbucket.io}{吕荐瑞}}
+\institute{暨南大学数学系}
+\renewcommand<>{\section}[1]{\begin{frame}[plain]\titlepage\end{frame}}
+
+\makeatletter
+\beamer@tocsectionnumber=2\relax
+\setcounter{section}{2}
+\makeatother
+
+\begin{document}
+%\ifxetex\else\heiti\fi
+
+\section{数量积与向量积}
+
+\subsection{两向量的数量积}
+
+\begin{frame}
+\frametitle{两向量的数量积}
+\begin{example}
+设一物体在常力$\vec F$作用下，沿与力夹角为$\theta$的直线移动，位移为$\vec s$。则力$\vec F$所做的功为\pause
+\begin{columns}[onlytextwidth]
+\column{.6\textwidth}
+$$W=|\vec F|\,|\vec s|\cos\theta\onslide<4>{=\bold{\vec F \cdot \vec s}}$$
+\column{.4\textwidth}
+\begin{tikzpicture}[thick,font=\small,scale=.7]
+\draw[->] (0,0) node[left]{$A$} -- node[below,color=accent1]{$\vec{s}$} (3,0) node[right]{$B$};
+\draw[->] (0,0) -- node[above,color=accent1]{$\vec{F}$} (2,2);
+\draw[draw=accent5] (.4,0) arc (0:45:.4); \node[above,inner sep=2pt,color=accent1] at (.8,0) {$\theta$};
+\end{tikzpicture}
+\end{columns}
+\end{example}
+\pause
+\begin{definition}
+设向量$\vec a$和$\vec b$的夹角为$\theta$，称
+\[ \vec a \cdot \vec b = |\vec a|\,|\vec b|\cos\theta \]
+为$\vec a$与$\vec b$的\bold{数量积}（点乘）。
+\end{definition}
+\end{frame}
+
+% TODO：正文宽度与 \textwidth 不同，\frametitle 位置也需调整
+\begin{frame}
+\frametitle{数量积与投影}
+\begin{columns}[onlytextwidth]
+\column{.73\textwidth}
+数量积与投影的关系如下：
+\[ \vec a\cdot\vec b = |\vec a|\,\bold{|\vec b|\cos\theta} \pause = \vert\vec a\vert\,\bold{\Prj_{\vec a}\vec b}\]
+\column{.27\textwidth}
+\pause
+\begin{tikzpicture}[thick,font=\small,scale=.7]
+\draw[densely dashed] (2,0) -- (2,2);
+\draw[->] (0,0) -- (3,0) node[right,color=accent1]{$\vec{a}$};
+\draw[->] (0,0) -- (2,2) node[right,color=accent1]{$\vec{b}$};
+\draw[draw=accent5] (.4,0) arc (0:45:.4); \node[above,inner sep=2pt,color=accent1] at (.8,0) {$\theta$};
+\draw[draw=accent2] (0,0) node[below]{$A$} -- (2,0) node[below]{$B$};
+\end{tikzpicture}
+\end{columns}
+\pause
+同理，我们有 $\vec a\cdot\vec b = |\vec b|\,\bold{|\vec a|\cos\theta} = \vert\vec b\vert\,\bold{\Prj_{\vec b}\vec a}$。
+\end{frame}
+
+\begin{frame}
+\frametitle{数量积的性质}
+\begin{property}
+规定零向量和任何向量都垂直，则有
+$$\bold{\va\cdot\vb=0} \Longleftrightarrow \bold{\va\bot\vb}$$
+\end{property}
+%\pause
+% FIXED：当前面定理以独立公式结尾时，\pause 会导致有多余的空白段落产生，\onslide<2->{} 也一样
+% 已解决，是 theorem end 没有用 \par 结尾（见 http://tex.stackexchange.com/q/179575/8956）
+% 实际上 $$...$$ 有时也会导致空白问题，最好用 \[...\]（见 http://tex.stackexchange.com/q/503/8956）
+\pause
+\begin{property}
+向量的数量积符合下列运算定律：\pause
+\begin{enumerate}[<+->]
+  \item $\va\cdot\va=|\va|^2$
+  \item $\va\cdot\vb=\vb\cdot\va$
+  \item $(\va+\vb)\cdot\vc=\va\cdot\vc+\vb\cdot\vc$
+  \item $(\lambda\va)\cdot\vb=\lambda(\va\cdot\vb)$
+\end{enumerate}
+\end{property}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+试用向量证明三角形的余弦定理
+$$c^2=a^2+b^2-2ab\cos\theta$$
+\end{example}\pause
+\begin{solution}
+设$\overrightarrow{CB}=\vec a$，$\overrightarrow{CA}=\vec b$，$\overrightarrow{AB}=\vec c$。
+\begin{center}
+\begin{tikzpicture}[thick,font=\small]
+\draw[->,draw=accent3] (2,2) -- node[right,color=accent1]{$\vec{c}$} (3,0);
+\draw[->,draw=accent2] (0,0) --  node[above,color=accent1]{$\vec{b}$} (2,2) node[above]{$A$};
+\draw[->,draw=accent2] (0,0) node[left]{$C$} -- node[below,color=accent1]{$\vec a$} (3,0) node[right]{$B$};
+\draw[draw=accent5] (.4,0) arc (0:45:.4); \node[above,color=accent1] at (.8,0) {$\theta$};
+\end{tikzpicture}
+\end{center}
+\end{solution}
+\end{frame}
+
+\begin{frame}
+\frametitle{数量积的坐标表示}
+设$\vec a=(a_x,a_y,a_z)$，$\vec b=(b_x,b_y,b_z)$，\pause 则有
+$$\vec a \cdot \vec b = a_xb_x+a_yb_y+a_zb_z$$\pause
+对于非零向量，由$\vec a \cdot \vec b=|\vec a|\,|\vec b|\cos\theta$，\pause 得
+\[ \cos\theta = \frac{\vec a \cdot \vec b}{|\vec a|\,|\vec b|}\pause=\frac{a_xb_x+a_yb_y+a_zb_z}{\pause\sqrt{a_x^2+a_y^2+a_z^2}\sqrt{b_x^2+b_y^2+b_z^2}}\]\pause
+此式即为\bold{两向量的夹角公式}。
+\end{frame}
+
+\begin{frame}
+\begin{example}
+已知三个点$M(1,1,1)$, $A(2,2,1)$ 和 $B(2,1,2)$，求$\angle AMB$。
+\end{example}
+\end{frame}
+
+\subsection{两向量的向量积}
+
+\begin{frame}
+\frametitle{力矩问题}
+\begin{columns}[onlytextwidth]
+\column{.65\textwidth}
+\begin{example}
+设$O$为杠杆$L$的支点，有一个与杠杆夹角为$\theta$的力$\vec F$作用在杠杆的$P$点上。\pause
+则力$\vec F$作用在杠杆上的力矩$\vec M$ 是一个向量：
+\end{example}
+\column{.35\textwidth}
+\hfill
+\begin{tikzpicture}[thick,font=\small,scale=.8]
+\draw (-2.2,0) -- (0,0) node[above]{$P$} -- (2,0) node[below]{$L$};
+\draw[->,draw=accent3] (0,0) -- node[above]{$\vec{F}$} (1.5,1.5);
+\draw[draw=accent1] (.4,0) arc (0:45:.4); \node[above,inner sep=1pt,color=accent1] at (.6,0) {$\theta$};
+\draw[draw=accent1] (-.4,0) arc (180:225:.4); \node[below,inner sep=1pt,color=accent1] at (-.6,0) {$\theta$};
+\draw[densely dashed] (-2,0) -- (-1,-1) node[below]{$Q$} (0,0) -- (-1,-1);
+\draw (-1.1,-.9) -- (-1,-.8) -- (-.9,-.9);
+\draw[->,draw=accent2] (-2,0) node[above]{$O$} -- (0,0);
+\fill[fill=accent1] (-2,0) -- (-2.1,-.2) -- (-1.9,-.2) -- cycle;
+\end{tikzpicture}
+\end{columns}
+\pause
+\begin{itemize}
+  \item $|\vec M|=|OQ|\,|\vec F|=|\overrightarrow{OP}|\,|\vec F|\,\sin\theta$
+  \item $\vec M\bot\overrightarrow{OP}$，$\vec M\bot\vec F$，$\overrightarrow{OP}$、$\vec F$、$\vec M$ 符合右手定则
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{两向量的向量积}
+\begin{definition}
+设$\vec a$与$\vec b$的夹角为$\theta$，定义向量$\vec c$\pause
+\begin{itemize}
+  \item[] 大小：$|\vec c|=|\vec a|\,|\vec b|\,\sin\theta$\pause
+  \item[] 方向：$\vec c\bot\vec a$, $\vec c\bot\vec b$ 且 $\vec a$, $\vec b$, $\vec c$ 符合右手定则
+\end{itemize}\pause
+称$\vec c$为向量$\vec a$与$\vec b$的\bold{向量积}（叉乘），记为$$\bold{\vec a\times \vec b=\vec c}$$
+\end{definition}
+\end{frame}
+
+\begin{frame}
+\frametitle{弗莱明右手定则}
+\bold{右手定则}是一个在数学及物理学上使用的定则，\pause 由英国物理学家约翰·弗莱明于19 世纪末发明。\pause
+\begin{columns}[onlytextwidth]
+\column{.5\textwidth}
+\centering
+\begin{tikzpicture}[x={(-1cm,.5cm)},y={(-1cm,-.5cm)},z={(0cm,1.3cm)},thick,font=\small]
+\draw[->] (0,0,0) -- node[above,color=accent2]{$\vec a$} (1.5,0,0) node[left]{食指};
+\draw[->] (0,0,0) -- node[below,color=accent2]{$\vec b$} (0,1.5,0) node[left]{中指};
+\draw (.2,0,0) arc (0:90:.2); \path (.25,.25,0) node {$\theta$};
+\draw[->,draw=accent1] (0,0,0) -- node[right,color=accent2]{$\vec c=\vec a\times\vec b$} (0,0,1.5) node[above]{拇指};
+\end{tikzpicture}\pause
+\column{.5\textwidth}
+\centering
+\begin{tikzpicture}[x={(-1cm,.5cm)},y={(-1cm,-.5cm)},z={(0cm,1.3cm)},thick,font=\small]
+\draw[->] (0,0,0) -- node[above,color=accent2]{$\vec b$} (1.5,0,0) node[left]{中指};
+\draw[->] (0,0,0) -- node[below,color=accent2]{$\vec a$} (0,1.5,0) node[left]{食指};
+\draw (.2,0,0) arc (0:90:.2); \path (.25,.25,0) node {$\theta$};
+\draw[->,draw=accent1] (0,0,0) -- node[right,color=accent2]{$\vec c=\vec a\times\vec b$} (0,0,-1.5) node[below]{拇指};
+\end{tikzpicture}\pause
+\end{columns}
+[$\vec a$，$\vec b$，$\vec c$]符合右手定则 $\leftrightarrow$ [食指，中指，拇指]
+\end{frame}
+
+\begin{frame}
+\frametitle{向量积的性质}
+\begin{property}
+规定零向量和任何向量都平行，则有
+$$\bold{\va\times\vb=\vec0} \Longleftrightarrow \bold{\va\parallel\vb}$$
+\end{property}
+\pause
+\begin{property}
+向量的向量积符合下列运算定律：\pause
+\begin{enumerate}[<+->]
+  \item $\va\times\va=\vec0$
+  \item $\vb\times\va=-\va\times\vb$
+  \item $(\va+\vb)\times\vc=\va\times\vc+\vb\times\vc$
+  \item $(\lambda\va)\times\vb=\lambda(\va\times\vb)$
+\end{enumerate}
+\end{property}
+\end{frame}
+
+\begin{frame}
+\frametitle{向量积的坐标表示}
+设$\vec a=(a_x,a_y,a_z)$，$\vec b=(b_x,b_y,b_z)$，\pause 则有
+\begin{align*}
+&\phantom{{}={}}\vec a \times \vec b =\left(
+    \begin{vmatrix}a_y&a_z\\b_y&b_z\end{vmatrix},
+    \begin{vmatrix}a_z&a_x\\b_z&b_x\end{vmatrix},
+    \begin{vmatrix}a_x&a_y\\b_x&b_y\end{vmatrix}\right) \\
+&= \Big(a_yb_z-a_zb_y,a_zb_x-a_xb_z,a_xb_y-a_yb_x\Big)
+\end{align*}\pause
+其中二阶行列式的定义为$\left|\begin{array}{cc}a&b\\c&d\end{array}\right|=ad-bc$。
+\end{frame}
+
+\begin{frame}
+\begin{example}
+已知$\triangle ABC$的顶点为$A(1,2,3)$, $B(3,4,5)$和$C(2,4,7)$，求$\triangle ABC$的面积。
+\end{example}
+\pause
+\begin{solution}
+$S=\frac12|AB|\,|AC|\sin\theta=\frac12|\overrightarrow{AB}\times\overrightarrow{AC}|$
+\begin{center}
+\begin{tikzpicture}[thick,font=\small]
+\draw (2,2) -- (3,0);
+\draw[densely dashed] (1.5,1.5) -- (3,0);
+\draw (1.4,1.4) -- (1.5,1.3) -- (1.6,1.4);
+\draw[->,draw=accent2] (0,0) -- (2,2) node[above]{$B$};
+\draw[->,draw=accent2] (0,0) node[left]{$A$} -- (3,0) node[right]{$C$};
+\draw[draw=accent5] (.4,0) arc (0:45:.4); \node[above,color=accent1] at (.8,0) {$\theta$};
+\end{tikzpicture}
+\end{center}
+\end{solution}
+\end{frame}
+
+\mybookmark{复习与提高}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+已知向量$\va$和$\vb$的夹角$\theta=\dfrac{3\pi}4$，且$|\va|=\sqrt{2}$，$|\vb|=3$，
+求$|\va-\vb|$．\pause\cdotfill$\sqrt{17}$
+\end{puzzle}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+证明三角形的正弦定理
+$$\frac{a}{\sin A}=\frac{b}{\sin B}=\frac{c}{\sin C}$$
+\end{puzzle}
+\begin{center}
+\begin{tikzpicture}[thick,font=\small]
+\draw (2,2) -- node[right,color=accent1]{$c$} (3,0);
+\draw (0,0) -- node[above,color=accent1]{$b$} (2,2) node[above]{$A$};
+\draw (0,0) node[left]{$C$} -- node[below,color=accent1]{$a$} (3,0) node[right]{$B$};
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+在顶点为$A(1,-1,2)$, $B(1,1,0)$, $C(1,3,-1)$的三角形中,
+求$AC$边上的高$BD$的长度．\pause\cdotfill$\frac{2}{5}$
+\end{puzzle}
+\end{frame}
+
+%% 需要混合积，超出范围
+%\begin{frame}
+%\frametitle{复习与提高}
+%\begin{puzzle}[1995年数学一]\newline
+%设$(\vec a\times \vec b)\cdot \vec c=2$，
+%求$[(\vec a+\vec b)\times(\vec b+\vec c)]\cdot(\vec c+\vec a)$．
+%\end{puzzle}
+%\pause
+%\begin{solution}
+%$4$．
+%\end{solution}
+%\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{choice}
+下列关系式错误的是\dotfill(\qquad)% (D) 应该是零向量
+\begin{choicehalf}
+  \item $\va\cdot\vb=\vb\cdot\va$ ~
+  \item $\va\times\vb=-\vb\times\va$ ~
+  \item $\va\cdot\va=|\va|^2$ ~
+  \item $\va\times\va=0$ ~
+\end{choicehalf}
+\end{choice}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{choice}
+设$\va$和$\vb$是非零向量，且满足$|\va+\vb|=|\va-\vb|$，则必有\dotfill(\qquad)% (C) 两边平方
+\begin{choicehalf}
+  \item $\va-\vb=\vec0$ ~
+  \item $\va+\vb=\vec0$ ~
+  \item $\va\cdot\vb=0$ ~
+  \item $\va\times\vb=\vec0$ ~
+\end{choicehalf}
+\end{choice}
+\end{frame}
+
+\end{document}

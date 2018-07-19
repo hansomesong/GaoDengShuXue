@@ -1,0 +1,539 @@
+% -*- coding: utf-8 -*-
+% !TEX program = xelatex
+
+%\documentclass[14pt]{article}
+%\usepackage[notheorems]{beamerarticle}
+
+\documentclass[14pt,notheorems,leqno,xcolor={rgb}]{beamer} % ignorenonframetext
+
+\input{../common/theme.sty}
+\input{../common/share.sty}
+\input{../common/local.sty}
+
+\occasion{高等数学第八章}
+\title{第五节·曲面及其方程}
+\author{\href{https://lvjr.bitbucket.io}{吕荐瑞}}
+\institute{暨南大学数学系}
+\renewcommand<>{\section}[1]{\begin{frame}[plain]\titlepage\end{frame}}
+
+\makeatletter
+\beamer@tocsectionnumber=5\relax
+\setcounter{section}{5}
+\makeatother
+
+\begin{document}
+%\ifxetex\else\heiti\fi
+
+\section{曲面及其方程}
+
+\subsection{曲面方程的概念}
+
+\begin{frame}
+\frametitle{方程与曲面}
+\begin{itemize}
+  \item 方程 $F(x,y,z)=0$ 对应一个曲面 $S$
+  \item 曲面 $S$ 对应一个方程 $F(x,y,z)=0$
+\end{itemize}
+\begin{figure}
+% Positioning Node: P163 in manual 2.10
+\begin{tikzpicture}[thick]
+\node[inner sep=0pt,below right=2pt and 0pt] at (0,0) {$O$};
+\draw[->] (0,0) -- (-1,-1) node[left]{$x$};
+\draw[->] (0,0) -- (2,0) node[right] {$y$};
+\draw[->] (0,0) -- (0,0.6) (0,1.1) -- (0,2) node[above] {$z$}; \draw[dashed] (0,0.65) -- (0,1.1);
+\draw plot[smooth,tension=.8] coordinates {(-1,0.4)  (0,0.6) (1.4,0.4)};
+\draw plot[smooth,tension=.8] coordinates {(-.6,1.4) (0,1.6) (1,1.6) (1.8,1.4)};
+\draw plot[smooth,tension=.8] coordinates {(1.4,0.4) (1.5,0.9) (1.8,1.4)};
+\draw plot[smooth,tension=.8] coordinates {(-1,0.4)  (-.9,0.9) (-.6,1.4)};
+\end{tikzpicture}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{球面}
+\begin{columns}[onlytextwidth]
+\column{.54\textwidth}
+\begin{itemize}
+  \item 球心在原点，半径为$R$的球面
+  \item 方程为$x^2+y^2+z^2=R^2$
+\end{itemize}
+\column{.45\textwidth}
+\hfill
+%\tikzset{external/remake next}
+\begin{tikzpicture}[x={(-.3cm,-.4cm)},y={(2cm,0cm)},z={(0cm,2cm)},samples=40,variable=\t,thick]
+\drawline{}{densely dashed}{(-5,0,0),(-4,0,0),(4,0,0),(5,0,0)}; \draw[->] (4,0,0) -- (5,0,0) node[left,below] {$x$};
+\drawline{}{densely dashed}{(0,-1.2,0),(0,-1,0),(0,1,0),(0,1.2,0)}; \draw[->] (0,1,0) -- (0,1.2,0) node[right] {$y$};
+\drawline{}{densely dashed}{(0,0,-1.2),(0,0,-1),(0,0,1),(0,0,1.2)}; \draw[->] (0,0,1) -- (0,0,1.2) node[above] {$z$};
+\draw plot[domain=0:2*pi] (0,{sin(\t r)},{cos(\t r)});
+\drawplot{}{densely dashed}{0,pi,2*pi}{({sin(\t r)},{cos(\t r)},0)}
+\drawplot{}{densely dashed}{0,pi,2*pi}{({sin(\t r)},0,{cos(\t r)})}
+\end{tikzpicture}
+\end{columns}
+\end{frame}
+
+%\begin{frame}
+%\begin{tikzpicture}
+%\begin{axis}[view={120}{30},xlabel=$x$,ylabel=$y$,axis lines=center,]%view={135}{45}
+%\addplot3[domain=-2:2,y domain=-2:2,mesh,draw=white,samples=30]{x^2+y^2};
+%\end{axis}
+%\end{tikzpicture}
+%\end{frame}
+
+%\begin{frame}
+%\begin{tikzpicture}
+%\begin{axis}[grid=both]
+%\addplot3[surf,shader=faceted] {x*y};
+%\end{axis}
+%\end{tikzpicture}
+%\end{frame}
+
+\subsection{旋转曲面}
+
+\begin{frame}
+\frametitle{旋转曲面}
+设在$yz$面上的曲线$C$的方程为$f(y,z)=0$。
+\begin{columns}[onlytextwidth]
+\column{.55\textwidth}
+它绕$z$轴旋转一周得到的旋转曲面方程为
+$$f(\pm\sqrt{x^2+y^2},z)=0.$$
+\pause 曲线$C$称为旋转曲面的\bold{母线}，
+\column{.4\textwidth}
+\begin{tikzpicture}[thick]
+\node[inner sep=1pt,below right] at (0,0) {$O$};
+\draw[densely dashed] (0,0) -- (-.4,-.4) ; \draw[->] (-.45,-.45) -- (-1,-1) node[left]{$x$};
+\draw[densely dashed] (0,0) -- (0.95,0); \draw[->] (1.0,0) -- (2,0) node[right] {$y$};
+\draw[densely dashed] (0,0) -- (0,1.45); \draw[->] (0,1.5) -- (0,2.4) node[above] {$z$};
+\draw(-1,0) arc (180 : 360 : 1 and .5); \draw[densely dashed] (1,0) arc (0 : 180 : 1 and .5);
+\draw(0,1.5) ellipse (.6 and .3);
+\draw[thick,color=accent3] plot[smooth,tension=.8] coordinates {(1,0) (0.85,0.75) (0.6,1.5)};
+\node[right] at (0.85,0.75) {$C$};
+\draw plot[smooth,tension=.8] coordinates {(-1,0) (-0.85,0.75) (-0.6,1.5)};
+\end{tikzpicture}
+\end{columns}
+\pause
+它绕$y$轴旋转一周得到的旋转曲面方程为
+$$f(y,\pm\sqrt{x^2+z^2})=0.$$
+\end{frame}
+
+\begin{frame}
+\frametitle{圆锥面}
+\begin{columns}[onlytextwidth]
+\column{.58\textwidth}
+\begin{itemize}
+  \item $yz$面上的直线$z=ay$绕$z$轴旋转一周
+  \item 圆锥面$z^2=a^2(x^2+y^2)$
+\end{itemize}
+\column{.4\textwidth}
+\hfill
+%\tikzset{external/remake next}
+\begin{tikzpicture}[x={(-.3cm,-.2cm)},y={(2cm,0cm)},z={(0cm,2cm)},samples=40,variable=\t]
+\draw[->] (-5,0,0) -- (5,0,0) node[above] {$x$};
+\draw[->] (0,-1,0) -- (0,1,0) node[right] {$y$};
+\drawline{}{densely dashed}{(0,0,-1.5),(0,0,-1.1),(0,0,1),(0,0,1.5)}; \draw[->] (0,0,1) -- (0,0,1.5) node[above] {$z$};
+\draw[thick] plot[domain=0:2*pi] ({sin(\t r)},{cos(\t r)},1);
+\drawplot[thick]{}{densely dashed}{0,pi,2*pi}{({sin(\t r)},{cos(\t r)},-1)}
+\draw[thick] (0,1,-1) -- (0,-1,1);
+\draw[thick,color=accent3] (0,-1,-1) -- (0,1,1);
+\draw (-1,0,1) -- (1,0,1) (0,-1,1) -- (0,1,1);
+\draw[densely dashed] (-1,0,-1) -- (1,0,-1) (0,-1,-1) -- (0,1,-1);
+\end{tikzpicture}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{旋转单叶双曲面}
+将$yz$面上的双曲线$\frac{y^2}{b^2}-\frac{z^2}{c^2}=1$绕$z$轴旋转一周，得到
+\CJKunderdot{旋转单叶双曲面}\ $\frac{x^2+y^2}{b^2}-\frac{z^2}{c^2}=1$．%
+\onslide<2->{(实例：\href{http://www.cantontower.com}{\CJKunderline{广州塔}})}
+\begin{center}
+\begin{tikzpicture}[thick]
+\draw[densely dashed] (0,0) -- (-.65,-.65) ; \draw[->] (-.7,-.7) -- (-1.7,-1.7) node[left]{$x$};
+\draw[densely dashed] (0,0) -- (0.55,0); \draw[->] (0.6,0) -- (1.6,0) node[right] {$y$};
+\draw[densely dashed] (0,0) -- (0,1.45); \draw[->] (0,1.5) -- (0,2.4) node[above] {$z$};
+\draw(-.6,0) arc (180 : 360 : .6 and .3); \draw[densely dashed] (.6,0) arc (0 : 180 : .6 and .3);
+\draw(-1,-1.5) arc (180 : 360 : 1 and .5); \draw[densely dashed] (1,-1.5) arc (0 : 180 : 1 and .5);
+\draw(0,1.5) ellipse (1 and .5);
+\draw[thick,color=accent3] plot[smooth,tension=.8] coordinates {(1,1.5) (0.6,0) (1,-1.5)};
+\draw[thick,color=accent3] plot[smooth,tension=.8] coordinates {(-1,1.5) (-0.6,0) (-1,-1.5)};
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{旋转双叶双曲面}
+将$yz$面上的双曲线$\frac{y^2}{b^2}-\frac{z^2}{c^2}=1$绕$y$轴旋转一周，得到
+\CJKunderdot{旋转双叶双曲面}\ $\frac{y^2}{b^2}-\frac{x^2+z^2}{c^2}=1$．
+\begin{center}
+\begin{tikzpicture}[thick]
+% Parabola Operation: P146 in manual 2.10
+% Plots of Functions: P223 in manual 2.10
+\node[inner sep=1pt,below right] at (0,0) {$O$};
+\draw[->] (0,0) -- (-1.4,-1.4) node[left]{$x$};
+\draw[->] (-3.4,0) -- (-2.8,0) (-1.11,0) -- (1.11,0) (2.2,0) -- (3.4,0) node[right] {$y$};
+\draw[densely dashed] (-2.75,0)-- (-1.14,0) (1.16,0) -- (2.15,0);
+\draw[->] (0,0) -- (0,2) node[above] {$z$};
+\draw (2.5,0) ellipse (.3 and 1);
+\draw[domain=-1:1,thick,color=accent3] plot[variable=\y] ({sqrt(5*(\y)^2+1.25)},\y);
+\draw (2.5,1) -- (2.5,-1) (2.22,-0.28) -- (2.78,0.28);
+\draw[domain=-.28:0] plot[variable=\y] ({14*(\y)^2+1.12},\y);
+\draw[domain=0:.28,densely dashed] plot[variable=\y] ({21.5*(\y)^2+1.12},\y);
+\draw (-2.5,1) arc (90 : 270 : .3 and 1); \draw[densely dashed] (-2.5,-1) arc (-90 : 90 : .3 and 1);
+\draw[domain=-1:1,thick,color=accent3] plot[variable=\y] ({-sqrt(5*(\y)^2+1.25)},\y);
+\draw[densely dashed] (-2.5,1) -- (-2.5,-1) (-2.22,0.28) -- (-2.78,-0.28);
+\draw[domain=-.28:0] plot[variable=\y] ({-21.5*(\y)^2-1.12},\y);
+\draw[domain=0:.28,densely dashed] plot[variable=\y] ({-14*(\y)^2-1.12},\y);
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\subsection{柱面}
+
+% 文字环绕图片可以用 wrapfig，picins 和 floatflt，但似乎都有缺点
+
+\begin{frame}
+%\frametitle{圆柱面}
+\begin{example*}
+$x^2+y^2=R^2$ \pause\bold{圆柱面}
+\end{example*}
+\pause
+\begin{columns}[onlytextwidth]
+\column{.59\textwidth}
+\uncover<4->{由平行于$z$轴的直线沿$xy$面上的圆$x^2+y^2=R^2$移动而得。}
+\par\vspace*{2em}
+\uncover<5->{\bold{准线}：$xy$面的圆$x^2+y^2=R^2$．\par
+\bold{母线}：平行于$z$轴的直线。}
+\column{.4\textwidth}
+\hfill
+\uncover<3->{%
+% Coordinate Systems: P124 and P249 in manual 2.10
+% 在定义坐标时，如果包含逗号，坐标外需要加花括号
+% Declaring and Using Images: P647 in manual 2.10
+\begin{tikzpicture}[x={(-.3cm,-.4cm)},y={(2cm,0cm)},z={(0cm,2cm)},samples=40,scale=.8]
+\drawline{}{densely dashed}{(-6.5,0,0),(-5.9,0,0),(5.9,0,0),(6.5,0,0)}; \draw[->] (6,0,0) -- (6.5,0,0) node[left,below] {$x$};
+\drawline{}{densely dashed}{(0,-1.2,0),(0,-1,0),(0,1,0),(0,1.2,0)}; \draw[->] (0,1,0) -- (0,1.2,0) node[right] {$y$};
+\drawline{}{densely dashed}{(0,0,-1.5),(0,0,-1.2),(0,0,1),(0,0,1.5)}; \draw[->] (0,0,1) -- (0,0,1.5) node[above] {$z$};
+\draw[thick] plot[domain=0:2*pi] ({sin(\x r)}, {cos(\x r)}, 1);
+\drawplot[thick,color=accent1]{}{densely dashed}{0,pi,2*pi}{({sin(\x r)}, {cos(\x r)}, 0)}
+\drawplot[thick]{}{densely dashed}{0,pi,2*pi}{({sin(\x r)}, {cos(\x r)}, -1)}
+\draw[thick] (0,1,-1) -- (0,1,1);
+\draw[thick] (0,-1,-1) -- (0,-1,1);
+\end{tikzpicture}}
+\end{columns}
+\uncover<6->{一般地，方程$F(x,y)=0$在空间中表示一个\bold{柱面}。}
+\end{frame}
+
+\begin{frame}
+%\frametitle{抛物柱面}
+\begin{columns}[onlytextwidth]%[T]
+\column{.6\textwidth}
+\begin{example*}
+$y=x^2$ \bold{抛物柱面}
+\end{example*}
+\vspace{2em}
+\begin{description}[一二]
+  \item[准线] $xy$面上的抛物线$y=x^2$
+  \item[母线] 平行于$z$轴的直线
+\end{description}
+\column{.4\textwidth}
+\hfill
+%\tikzset{external/remake next}
+\begin{tikzpicture}[x={(-.3cm,-.4cm)},y={(2cm,0cm)},z={(0cm,2cm)},samples=40,thick]
+\drawline{}{densely dashed}{(-7,0,0),(-5.9,0,0),(0,0,0),(3,0,0)}; \draw[->] (0,0,0) -- (3,0,0) node[left,below] {$x$};
+\draw[densely dashed] (0,0,0) node[left]{$O$} -- (0,.83,0); \draw[->] (0,.85,0) -- (0,1.4,0) node[right] {$y$};
+\draw[->] (0,0,-1.5) -- (0,0,1.5) node[above] {$z$};
+\draw plot[domain=-1:1,samples=40] (\x,{(\x)^2},1);
+\drawplot[color=accent1,thick]{}{densely dashed}{-1,-.85,0,1}{(\x,{(\x)^2},0)};
+\drawplot{}{densely dashed}{-1,-.85,0,1}{(\x,{(\x)^2},-1)};
+\draw (1,1,-1) -- (1,1,1);
+\draw (-1,1,-1) -- (-1,1,1);
+\end{tikzpicture}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+%\frametitle{双曲柱面}
+\begin{columns}[onlytextwidth]%[T]
+\column{.55\textwidth}
+\begin{example*}
+$y^2-x^2=1$ \bold{双曲柱面}
+\end{example*}
+\vspace{2em}
+\begin{description}[一二]
+  \item[准线] $xy$面上的双曲线%$y^2-x^2=1$
+  \item[母线] 平行于$z$轴的直线
+\end{description}
+\column{.45\textwidth}
+\hfill
+\begin{tikzpicture}[x={(-.2cm,-.5cm)},y={(1.4cm,0cm)},z={(0cm,2cm)},samples=40,variable=\x,thick,scale=0.9]
+\draw[->] (-2,0,0) -- (2,0,0) node[left,below] {$x$};
+\drawline{}{densely dashed}{(0,-1.8,0),(0,-1.6,0),(0,-1,0),(0,1,0),(0,1.3,0),(0,1.8,0)}; \draw[->] (0,1.3,0) -- (0,1.8,0) node[right] {$y$};
+\draw[->] (0,0,-1.2) -- (0,0,1) node[above] {$z$};
+\draw plot[domain=-1:1,samples=40,variable=\x] (\x,{sqrt((\x)^2+1)},1);
+\drawplot[color=accent1,thick]{}{densely dashed}{-1,-.71,0,1}{(\x,{sqrt((\x)^2+1)},0)};
+\drawplot{}{densely dashed}{-1,-.71,0,1}{(\x,{sqrt((\x)^2+1)},-1)};
+\draw (0,1,-1) -- (0,1,1);
+\draw (-1,1.41,-1) -- (-1,1.41,1);
+\draw (1,1.41,-1) -- (1,1.41,1);
+\draw plot[domain=-1:1,samples=40,variable=\x] (\x,{-sqrt((\x)^2+1)},1);
+\drawplot[color=accent1,thick]{densely dashed}{}{-1,0,1}{(\x,{-sqrt((\x)^2+1)},0)};
+\drawplot{densely dashed}{}{-1,0,1}{(\x,{-sqrt((\x)^2+1)},-1)};
+\draw (0,-1,-1) -- (0,-1,1);
+\draw[densely dashed] (-1,-1.41,-1) -- (-1,-1.41,1);
+\draw (1,-1.41,-1) -- (1,-1.41,1);
+\end{tikzpicture}
+\end{columns}
+\end{frame}
+
+\subsection{二次曲面}
+
+\begin{frame}
+\frametitle{椭球面}
+\begin{columns}[onlytextwidth]
+\column{.5\textwidth}
+$\dfrac{x^2}{a^2}+\dfrac{y^2}{b^2}+\dfrac{z^2}{c^2}=1$
+\column{.5\textwidth}
+\centering
+%\tikzset{external/remake next}
+\begin{tikzpicture}[x={(-.2cm,-.2cm)},y={(2cm,0cm)},z={(0cm,2cm)},samples=40,variable=\t]
+\drawline{}{densely dashed}{(-6.5,0,0),(-4.5,0,0),(4.5,0,0),(6.5,0,0)}; \draw[->] (6,0,0) -- (6.5,0,0) node[left,below] {$x$};
+\drawline{}{densely dashed}{(0,-1.2,0),(0,-1,0),(0,1,0),(0,1.2,0)}; \draw[->] (0,1,0) -- (0,1.2,0) node[right] {$y$};
+\drawline{}{densely dashed}{(0,0,-.5),(0,0,-1),(0,0,.5),(0,0,1)}; \draw[->] (0,0,.5) -- (0,0,1) node[above] {$z$};
+\draw[thick] plot[domain=0:2*pi] (0,{sin(\t r)},{.5*cos(\t r)});
+\drawplot{thick}{densely dashed}{0,pi,2*pi}{({sin(\t r)},{cos(\t r)},0)}
+\drawplot{thick}{densely dashed}{0,pi,2*pi}{({sin(\t r)},0,{.5*cos(\t r)})}
+\end{tikzpicture}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{椭圆锥面}
+\begin{columns}[onlytextwidth]
+\column{.4\textwidth}
+$\dfrac{x^2}{a^2}+\dfrac{y^2}{b^2}=z^2$
+\column{.5\textwidth}
+\centering
+%\tikzset{external/remake next}
+\begin{tikzpicture}[x={(-.3cm,-.2cm)},y={(2cm,0cm)},z={(0cm,2cm)},samples=40,variable=\t]
+\draw[->] (-5,0,0) -- (5,0,0) node[above] {$x$};
+\draw[->] (0,-1,0) -- (0,1,0) node[right] {$y$};
+\drawline{}{densely dashed}{(0,0,-1.5),(0,0,-1.1),(0,0,1),(0,0,1.5)}; \draw[->] (0,0,1) -- (0,0,1.5) node[above] {$z$};
+\draw[thick] plot[domain=0:2*pi] ({sin(\t r)},{cos(\t r)},1);
+\drawplot[thick]{}{densely dashed}{0,pi,2*pi}{({sin(\t r)},{cos(\t r)},-1)}
+\draw[thick] (0,1,-1) -- (0,-1,1);
+\draw[thick] (0,-1,-1) -- (0,1,1);
+\draw (-1,0,1) -- (1,0,1) (0,-1,1) -- (0,1,1);
+\draw[densely dashed] (-1,0,-1) -- (1,0,-1) (0,-1,-1) -- (0,1,-1);
+\end{tikzpicture}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{椭圆抛物面}
+\begin{columns}[onlytextwidth]
+\column{.4\textwidth}
+$z=\dfrac{x^2}{a^2}+\dfrac{y^2}{b^2}$
+\column{.6\textwidth}
+\centering
+%\tikzset{external/remake next}
+\begin{tikzpicture}[x={(-.3cm,-.2cm)},y={(2cm,0cm)},z={(0cm,2cm)},samples=40,variable=\t]
+\draw[->] (0,0,0) -- (5,0,0) node[above] {$x$};
+\draw[->] (0,-1,0) -- (0,1,0) node[right] {$y$};
+\draw[densely dashed] (0,0,0) -- (0,0,.9); \draw[->] (0,0,-.6) -- (0,0,0) (0,0,.9) -- (0,0,1.3) node[above] {$z$};
+\draw[thick] plot[domain=0:2*pi] ({sin(\t r)},{cos(\t r)},1);
+\draw[thick] plot[domain=-1:1] (0,\t,{(\t)^2});
+\drawplot[thick]{densely dashed}{}{-1,0,1}{(\t,0,{(\t)^2})}
+\draw (-1,0,1) -- (1,0,1) (0,-1,1) -- (0,1,1);
+\end{tikzpicture}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{双曲抛物面}
+\begin{columns}[onlytextwidth]
+\column{.4\textwidth}
+\begin{itemize}
+  \item $z=-\dfrac{x^2}{a^2}+\dfrac{y^2}{b^2}$\vspace{1em}
+  \item 又称为\bold{马鞍面}
+\end{itemize}
+\column{.6\textwidth}
+\centering
+%\tikzset{external/remake next}
+\begin{tikzpicture}[x={(-.3cm,-.2cm)},y={(2cm,0cm)},z={(0cm,2cm)},samples=40,variable=\t]
+\draw[->] (0,0,0) -- (3,0,0) node[above] {$x$};
+\draw[->] (0,0,0) -- (0,1.3,0) node[right] {$y$};
+\draw[->] (0,0,0) -- (0,0,1) node[above] {$z$};
+\draw[thick] plot[domain=-1:1] (0,\t,{(\t)^2});
+\draw[thick] plot[domain=-1:1] (\t,{sqrt(1+(\t)^2)},1);
+\draw[thick] plot[domain=-1:1] (\t,{-sqrt(1+(\t)^2)},1);
+\drawplot[thick]{densely dashed}{}{-1,0,1}{(\t,0,{-(\t)^2})}
+\draw[thick] plot[domain=-1.414:1.414] (1,\t,{(\t)^2-1});
+\drawplot[thick]{}{densely dashed}{-1.414,-1.38,.20,1.414}{(-1,\t,{(\t)^2-1})};
+\end{tikzpicture}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{二次曲面的分类}
+{\footnotesize\renewcommand{\arraystretch}{2}
+\begin{tabularx}{\textwidth}{|c||X|X|X|}
+\hline\hline
+\multirow{2}{*}{椭圆型} & 椭球面 & 椭圆锥面 & 椭圆柱面 \\
+      & $\frac{x^2}{a^2}+\frac{y^2}{b^2}+\frac{z^2}{c^2}=1$
+      & $\frac{x^2}{a^2}+\frac{y^2}{b^2}=z^2$
+      & $\frac{x^2}{a^2}+\frac{y^2}{b^2}=1$\\
+\hline\hline
+\multirow{2}{*}{双曲型} & 单叶双曲面 & 双叶双曲面 & 双曲柱面 \\
+      & $\frac{x^2}{a^2}+\frac{y^2}{b^2}-\frac{z^2}{c^2}=1$
+      & $\frac{x^2}{a^2}-\frac{y^2}{b^2}-\frac{z^2}{c^2}=1$
+      & $-\frac{x^2}{a^2}+\frac{y^2}{b^2}=1$\\
+\hline\hline
+\multirow{2}{*}{抛物型} & 椭圆抛物面 & 双曲抛物面 & 抛物柱面\\
+      & $z=\frac{x^2}{a^2}+\frac{y^2}{b^2}$
+      & $z=-\frac{x^2}{a^2}+\frac{y^2}{b^2}$
+      & $x=ay^2$\\
+\hline
+\end{tabularx}
+}
+\end{frame}
+
+\begin{frame}
+%\frametitle{二次曲面的图形}
+{\footnotesize\renewcommand{\arraystretch}{1}
+\begin{tabular}{ccc}
+\begin{tikzpicture}[x={(-.2cm,-.2cm)},y={(2cm,0cm)},z={(0cm,2cm)},samples=40,variable=\t,scale=.55]
+    \drawline{}{densely dashed}{(-6.5,0,0),(-4.5,0,0),(4.5,0,0),(6.5,0,0)}; \draw[->] (6,0,0) -- (6.5,0,0) node[left,below] {$x$};
+    \drawline{}{densely dashed}{(0,-1.2,0),(0,-1,0),(0,1,0),(0,1.2,0)}; \draw[->] (0,1,0) -- (0,1.2,0) node[right] {$y$};
+    \drawline{}{densely dashed}{(0,0,-.5),(0,0,-1),(0,0,.5),(0,0,1)}; \draw[->] (0,0,.5) -- (0,0,1) node[above] {$z$};
+    \draw[thick] plot[domain=0:2*pi] (0,{sin(\t r)},{.5*cos(\t r)});
+    \drawplot{thick}{densely dashed}{0,pi,2*pi}{({sin(\t r)},{cos(\t r)},0)}
+    \drawplot{thick}{densely dashed}{0,pi,2*pi}{({sin(\t r)},0,{.5*cos(\t r)})}
+\end{tikzpicture}
+&\begin{tikzpicture}[x={(-.3cm,-.2cm)},y={(2cm,0cm)},z={(0cm,2cm)},samples=40,variable=\t,scale=.35]
+    \draw[->] (-5,0,0) -- (5,0,0) node[above] {$x$};
+    \draw[->] (0,-1,0) -- (0,1,0) node[right] {$y$};
+    \drawline{}{densely dashed}{(0,0,-1.5),(0,0,-1.1),(0,0,1),(0,0,1.5)}; \draw[->] (0,0,1) -- (0,0,1.5) node[above] {$z$};
+    \draw[thick] plot[domain=0:2*pi] ({sin(\t r)},{cos(\t r)},1);
+    \drawplot[thick]{}{densely dashed}{0,pi,2*pi}{({sin(\t r)},{cos(\t r)},-1)}
+    \draw[thick] (0,1,-1) -- (0,-1,1);
+    \draw[thick] (0,-1,-1) -- (0,1,1);
+    \draw (-1,0,1) -- (1,0,1) (0,-1,1) -- (0,1,1);
+    \draw[densely dashed] (-1,0,-1) -- (1,0,-1) (0,-1,-1) -- (0,1,-1);
+\end{tikzpicture}
+&\begin{tikzpicture}[x={(-.3cm,-.4cm)},y={(2cm,0cm)},z={(0cm,2cm)},samples=40,variable=\t,scale=.4]
+    \drawline{}{densely dashed}{(-6.5,0,0),(-5.9,0,0),(5.9,0,0),(6.5,0,0)}; \draw[->] (6,0,0) -- (6.5,0,0) node[left,below] {$x$};
+    \drawline{}{densely dashed}{(0,-1.2,0),(0,-1,0),(0,1,0),(0,1.2,0)}; \draw[->] (0,1,0) -- (0,1.2,0) node[right] {$y$};
+    \drawline{}{densely dashed}{(0,0,-1.5),(0,0,-1.2),(0,0,1),(0,0,1.5)}; \draw[->] (0,0,1) -- (0,0,1.5) node[above] {$z$};
+    \draw[thick] plot[domain=0:2*pi] ({sin(\t r)},{cos(\t r)},1);
+    \drawplot[thick,color=accent3]{}{densely dashed}{0,pi,2*pi}{({sin(\t r)},{cos(\t r)},0)}
+    \drawplot[thick]{}{densely dashed}{0,pi,2*pi}{({sin(\t r)},{cos(\t r)},-1)}
+    \draw[thick] (0,1,-1) -- (0,1,1);
+    \draw[thick] (0,-1,-1) -- (0,-1,1);
+\end{tikzpicture}\\
+\begin{tikzpicture}[scale=.4]
+    \draw[densely dashed] (0,0) -- (-.65,-.65) ; \draw[->] (-.7,-.7) -- (-1.7,-1.7) node[left]{$x$};
+    \draw[densely dashed] (0,0) -- (0.55,0); \draw[->] (0.6,0) -- (1.6,0) node[right] {$y$};
+    \draw[densely dashed] (0,0) -- (0,1.45); \draw[->] (0,1.5) -- (0,2.4) node[above] {$z$};
+    \draw(-.6,0) arc (180 : 360 : .6 and .3); \draw[densely dashed] (.6,0) arc (0 : 180 : .6 and .3);
+    \draw(-1,-1.5) arc (180 : 360 : 1 and .5); \draw[densely dashed] (1,-1.5) arc (0 : 180 : 1 and .5);
+    \draw(0,1.5) ellipse (1 and .5);
+    \draw[thick] plot[smooth,tension=.8] coordinates {(1,1.5) (0.6,0) (1,-1.5)};
+    \draw[thick] plot[smooth,tension=.8] coordinates {(-1,1.5) (-0.6,0) (-1,-1.5)};
+\end{tikzpicture}
+&\begin{tikzpicture}[scale=0.45]
+    \node[inner sep=1pt,below right] at (0,0) {$O$};
+    \draw[->] (0,0) -- (-1.4,-1.4) node[left]{$x$};
+    \draw[->] (-3.4,0) -- (-2.8,0) (-1.11,0) -- (1.11,0) (2.2,0) -- (3.4,0) node[right] {$y$};
+    \draw[densely dashed] (-2.75,0)-- (-1.14,0) (1.16,0) -- (2.15,0);
+    \draw[->] (0,0) -- (0,2) node[above] {$z$};
+    \draw (2.5,0) ellipse (.3 and 1);
+    \draw[domain=-1:1,thick] plot[variable=\y] ({sqrt(5*(\y)^2+1.25)},\y);
+    \draw (2.5,1) -- (2.5,-1) (2.22,-0.28) -- (2.78,0.28);
+    \draw[domain=-.28:0] plot[variable=\y] ({14*(\y)^2+1.12},\y);
+    \draw[domain=0:.28,densely dashed] plot[variable=\y] ({21.5*(\y)^2+1.12},\y);
+    \draw (-2.5,1) arc (90 : 270 : .3 and 1); \draw[densely dashed] (-2.5,-1) arc (-90 : 90 : .3 and 1);
+    \draw[domain=-1:1,thick] plot[variable=\y] ({-sqrt(5*(\y)^2+1.25)},\y);
+    \draw[densely dashed] (-2.5,1) -- (-2.5,-1) (-2.22,0.28) -- (-2.78,-0.28);
+    \draw[domain=-.28:0] plot[variable=\y] ({-21.5*(\y)^2-1.12},\y);
+    \draw[domain=0:.28,densely dashed] plot[variable=\y] ({-14*(\y)^2-1.12},\y);
+\end{tikzpicture}
+&\begin{tikzpicture}[x={(-.2cm,-.5cm)},y={(1.4cm,0cm)},z={(0cm,2cm)},samples=40,variable=\x,scale=0.4]
+    \draw[->] (-2,0,0) -- (2,0,0) node[left,below] {$x$};
+    \drawline{}{densely dashed}{(0,-1.8,0),(0,-1.6,0),(0,-1,0),(0,1,0),(0,1.3,0),(0,1.8,0)}; \draw[->] (0,1.3,0) -- (0,1.8,0) node[right] {$y$};
+    \draw[->] (0,0,-1.2) -- (0,0,1) node[above] {$z$};
+    \draw[thick] plot[domain=-1:1,samples=40,variable=\x] (\x,{sqrt((\x)^2+1)},1);
+    \drawplot[color=accent3,thick]{}{densely dashed}{-1,-.71,0,1}{(\x,{sqrt((\x)^2+1)},0)};
+    \drawplot[thick]{}{densely dashed}{-1,-.71,0,1}{(\x,{sqrt((\x)^2+1)},-1)};
+    \draw[thick] (0,1,-1) -- (0,1,1);
+    \draw[thick] (-1,1.41,-1) -- (-1,1.41,1);
+    \draw[thick] (1,1.41,-1) -- (1,1.41,1);
+    \draw[thick] plot[domain=-1:1,samples=40,variable=\x] (\x,{-sqrt((\x)^2+1)},1);
+    \drawplot[color=accent3,thick]{densely dashed}{}{-1,0,1}{(\x,{-sqrt((\x)^2+1)},0)};
+    \drawplot[thick]{densely dashed}{}{-1,0,1}{(\x,{-sqrt((\x)^2+1)},-1)};
+    \draw[thick] (0,-1,-1) -- (0,-1,1);
+    \draw[thick,densely dashed] (-1,-1.41,-1) -- (-1,-1.41,1);
+    \draw[thick] (1,-1.41,-1) -- (1,-1.41,1);
+\end{tikzpicture}\\
+\begin{tikzpicture}[x={(-.3cm,-.2cm)},y={(2cm,0cm)},z={(0cm,2cm)},samples=40,variable=\t,scale=.5]
+    \draw[->] (0,0,0) -- (5,0,0) node[above] {$x$};
+    \draw[->] (0,-1,0) -- (0,1,0) node[right] {$y$};
+    \draw[densely dashed] (0,0,0) -- (0,0,.9); \draw[->] (0,0,-.6) -- (0,0,0) (0,0,.9) -- (0,0,1.3) node[above] {$z$};
+    \draw[thick] plot[domain=0:2*pi] ({sin(\t r)},{cos(\t r)},1);
+    \draw[thick] plot[domain=-1:1] (0,\t,{(\t)^2});
+    \drawplot[thick]{densely dashed}{}{-1,0,1}{(\t,0,{(\t)^2})}
+    \draw (-1,0,1) -- (1,0,1) (0,-1,1) -- (0,1,1);
+\end{tikzpicture}
+&\begin{tikzpicture}[x={(-.3cm,-.2cm)},y={(2cm,0cm)},z={(0cm,2cm)},samples=40,variable=\t,scale=.4]
+    \draw[->] (0,0,0) -- (3,0,0) node[above] {$x$};
+    \draw[->] (0,0,0) -- (0,1.3,0) node[right] {$y$};
+    \draw[->] (0,0,0) -- (0,0,1) node[above] {$z$};
+    \draw[thick] plot[domain=-1:1] (0,\t,{(\t)^2});
+    \draw[thick] plot[domain=-1:1] (\t,{sqrt(1+(\t)^2)},1);
+    \draw[thick] plot[domain=-1:1] (\t,{-sqrt(1+(\t)^2)},1);
+    \drawplot[thick]{densely dashed}{}{-1,0,1}{(\t,0,{-(\t)^2})}
+    \draw[thick] plot[domain=-1.414:1.414] (1,\t,{(\t)^2-1});
+    \drawplot[thick]{}{densely dashed}{-1.414,-1.38,.20,1.414}{(-1,\t,{(\t)^2-1})};
+\end{tikzpicture}
+&\begin{tikzpicture}[x={(-.3cm,-.4cm)},y={(2cm,0cm)},z={(0cm,2cm)},samples=40,scale=0.4]
+    \drawline{}{densely dashed}{(-7,0,0),(-5.9,0,0),(0,0,0),(3,0,0)}; \draw[->] (0,0,0) -- (3,0,0) node[left,below] {$x$};
+    \draw[densely dashed] (0,0,0) node[left]{$O$} -- (0,.83,0); \draw[->] (0,.85,0) -- (0,1.4,0) node[right] {$y$};
+    \draw[->] (0,0,-1.5) -- (0,0,1.5) node[above] {$z$};
+    \draw[thick] plot[domain=-1:1,samples=40] (\x,{(\x)^2},1);
+    \drawplot[color=accent3,thick]{}{densely dashed}{-1,-.85,0,1}{(\x,{(\x)^2},0)};
+    \drawplot[thick]{}{densely dashed}{-1,-.85,0,1}{(\x,{(\x)^2},-1)};
+    \draw[thick] (1,1,-1) -- (1,1,1);
+    \draw[thick] (-1,1,-1) -- (-1,1,1);
+\end{tikzpicture}
+\end{tabular}
+}
+\end{frame}
+
+\mybookmark{复习与提高}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+求内切于平面$x+y+z=1$与三个坐标面所构成四面体的球面方程．
+\end{puzzle}
+\pause
+%\begin{solution}
+$\left(x-\frac{3-\sqrt3}{6}\right)^2
+\!+\left(y-\frac{3-\sqrt3}{6}\right)^2
+\!+\left(z-\frac{3-\sqrt3}{6}\right)^2
+\!\!=\left(\frac{3-\sqrt3}{6}\right)^2$
+%\end{solution}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{choice}
+下列结论中，错误的是\dotfill(\qquad)
+\begin{choiceline}
+  \item $z+2x^2+y^2=0$表示椭圆抛物面
+  \item $x^2+2y^2=1+3z^2$表示双叶双曲面
+  \item $x^2+y^2-(z-1)^2=0$表示圆锥面
+  \item $y^2=5x$表示抛物柱面
+\end{choiceline}
+\end{choice}
+\end{frame}
+
+\end{document}

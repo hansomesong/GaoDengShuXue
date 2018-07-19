@@ -1,0 +1,454 @@
+% -*- coding: utf-8 -*-
+% !TEX program = xelatex
+
+%\documentclass[14pt]{article}
+%\usepackage[notheorems]{beamerarticle}
+
+\documentclass[14pt,notheorems,leqno,xcolor={rgb}]{beamer} % ignorenonframetext
+
+\input{../common/theme.sty}
+\input{../common/share.sty}
+\input{../common/local.sty}
+
+\occasion{高等数学第十一章}
+\title{第三节·格林公式}
+\author{\href{https://lvjr.bitbucket.io}{吕荐瑞}}
+\institute{暨南大学数学系}
+\renewcommand<>{\section}[1]{\begin{frame}[plain]\titlepage\end{frame}}
+
+\makeatletter
+\beamer@tocsectionnumber=3\relax
+\setcounter{section}{3}
+\makeatother
+
+\begin{document}
+
+\section{格林公式}
+
+\subsection{格林公式}
+
+\begin{frame}
+\bold{牛顿－莱布尼茨公式}：$\displaystyle\int_{a}^{b}F'(x)\dx=F(x)\big|_{a}^{b}$\par
+$F'(x)$在闭区间的积分可以通过它的原函数$F(x)$在这个闭区间的边界(即两个端点)的值来表达．
+\vpause
+\begin{problem*}上述公式在二重积分中的类比？\end{problem*}
+\vpause
+\bold{格林公式}：
+$\displaystyle\iint_{D}\left(\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\right)\dx\dy
+ =\oint_{L}P\dx+Q\dy$\par
+在平面闭区域$D$上的二重积分可以通过沿闭区域$D$的边界曲线$L$上的曲线积分来表达．
+\end{frame}
+
+\begin{frame}
+\begin{definition*}
+设$D$为平面区域．如果$D$中任意一条闭曲线所围部分都属于$D$，
+则称$D$是\bold{单连通}区域，否则称$D$是\bold{多连通}区域．
+\end{definition*}
+\vpause
+\begin{example*}
+如图，$D_{1}$是单连通区域，而$D_{2}$是多连通区域．\par
+\centering
+\begin{tikzpicture}[scale=1.2,font=\small]
+\draw[fill=gray!30] (0,0) circle (1);
+\node at(0,-1.3) {$D_1$};
+%circle 
+\visible<3->{
+\draw[thick,blue,decoration={markings, mark=at position 0.1 with {\arrow{stealth}}},
+        decoration={markings, mark=at position 0.6 with {\arrow{stealth}}},postaction={decorate}]  
+	(0.3,-0.3) to[out=0,in=-90]
+	(0.7,0.3) to[out=90,in=0]
+	(0.2,0.7) to[out=180,in=90]
+	(-0.1,0.3) to[out=-90,in=180]
+	(0.3,-0.3); 
+}
+\end{tikzpicture}
+\hspace{2em}
+\begin{tikzpicture}[scale=1.8,font=\small]
+%body 
+\def\mya{245} 
+\draw[fill=gray!30]
+ 	(0,0) to[out=-25,in=\mya]
+ 	(2,0.5) to[out={\mya-180},in={\mya-180-90}]
+ 	(1.8,1) to[out={\mya-90},in={-\mya+270}]
+ 	(0.2,1.1) to[out={-\mya+90},in=165]
+ 	(0,0);
+\node at(1,-0.4) {$D_2$};
+%hole
+\draw[fill=white]
+	(0.2,0.2) to[out=0,in=-90]
+	(0.3,0.4) to[out=90,in=0]
+	(0.2,0.5) to[out=180,in=90]
+	(0.1,0.3) to[out=-90,in=180]
+	(0.2,0.2);
+%hole 
+\draw[fill=white] 
+	(1.0,0.6) to[out=0,in=-90]
+	(1.3,0.8) to[out=90,in=0]
+	(1.1,1.0) to[out=180,in=90]
+	(0.8,0.75) to[out=-90,in=180]
+	(1.0,0.6);
+%hole 
+\draw[fill=white] 
+	(1.3,0.0) to[out=0,in=-90]
+	(1.5,0.2) to[out=90,in=0]
+	(1.2,0.3) to[out=180,in=90]
+	(1.0,0.15) to[out=-90,in=180]
+	(1.3,0.0); 
+%hole 
+\draw[fill=white] (0.7,0.3) circle (0.5pt);
+%circle 
+\visible<4->{
+\draw[thick,red,decoration={markings, mark=at position 0.1 with {\arrow{stealth}}},
+      decoration={markings, mark=at position 0.6 with {\arrow{stealth}}},postaction={decorate}]  
+	(1.0,0.5) to[out=0,in=-90]
+	(1.4,0.9) to[out=90,in=0]
+	(0.9,1.1) to[out=180,in=90]
+	(0.7,0.8) to[out=-90,in=180]
+	(1.0,0.5);
+}
+\visible<5->{
+%circle 
+\draw[thick,blue,decoration={markings, mark=at position 0.1 with {\arrow{stealth}}},
+      decoration={markings, mark=at position 0.6 with {\arrow{stealth}}},postaction={decorate}]  
+	(0.7,0.15) to[out=0,in=-90]
+	(0.9,0.3) to[out=90,in=0]
+	(0.7,0.45) to[out=180,in=90]
+	(0.5,0.3) to[out=-90,in=180]
+	(0.7,0.15);
+}
+\end{tikzpicture}
+\end{example*}
+\vfill
+\uncover<6->{\begin{remark*}
+直观上，单连通区域是指不含“洞”的区域．
+\end{remark*}}
+\end{frame}
+
+\begin{frame}
+\frametitle{区域边界的定向}
+\begin{definition*}
+对平面区域$D$的边界曲线$L$，规定$L$的\bold{正向}如下：
+当观察者沿$L$的这个方向行走时，他的\warn{左侧}区域在$D$内部。
+\end{definition*}
+\begin{center} 
+\begin{tikzpicture}[scale=3,font=\small]
+%body 
+\def\mya{245} 
+\draw[fill=gray!30]
+ 	(0,0) to[out=-25,in=\mya]
+ 	(2,0.5) to[out={\mya-180},in={\mya-180-90}]
+ 	(1.8,1) to[out={\mya-90},in={-\mya+270}]
+ 	(0.2,1.1) to[out={-\mya+90},in=165]
+ 	(0,0);
+\visible<2->{
+\draw[very thick,blue,decoration={markings, mark=at position 0.3 with {\arrow{stealth}}},
+      decoration={markings, mark=at position 0.6 with {\arrow{stealth}}},
+      decoration={markings, mark=at position 0.9 with {\arrow{stealth}}},postaction={decorate}]
+ 	(0,0) to[out=-25,in=\mya]
+ 	(2,0.5) to[out={\mya-180},in={\mya-180-90}]
+ 	(1.8,1) to[out={\mya-90},in={-\mya+270}]
+ 	(0.2,1.1) to[out={-\mya+90},in=165]
+ 	(0,0);
+}
+\node at(0.5,0.2) {$D$};
+%hole 
+\draw[fill=white]
+	(0.5,0.5) to[out=180,in=-90]
+	(0.3,0.7) to[out=90,in=180]
+	(0.6,1.0) to[out=0,in=90]
+	(0.8,0.9) to[out=-90,in=0]
+	(0.5,0.5);
+\visible<3->{
+\draw[very thick,red,decoration={markings, mark=at position 0.25 with {\arrow{stealth}}},
+      decoration={markings, mark=at position 0.5 with {\arrow{stealth}}},
+      decoration={markings, mark=at position 0.8 with {\arrow{stealth}}},postaction={decorate}]
+	(0.5,0.5) to[out=180,in=-90]
+	(0.3,0.7) to[out=90,in=180]
+	(0.6,1.0) to[out=0,in=90]
+	(0.8,0.9) to[out=-90,in=0]
+	(0.5,0.5);
+}
+%hole 
+\draw[fill=white]
+	(1.3,0.1) to[out=180,in=-90]
+	(1.0,0.25) to[out=90,in=180]
+	(1.2,0.5) to[out=0,in=90]
+	(1.5,0.3) to[out=-90,in=0]
+	(1.3,0.1); 
+\visible<4->{
+\draw[very thick,red,decoration={markings, mark=at position 0.3 with {\arrow{stealth}}},
+      decoration={markings, mark=at position 0.6 with {\arrow{stealth}}},
+      decoration={markings, mark=at position 0.9 with {\arrow{stealth}}},postaction={decorate}]
+	(1.3,0.1) to[out=180,in=-90]
+	(1.0,0.25) to[out=90,in=180]
+	(1.2,0.5) to[out=0,in=90]
+	(1.5,0.3) to[out=-90,in=0]
+	(1.3,0.1); 
+}
+\end{tikzpicture} 
+\end{center}
+\end{frame}
+
+\begin{frame}
+\begin{theorem}[格林公式]
+设闭区域$D$由分段光滑的曲线$L$围成，函数$P(x,y)$及$Q(x,y)$在$D$上具有一阶连续偏导数，则有
+\[
+\bold{\iint_{D}\left(\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\right)\dx\dy
+  =\oint_{L}P\dx+Q\dy},
+\]
+其中$L$是$D$的\warn{取正向}的边界曲线．
+\end{theorem}
+\end{frame}
+
+\begin{sframe}
+\frametitle{格林公式}
+\begin{proof}
+(1)首先考虑$D$既是$X$型又是$Y$型区域情形．
+\par
+(2)其次考虑$D$是一般区域的情形．此时可以将$D$分成若干个(1)中的简单区域．
+\par
+注意对坐标的曲线积分是有方向的，在同一曲线沿相反方向的积分互相抵消．
+\end{proof}
+\end{sframe}
+
+\begin{frame}
+\noindent
+\[
+\bold{\iint_{D}\left(\frac{\partial Q}{\partial x}-\frac{\partial P}{\partial y}\right)\dx\dy
+  =\oint_{L}P\dx+Q\dy}.
+\]
+\pause\vfill\cdotfill\vfill
+在格林公式中取$P=-y$, $Q=x$，即得
+$$\bold{A=\iint_{D}\dx\dy=\frac{1}{2}\oint_{L}x\dy-y\dx}.$$
+也就是说，可以用此公式来计算闭区域$D$的面积．
+\end{frame}
+
+\begin{frame}
+\begin{columns}[onlytextwidth,\stext{T}]
+\column{60mm}
+\begin{example}
+求椭圆$x=a\cos\theta$,\newline$y=b\sin\theta$的面积$A$．
+\end{example}
+\stext{\onslide<2->{\parbox[t]{60mm}{\begin{align*}\smark
+A&=\frac{1}{2}\oint_{L}x\dy-y\dx \\
+ &\uncover<3->{=\begin{aligned}[t]\frac{1}{2}\int_{0}^{2\pi}\bigg[&(a\cos\theta)(b\sin\theta)'\\
+          -&(b\sin\theta)(a\cos\theta)'\bigg]\d\theta\end{aligned}}\\
+ &\uncover<4->{=\frac{1}{2}\int_{0}^{2\pi}ab\d\theta}
+  \uncover<5->{=\pi ab.}
+\end{align*}}}}
+\column{60mm}
+\hfill
+\begin{tikzpicture}[thick,scale=1.2,font=\small]
+%coordinates 
+\draw[gray,thin,-stealth] (-2,0)--(2,0) node[right] {$x$};
+\draw[gray,thin,-stealth] (0,-1.5)--(0,1.5) node[right] {$y$};
+\node[below right] at(1.5,0) {$a$}; 
+\node[above left] at(0,1) {$b$};
+\mode<beamer>{\fill[fill=gray!30,opacity=0.6](0,0) ellipse (1.5 and 1);}
+\draw (0,0) ellipse (1.5 and 1); \node[below left] at(60:1.3 and 0.8) {$A$};
+\draw[blue, decoration={markings, mark=at position 0.125 with {\arrow{stealth}}},
+            decoration={markings, mark=at position 0.375 with {\arrow{stealth}}}, 
+            decoration={markings, mark=at position 0.675 with {\arrow{stealth}}}, 
+            decoration={markings, mark=at position 0.875 with {\arrow{stealth}}},postaction={decorate}]
+   (0,0) ellipse (1.5 and 1);
+\node[above right] at(45:1.5 and 1) {$L$};
+\end{tikzpicture} 
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+设$L$是一条分段光滑的闭曲线，证明：
+$$\oint_{L}2xy\dx+x^2\dy=0.$$ %(参考第2节例3)
+\end{example}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+计算$\iint_{D}\e^{-y^2}\dx\dy$，其中$D$是以$O(0,0)$, $A(1,1)$, $B(0,1)$为顶点的三角形闭区域．
+\end{example}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+设$L$为一条无重点、分段光滑且不经过原点的连续闭曲线，
+$L$的方向为逆时针方向．计算
+$$\displaystyle\oint_L \frac{x\dy-y\dx}{x^2+y^2}.$$
+\end{example}
+\pause\hrule\vspace{0.5em}
+\begin{columns}[onlytextwidth,t]
+\column{0.5\textwidth}
+情形1：$(0,0)\not\in D$．\\
+\begin{tikzpicture}[thick,scale=0.8,font=\small]
+%\path[use as bounding box] (-2.4,-2.3) rectangle (2.1,2.6);
+\draw[fill=gray!30,draw=accent1,postaction={decorate},
+      decoration={markings, mark=at position 0.35 with {\arrow[accent1]{stealth}}},
+      decoration={markings, mark=at position 0.85 with {\arrow[accent1]{stealth}}}]
+  (-1,-1) to[bend right=105] (1.5,2.2) to[bend left=-75] (-1,-1);
+\node at (0.2,0.5) {$D$};
+\node[color=accent1,above right] at (1.5,2) {$L$};
+\draw[-stealth,thin] (-2.4,-2)--(2.1,-2) node[above left] {$x$};
+\draw[-stealth,thin] (-2,-2.3)--(-2,2.6) node[below right] {$y$};
+\end{tikzpicture}%
+\column{0.5\textwidth}\pause
+情形2：$(0,0)\in D$．\\
+\begin{tikzpicture}[thick,font=\small]
+\path[use as bounding box] (-1.4,-1.3) rectangle (2.3,2.6);
+\draw[fill=gray!30,draw=accent1,postaction={decorate},
+      decoration={markings, mark=at position 0.35 with {\arrow[accent1]{stealth}}},
+      decoration={markings, mark=at position 0.85 with {\arrow[accent1]{stealth}}}]
+  (-1,-1) to[bend right=105] (1.5,2.2) to[bend left=-75] (-1,-1); 
+\draw[fill=white,draw=accent3,postaction={decorate},
+      decoration={markings, mark=at position 0.35 with {\arrow[accent3]{stealth}}},
+      decoration={markings, mark=at position 0.85 with {\arrow[accent3]{stealth}}}]
+  (0.5,0) arc (0:-360:0.5);
+\node at (1.2,1.5) {$D_1$};
+\node[color=accent1,above right] at (1.5,2) {$L$};
+\node[color=accent3,above right] at (0.4,0) {$l$};
+\draw[-stealth,thin] (-1.4,0)--(1.9,0) node[below left] {$x$};
+\draw[-stealth,thin] (0,-1.3)--(0,2.6) node[below left] {$y$};
+\end{tikzpicture}%
+\end{columns}
+\stext{\pause\begin{remark*}\smark
+注意这里选取的$l$的方向与书上不一致．
+\end{remark*}}
+\end{frame}
+
+\subsection{曲线积分与路径无关的条件}
+
+\begin{frame}
+\begin{definition*}
+设$G$是一个区域，函数$P(x,y)$，$Q(x,y)$在$G$内具有一阶连续偏导数．
+如果对于$G$内\CJKunderdot{任意}指定的两个点$A$和$B$以及$G$内从$A$到$B$
+的\CJKunderdot{任意}两条曲线$L_1$和$L_2$，等式
+\[ \int_{L_1}P\dx+Q\dy = \int_{L_2}P\dx+Q\dy \]
+\CJKunderdot{恒成立}，就说曲线积分$\int_{L}P\dx+Q\dy$在$G$内\bold{与路径无关}，
+否则就说\bold{与路径有关}．  
+\end{definition*}
+\end{frame}
+
+\begin{frame}
+\begin{theorem}
+设$G$是\CJKunderdot{单连通}区域，函数$P(x,y)$，$Q(x,y)$在$G$内具有一阶连续偏导数，则下述三者等价：
+\begin{enumerate}
+  \item 在$G$内的曲线积分$\displaystyle\int_{L}P\dx+Q\dy$与路径无关．
+  \item 在$G$内的\CJKunderdot{闭}曲线积分$\displaystyle\oint_{C}P\dx+Q\dy$恒为零．
+  \item 在$G$内$\dfrac{\partial Q}{\partial x}=\dfrac{\partial P}{\partial y}$恒成立．
+\end{enumerate}
+\end{theorem}
+\pause
+\begin{remark*}
+由前面例子知道，对于\CJKunderdot{多连通}区域，上述定理未必成立．
+\end{remark*}
+\end{frame}
+
+\subsection{二元函数的全微分求积}
+
+\begin{frame}
+\begin{theorem}
+设$G$是\CJKunderdot{单连通}区域，函数$P(x,y)$，$Q(x,y)$在$G$内具有一阶连续偏导数，
+则下述等价：
+\begin{enumerate}
+  \item 在$G$内的曲线积分$\displaystyle\int_{L}P\dx+Q\dy$与路径无关．
+  \item 在$G$内的\CJKunderdot{闭}曲线积分$\displaystyle\oint_{C}P\dx+Q\dy$恒为零．
+  \item 在$G$内$\dfrac{\partial Q}{\partial x}=\dfrac{\partial P}{\partial y}$恒成立．
+  \item 在$G$内存在$u(x,y)$，使得$\bold{\strut\du=P\dx+Q\dy}$．
+\end{enumerate}
+\end{theorem}
+\end{frame}
+
+\begin{rframe}
+\frametitle{从微分求函数}
+已知$\dy=P(x)\dx$，求过点$(x_0,0)$的函数$y=f(x)$．我们有
+\[ y = \int_{x_0}^x P(x)\dx. \]
+\vfill\hrule\vfill
+已知$\du=P(x,y)\dx+Q(x,y)\dy$，求过点$(x_0,y_0)$的函数$u=u(x,y)$．我们有
+\[ u(x,y)=\int_{(x_{0},y_{0})}^{(x,y)}P(x,y)\dx+Q(x,y)\dy. \]
+\end{rframe}
+
+\begin{frame}
+\begin{remark*}
+若在$G$内存在$u(x,y)$使得$\du=P\dx+Q\dy$，则有
+\[\cbold u(x,y)=\int_{(x_{0},y_{0})}^{(x,y)}P(x,y)\dx+Q(x,y)\dy. \]
+\end{remark*}
+\vpause
+在前面的式子中取特殊的路径，可以得到
+\begin{align}
+  u(x,y) &= \int_{x_0}^{x}P(x,\bold{y_0})\dx+\int_{y_0}^{y}Q(x,y)\dy \\
+  u(x,y) &= \int_{x_0}^{x}P(x,y)\dx+\int_{y_0}^{y}Q(\bold{x_0},y)\dy
+\end{align}
+\end{frame}
+
+\begin{frame}
+\frametitle{二元函数的全微分求积}
+\begin{example}
+验证：$\dfrac{x\dy-y\dx}{x^2+y^2}$在右半平面($x>0$)内是某个函数的全微分，并求出一个这样的函数．
+\end{example}
+\stext{\pause\begin{method}\smark
+令$P(x,y)=-\dfrac{y}{x^2+y^2}$，$Q(x,y)=\dfrac{x}{x^2+y^2}$．\newline
+取$(x_0,y_0)=(1,0)$，用公式(1)计算得到%\let\displaystyle=\textstyle
+\begin{align*}
+  u(x,y) &= \int_1^x -\frac{0}{x^2+0^2}\dx + \int_0^y \dfrac{x}{x^2+y^2}\dy \\
+         &= \left[x\cdot\frac1x\arctan\wfrac{y}{x}\right]_0^y = \arctan\wfrac{y}{x}.
+\end{align*}
+\end{method}}
+\end{frame}
+
+\begin{sframe}%[shrink=8]
+%\frametitle{二元函数的全微分求积}
+\begin{method}
+仍旧取$(x_0,y_0)=(1,0)$，改用公式(2)可得%\let\displaystyle=\textstyle
+\begin{align*}
+  u(x,y) &= \int_1^x -\dfrac{y}{x^2+y^2}\dx + \int_0^y \dfrac{1}{1^2+y^2}\dy \\
+         &= \left[-\arctan\wfrac{x}{y}\right]_1^x + \bigg[\arctan y\bigg]_0^y \\
+         &= -\arctan\wfrac{x}{y} + \arctan\wfrac1y + \arctan y
+\end{align*}
+\end{method}
+\begin{remark*}
+两种方法计算出的结果是相等的：事实上
+\[ \arctan\wfrac1y + \arctan y = \arctan\wfrac{x}{y} + \arctan\wfrac{y}{x}. \]
+原因是当$v\neq0$时$\arctan v + \arctan(1/v)$为常数．
+\end{remark*}
+\end{sframe}
+
+\begin{frame}
+\frametitle{二元函数的全微分求积}
+\begin{example}
+验证：在整个平面内，$xy^2\dx+x^2y\dy$是某个函数的全微分，并求出一个这样的函数．
+\end{example}
+\end{frame}
+
+\mybookmark{复习与提高}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{review}
+利用格林公式计算曲线积分
+$$I=\oint_{C}(y^4+x^3)\dx+2x^6\dy$$
+其中$C$是矩形$[0,1]\times[0,1]$的边界，取逆时针方向．
+\end{review}
+\stext{\vpause
+\begin{solution}\smark
+$I=\iint_{D}(12x^5-4y^3)\dx\dy=1$．
+\end{solution}}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+设$L$为从$O(0,0)$到$A(4,0)$的上半圆周$y=\sqrt{4x-x^2}$，计算曲线积分
+\[ I=\int_L (x^2+3y)\dx + (y^2-x)\dy. \]
+\end{puzzle}
+\stext{\pause
+\begin{solution}\smark
+为了使用格林公式，添加辅助线段$AO$，则有\let\displaystyle=\textstyle
+\begin{align*}
+  \int_{L+AO}(x^2+3y)\dx+(y^2-x)\dy
+   = 4\iint_D\d\sigma = 8\pi, \\
+  \int_{AO}(x^2+3y)\dx+(y^2-x)\dy = \int_{AO}x^2\dx=-\frac{64}{3}.
+\end{align*}
+故$I = \int_{L+AO}P\dx+Q\dy - \int_{AO}P\dx+Q\dy = 8\pi + \frac{64}{3}$.
+\end{solution}}
+\end{frame}
+
+\end{document}

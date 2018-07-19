@@ -1,0 +1,1170 @@
+% -*- coding: utf-8 -*-
+% !TEX program = xelatex
+
+%\documentclass[14pt]{article}
+%\usepackage[notheorems]{beamerarticle}
+
+\documentclass[14pt,notheorems,leqno,xcolor={rgb}]{beamer} % ignorenonframetext
+
+\input{../common/theme.sty}
+\input{../common/share.sty}
+\input{../common/local.sty}
+
+\begin{document}
+
+\occasion{高等数学课程}
+\title{第三章·导数的应用}
+\author{\href{https://lvjr.bitbucket.io}{吕荐瑞}}
+\institute{暨南大学数学系}
+
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+\section{微分中值定理}
+
+\subsection{罗尔中值定理}
+
+\begin{iframe}
+\frametitle{费马引理}
+\lead{费马引理}\quad
+设$f(x)$在点$x_0$的某邻域$U(x_0)$内有定义，
+且$\forall x\in U(x_0)$有$f(x)\le f(x_0)$（或$f(x)\ge f(x_0)$）．
+如果$f(x)$在$x_0$处可导．则有$f'(x_0)=0$．
+\end{iframe}
+
+\begin{frame}
+\frametitle{罗尔定理}
+\begin{theorem}
+如果函数$f(x)$满足条件：
+\begin{enumskip}
+\item 在闭区间$[a,b]$上连续，
+\item 在开区间$(a,b)$上可导，
+\item 在端点处$f(a)=f(b)$，
+\end{enumskip}
+则至少存在一点$\xi\in(a,b)$，使得$f'(\xi)=0$.
+\end{theorem}
+\vpause
+\begin{fact}
+如果定理的三个条件有一个不满足，则结论可能不成立．
+\end{fact}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+下列函数只满足罗尔定理的条件(2)和(3)，不满足条件(1)，因此没有导数为零的点．
+\[f(x)=\begin{cases}x,&-1\leq x<1 \\
+-1, &x=1\end{cases}\]
+\end{example}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+下列函数只满足罗尔定理的条件(1)和(3)，不满足条件(2)，因此没有导数为零的点．
+\[f(x)=|x|, -1\leq x\leq 1\]
+\end{example}
+\vpause
+\begin{example}
+下列函数只满足罗尔定理的条件(1)和(2)，不满足条件(3)，因此没有导数为零的点．
+\[f(x)=x, -1\leq x\leq 1\]
+\end{example}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+对$f(x)=x^2-2x-3$在区间$[-1,3]$上验证罗尔定理．
+\end{example}%\pause
+%\begin{example}
+%对$f(x)=e^{x^2}-1$在区间$[-1,1]$上验证罗尔定理．
+%\end{example}
+\vpause
+\begin{exercise}
+%对$f(x)=2x^2-x-3$在区间$[-1,\frac32]$上验证罗尔定理．\\
+对$f(x)=\dfrac1{1+x^2}$在区间$[-2,2]$上验证罗尔定理．
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\frametitle{罗尔定理}
+\begin{example}
+设$f(x)$在$[0,1]$上连续，在$(0,1)$上可导，而且$f(0)=0$，$f(1)=1$．证明：存在$\xi\in(0,1)$，使得$f'(\xi)=2\xi$．
+\end{example}
+\end{frame}
+
+\subsection{拉格朗日中值定理}
+
+\begin{frame}
+\frametitle{拉格朗日定理}
+\begin{theorem*}
+如果函数$f(x)$满足下列条件：
+\begin{enumskip}
+\item 在闭区间$[a,b]$上连续，
+\item 在开区间$(a,b)$内可导，
+\end{enumskip}
+则至少存在一点$\xi\in(a,b)$使得$f'(\xi)=\frac{f(b)-f(a)}{b-a}$.
+\end{theorem*}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+对函数$f(x)=x^3$在区间$[0,1]$上验证拉格朗日定理．
+\end{example}%\pause
+%\begin{example}
+%对$f(x)=\mathrm{e}^x$在区间$[0,1]$上验证拉格朗日中值定理．
+%\end{example}
+\vpause
+\begin{exercise}
+对$f(x)=x^3+x$在区间$[-1,1]$上验证拉格朗日定理．\\
+%对$f(x)=\ln x$在区间$[1,2]$上验证拉格朗日中值定理．
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\begin{corollary}
+如果函数$f(x)$在区间$I$上的导数恒为$0$，那么$f(x)$在区间$I$上是一个常数．
+\end{corollary}
+\vpause
+\begin{example}
+证明当$-1\le x \le 1$时，有
+$$\arcsin x + \arccos x = \dfrac{\pi}2.$$
+\end{example}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+证明当$x_2>x_1$时不等式成立：
+$$\arctan x_2-\arctan x_1 \le x_2-x_1.$$
+\end{example}
+\vpause
+\begin{exercise}
+证明：当$x_2>x_1$时有
+$$\sin x_2-\sin x_1 \le x_2-x_1.$$
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\frametitle{拉格朗日定理}
+\begin{example}
+证明当$x>0$时不等式成立：
+$$\dfrac{x}{1+x}<\ln(1+x)<x.$$
+\end{example}
+\pause
+\begin{remark*}
+当$-1<x<0$时，不等式同样成立．
+\end{remark*}
+\end{frame}
+
+\begin{sframe}
+\frametitle{对数函数不等式}
+\begin{remark*}
+这个例子包含的两个不等式是等价的：先作换元$t=1+x$，则不等式变成
+\[ \frac{t-1}{t} < \ln t < t - 1 . \]
+再利用换元$u=1/t$就可看出这两个不等式是等价的．
+\end{remark*}
+\end{sframe}
+
+\subsection{柯西中值定理}
+
+\begin{frame}
+\frametitle{柯西定理}
+\begin{theorem*}
+如果函数$f(x)$和$g(x)$满足下列条件：
+\begin{enumskip}
+\item 在闭区间$[a,b]$上都连续，
+\item 在开区间$(a,b)$内都可导，
+\item 在开区间$(a,b)$内$g'(x)\neq0$,
+\end{enumskip}
+则至少存在一点$\xi\in(a,b)$使得$\frac{f'(\xi)}{g'(\xi)}=\frac{f(b)-f(a)}{g(b)-g(a)}$.
+\end{theorem*}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+对函数$f(x)=x^3$和$g(x)=x^2+1$在区间$[1,2]$上验证柯西定理．
+\end{example}
+\end{frame}
+
+\begin{frame}
+\begin{review}
+证明：当$x>1$时，$\e^x-\e>\e(x-1)$．
+\end{review}
+\end{frame}
+
+\begin{sframe}
+\frametitle{复习与提高：存在性问题}
+\begin{review}
+设$f(x)$在$[a,b]$上连续，在$(a,b)$内有二阶导数，且$f(a)=f(b)=0$。
+证明：$\forall c\in(a,b)$，$\exists\xi\in(a,b)$，使得
+\[ f(c)=\tfrac12f''(\xi)(c-a)(c-b). \]
+\end{review}
+\pause
+\begin{solution}
+若能找到$L(x)$，使得$L(a)=L(c)=L(b)$，且
+\[ L''(x)=f''(x)(c-a)(c-b)-2f(c). \]
+则由罗尔定理，存在$\xi_1\in(a,c)$，$\xi_2\in(c,b)$，使得
+$L'(\xi_1)=L'(\xi_2)=0$．从而$\exists\xi\in(\xi_1,\xi_2)$，
+使得$L''(\xi)=0$，从而结论成立．
+\end{solution}
+\end{sframe}
+
+\begin{sframe}
+\frametitle{复习与提高：存在性问题}
+对$L''(x)$积分，逐步寻找$L(x)$：
+\noindent\begin{align*}
+&& L''(x)&=f''(x)(c-a)(c-b)-2f(c) \\
+\rightwhitearrow&& L'(x)&=f'(x)(c-a)(c-b)-2f(c)x+k \\
+\rightwhitearrow&& L(x)&=f(x)(c-a)(c-b)-f(c)x^2+kx
+\end{align*}
+利用条件$L(a)=L(b)$可得$k=f(c)(a+b)$．因此
+$$\bold{L(x)=f(x)(c-a)(c-b)-f(c)x^2+f(c)(a+b)x}$$
+为所求．或者也可给$L(x)$减去$L(c)=f(c)ab$变成
+$$\bold{\tilde{L}(x)=f(x)(c-a)(c-b)-f(c)(x-a)(x-b)}.$$
+\end{sframe}
+
+\section{洛必达法则}
+
+\begin{frame}
+\frametitle{洛必达法则}
+在一定条件下，我们有下面的洛必达法则：
+\[ \lim\frac{f(x)}{g(x)}=\lim\frac{f'(x)}{g'(x)}\]
+\end{frame}
+
+\begin{frame}
+\frametitle{一、$\frac00$型的洛必达法则}
+\begin{theorem}
+如果$\lim\limits_{x\to a}f(x)=0$，$\lim\limits_{x\to a}g(x)=0$，
+而且$\lim\limits_{x\to a}\frac{f'(x)}{g'(x)}$ 的极限存在（或为$\infty$），则有
+\[\lim_{x\to a}\frac{f(x)}{g(x)}=\lim\limits_{x\to a}\frac{f'(x)}{g'(x)}\]
+\end{theorem}\pause
+\begin{example}
+求极限$\lim\limits_{x\to2}\dfrac{x^2+x-6}{x^2-4}$．
+\end{example}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+求极限$\lim\limits_{x\to0}\dfrac{(1+x)^a-1}{x}$．
+\end{example}\pause
+\begin{example}
+求极限$\lim\limits_{x\to0}\dfrac{e^x-1}{x^2-x}$．
+\end{example}\pause
+\begin{example}
+求极限$\lim\limits_{x\to0}\dfrac{x-\sin x}{x^3}$．
+\end{example}\pause
+\begin{example}
+求极限$\lim\limits_{x\to0}\dfrac{\ln(1+x)}{x^2}$．
+\end{example}
+\end{frame}
+
+\begin{frame}
+\begin{exercise}
+用洛必达法则求函数极限．
+\begin{enumlite}[<+->]
+  \item $\lim\limits_{x\to1}\dfrac{x^3-3x+2}{x^3-x^2-x+1}$
+  \item $\lim\limits_{x\to4}\dfrac{\sqrt{x}-2}{x-4}$
+  \item $\lim\limits_{x\to0}\dfrac{\sin 3x}{\sin 5x}$
+\end{enumlite}
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\frametitle{两种方法比较}
+\begin{remark}
+对于$x\to0$时的$\frac00$型极限，现在我们有两种方法可以使用：
+\begin{enumskip}
+  \item 等价无穷小量代换
+  \item 洛必达法则
+\end{enumskip}
+一般地，方法(1)应该优先使用，因为方法(2)可能变得复杂．
+\end{remark}
+\end{frame}
+
+\begin{frame}
+\frametitle{两种方法比较}
+\begin{example}
+求函数极限．
+\begin{enumlite}
+  \item $\lim\limits_{x\to0}\dfrac{\sin 3x}{\tan 6x}$\pause
+  \item $\lim\limits_{x\to0}\dfrac{\mathrm{e}^{x-\sin x}-1}{\arcsin(x^3)}$
+\end{enumlite}
+\end{example}
+\end{frame}
+
+\begin{frame}
+\frametitle{两种方法比较}
+\begin{exercise}
+求函数极限．
+\begin{enumlite}
+  \item $\lim\limits_{x\to0}\dfrac{\sin x-x\cos x}{\sin^3x}$
+  \item $\lim\limits_{x\to0^+}\dfrac{\sqrt{1+x^3}-1}{1-\cos\sqrt{x-\sin x}}$
+\end{enumlite}
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\frametitle{二、$\frac{\infty}{\infty}$型的洛必达法则}
+\begin{theorem}
+如果$\lim\limits f(x)=\infty$，$\lim\limits g(x)=\infty$，
+而且$\lim\limits \frac{f'(x)}{g'(x)}$的极限存在（或为$\infty$），则有
+\[\lim \frac{f(x)}{g(x)}=\lim\limits \frac{f'(x)}{g'(x)}\]
+\end{theorem}\pause
+\begin{example}
+求极限$\lim\limits_{x\to\infty}\dfrac{2x^2+x+1}{3x^2-x+4}$．
+\end{example}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+求函数极限．
+\begin{enumlite}
+  \item 求极限$\lim\limits_{x\to+\infty}\dfrac{\ln x}{x^n}$（$n>0$）\pause
+  \item 求极限$\lim\limits_{x\to+\infty}\dfrac{x^3}{\mathrm{e}^x}$\pause
+\end{enumlite}
+\end{example}\pause
+\begin{exercise}
+求函数极限：
+$\lim\limits_{x\to0^+}\dfrac{\ln\sin x}{\ln x}$
+\end{exercise}\pause
+\begin{thinking}
+求极限$\lim\limits_{x\to\frac{\pi}2}\dfrac{\tan x}{\tan 3x}$
+\end{thinking}
+\end{frame}
+
+\begin{frame}
+\begin{remark}洛必达法则未必总是有效．例如：
+\begin{enumhalf}
+  \item $\lim\limits_{x\to\infty}\dfrac{x+\sin x}{x}$ ~\pause
+  \item $\lim\limits_{x\to+\infty}\dfrac{\sqrt{1+x^2}}{x}$ ~
+\end{enumhalf}
+\end{remark}
+\end{frame}
+
+\begin{frame}
+\frametitle{三、$0\cdot\infty$型和$\infty-\infty$型的未定式}
+对于$0\cdot\infty$型和$\infty-\infty$型的未定式，
+我们可以将它们变换为$\frac00$ 型或$\frac{\infty}{\infty}$型的未定式，
+然后使用洛必达法则．\pause
+\begin{example}
+求函数极限：
+\begin{enumlite}
+  \item $\lim\limits_{x\to+\infty}x\left(\dfrac\pi2-\arctan x\right)$\pause
+  \item $\lim\limits_{x\to1}\left(\dfrac{1}{x-1}-\dfrac1{\ln x}\right)$
+\end{enumlite}
+\end{example}
+\end{frame}
+
+\begin{frame}
+\begin{exercise}
+求函数极限：
+\begin{enumhalf}
+  \item $\lim\limits_{x\to0^+}x^2\ln x$ ~
+  \item $\lim\limits_{x\to0}\left(\dfrac{1}{x}-\dfrac1{e^x-1}\right)$ ~
+\end{enumhalf}
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\frametitle{四、$1^\infty$型，$0^0$型和$\infty^0$型的未定式}
+对于$1^\infty$型，$0^0$型和$\infty^0$型的未定式，我们可以将它们变换为$0\cdot\infty$型未定式，
+进而化为$\frac00$ 型或$\frac{\infty}{\infty}$型，然后使用洛必达法则．\pause
+\[\lim u(x)^{v(x)}=\lim \mathrm{e}^{v(x)\ln u(x)} = \mathrm{e}^{\lim v(x)\ln u(x)}\]
+\end{frame}
+
+\begin{frame}
+\begin{example}
+求函数极限：
+\begin{enumlite}
+  \item \ $\lim\limits_{x\to1}x^{\frac{1}{x-1}}$\pause
+  \item \ $\lim\limits_{x\to0^+}x^x$\pause
+  \item $\lim\limits_{x\to+\infty}\left(1+\mathrm{e}^x\right)^{\frac1x}$
+\end{enumlite}
+\end{example}
+\end{frame}
+
+\begin{frame}
+\begin{exercise}
+求函数极限：
+\begin{enumlite}
+  \item $\lim\limits_{x\to0}\left(1+\sin x\right)^{\frac1x}$
+  \item $\lim\limits_{x\to+\infty}x^{\frac1x}$
+  \pause
+  \item $\lim\limits_{x\to0^+}x^{\sin x}$
+\end{enumlite}
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{review}
+求函数极限．
+\begin{enumlite}
+  \item $\lim\limits_{x\to0}\dfrac{e^x-e^{-x}}{x}$
+  \item $\lim\limits_{x\to1}\dfrac{\ln x}{x-1}$
+  \item $\lim\limits_{x\to1}\dfrac{x^3-x^2-x+1}{x^3-3x+2}$
+\end{enumlite}
+\end{review}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{review}
+求函数极限：
+\begin{enumhalf}
+  \item $\lim\limits_{x\to0^+}\sqrt{x}\ln x$ ~
+  \item $\lim\limits_{x\to0}\left(\dfrac1{\ln(1+x)}-\dfrac1x\right)$ ~
+\end{enumhalf}
+\end{review}
+\end{frame}
+
+\begin{iframe}
+\frametitle{复习与提高：倒代换}
+\begin{review}
+求函数极限：
+\begin{enumlite}
+  \item $\lim\limits_{x\to+\infty}\left(x^2-x\ln\left(1+\frac1x\right)\right)$
+  \item $\lim\limits_{x\to+\infty}\left(\sqrt{x^2+x}-\sqrt[3]{x^3+x^2}\right)$
+\end{enumlite}
+\end{review}
+\end{iframe}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{review}
+求函数极限 $\lim\limits_{x\to0^+}\left(\dfrac1x\right)^{\tan x}$。
+\end{review}
+\end{frame}
+
+\section{泰勒公式}
+
+\begin{frame}
+\frametitle{近似估计}
+假设$f'(x_0)$存在。已经知道当$x\to x_0$时有
+\[ f(x) = f(x_0) + f'(x_0)(x-x_0) + \mathrm{o}\big(x-x_0\big)\]
+\vpause
+是否存在\bold{二次}多项式$g(x)$使得当$x\to x_0$时有
+\[ f(x) \overset{\warn{?}}{=} g(x) + \bold{\mathrm{o}\left((x-x_0)^2\right)}\]
+\vpause
+令$g(x)=A+B(x-x_0)+C(x-x_0)^2$，则有
+\[ A=f(x_0),\qquad B=f'(x_0),\qquad C=\wfrac12f''(x_0).\]
+\end{frame}
+
+\begin{frame}
+%\frametitle{近似估计}
+\noindent
+\[ \bold{f(x) = A+B(x-x_0)+C(x-x_0)^2 + \mathrm{o}\left((x-x_0)^2\right)} \]
+{\clead\cdotfill}\vpause
+令$x\to x_0$，得到$A=f(x_0)$，\pause 从而
+\[ \dfrac{f(x)-f(x_0)}{x-x_0} = B + C(x-x_0) + \mathrm{o}(x-x_0). \]\pause
+再令$x\to x_0$，得到$B=f'(x_0)$。\pause 因此\vspace{2pt}
+\begin{align*}
+  C &=\lim_{x\to x_0}\frac{f(x)-f(x_0)-f'(x_0)(x-x_0)}{(x-x_0)^2} \\
+    &\onslide<6->{=\lim_{x\to x_0}\frac{f'(x)-f'(x_0)}{2(x-x_0)}\qquad\fbox{洛必达法则}}\\[-2pt]
+    &\onslide<7->{=\wfrac12f''(x_0)\qquad{\fbox{导数的定义}}}
+\end{align*}
+\end{frame}
+
+\begin{frame}
+%\frametitle{泰勒公式}
+\begin{theorem}[带佩亚诺余项的泰勒公式]\par
+设$f(x)$在$x_0$点存在$\warn{n}$阶导数，则有
+\begin{align*}
+f(x)&=f(x_0)+f'(x_0)(x-x_0)+\frac{f''(x_0)}{2!}(x-x_0)^2\\
+    &\phantom{=}+\cdots+\frac{f^{(n)}(x_0)}{n!}(x-x_0)^n+\bold{\mathrm{o}\big((x-x_0)^n\big)}
+\end{align*}
+\end{theorem}
+\pause
+\begin{solution}
+连续用$n-1$次洛必达法则，再用导数的定义．
+\end{solution}
+\end{frame}
+
+\begin{frame}
+%\frametitle{泰勒公式}
+\begin{theorem}[带拉格朗日余项的泰勒公式]\par
+设$f(x)$在$x_0$的某邻域$U(x_0)$内存在$\warn{n+1}$阶导数，则$\forall x\in U(x_0)$有
+\begin{align*}
+  f(x)=f(x_0)&+f'(x_0)(x-x_0)+\frac{f''(x_0)}{2!}(x-x_0)^2\\
+             &+\cdots+\frac{f^{(n)}(x_0)}{n!}(x-x_0)^n+R_n(x),
+\end{align*}
+其中余项$R_n(x)=\bold{\dfrac{f^{(n+1)}(\xi)}{(n+1)!}(x-x_0)^{n+1}}$，
+$\xi$介于$x_0$和$x$之间。
+\end{theorem}
+\vpause
+\begin{solution}
+连续用$n+1$次柯西中值定理．
+\end{solution}
+\end{frame}
+
+\begin{frame}
+%\frametitle{麦克劳林公式}
+当$x_0=0$时，泰勒公式称为\bold{麦克劳林公式}
+\begin{align*}
+  f(x)=f(0)&+f'(0)x+\frac{f''(0)}{2!}x^2\\
+             &+\cdots+\frac{f^{(n)}(0)}{n!}x^n+R_n(x),
+\end{align*}
+\pause
+其中$R_n(x)=\mathrm{o}\left(x^n\right)$\cdotfill \bold{佩亚诺余项}\par
+或者$R_n(x)=\dfrac{f^{(n+1)}(\xi)}{(n+1)!}x^{n+1}$\cdotfill\bold{拉格朗日余项}\newline
+　　$\xi$介于$0$和$x$之间。
+\vfill\pause{\clead\hrule}\vfill
+令$\xi=\theta x$，则$R_n(x)=\dfrac{f^{(n+1)}(\theta x)}{(n+1)!}x^{n+1}$, $0<\theta<1$。
+\end{frame}
+
+\begin{frame}[label=maclaurin]%若这里用 \label 命令，后面将无法跳回各个 slide
+\begin{example}
+求$f(x)$的带拉格朗日余项的麦克劳林公式.\onslide<5>{\hfill\hyperlink{maclaurin:list}{\beamerbutton{小结}}\par}
+\begin{enumlite}[<+->]
+  \item $f(x)=\e^x$ \cdotfill\hyperlink{maclaurin:exp}{\beamerbutton{应用}}
+  \item $f(x)=\sin x$ \cdotfill\hyperlink{maclaurin:sin}{\beamerbutton{图形}}
+  \item $f(x)=\cos x$
+  \item $f(x)=\ln(1+x)$ \cdotfill\hyperlink{maclaurin:log}{\beamerbutton{应用}}
+  \item $f(x)=(1+x)^{\alpha}$ \cdotfill\hyperlink{maclaurin:sqrt}{\beamerbutton{应用}}
+\end{enumlite}
+\end{example}
+\end{frame}
+
+\begin{frame}\label{maclaurin:exp}
+\begin{example}
+证明常数$\e$是无理数。
+\end{example}
+\pause
+\begin{proof}
+假设$\e=\dfrac{m}n$为有理数，其中$n\ge2$。\pause 在$\e^x$的麦克劳林公式中令$x=1$，得到（$0<\theta<1$）
+\[ \frac{m}n = \e = 1 + 1 + \frac1{2!} + \frac1{3!} + \cdots + \frac1{n!} + \frac{\e^\theta}{(n+1)!} \]\pause
+两边同时乘以$n!$，得到
+\[ \frac{m\cdot n!}n = n! + n! + \frac{n!}{2!} + \frac{n!}{3!} + \cdots
+ + \frac{n!}{n!} + \frac{\e^\theta}{n+1} \]\pause
+由于$0<\e^\theta<3$，\pause 所以最后一项为分数，但是其他各项都为整数。\pause 矛盾。
+%\hfill % FIXME
+\hyperlink{maclaurin}{\beamerbutton{返回}}
+\end{proof}
+\end{frame}
+
+% 数字太大，tikz 无法处理，加上 fpu 库就可以了
+\usepgflibrary{fpu}
+
+% 分为三个 frame 保证打印时不会混成一团
+
+\begin{frame}\label{maclaurin:sin}
+\frametitle{正弦函数的近似}
+\noindent % 去掉空行
+\[ \sin x = x - \frac1{3!}x^3 + \frac1{5!}x^5 - \frac1{7!}x^7 + \frac1{9!}x^9 + \cdots \]
+\begin{center}
+\begin{tikzpicture}[thick,scale=.8,font=\small,/pgf/fpu,/pgf/fpu/output format=fixed]
+\path[use as bounding box] (-6.5,-3.5) -- (6.6,3.5);
+\draw[very thin,color=gray] (-6,-3) grid (6,3);
+\draw[thin,->] (-6.5,0) -- (6.6,0) node[right] {$x$};
+\draw[thin,->] (0,-3.2) -- (0,3.2) node[above] {$y$};
+\onslide+<2->\draw plot[domain=-6.28:6.28,samples=50] (\x,{sin(\x r)}); %node[above=7mm] {$y=\sin x$};
+\onslide+<3->\draw[color=accent2] plot[domain=-3:3]
+  (\x,\x) node[above,inner sep=1pt] {$y=x$};
+\onslide+<4>\draw[color=accent3] plot[domain=-3.35:3.35,samples=40]
+  (\x,{\x-(1/3!)*(\x)^3}) node[below,inner sep=1pt]{$y=x-\frac{1}{3!}x^3$};
+\onslide+<1->%否则底栏在最后才显示
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{正弦函数的近似}
+\noindent % 去掉空行
+\[ \sin x = x - \frac1{3!}x^3 + \frac1{5!}x^5 - \frac1{7!}x^7 + \frac1{9!}x^9 + \cdots \]
+\begin{center}
+\begin{tikzpicture}[thick,scale=.8,font=\small,/pgf/fpu,/pgf/fpu/output format=fixed]
+\path[use as bounding box] (-6.5,-3.5) -- (6.6,3.5);
+\draw[very thin,color=gray] (-6,-3) grid (6,3);
+\draw[thin,->] (-6.5,0) -- (6.6,0) node[right] {$x$};
+\draw[thin,->] (0,-3.2) -- (0,3.2) node[above] {$y$};
+\draw plot[domain=-6.28:6.28,samples=50] (\x,{sin(\x r)}); %node[above=7mm] {$y=\sin x$};
+\onslide+<1|handout:0>\draw[color=accent3] plot[domain=-3.35:3.35,samples=40]
+  (\x,{\x-(1/3!)*(\x)^3}) node[below,inner sep=1pt]{$y=x-\frac{1}{3!}x^3$};
+\onslide+<1->\draw[color=accent2] plot[domain=-4.2:4.2,samples=50]
+  (\x,{\x-(1/3!)*(\x)^3+(1/5!)*(\x)^5}) node[above,inner sep=1pt]{$y=x-\frac1{3!}x^3+\frac1{5!}x^5$};
+\onslide+<2->\draw[color=accent3] plot[domain=-4.3:4.3,samples=60]
+  (\x,{\x-(1/3!)*(\x)^3+(1/5!)*(\x)^5-(1/7!)*(\x)^7})
+      node[below,inner sep=1pt]{$y=x - \frac1{3!}x^3 + \frac1{5!}x^5 - \frac1{7!}x^7$};
+\onslide+<1->%否则底栏在最后才显示
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{正弦函数的近似}
+\noindent % 去掉空行
+\[ \sin x = x - \frac1{3!}x^3 + \frac1{5!}x^5 - \frac1{7!}x^7 + \frac1{9!}x^9 + \cdots \]
+\begin{center}
+\begin{tikzpicture}[thick,scale=.8,font=\small,/pgf/fpu,/pgf/fpu/output format=fixed]
+\path[use as bounding box] (-6.5,-3.5) -- (6.6,3.5);
+\draw[very thin,color=gray] (-6,-3) grid (6,3);
+\draw[thin,->] (-6.5,0) -- (6.6,0) node[right] {$x$};
+\draw[thin,->] (0,-3.2) -- (0,3.2) node[above] {$y$};
+\draw plot[domain=-6.28:6.28,samples=50] (\x,{sin(\x r)}); %node[above=7mm] {$y=\sin x$};
+\onslide+<1|handout:0>\draw[color=accent3] plot[domain=-4.3:4.3,samples=60]
+  (\x,{\x-(1/3!)*(\x)^3+(1/5!)*(\x)^5-(1/7!)*(\x)^7})
+      node[below,inner sep=1pt]{$y=x - \frac1{3!}x^3 + \frac1{5!}x^5 - \frac1{7!}x^7$};
+\onslide+<1->\draw[color=accent2] plot[domain=-5.55:5.55,samples=70]
+  (\x,{\x-(1/3!)*(\x)^3+(1/5!)*(\x)^5-(1/7!)*(\x)^7+(1/9!)*(\x)^9})
+      node[left]{$y=x - \frac1{3!}x^3 + \frac1{5!}x^5 - \frac1{7!}x^7 + \frac1{9!}x^9$};
+\onslide+<2->\draw[color=accent3] plot[domain=-6.2:6.2,samples=80]
+  (\x,{\x-(1/3!)*(\x)^3+(1/5!)*(\x)^5-(1/7!)*(\x)^7+(1/9!)*(\x)^9-(1/11!)*(\x)^11})
+      node[left]{$y=x - \frac1{3!}x^3 + \frac1{5!}x^5 - \frac1{7!}x^7 + \frac1{9!}x^9 - \frac1{11!}x^{11}$};
+\onslide+<1->%否则底栏在最后才显示
+\end{tikzpicture}
+\end{center}
+\begin{bblock}[white]{4}(28,1)\hyperlink{maclaurin<2>}{\beamerbutton{返回}}\end{bblock}
+\end{frame}
+
+\begin{frame}\label{maclaurin:log}
+\frametitle{利用泰勒公式证明不等式}
+\begin{example}
+证明：当$x>0$时，有$\ln(1+x)>x-\dfrac{x^2}{2}$。
+\end{example}
+\pause
+\begin{solution}
+利用$\ln(1+x)$的$1$阶麦克劳林公式．\hfill
+\hyperlink{maclaurin<4>}{\beamerbutton{返回}}
+\end{solution}
+\end{frame}
+
+%\begin{sframe}
+%\frametitle{利用泰勒公式求极限}
+%\begin{example}
+%求极限$\limit_{x\to0}\dfrac{\sin x-x\cos x}{\sin^3 x}$。
+%\end{example}
+%\end{sframe}
+
+\begin{frame}\label{maclaurin:sqrt}
+\frametitle{利用泰勒公式求极限}
+\begin{example}
+求极限$\limit_{x\to0}\dfrac{\sqrt{4+3x}+\sqrt{4-3x}-4}{x^2}$。
+\end{example}
+\pause
+\begin{solution}
+利用$\sqrt{1+x}$的$2$阶麦克劳林公式，求得极限等于$-\dfrac{9}{32}$．\hfill
+\hyperlink{maclaurin<5>}{\beamerbutton{返回}}
+\end{solution}
+\end{frame}
+
+\begin{frame}[shrink=10]\label{maclaurin:list}
+\frametitle{初等函数的麦克劳林公式}
+\noindent\begin{align*}
+\e^x &= 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \frac{x^4}{4!} + \cdots + \frac{x^n}{n!} + R_n(x) \\
+\sin x &= x-\frac{x^3}{3!}+\frac{x^5}{5!}-\cdots + (-1)^{n-1}\frac{x^{2n-1}}{(2n-1)!} + R_{2n}(x) \\
+\cos x &= 1-\frac{x^2}{2!}+\frac{x^4}{4!}-\cdots+(-1)^n\frac{x^{2n}}{(2n)!} + R_{2n+1}(x)
+\end{align*}
+\vfill\bold{\cdotfill}\vfill
+\noindent\begin{align*}
+\ln(1+x) &= x - \frac{x^2}2 + \frac{x^3}{3} - \frac{x^4}{4} +\cdots + (-1)^{n-1}\frac{x^n}{n} + R_n(x) \\
+(1+x)^{\alpha} &= 1 + C_\alpha^1x + C_\alpha^2x^2 + C_\alpha^3x^3 +\cdots + C_\alpha^n{x^n} + R_n(x)
+%\arctan x  &=x-\frac{x^3}{3}+\frac{x^5}{5}-\frac{x^7}{7}+\cdots + (-1)^n\frac{x^{2n+1}}{(2n+1)} + \cdots \\
+\end{align*}
+\end{frame}
+
+\section{单调性与凹凸性}
+
+\subsection{函数的单调性}
+
+\begin{frame}
+\begin{theorem}
+设$f(x)$在闭区间$[a,b]$上连续，在开区间$(a,b)$上可导，那么
+\begin{enumzero}
+  \item 如果在$(a,b)$上恒有$f'(x)>0$，则$f(x)$在$[a,b]$上单调增加．
+  \item 如果在$(a,b)$上恒有$f'(x)<0$，则$f(x)$在$[a,b]$上单调减少．
+\end{enumzero}
+\end{theorem}
+%\vpause
+%\begin{remark*}
+%对开区间或者无限区间，也有类似的结论。
+%\end{remark*}
+\vpause
+\begin{remark*}
+若在区间上$f'(x)=0$的点仅有有限个，仍有
+\begin{enumzero}
+  \item 在$(a,b)$上$f'(x)\ge0$\hspace{0.5em}$\lead{\rightwhitearrow}$\hspace{0.4em}在$[a,b]$上单调增加．
+  \item 在$(a,b)$上$f'(x)\le0$\hspace{0.5em}$\lead{\rightwhitearrow}$\hspace{0.4em}在$[a,b]$上单调减少．
+\end{enumzero}
+\end{remark*}
+\end{frame}
+
+\begin{frame}
+\frametitle{函数的单调性}
+\begin{example}
+确定下列函数的单调增减区间．
+\begin{enumhalf}
+  \item $f(x)=x^3-3x$ ~
+  \item $f(x)=x^3$ ~\pause
+  \item $f(x)=x-\sin x$ ~
+  \item $f(x)=\sqrt[3]{x^2}$ ~  
+\end{enumhalf}
+\end{example}
+\vpause
+\begin{remark*}
+通常可用这两类点来划分单调区间：
+\begin{enumhalf}
+  \item \CJKunderdot{导数为零的点}； ~
+  \item \CJKunderdot{导数不存在的点}。 ~
+\end{enumhalf}
+\end{remark*}
+\vpause
+\begin{definition*}
+导数为零的点称为函数的\bold{驻点}。
+\end{definition*}
+\end{frame}
+
+\begin{oframe}
+\frametitle{函数的单调性}
+\begin{exercise}
+确定下列函数的单调增减区间．
+\begin{enumhalf}
+  \item $y=3x^2+6x+5$ ~
+  \item $y=x-\mathrm{e}^x$ ~
+\end{enumhalf}
+\end{exercise}
+\end{oframe}
+
+%\begin{frame}
+%\begin{example}
+%证明函数$y=x-\ln(1+x^2)$单调增加．
+%\end{example}
+%\pause
+%\begin{exercise}
+%证明函数$y=\sin x-x$单调减少．
+%\end{exercise}
+%\end{frame}
+
+\begin{frame}
+\frametitle{不等式问题}
+\begin{example}
+证明当$x>0$时有不等式$\mathrm{e}^x>1+x$．
+\end{example}
+\pause
+\begin{example}
+证明当$x>0$时有$x-\dfrac{x^3}{6}<\sin x$．
+\end{example}
+\end{frame}
+
+%\begin{frame}
+%\frametitle{不等式问题}
+%\begin{exercise}
+%证明当$x>1$时有$3-\dfrac1x<2\sqrt{x}$．
+%\end{exercise}
+%\end{frame}
+
+\subsection{曲线的凹凸性}
+
+%\begin{frame}
+%%\frametitle{凹凸性}
+%\begin{definition}
+%设函数$f(x)$在区间$I$上有定义．
+%\begin{enumskip}
+%  \item 如果对任何$x\in I$，函数$f(x)$的曲线总位于该点切线的上方，
+%        则称曲线$f(x)$在区间$I$上是\bold{凹}（上凹）的。
+%  \pause
+%  \item 如果对任何$x\in I$，函数$f(x)$的曲线总位于该点切线的下方，
+%        则称曲线$f(x)$在区间$I$上是\bold{凸}（下凹）的。
+%\end{enumskip}
+%\end{definition}
+%\end{frame}
+
+\begin{frame}
+%\frametitle{凹凸性}
+\begin{definition}
+设函数$f(x)$在区间$I$上连续．
+\begin{enumzero}
+  \item 如果对任何$I$上任何两点$x_1$和$x_2$，恒有
+        \[ \frac{f(x_1)+f(x_2)}{2} \,\mathbin{\cbold>}\, f\left(\frac{x_1+x_2}{2}\right)\]
+        则称曲线$f(x)$在区间$I$上是\bold{凹}（上凹）的。
+  \pause
+  \item 如果对任何$I$上任何两点$x_1$和$x_2$，恒有
+        \[ \frac{f(x_1)+f(x_2)}{2} \,\mathbin{\cbold<}\, f\left(\frac{x_1+x_2}{2}\right)\]
+        则称曲线$f(x)$在区间$I$上是\bold{凸}（下凹）的。
+\end{enumzero}
+\end{definition}
+\end{frame}
+
+\begin{frame}
+\frametitle{凹凸性的判别法}
+\begin{theorem}
+设函数$f(x)$在$[a,b]$上连续，在$(a,b)$内有二阶导数，那么
+\begin{enumzero}
+  \item 如果$x\in(a,b)$时，恒有$f''(x)>0$，则函数的曲线在$(a,b)$上是凹的。\pause
+  \item 如果$x\in(a,b)$时，恒有$f''(x)<0$，则函数的曲线在$(a,b)$上是凸的。
+\end{enumzero}
+\end{theorem}
+\end{frame}
+
+\begin{frame}
+\begin{definition*}
+曲线凹和凸的分界点$(x_0,y_0)$称为\bold{拐点}。
+\end{definition*}
+\vpause
+\begin{property*}
+在拐点$(x_0,y_0)$处，要么$f''(x_0)=0$，要么$f''(x_0)$不存在。
+\end{property*}
+\pause\vskip0pt plus0.2fill\cdotfill\vskip0pt plus0.2fill
+\begin{example}
+求曲线$y=\sqrt[3]{x}$的凹凸区间和拐点。
+\end{example}
+\begin{remark}
+$(x_0,y_0)$为拐点 $\cwarn\centernot\Longrightarrow$ $f''(x_0)=0$。
+\end{remark}
+\vpause
+\begin{example}
+求曲线$y=x^4$的凹凸区间和拐点。
+\end{example}
+\pause
+\begin{remark}
+$f''(x_0)=0$ $\cwarn\centernot\Longrightarrow$ $(x_0,y_0)$为拐点。\pause
+\end{remark}
+\end{frame}
+
+\begin{frame}
+\frametitle{曲线的凹凸性}
+\begin{example}
+求曲线$y=x^4-2x^3+1$的凹凸区间和拐点。
+\end{example}
+\vpause
+\begin{exercise}
+求下列曲线的凹凸区间和拐点。
+\begin{enumhalf}
+  \item $y=x^2-x^3$ ~\pause
+  \item $y=\mathrm{e}^{-x}$ ~
+\end{enumhalf}
+\end{exercise}
+\end{frame}
+
+\begin{oframe}
+\frametitle{复习与提高}
+\begin{review}
+确定函数$y=2x^2-\ln x$的单调增减区间．
+\end{review}
+\end{oframe}
+
+\begin{iframe}
+\frametitle{复习与提高}
+\begin{review}
+设$x>0$，$y>0$，$x\neq y$，$n>1$，证明
+$$\frac12\left(x^n+y^n\right)>\left(\frac{x+y}{2}\right)^n.$$
+\end{review}
+\end{iframe}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{choice}
+设在$[0,1]$上$f''(x)>0$, 则$f'(0)$, $f'(1)$, $f(1)-f(0)$
+或$f(0)-f(1)$的大小顺序是\dotfill(\qquad)
+\begin{choiceline}
+  \item $f'(1)>f'(0)>f(1)-f(0)$
+  \item $f'(1)>f(1)-f(0)>f'(0)$
+  \item $f(1)-f (0)>f'(1)>f'(0)$
+  \item $f'(1)>f(0)-f(1)>f'(0)$
+\end{choiceline} % 答案 B
+%提示：利用$f''(x)>0$得到$f'(x)$单调增加．
+%再用中值定理得到$f(1)-f(0)=f'(\xi)$，$0<\xi<1$．
+\end{choice}
+\end{frame}
+
+\section{极值与最值}
+
+\subsection{函数的极值}
+
+\begin{frame}
+\begin{definition}
+设$f(x)$在点$x_0$的某邻域$U(x_0)$内有定义．
+\begin{enumzero}
+  \item 若$\forall x\in\mathring{U}(x_0)$，总有$\bold{f(x)<f(x_0)}$，则称
+    \begin{itemize}
+      \item $x_0$为$f(x)$ 的一个\lead{极大值点}，
+      \item $f(x_0)$为$f(x)$ 的一个\warn{极大值}。
+    \end{itemize}
+  \pause
+  \item 若$\forall x\in\mathring{U}(x_0)$，总有$\bold{f(x)>f(x_0)}$，则称
+    \begin{itemize}
+      \item $x_0$为$f(x)$ 的一个\lead{极小值点}，
+      \item $f(x_0)$为$f(x)$ 的一个\warn{极小值}。
+    \end{itemize}
+\end{enumzero}
+\end{definition}
+\vpause
+\begin{remark*}
+极大值点和极小值点统称为\lead{极值点}，极大值和极小值统称为\warn{极值}．  
+\end{remark*}
+\end{frame}
+
+\begin{frame}
+\frametitle{极值的必要条件}
+\begin{theorem}
+设$f(x)$在$x_0$点可导，而且$x_0$为极值点，则$f'(x_0)=0$．
+\end{theorem}
+\vpause
+\begin{remark*}
+我们称导数为零的点为\bold{驻点}．\pause
+\begin{itemize}
+  \item 驻点\warn{未必}都是极值点：\pause 比如$y=x^3$．
+  \pause
+  \item 极值点\warn{未必}都是驻点：\pause 比如$y=|x|$．
+\end{itemize}
+\end{remark*}
+\end{frame}
+
+\begin{frame}
+\frametitle{极值的第一判别法}
+\begin{theorem}
+设$f(x)$在$x_0$点连续,而且在它的某个去心邻域内可导．\pause
+\begin{enumskip}
+  \item 若在$x_0$的左邻域内$f'(x)>0$，在右邻域内$f'(x)<0$，则$x_0$为极大值点．\pause
+  \item 若在$x_0$的左邻域内$f'(x)<0$，在右邻域内$f'(x)>0$，则$x_0$为极小值点．\pause
+  \item 若在$x_0$的左邻域内和右邻域内$f'(x)$的符号不变，则$x_0$不为极值点．
+\end{enumskip}
+\end{theorem}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+求函数的单调增减区间和极值．
+\begin{enumlite}
+  \item $f(x)=(x-1)^2(x+1)^3$\pause
+  \item $f(x)=x-\frac32x^{\frac23}$
+\end{enumlite}
+\end{example}
+\end{frame}
+
+\begin{oframe}
+\frametitle{函数的极值}
+\begin{exercise}
+求函数的单调增减区间和极值．
+\begin{enumlite}
+  \item $f(x)=x^3-3x^2+7$\pause
+  \item $f(x)=\dfrac{2x}{1+x^2}$
+\end{enumlite}
+\end{exercise}
+\end{oframe}
+
+\begin{frame}
+\frametitle{极值的第二判别法}
+\begin{theorem}
+设$f'(x_0)=0$而且$f''(x_0)$存在。
+\begin{enumskip}
+  \item 若$f''(x_0)>0$，则$x_0$为$f(x)$的极小值点。
+  \item 若$f''(x_0)<0$，则$x_0$为$f(x)$的极大值点。
+\end{enumskip}
+\end{theorem}\pause
+\begin{remark}
+当$f''(x_0)=0$时，上面的定理无法判定。例如$f(x)=x^3$和$f(x)=x^4$。
+\end{remark}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+用极值的第二判别法求$f(x)=x^3-3x$的极值。
+\end{example}\pause
+\begin{exercise}
+用极值的第二判别法求函数的极值：
+$$y=x^3-3x^2-9x-5$$
+\end{exercise}
+\end{frame}
+
+\subsection{函数的最值}
+
+\begin{frame}
+\frametitle{函数的最值}
+\begin{definition}
+设$f(x)$在区间$I$上有定义。如果有$x_0\in I$，
+使得对所有$x\in I$都有
+$$f(x)\le f(x_0) \quad\text{（或$f(x)\ge f(x_0)$）},$$
+则称$f(x_0)$是$f(x)$ 在区间$I$上的\bold{最大值}（或\bold{最小值}）。
+\end{definition}
+\end{frame}
+
+\begin{frame}
+\frametitle{函数最值的求法：闭区间情形}
+设函数$f(x)$在闭区间$[a,b]$上连续，而且在除有限个点外都可导．则可按照下面步骤求出函数的最值：\pause
+\begin{enumerate}
+  \item 求出函数所有的驻点，不可导点，和区间端点一起列出来作为最值可疑点．\pause
+  \item 求出函数在这些点的取值并比较，最大（小）者就为函数的最大（小）值．
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+求以下函数在指定区间上的最值。
+\begin{enumlite}
+  \item $f(x)=x^3-3x^2+7$在区间$[-2,3]$上. \pause
+  \item $f(x)=x-\frac32x^{\frac23}$在区间$[-1,8]$上.
+\end{enumlite}
+\end{example}
+\vpause
+\begin{exercise}
+求以下函数在指定区间上的最值。
+\begin{enumlite}
+  \item $f(x)=x^4-2x^2+5$在区间$[-2,3]$上.
+  %% 不好，去掉！（去掉 x=-2 和 x=-1）
+  %\item $f(x)=\dfrac{x^2}{1+x}$在区间$[-\frac12,2]$上.
+\end{enumlite}
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\frametitle{函数最值的求法：唯一驻点情形}
+如果函数$f(x)$在区间（开或闭，有限或无限）上可导，而且只有一个驻点$x_0$。
+则$f(x_0)$为极大值时就是最大值，为极小值时就是最小值。
+\end{frame}
+
+\begin{frame}
+\begin{example}
+将边长为$a$的一块正方形铁皮，四角各截去一个大小相同的小正方形，然后将四边折起做成一个无盖的方盒。
+问截掉的小正方形的长为多少时，所得方盒的容积最大？
+\end{example}
+\end{frame}
+
+%\begin{frame}
+%\begin{exercise}
+%一房地产公司有$50$套公寓要出租．当月租定为$2000$元时，公寓会全部租出去．
+%当月租每增加$100$ 元，就会多剩一套公寓租不出去．
+%而租出去的每套公寓每月需要花费$200$ 元的维修费用．问房租定为多少时可获得最大收入？
+%\end{exercise}
+%\end{frame}
+
+\begin{oframe}
+\frametitle{复习与提高}
+\begin{review}
+求函数$y=(x-3)^2(x-2)$的极值。
+\end{review}
+\end{oframe}
+
+\begin{oframe}
+\frametitle{复习与提高}
+\begin{review}
+求以下函数在指定区间上的最值。
+\begin{enumlite}
+  \item $f(x)=x^3-3x$在区间$[-2,3]$上.
+  \item $f(x)=x^2\mathrm{e}^{-x}$在区间$[-2,3]$上.
+\end{enumlite}
+\end{review}
+\end{oframe}
+
+\begin{iframe}
+\frametitle{极值的判别法}
+\begin{example*}
+设$f(x)$在$x_0$处有$n$阶导数，且$f'(x_0)=f''(x_0)=\cdots=f^{(n-1)}(x_0)=0$, $f^{(n)}(x_0)\neq0$．证明：\unskip
+\begin{enumzero}
+  \item 当$n$为奇数时，$f(x)$在$x_0$点不取得极值．
+  \item 当$n$为偶数时，$f(x)$在$x_0$点取得极值，且
+  \begin{itemize}
+    \item 当$f^{(n)}(x_0)<0$时，$f(x_0)$为极大值；
+    \item 当$f^{(n)}(x_0)>0$时，$f(x_0)$为极小值．
+  \end{itemize}
+\end{enumzero}
+\end{example*}
+\end{iframe}
+
+\begin{iframe}
+\begin{solution}
+我们只证明$f^{(n)}(x_0)>0$的情形．\pause 由带佩亚诺余项的$n$阶泰勒公式，有
+\begin{align*}
+f(x)&=f(x_0)+\frac{f^{(n)}(x_0)}{n!}(x-x_0)^n+o\big((x-x_0)^n\big)\\
+&=f(x_0)+(x-x_0)^n\left[\frac{f^{(n)}(x_0)}{n!}+o(1)\right]
+\end{align*}\pause
+其中的$o(1)$是$x\to x_0$时的无穷小量．\pause 由极限的局部保号性，存在$x_0$的去心邻域，%$\mathring{U}(x_0)$
+使得在此邻域中$$\frac{f^{(n)}(x_0)}{n!}+o(1)>0.$$\pause
+所以当$n$为奇数时$f(x)$在$x_0$点不取得极值，当$n$为偶数时$f(x)$在$x_0$点取得极小值．
+\end{solution}
+\end{iframe}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{choice}
+设函数$f(x)$满足$\limit_{x\to a}\dfrac{f(x)-f(a)}{(x-a)^2}=-1$，则在点$a$处\dotfill(\qquad)
+\begin{choiceline}
+  \item $f(x)$的导数存在，且$f'(a)\neq0$
+  \item $f(x)$的导数不存在
+  \item $f(x)$取得极大值
+  \item $f(x)$取得极小值
+\end{choiceline}
+\end{choice}% 答案 C
+\end{frame}
+
+\section{函数图形的描绘}
+
+\begin{frame}
+\begin{definition}
+给定曲线$y=f(x)$。
+\begin{enumskip}
+  \item 若$\lim\limits_{x\to\infty}f(x)=b$，称$y=b$为其\bold{水平渐近线}。
+  \item 若$\lim\limits_{x\to a}f(x)=\infty$，称$x=a$为其\bold{铅直渐近线}。
+\end{enumskip}
+\end{definition}
+\vpause
+\begin{remark*}
+$(1)$ $x\to\infty$可以改为$x\to+\infty$或$x\to-\infty$。\pause
+$(2)$ $x\to a$可以改为$x\to a^+$或$x\to a^-$。
+\end{remark*}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+求曲线$y=\dfrac1{x-1}$的水平和铅直渐近线．
+\end{example}\pause
+\begin{example}
+求曲线$y=\dfrac{-x^2+x+1}{x^2}$的水平和铅直渐近线．
+\end{example}
+\end{frame}
+
+\begin{frame}
+\frametitle{曲线的渐近线}
+\begin{exercise}
+求曲线的水平和铅直渐近线．
+\begin{enumhalf}
+  \item $y=\dfrac{2x+1}{x+2}$ ~
+  \item $y=\dfrac{2x}{x^2-1}$ ~
+\end{enumhalf}
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\begin{definition}
+若直线$y=kx+b$（$k\neq0$）满足
+$$\lim\limits_{x\to\infty}[f(x)-(kx+b)]=0,$$
+则称它是曲线$y=f(x)$的一条\bold{斜渐近线}。
+\end{definition}
+\vpause
+\begin{theorem}
+直线$y=kx+b$是曲线$y=f(x)$的斜渐近线，当且仅当
+$$\lim_{x\to\infty}\frac{f(x)}{x}=k\text{~~~而且~~}\lim_{x\to\infty}[f(x)-kx]=b.$$
+\end{theorem}
+\vpause
+\begin{remark*}
+$x\to\infty$可以改为$x\to+\infty$或$x\to-\infty$。
+\end{remark*}
+\end{frame}
+
+\begin{frame}
+\frametitle{曲线的渐近线}
+\begin{example}
+求曲线$y=\dfrac{x^2}{x+1}$的斜渐近线．
+\end{example}\pause
+\begin{exercise}
+求曲线$y=\dfrac{x^3}{(x-1)^2}$的斜渐近线．
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\frametitle{函数图形的描绘}
+\begin{example}
+描绘函数$y=\dfrac{x^2}{x+1}$的曲线。
+\end{example}
+\end{frame}
+
+\section{曲线的曲率}
+
+\begin{frame}
+\frametitle{曲率与曲率半径}
+\begin{itemize}
+  \item 弧微分： $\ds=\sqrt{1+y'^2}{\dx}$
+  \item 角微分： $\d\alpha=\dfrac{y''}{1+y'^2}\dx$
+  \item 曲率： $K=\left|\dfrac{\d\alpha}{\ds}\right|=\dfrac{|y''|}{(1+y'^2)^{3/2}}$
+  \item 曲率半径： $\rho=\dfrac1K$
+\end{itemize}
+\end{frame}
+
+\end{document}

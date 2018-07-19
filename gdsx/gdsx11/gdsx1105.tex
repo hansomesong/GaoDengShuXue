@@ -1,0 +1,728 @@
+% -*- coding: utf-8 -*-
+% !TEX program = xelatex
+
+%\documentclass[14pt]{article}
+%\usepackage[notheorems]{beamerarticle}
+
+\documentclass[14pt,notheorems,leqno,xcolor={rgb}]{beamer} % ignorenonframetext
+
+\input{../common/theme.sty}
+\input{../common/share.sty}
+\input{../common/local.sty}
+
+\occasion{高等数学第十一章}
+\title{第五节·对坐标的曲面积分}
+\author{\href{https://lvjr.bitbucket.io}{吕荐瑞}}
+\institute{暨南大学数学系}
+\renewcommand<>{\section}[1]{\begin{frame}[plain]\titlepage\end{frame}}
+
+\setbeamerfont{title}{size=\Large}
+
+\makeatletter
+\beamer@tocsectionnumber=5\relax
+\setcounter{section}{5}
+\makeatother
+
+\begin{document}
+
+\section{对坐标的曲面积分}
+
+\subsection{概念与性质}
+
+\begin{frame}
+%\frametitle{有向曲面}
+\begin{definition*}
+若曲面在整体上具有\CJKunderdot{双侧}，则称它为\bold{可定向}的。\pause
+我们可以通过曲面上法向量的指向来定出曲面的侧．\pause
+指定了法向量亦即选定了侧的曲面，称为\bold{有向曲面}。
+%莫比乌斯带(单侧曲面的典型)
+\end{definition*}
+\pause\vfill\hrule\vfill
+\begin{columns}[onlytextwidth,c]
+\column{85mm}
+\uncover<4->{球面$x^2+y^2+z^2=R^2$可定向：}
+\begin{description}
+  \item<5->[外侧] 法向量指向朝外
+  \item<6->[内测] 法向量指向朝内
+\end{description}
+\column{35mm}
+\uncover<4->{\begin{tikzpicture}[thick,font=\footnotesize,inner sep=1pt,scale=1]
+%sphere 
+\fill[fill=black] (0,0) circle (0.6pt); 
+\draw[dashed] (1,0) arc (0:180:1 and 0.3);
+\shade[ball color = gray!40, opacity = 0.4] (0,0) circle (1);
+\draw (0,0) circle (1);  \draw (-1,0) arc (180:360:1 and 0.3);
+\node at (2.1,0) {$\phantom{a}$};
+\visible<5->{\draw[-stealth,color=accent1] (30:1) -- (30:1.6) node[right] {$\vec{n}$};}
+\visible<6->{\draw[-stealth,color=accent3] (30:1) -- (30:0.4) node[left] {$\vec{n}$};}
+\end{tikzpicture}}
+\end{columns}
+\vfill
+\begin{columns}[onlytextwidth,c]
+\column{85mm}
+\uncover<7->{曲面$z=f(x,y)$可定向：}
+\begin{description}
+  \item<8->[上侧] 法向量指向朝上
+  \item<9->[下测] 法向量指向朝下
+\end{description}
+\column{35mm}
+\uncover<7->{\begin{tikzpicture}[x=(215:2em/sqrt 2), y=(0:2em), z=(90:2em),
+   thick, line join=round,scale=0.45, font=\footnotesize, inner sep=2pt,
+   declare function={f(\x,\y)=((\x-3)^2+(-\y+3)^3)/8+3;}]
+\visible<8->{\draw[-stealth,color=accent1] (3.1,3.1,3.1) -- (6,5.5,6) node[right] {$\vec{n}$};}
+\visible<9->{\draw[-stealth,color=accent3] (2.9,2.9,2.9) -- (0,0.5,0) node[right] {$\vec{n}$};}
+\draw (3,3,3) circle (1pt);
+%surfaces 
+\draw [black, fill=black, fill opacity=0.1, domain=0:4, smooth, variable=\t]
+    plot (1+\t, 1, {f(1+\t,1)}) --
+    plot (5, 1+\t, {f(5,1+\t)}) --
+    plot (5-\t, 5, {f(5-\t,5)}) --
+    plot (1, 5-\t, {f(1,5-\t)}) -- cycle;
+\end{tikzpicture}}
+\end{columns}
+\end{frame}
+
+\begin{frame}%<99>
+%\frametitle{引例：流向曲面一侧的流量}
+\begin{problem*}
+设稳定流体（假设密度为$1$）的速度场为
+\[ \bold{\vec{v}(x,y,z)=P(x,y,z)\,\vi+Q(x,y,z)\,\vj+R(x,y,z)\,\vk}. \]
+$\Sigma$是速度场中的一片有向曲面，
+求单位时间内流向$\Sigma$指定侧（单位法向量为$\vn$）的流体的质量，即流量$\Phi$．
+\end{problem*}
+\pause
+\begin{columns}[onlytextwidth]
+\column{0.55\textwidth}
+\begin{tikzpicture}[x=(215:2em/sqrt 2), y=(0:2em), z=(90:2em), declare function={
+    f(\x,\y)=((\x-3)^2+(-\y+3)^3)/8+3;
+    fx(\x,\y)=(\x-3)/4;
+    fy(\x,\y)=-3*(3-\y)^2/8;
+    nlength(\x,\y)=sqrt(fx(\x,\y)*fx(\x,\y)+fy(\x,\y)*fy(\x,\y)+1);
+    nx(\x,\y)= -fx(\x,\y)/nlength(\x,\y);
+    ny(\x,\y)= -fy(\x,\y)/nlength(\x,\y);
+    nz(\x,\y)= 1/nlength(\x,\y);
+    vx(\x,\y,\z)=1/sqrt(1+(\x*\x+\y*\y-1)^2+(\z*\z+\y*\y+1)^2);
+    vy(\x,\y,\z)=(\x*\x+\y*\y-1)/sqrt(1+(\x*\x+\y*\y-1)^2+(\z*\z+\y*\y+1)^2);
+    vz(\x,\y,\z)=(\z*\z+\y*\y+1)/sqrt(1+(\x*\x+\y*\y-1)^2+(\z*\z+\y*\y+1)^2);
+  },line join=round,thick]
+% surface
+\draw[fill=gray3,thin,fill opacity=0.125,domain=0:4,smooth,variable=\t]
+     	plot (1+\t, 1, {f(1+\t,1)}) --
+     	plot (5, 1+\t, {f(5,1+\t)}) --
+     	plot (5-\t, 5, {f(5-\t,5)}) --
+     	plot (1, 5-\t, {f(1,5-\t)}) -- cycle;
+\node[left] at (2.2,0.6,{f(2.6,1)}) {$\Sigma$};
+% draw vector field n
+\def\ss{0.5} %scale of the vectors
+\visible<2|handout:0>{
+  \foreach \k in {1.5,2.5,3.5,4.5}
+  \foreach \l [evaluate={\m=f(\k,\l);\p=vx(\k,\l,\m);\q=vy(\k,\l,\m);\r=vz(\k,\l,\m)}] in {1.5,2.5,3.5,4.5} {
+    \draw[fill] (\k,\l,\m) circle (0.3pt);
+	\draw[-stealth,accent1] (\k,\l,\m) -- ++(\p*\ss,\q*\ss,\r*\ss);
+  }
+  \node[above=1em,accent1] at (1,3,{f(1,3)}) {$\vec{v}(x,y,z)$};
+}
+% one piece  
+\def\a{2}  
+\def\b{2}  
+\pgfmathsetmacro{\c}{f(\a,\b)}
+\visible<3->{
+\draw[domain=0:1,variable=\t,smooth,fill=black,fill opacity=0.125]
+    plot (\a+\t, \b, {f(\a+\t,\b)}) --
+    plot (\a+1, \b+\t, {f(\a+1,\b+\t)}) --
+    plot (\a+1-\t, \b+1, {f(\a+1-\t,\b+1)}) --
+    plot (\a, \b+1-\t, {f(\a,\b+1-\t)}) -- cycle;
+\node[below,inner sep=0.04em,font=\small] at (3,2.5,{f(3,2.5)}) {$\dS$};
+}
+% velocity vector
+\coordinate (p) at ({\a+0.5},{\b+0.5},{\c-0.2});
+\coordinate (v) at (-1,1,2);
+\visible<4->{
+  \draw[-stealth,color=accent1] (p)--++(v) coordinate(vv) node[right,inner sep=0pt]{$\vv$};
+}
+% amount of fluid
+\def\vx{-1}
+\def\vy{1} 
+\def\vz{2}
+\visible<5->{
+  \draw[domain=0:1,variable=\t,smooth]
+	plot (2+\t+\vx,2+\vy,{f(2+\t,2)+\vz}) --
+	plot (3+\vx,2+\t+\vy,{f(3,2+\t)+\vz}) --
+	plot (3-\t+\vx,3+\vy,{f(3-\t,3)+\vz}) --
+	plot (2+\vx,3-\t+\vy,{f(2,3-\t)+\vz}) -- cycle;
+  \draw[thin] (2,2,{f(2,2)}) -- ++(v) (2,3,{f(2,3)}) -- ++(v)
+              (3,2,{f(3,2)}) -- ++(v) (3,3,{f(3,3)}) -- ++(v);
+}
+% normal vector
+\visible<6->{
+  \draw[-stealth,accent3] (p)--++({nx(2.5,2.5)*3},{ny(2.5,2.5)*3},{nz(2.5,2.5)*3}) 
+                          coordinate(vn) node[right]{$\vn$};
+}
+% projection
+\visible<7->{\draw[densely dashed] (vv) -- ($(p)!(vv)!(vn)$);} %垂线
+\end{tikzpicture}
+\column{0.45\textwidth}
+\uncover<7->{
+  \begin{align*}
+    \d\Phi &=\vv\cdot\vn\dS \\
+    \uncover<8->{\lead{\rightwhitearrow}\;\bold{\Phi}} &\uncover<8->{\cbold=\iint_{\Sigma}\vv\cdot\vn\dS}
+  \end{align*}
+}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+%\frametitle{向量场的曲面积分}
+\onslide<2->{已知速度场$\vv=\big(P(x,y,z),Q(x,y,z),R(x,y,z)\big)$，}\par
+\onslide<3->{单位法向量$\vn=(\cos\alpha,\cos\beta,\cos\gamma)$，}\onslide<4->{从而}\vspace{0.7em}%
+\begin{align*}
+  &\cbold\Phi\!=\!\!\!\iint_{\Sigma}\!\!\vv\cdot\vn\dS
+  %\onslide<4->{=\iint_{\Sigma}\big(P,Q,R\big)\cdot\big(\cos\alpha,\cos\beta,\cos\gamma\big)\dS} \\
+   \onslide<4->{\!=\!\!\!\iint_{\Sigma}\!\!\big(P\cos\alpha\!+\!Q\cos\beta\!+\!R\cos\gamma\big)\!\dS} \\
+  &\onslide<5->{\!\!=\iint_{\Sigma}P\cos\alpha\dS+\iint_{\Sigma}Q\cos\beta\dS+\iint_{\Sigma}R\cos\gamma\dS} \\
+  &\onslide<6->{\!\!\xlongequal{\text{记为}}
+                \bold{\iint_{\Sigma}P\dy\dz}+\bold{\iint_{\Sigma}Q\dz\dx}+\bold{\iint_{\Sigma}R\dx\dy}}
+\end{align*}
+\vskip0.4em\pause[7]称为\bold{对坐标的曲面积分}，或\bold{第二类曲面积分}．
+\end{frame}
+
+\begin{frame}
+\frametitle{对坐标的曲面积分}
+%\begin{definition*}
+设有向曲面$\Sigma$的单位法向量为$(\cos\alpha,\cos\beta,\cos\gamma)$．\par
+\bold{对坐标$y,z$的曲面积分}
+\[ \iint_{\Sigma}P(x,y,z)\dy\dz=\iint_{\Sigma}P(x,y,z)\cos\alpha\dS \]
+\bold{对坐标$z,x$的曲面积分}
+\[ \iint_{\Sigma}Q(x,y,z)\dz\dx=\iint_{\Sigma}Q(x,y,z)\cos\beta\dS \]
+\bold{对坐标$x,y$的曲面积分}
+\[ \iint_{\Sigma}R(x,y,z)\dx\dy=\iint_{\Sigma}R(x,y,z)\cos\gamma\dS \]
+%\end{definition*}
+\end{frame}
+
+\begin{frame}
+\frametitle{两类曲面积分的联系}
+\noindent
+\begin{align*}
+&\iint_{\Sigma}P(x,y,z)\dy\dz=\iint_{\Sigma}P(x,y,z)\cos\alpha\dS \\
+&\iint_{\Sigma}Q(x,y,z)\dz\dx=\iint_{\Sigma}Q(x,y,z)\cos\beta\dS \\
+&\iint_{\Sigma}R(x,y,z)\dx\dy=\iint_{\Sigma}R(x,y,z)\cos\gamma\dS \\
+&\!\begin{aligned}[T]
+  &\cbold\iint_{\Sigma}P\dy\dz+Q\dz\dx+R\dx\dy \\[-0.3em]
+  &\qquad\qquad\quad\cbold=\iint_{\Sigma}\left(P\cos\alpha+Q\cos\beta+R\cos\gamma\right)\dS
+\end{aligned}
+\end{align*}
+\end{frame}
+
+\begin{rframe}
+\frametitle{第二类曲面积分：直接定义}
+\begin{tabu}{X}
+\hline
+$\cos\alpha\dS$是面积元素$\dS$在$yOz$坐标面的\CJKunderdot{有向}投影 \\
+$\cos\beta\dS$是面积元素$\dS$在$zOx$坐标面的\CJKunderdot{有向}投影 \\
+$\cos\gamma\dS$是面积元素$\dS$在$xOy$坐标面的\CJKunderdot{有向}投影 \\
+\hline
+\end{tabu}
+\end{rframe}
+
+\begin{rframe}
+\frametitle{第二类曲面积分：直接定义}
+设$\Sigma$是\bold{有向曲面}，在$\Sigma$上取一小块曲面$\Delta S$．\pause
+\begin{itemize}
+  \item<+-> 设$\Delta S$在$xOy$面的投影区域的面积为$(\Delta\sigma)_{xy}$
+  \item<+-> 设$\Delta S$上各点处的法向量与$z$轴的夹角为$\gamma$
+\end{itemize}\onslide<+->
+我们规定$\Delta S$在$xOy$面的\bold{有向投影} $(\Delta S)_{xy}$为
+\[ (\Delta S)_{xy} = \begin{cases}
+  (\Delta\sigma)_{xy},  & \cos\gamma>0; \\
+  -(\Delta\sigma)_{xy}, & \cos\gamma<0; \\
+  0,                    & \cos\gamma\equiv0.
+\end{cases}\]\onslide<+->
+其中假定夹角余弦$\cos\gamma$的符号在$\Delta S$上保持不变。
+\end{rframe}
+
+%\begin{frame}%<99>
+%%\frametitle{对坐标的曲面积分的定义}
+%\begin{columns}[onlytextwidth]
+%\column{60mm}
+%\begin{tikzpicture}[x=(215:2em/sqrt 2), y=(-15:2em), z=(75:2em), declare function={
+%    f(\x,\y)=((\x-3)^2+(-\y+3)^3)/8+3;
+%    fx(\x,\y)=(\x-3)/4;
+%    fy(\x,\y)=-3*(3-\y)^2/8;
+%  }, line join=round,font=\small]
+%\visible<2->{
+%%partitions of surface
+%\foreach \x in {1,...,4}{
+%   \foreach \y in {1,...,4} {
+%      \draw[domain=0:1,variable=\t,smooth]
+%         plot (\x+\t,\y,{f(\x+\t,\y})--
+%         plot (\x+1,\y+\t,{f(\x+1,\y+\t)})--
+%         plot (\x+1-\t,\y+1,{f(\x+1-\t,\y+1)})--
+%         plot (\x,\y+1-\t,{f(\x,\y+1-\t)})--cycle;
+%      }
+%   }
+%}
+%%one piece  
+%\def\a{2}  
+%\def\b{2}  
+%\pgfmathsetmacro{\c}{f(\a,\b)}
+%\visible<3->{
+%\draw[blue,very thick,domain=0:1,variable=\t,smooth,fill=black, fill opacity=0.125]
+%    plot (\a+\t, \b, {f(\a+\t,\b)}) --
+%    plot (\a+1, \b+\t, {f(\a+1,\b+\t)}) --
+%    plot (\a+1-\t, \b+1, {f(\a+1-\t,\b+1)}) --
+%    plot (\a, \b+1-\t, {f(\a,\b+1-\t)}) -- cycle;
+%}
+%\coordinate (q) at ({\a+0.5},{\b+1.5},{\c+1.3});  
+%\coordinate (p) at ({\a+0.5},{\b+0.5},{\c-0.2}); 
+%\coordinate (r) at ({\a+0.16},{\b-0.02},{\c-0.2});
+%\visible<3->{
+%\draw[fill] (p) circle (0.5pt); 
+%\draw[<-] ($(p)+(0,0,0.1)$) to[out=80,in=190] (q); 
+%\node[right] at (q) {$(\xi_i,\eta_i,\zeta_i)$}; 
+%}
+%\visible<4->{
+%\node[above left] at (r) {$\Delta S_i$};
+%}
+%%surfaces  
+%\draw [black,thick,fill=black, fill opacity=0.125, domain=0:4, smooth, variable=\t]
+%    plot (1+\t, 1, {f(1+\t,1)}) --
+%    plot (5, 1+\t, {f(5,1+\t)}) --
+%    plot (5-\t, 5, {f(5-\t,5)}) --
+%    plot (1, 5-\t, {f(1,5-\t)}) -- cycle;
+%\node[right] at (1,1,{f(1,1)}) {$\Sigma$};
+%\end{tikzpicture}  
+%\column{60mm}
+%\begin{itemize}
+%  \item 有向曲面$\Sigma$分片光滑
+%  \item $R(x,y,z)$在$\Sigma$上有界
+%\end{itemize}
+%\begin{itemize}
+%  \item<2-> \warn{任意}划分$\Sigma=\bigcup\limits_i \Sigma_i$
+%  \item<3-> \warn{任取}点$(\xi_{i},\eta_{i},\zeta_{i})\in \Sigma_i$
+%\end{itemize}
+%\end{columns}
+%\uncover<9->{定义$R(x,y,z)$在$\Sigma$上\bold{对坐标$x,y$的曲面积分}}
+%\[\uncover<5->{
+%  \uncover<8->{\iint_{\Sigma}R(x,y,z)\dx\dy=}
+%  \uncover<7->{\lim\limits_{\lambda\rightarrow0}}
+%  \uncover<6->{\sum\limits_{i=1}^{n}}
+%  R(\xi_{i},\eta_{i},\zeta_{i})(\Delta S_{i})_{xy}
+%}\]
+%\uncover<10->{其中$\Sigma$称为\bold{积分曲面}。}
+%\end{frame}
+
+\begin{rframe}
+\frametitle{第二类曲面积分：直接定义}
+\begin{definition*}
+给定有向曲面$\Sigma$，\CJKunderdot{任意}划分$\Sigma=\bigcup_i \Sigma_i$，
+\CJKunderdot{任取}点$(\xi_{i},\eta_{i},\zeta_{i})\in \Sigma_i$，
+定义在$\Sigma$上\bold{对坐标的曲面积分}或者称\bold{第二类曲面积分}
+\begin{align*}
+&\iint_{\Sigma}P(x,y,z)\dy\dz=\lim\limits_{\lambda\rightarrow0}
+   \sum\limits_{i=1}^{n}P(\xi_{i},\eta_{i},\zeta_{i})(\Delta S_{i})_{yz} \\
+&\iint_{\Sigma}Q(x,y,z)\dz\dx=\lim\limits_{\lambda\rightarrow0}
+   \sum\limits_{i=1}^{n}Q(\xi_{i},\eta_{i},\zeta_{i})(\Delta S_{i})_{zx} \\
+&\iint_{\Sigma}R(x,y,z)\dx\dy=\lim\limits_{\lambda\rightarrow0}
+   \sum\limits_{i=1}^{n}R(\xi_{i},\eta_{i},\zeta_{i})(\Delta S_{i})_{xy}
+\end{align*}
+\end{definition*}
+\end{rframe}
+
+\begin{frame}
+%\frametitle{对坐标的曲线积分的性质}
+\begin{property}[线性和]
+设$\alpha$和$\beta$为常数，则有
+$$\iint_{\Sigma}\!\!(\alpha R_1+\beta R_2)\dx\!\dy
+ \!=\!\alpha\!\!\iint_{\Sigma}\!\!R_1\dx\!\dy+\beta\!\!\iint_{\Sigma}\!\!R_2\dx\!\dy$$
+\end{property}
+\pause
+\begin{property}[分片和]
+将有向曲面$\Sigma$分成$\Sigma_1$和$\Sigma_2$，则有
+$$\iint_{\Sigma}R\dx\dy=\iint_{\Sigma_{1}}R\dx\dy+\iint_{\Sigma_{2}}R\dx\dy$$
+\end{property}
+\pause
+\begin{property}[方向性]
+设$\Sigma^-$是$\Sigma$的反向有向曲面，则有
+$$\iint_{\Sigma^-}R(x,y,z)\dx\dy=-\iint_{\Sigma}R(x,y,z)\dx\dy$$
+\end{property}
+\pause
+\begin{remark}
+前两个性质与第一类曲面积分类似．
+\end{remark}
+\end{frame}
+
+\subsection{计算方法}
+
+\begin{frame}
+设积分曲面$\Sigma$是由方程$z=z(x,y)$所给出的曲面的\bold{上侧}，
+$\Sigma$在$xOy$面上的投影区域是$D_{xy}$．\ppause
+此时有向曲面$\Sigma$的单位法向量$\vn$为
+\[\dfrac{\raisebox{-0.3em}{$1$}}{\!\sqrt{1+{z'_x}^2+{z'_y}^2}}\big(-z'_x,-z'_y,\bold{1}\big)
+   =\big(\!\cos\alpha,\cos\beta,\bold{\cos\gamma}\big)\]\\[0.5em]
+{\clead\hrule}\ppause\vspace{0.2em}
+\mylinebox{$\!\begin{aligned}[T]
+  &\bold{\iint_{\Sigma}\!R(x,y,z)\dx\dy} = \iint_{\Sigma}R(x,y,z)\cos\gamma\dS \\
+  &\onslide<4->{\!\!=\!\iint_{D_{xy}}\!\!\!\!\!\!R(x,y,z(x,y))
+      \frac{\raisebox{-0.3em}{$1$}}{\!\!\sqrt{1\!+\!{z'_x\!}^2\!+\!{z'_y\!}^2}}
+      \sqrt{1\!+\!{z'_x\!}^2\!+\!{z'_y\!}^2}\dx\dy} \\[-0.5em]
+  &\onslide<5->{\cbold\!\!=\!\iint_{D_{xy}}\!\!\!R(x,y,z(x,y))\dx\dy}
+\end{aligned}$}%
+\end{frame}
+
+\begin{frame}
+设积分曲面$\Sigma$是由方程$z=z(x,y)$所给出的曲面的\bold{下侧}，
+$\Sigma$在$xOy$面上的投影区域是$D_{xy}$．\ppause
+此时有向曲面$\Sigma$的单位法向量$\vn$为
+\[\dfrac{\raisebox{-0.3em}{$1$}}{\!\sqrt{1+{z'_x}^2+{z'_y}^2}}\big(z'_x,z'_y,\bold{-1}\big)
+   =\big(\!\cos\alpha,\cos\beta,\bold{\cos\gamma}\big)\]\\[0.5em]
+{\clead\hrule}\ppause\vspace{0.2em}
+\mylinebox{$\!\begin{aligned}[T]
+  &\bold{\iint_{\Sigma}\!R(x,y,z)\dx\dy} = \iint_{\Sigma}R(x,y,z)\cos\gamma\dS \\
+  &\onslide<4->{\!\!=\!\iint_{D_{xy}}\!\!\!\!\!\!R(x,y,z(x,y))
+      \frac{\raisebox{-0.3em}{$-1$}}{\!\!\sqrt{1\!+\!{z'_x\!}^2\!+\!{z'_y\!}^2}}
+      \sqrt{1\!+\!{z'_x\!}^2\!+\!{z'_y\!}^2}\dx\dy} \\[-0.5em]
+  &\onslide<5->{\cbold\!\!=\warn{-}\!\iint_{D_{xy}}\!\!\!R(x,y,z(x,y))\dx\dy}
+\end{aligned}$}%
+\end{frame}
+
+\begin{frame}
+设积分曲面为$\bold{z=z(x,y)}$，则（\warn{上侧正号}，\lead{下侧负号}）
+\[\iint_{\Sigma}R(x,y,z)\dx\dy=\bold{\pm}\iint_{D_{xy}}R(x,y,z(x,y))\dx\dy\]
+\vfill
+设积分曲面为$\bold{x=x(y,z)}$，则（\warn{前侧正号}，\lead{后侧负号}）
+\[\iint_{\Sigma}P(x,y,z)\dy\dz=\bold{\pm}\iint_{D_{yz}}P(x(y,z),y,z)\dy\dz\]
+\vfill
+设积分曲面为$\bold{y=y(z,x)}$，则（\warn{右侧正号}，\lead{左侧负号}）
+\[\iint_{\Sigma}Q(x,y,z)\dz\dx=\bold{\pm}\iint_{D_{zx}}Q(x,y(z,x),z)\dz\dx\]
+\end{frame}
+
+\begin{frame}
+\begin{example}
+计算曲面积分$\iint_\Sigma x^2\dy\dz$，其中$\Sigma$是长方体
+$$\Omega=\big\{(x,y,z)\mid 0\le x\le a, 0\le y \le b, 0\le z\le c\big\}$$
+的整个表面的\CJKunderdot{外侧}．
+\end{example}
+\stext{\pause
+\begin{solution}\smark
+将有向曲面$\Sigma$分成以下六部分：
+\begin{align*}
+  &\Sigma_1: z=c\ (0\le x\le a, 0\le y \le b)\ \text{的上侧};\\
+  &\Sigma_2: z=0\ (0\le x\le a, 0\le y \le b)\ \text{的下侧};\\
+  &\Sigma_3: x=a\ (0\le y\le b, 0\le z \le c)\ \text{的前侧};\\
+  &\Sigma_4: x=0\ (0\le y\le b, 0\le z \le c)\ \text{的后侧};\\
+  &\Sigma_5: y=b\ (0\le x\le a, 0\le z \le c)\ \text{的右侧};\\
+  &\Sigma_6: y=0\ (0\le x\le a, 0\le z \le c)\ \text{的左侧}.\\
+\end{align*}
+\end{solution}}
+\end{frame}
+
+\begin{sframe}
+\begin{columns}[onlytextwidth]
+\column{75mm}
+除$\Sigma_3$和$\Sigma_4$外，其余四片曲面在$yOz$面上的投影都为零，
+\onslide<2->{因此}
+\column{40mm}
+\hfill
+\begin{tikzpicture}[x=(215:2em/sqrt 2), y=(0:2em), z=(90:2em),
+   inner sep=2pt,thick,scale=1.8]
+\coordinate (p)  at (0,0,0); 
+\coordinate (pa) at (1,0,0); 
+\coordinate (pb) at (1,1,0);
+\coordinate (pc) at (0,1,0);
+\coordinate (q)  at (0,0,1); 
+\coordinate (qa) at (1,0,1); 
+\coordinate (qb) at (1,1,1); 
+\coordinate (qc) at (0,1,1);
+\fill[fill=filler2,opacity=0.6] (p)--(pc)--(qc)--(q)--cycle;
+\node[accent2] at (0,0.8,0.2) {$\Sigma_4$};
+\fill[fill=filler1,opacity=0.6] (pa)--(pb)--(qb)--(qa)--cycle;
+\node[accent1] at (1,0.8,0.2) {$\Sigma_3$};
+%cube 
+\draw[densely dashed] (p) -- (pa) node[above left,accent3] {$a$};
+\draw[-stealth] (pa) --++ (0.3,0,0) node[below right,font=\footnotesize] {$x$};
+\draw[densely dashed] (p) -- (pc) node[below right,accent3] {$b$};
+\draw[-stealth] (pc) --++ (0,0.3,0) node[above left,font=\footnotesize] {$y$};
+\draw[densely dashed] (p) -- (q) node[above left,accent3] {$c$};
+\draw[-stealth] (q) --++ (0,0,0.3) node[below right,font=\footnotesize] {$z$};
+\draw[thick] (q)--(qa)--(qb)--(qc)--cycle;
+\draw[thick] (pa)--(qa);
+\draw[thick] (pb)--(qb);
+\draw[thick] (pc)--(qc);
+\draw[thick] (pa)--(pb)--(pc);
+\end{tikzpicture}  
+\end{columns}
+\onslide<2->\noindent
+$\!\begin{aligned}
+   \iint_\Sigma x^2\dy\dz 
+ &=\iint_{\Sigma_3}x^2\dy\dz + \iint_{\Sigma_4}x^2\dy\dz \\
+ &\onslide<3->{=\iint_{D_{yz}}a^2\dy\dz \mathbin{\warn{-}} \iint_{D_{yz}}0^2\dy\dz} \\
+ &\onslide<4->{=a^2bc.}
+\end{aligned}$
+\end{sframe}
+
+\begin{frame}
+\begin{columns}[onlytextwidth,c]
+\column{69mm}
+\begin{example}
+计算$\iint_{\Sigma}xyz\dx\dy$，\vspace{0.4em}
+其中$\Sigma$是球面$x^2+y^2+z^2=1$外侧在$x\ge0$，$y\ge0$的部分．
+\end{example}
+\stext{\vspace{0.5em}
+\onslide<2->{\begin{solution}\smark
+将$\Sigma$分为上下两部分：
+\end{solution}}}
+\column{51mm}
+\hfill
+\begin{tikzpicture}[x=(215:2em/sqrt 2), y=(0:2em), z=(90:2em),
+                    thick,font=\small,scale=1.8,inner sep=2pt]
+%define two points 
+\pgfmathsetmacro{\px}{0.65*cos(45)}
+\pgfmathsetmacro{\py}{0.65*sin(45)}
+\pgfmathsetmacro{\pz}{sqrt(1-(\px)^2-(\py)^2)}
+\coordinate (p) at (\px,\py,\pz); 
+\coordinate (q) at (\px,\py,-\pz+0.3);
+%coordinates 
+\draw[-stealth, black!75, thin] (0,0,0) -- (1.3,0,0) node[below, font=\footnotesize] {$x$}; 
+\draw[-stealth, black!75, thin] (0,0,0) -- (0,1.3,0) node[below, font=\footnotesize] {$y$};
+\draw[-stealth, black!75, thin] (0,0,-1.1) -- (0,0,1.2) node[below left, font=\footnotesize] {$z$};
+\draw[variable=\t,domain=0:pi*0.5,smooth]
+    plot ({cos(\t r)},{sin(\t r)},0);
+\draw[variable=\t,domain=0:pi*0.5,smooth]
+    plot (0,{cos(\t r)},{sin(\t r)})--
+    plot ({sin(\t r)},0,{cos(\t r})
+    to[out=-70,in=160] (0,0,-1)
+    to[out=20,in=250] (0,1,0);
+% normal vector
+\visible<2->{
+  \draw[-stealth,accent1,thick] (p) --++ (\px*1.0,\py*1.0,\pz*1.0)
+      node[right] {$\vec{n}$};
+  \node[accent1,below] at(p) {$\Sigma_{\text{上}}$};
+  \draw[-stealth,accent3,thick] (q) --++ (\px*0.7,\py*0.7,{(-\pz+0.3)*0.7})
+      node[above right] {$\vec{n}$};
+  \node[accent3,above] at(q) {$\Sigma_{\text{下}}$};
+}
+% Dxy
+\visible<3->{
+  \draw[accent2,fill=filler2,opacity=0.6]
+      plot[variable=\t,domain=0:pi*0.5,smooth] ({cos(\t r)},{sin(\t r)},0)
+        -- (0,0,0) -- (1,0,0);
+  \node[below right,font=\footnotesize] at(0,0,0) {$D_{xy}$};
+}
+\end{tikzpicture} 
+\end{columns}
+\stext{\noindent\vspace{-0.7em}
+\begin{align*}
+   \onslide<3->{\iint_{\Sigma_{\text{上}}}xyz\dx\dy}
+  &\onslide<3->{=\iint_{D_{xy}}xy\sqrt{1-x^2-y^2}\dx\dy} \\
+   \onslide<4->{\iint_{\Sigma_{\text{下}}}xyz\dx\dy}
+  &\onslide<4->{=-\!\!\iint_{D_{xy}}\!\!\!\!xy\left(\!-\sqrt{1\!-\!x^2\!-\!y^2}\right)\!\dx\!\dy} \\
+   \onslide<5->{\lead{\rightwhitearrow} \iint_{\Sigma}xyz\dx\dy}
+  &\onslide<5->{=2\iint_{D_{xy}}xy\sqrt{1-x^2-y^2}\dx\dy}
+   %\onslide<6->{=\frac{2}{15}.}
+\end{align*}}
+\end{frame}
+
+\begin{frame}
+设积分曲面$\Sigma$由$z=z(x,y)$给出．单位法向量$\vn$为
+\[\dfrac{\pm1}{\!\sqrt{1+{z'_x}^2+{z'_y}^2}}\big(\!-z'_x,-z'_y,1\big)
+   \!=\!\big(\!\cos\alpha,\cos\beta,\cos\gamma\big)\]\\[0.6em]
+{\clead\hrule}\ppause\vspace{0.3em}
+\begin{align*}
+  \bold{\iint_{\Sigma}\!P(x,y,z)\dy\dz} &= \iint_{\Sigma}P(x,y,z)\cos\alpha\dS \\
+  &\onslide<3->{=\!\iint_{\Sigma}P(x,y,z)\frac{\cos\alpha}{\cos\gamma}\cos\gamma\dS} \\
+  &\onslide<4->{\cbold=\!\iint_{\Sigma}\!P(x,y,z)(-z'_x)\dx\dy}
+\end{align*}
+\end{frame}
+
+\begin{frame}
+设积分曲面$\Sigma$由$z=z(x,y)$给出．单位法向量$\vn$为
+\[\dfrac{\pm1}{\!\sqrt{1+{z'_x}^2+{z'_y}^2}}\big(\!-z'_x,-z'_y,1\big)
+   \!=\!\big(\!\cos\alpha,\cos\beta,\cos\gamma\big)\]\\[0.6em]
+{\clead\hrule}\ppause\vspace{0.3em}
+\begin{align*}
+  \bold{\iint_{\Sigma}\!Q(x,y,z)\dz\dx} &= \iint_{\Sigma}Q(x,y,z)\cos\beta\dS \\
+  &\onslide<3->{=\!\iint_{\Sigma}Q(x,y,z)\frac{\cos\beta}{\cos\gamma}\cos\gamma\dS} \\
+  &\onslide<4->{\cbold=\!\iint_{\Sigma}\!Q(x,y,z)(-z'_y)\dx\dy}
+\end{align*}
+\end{frame}
+
+\begin{frame}
+设积分曲面$\Sigma$由$z=z(x,y)$给出，则有
+\begin{align*}
+  \cbold\iint_{\Sigma}P(x,y,z)\dy\dz  &\cbold=\iint_{\Sigma}P(x,y,z)(-z'_x)\dx\dy \\
+  \bold{\iint_{\Sigma}Q(x,y,z)\dz\dx} &\cbold=\iint_{\Sigma}Q(x,y,z)(-z'_y)\dx\dy
+\end{align*}\vpause
+从而有第二类曲面积分的\CJKunderdot{转换公式}：
+\begin{multline*}
+  \cbold\iint_{\Sigma}P\dy\dz+Q\dz\dx+R\dx\dy \\
+  \cbold=\iint_{\Sigma}\big[P\,(-z'_x)+Q\,(-z'_y)+R\big]\dx\dy
+\end{multline*}
+\end{frame}
+
+%\begin{sframe}
+%\begin{columns}[onlytextwidth,c]
+%\column{80mm}
+%\begin{example}
+%设有向曲面$\Sigma$是旋转抛物面$z=\frac12(x^2+y^2)$介于$z=0$及$z=2$之间的部分的\CJKunderdot{下侧}，
+%求$$\displaystyle\iint_{\Sigma}(z^2+x)\dy\dz-z\dx\dy.$$
+%\end{example}%
+%\addtocounter{example}{-1}%
+%\column{40mm}
+%\hfill
+%\begin{tikzpicture}[thick,font=\small,scale=0.9,inner sep=2pt]
+%\def\a{1.5} 
+%\def\b{0.3} 
+%\pgfmathsetmacro{\c}{(\a)^2}
+%%coordinates 
+%\draw [-stealth,black!75,thin] (-1.7,0) -- (1.8,0) node [right, font={\scriptsize}] {$y$};
+%\draw [-stealth,black!75,thin] (0,0) -- (0,{\c+0.6}) node [left, font={\scriptsize}] {$z$};
+%\draw [-stealth,black!75,thin] (35:1) -- (215:1) node [left, font={\scriptsize}] {$x$};
+%%suface 
+%\draw [right color=gray5, left color=white, opacity=0.7]
+%	plot[variable=\t,domain=-\a:\a,smooth] (\t,{\t*\t})--
+%	(\a,\c) arc (0:-180:{\a} and {\b});
+%\draw [top color=white, bottom color=gray5, opacity=0.7] (0,\c) ellipse ({\a} and {\b});
+%\node[right,font={\footnotesize}] at(0,\c) {$z\!=\!2$};
+%\end{tikzpicture} 
+%\end{columns}
+%\pause\vspace{-0.5em}
+%\begin{solution}
+%由两类曲面积分的联系可得\quad\onslide<4->{$\boxed{\warn{\frac{\cos\alpha}{\cos\gamma}=-z'_x}}$}
+%\vspace{-0.5em}
+%\begin{align*}
+%  &\iint_{\Sigma}(z^2+x)\dy\dz = \iint_{\Sigma}(z^2+x)\cos\alpha\dS \\
+%  &\onslide<3->{=\!\iint_{\Sigma}\!(z^2+x)\frac{\cos\alpha}{\cos\gamma}\dx\!\dy}
+%   \onslide<5->{=\!\iint_{\Sigma}\!(z^2+x)(-x)\dx\!\dy}
+%\end{align*}
+%\end{solution}
+%\end{sframe}
+
+\begin{frame}
+\begin{columns}[onlytextwidth,c]
+\column{80mm}
+\begin{example}
+设有向曲面$\Sigma$是旋转抛物面$z=\frac12(x^2+y^2)$介于$z=0$及$z=2$之间的部分的\CJKunderdot{下侧}，
+求$$\displaystyle\iint_{\Sigma}(z^2+x)\dy\dz-z\dx\dy.$$
+\end{example}
+\column{40mm}
+\hfill
+\begin{tikzpicture}[thick,font=\small,scale=0.9,inner sep=2pt]
+\def\a{1.5} 
+\def\b{0.3} 
+\pgfmathsetmacro{\c}{(\a)^2}
+%Dxy
+\uncover<2->{ 
+\draw [blue,thick,fill=gray2, opacity=0.7] (0,0) ellipse ({\a} and {\b}); 
+\draw [blue,thin,densely dashed] (-\a,0)--(-\a,\c); 
+\draw [blue,thin,densely dashed] (\a,0)--(\a,\c);
+\node[below right,blue,font={\footnotesize}] at(-30:0.6) {$D_{xy}$};
+}
+%coordinates 
+\draw [-stealth,black!75,thin] (-1.7,0) -- (1.8,0) node [right] {$y$};
+\draw [-stealth,black!75,thin] (0,0) -- (0,{\c+0.6}) node [left] {$z$};
+\draw [-stealth,black!75,thin] (35:1) -- (215:1) node [left] {$x$};
+%suface 
+\draw [right color=gray5, left color=white, opacity=0.7]
+	plot[variable=\t,domain=-\a:\a,smooth] (\t,{\t*\t})--
+	(\a,\c) arc (0:-180:{\a} and {\b});
+\draw [top color=white, bottom color=gray5, opacity=0.7] (0,\c) ellipse ({\a} and {\b});
+\node[right] at(0,\c) {$z\!=\!2$};
+\end{tikzpicture} 
+\end{columns}
+\stext{\pause\begin{solution}\smark
+原式 $\displaystyle = \iint_{\Sigma}\bigg[(z^2+x)(-x)-z\bigg]\dx\dy$\newline
+\onslide<3->{$\displaystyle=-\!\iint_{D_{xy}}\!\!\left\{\!\left[\frac{(x^2+y^2)^2}{4}+x\right]\!(-x)
+              -\frac{x^2+y^2}{2}\!\right\}\dx\dy$}\newline
+\onslide<4->{$\displaystyle=\iint_{D_{xy}}\!\!\left\{x^2+\frac{x^2+y^2}{2}\right\}\dx\dy=\cdots=8\pi.$}
+\end{solution}}
+\end{frame}
+
+\begin{sframe}
+\begin{solution}[法1]
+利用极坐标：$0\le\theta\le2\pi$, $0\le\rho\le2$．\par%\let\displaystyle=\textstyle
+\mylinebox{\!\!$\begin{aligned}[t]
+&\phantom{={}}\iint_{D_{xy}}\!\left\{x^2+\frac{x^2+y^2}{2}\right\}\dx\dy \\
+&=\int_0^{2\pi}\left[\int_0^2\left(\rho^2\cos^2\theta +\frac12\rho^2\right)\rho\d\rho\right]\d\theta \\
+&=\int_0^{2\pi}\left[\frac14\rho^4\cos^2\theta +\frac18\rho^4\right]_0^2\d\theta \\
+&=\int_0^{2\pi}\!\!\!\left[4\cos^2\theta +2\right]\!\d\theta 
+ =\int_0^{2\pi}\!\!\!\big[2(1+\cos 2\theta) +2\big]\!\d\theta \\
+&=\left[4\theta+\sin 2\theta\right]_0^{2\pi}=8\pi.
+\end{aligned}$}
+\end{solution}
+\end{sframe}
+
+\begin{sframe}
+\begin{solution}[法2]
+利用极坐标：$0\le\theta\le2\pi$, $0\le\rho\le2$．
+由轮换对称性有$\iint_{D_{xy}}x^2\dx\dy=\iint_{D_{xy}}y^2\dx\dy$，则
+\begin{align*}
+&\phantom{={}}\iint_{D_{xy}}\!\left\{x^2+\frac{x^2+y^2}{2}\right\}\dx\dy \\
+&=\iint_{D_{xy}}\!\left\{x^2+\frac{\bold{y^2}+y^2}{2}\right\}\dx\dy \\
+&=\iint_{D_{xy}}\!\left[x^2+y^2\right]\dx\dy
+ =\int_0^{2\pi}\left[\int_0^2\rho^2\cdot\rho\d\rho\right]\d\theta \\
+&=\int_0^{2\pi}\left[\frac14\rho^4\right]_0^2\d\theta 
+ =\int_0^{2\pi}4\d\theta=8\pi.
+\end{align*}
+\end{solution}
+\end{sframe}
+
+\begin{rframe}
+若直接计算$\iint_{\Sigma}(z^2+x)\dy\dz$，需将$\Sigma$分为前侧$\Sigma_1$和后侧$\Sigma_2$．
+它们的方程分别是$x=\sqrt{2z-y^2}$和$x=-\sqrt{2z-y^2}$．
+从而（其中$\int_{0}^{\pi/2}\cos^4t\dt=\frac34\cdot\frac12\cdot\frac\pi2$）\par
+\mylinebox{$\!\!\begin{aligned}[t]
+&\phantom{={}}\iint_{\Sigma}(z^2+x)\dy\dz \\
+&=\int_{D_{yz}}\!\!\!\left(z^2\!+\!\sqrt{2z-y^2}\right)\dy\dz
+   -\int_{D_{yz}}\!\!\!\left(z^2\!-\!\sqrt{2z-y^2}\right)\dy\dz \\
+&=2\int_{D_{yz}}\!\!\!\sqrt{2z-y^2}\dy\dz=2\int_{-2}^{2}\left[\int_{y^2/2}^{2}\!\sqrt{2z-y^2}\dz\right]\dy \\
+&=\frac{2}{3}\int_{-2}^{2}(4-y^2)^{3/2}\dy=\frac{32}{3}\int_{-\pi/2}^{\pi/2}\cos^4t\dt=4\pi.\text{\;\;\fbox{\warn{复杂}}}
+\end{aligned}$}
+\end{rframe}
+
+\mybookmark{复习与提高}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}%[改自PPT例2]
+设$\Sigma$是球面$x^2+y^2+z^2=1$外侧在$x\ge0$，$y\ge0$的部分．
+判断下面$\iint_{\Sigma}z\dx\dy$解法是否正确？
+\end{puzzle}
+\pause
+\begin{solution}
+因为曲面$\Sigma$关于$xy$坐标面对称，且被积函数关于$z$是奇函数，所以
+$\iint_{\Sigma}z\dx\dy=0$．
+\end{solution}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+设$\Sigma$是球面$x^2+y^2+z^2=1$的外侧．计算
+$$\iint_{\Sigma}\dy\dz+y\dz\dx+z^2\dx\dy.$$
+\end{puzzle}
+\stext{\pause
+\begin{method*}\smark
+由轮换对称性有
+\[\iint_{\Sigma}\dy\dz=\iint_{\Sigma}\dx\dy,\
+  \iint_{\Sigma}y\dz\dx=\iint_{\Sigma}z\dx\dy.\]
+所以原式$\displaystyle=\iint_{\Sigma}\left(1+z+z^2\right)\dx\dy=\cdots=\frac{4\pi}{3}$．
+\end{method*}}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+设$\Sigma$是圆锥面$z=\sqrt{x^2+y^2}$位于$0\le z\le1$的外侧．计算
+$$I=\iint_{\Sigma}(x-y)\dy\dz+(y-z)\dz\dx+(z-x)\dx\dy.$$
+\end{puzzle}
+\stext{\pause
+\begin{method*}\smark
+$z'_x=\frac{x}{\sqrt{x^2+y^2}}$，$z'_y=\frac{y}{\sqrt{x^2+y^2}}$则由奇偶对称性有%\let\displaystyle=\textstyle
+\begin{align*}
+  I&=\iint_{\Sigma}\left[\frac{-(x-y)x}{\sqrt{x^2+y^2}}+\frac{-(y-z)y}{\sqrt{x^2+y^2}}+(z-x)\right]\!\dx\dy \\
+   &=-\iint_{D_{xy}}\!\left[\frac{-x^2}{\sqrt{x^2+y^2}}+\frac{-y^2}{\sqrt{x^2+y^2}}+z\right]\!\dx\dy = 0 \\
+\end{align*}
+\end{method*}}
+\end{frame}
+
+\end{document}

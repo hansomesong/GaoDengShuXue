@@ -1,0 +1,407 @@
+% -*- coding: utf-8 -*-
+% !TEX program = xelatex
+
+%\documentclass[14pt]{article}
+%\usepackage[notheorems]{beamerarticle}
+
+\documentclass[14pt,notheorems,leqno,xcolor={rgb}]{beamer} % ignorenonframetext
+
+\input{../common/theme.sty}
+\input{../common/share.sty}
+\input{../common/local.sty}
+
+\occasion{高等数学第十章}
+\title{第三节·三重积分}
+\author{\href{https://lvjr.bitbucket.io}{吕荐瑞}}
+\institute{暨南大学数学系}
+\renewcommand<>{\section}[1]{\begin{frame}[plain]\titlepage\end{frame}}
+
+\makeatletter
+\beamer@tocsectionnumber=3\relax
+\setcounter{section}{3}
+\makeatother
+
+\begin{document}
+%\ifxetex\else\heiti\fi
+
+\section{三重积分}
+
+\subsection{三重积分的概念}
+
+\begin{frame}
+%\frametitle{三重积分的定义}
+\begin{example*}
+求占有空间$\Omega$且密度为$f(x,y,z)$的物体质量．
+\end{example*}
+\vpause
+\begin{definition*}
+设$f(x,y,z)$在空间有界闭区域$\Omega$上有界．\pause
+\begin{itemize}
+  \item \CJKunderdot{任意}划分$\displaystyle\Omega=\bigcup\nolimits_i \Delta v_i$\pause
+  \item \CJKunderdot{任取}点$(\xi_{i},\eta_{i},\zeta_{i})\in \Delta v_i$
+\end{itemize}
+\onslide<8->{定义$f(x,y,z)$在$\Omega$上的\bold{三重积分}}
+\[
+\onslide<7->{\iiint_{\Omega}f(x,y,z)\dv=}
+\onslide<6->{\limit_{\lambda\to0}}
+\onslide<5->{\sum\limits_{i=1}^{n}f(\xi_{i},\eta_{i},\zeta_{i})\Delta v_{i}}
+\]\pause[9]%
+其中$\dv$称为\bold{体积元素}．$\dv=\dx\dy\dz$．%$\Omega$称为\bold{积分区域}
+\end{definition*}
+\end{frame}
+
+\subsection{三重积分的计算}
+
+\begin{frame}
+\frametitle{直角坐标算三重积分：土豆丝法}
+\begin{columns}[onlytextwidth]
+\column{0.55\textwidth} %投影法
+\lead{先一后二}：将积分区域表示为\vspace{0.5em}
+\begin{align*}
+\Omega = \Big\{ &(x,y,z) \,\Big|\, (x,y)\in D_{xy},\\ &z_1(x,y) \le z \le z_2(x,y) \Big\}
+\end{align*}
+\vskip2em\onslide<2->{则有三重积分计算公式}% FIXME: 用\vspace无效
+\column{0.45\textwidth}
+\begin{tikzpicture}[scale=0.9,thick,font=\small]
+\def\a{1}
+\def\b{1.5}
+\def\d{0.25}
+\pgfmathsetmacro{\xi}{\a/2} 
+\pgfmathsetmacro{\yi}{\b/2}
+%definition: projection point and help lines 
+\coordinate (q1) at ($(0,{-\b*2})+(-45:{\a/3})$);
+\coordinate (q2) at ($(q1)+(0,{\b*1.5})$);
+\coordinate (q3) at ($(q1)+(0,{\b*2.8})$);
+\coordinate (q4) at ($(q1)+(0,{\b*2.8+\b*0.5})$);
+%coordinates 
+\draw[-stealth,thin,gray] ({-\a*1.5},{-\b*1.5})--++({\a*3.5},0) node[below]{$y$};
+\draw[-stealth,thin,gray] ({-\a*1.5},{-\b*1.5})--++(0,{\b*2.5}) node[left]{$z$};
+\draw[-stealth,thin,gray] ({-\a*1.5},{-\b*1.5})--++(225:{\a*2}) node[above]{$x$};
+%help line
+\draw[densely dashed,accent3,thick] (q2) -- (q3);
+%3d body
+\draw (0:{\a} and {\b*0.3}) arc (0:-180:{\a} and {\b*0.3});
+\shade[ball color=gray1,opacity=0.7] (0,0) ellipse ({\a} and {\b});
+\draw (0,0) ellipse ({\a} and {\b}); 
+\draw[densely dashed] (0:{\a} and {\b*0.3}) arc (0:180:{\a} and {\b*0.3});
+\node[left=3pt] at (120:{\a} and {\b}) {$\Omega$};
+%projection 
+\draw[accent1,fill=gray2,opacity=0.8] (0,{-\b*2}) ellipse ({\a} and {\b*0.3});
+\node[accent1,left,inner sep=2pt] at ({-\a},{-\b*2}) {$D_{xy}$};
+\draw[fill](q1) circle (0.8pt) node[below right] {$(x,y)$};
+%help lines 
+\draw[darkgray] (q1)--(q2);
+\draw[thin,fill=accent3] (q2) circle (1.2pt) node[accent3,right,inner sep=3pt]{$z_1(x,y)$};
+\draw[darkgray] (q4)--(q3) circle (1pt);
+\draw[thin,fill=accent3] (q3) circle (1.2pt) node[accent3,right,inner sep=3pt]{$z_2(x,y)$};
+\end{tikzpicture}
+\end{columns}
+\vspace{-0.5em}\onslide<2->{%
+\mylinebox{\cbold$\displaystyle
+\iiint_{\Omega}f(x,y,z)\dv=\!\iint_{D_{xy}}\!\bigg[\int_{z_1(x,y)}^{z_2(x,y)}\!f(x,y,z)\dz\bigg]\!\dx\dy
+$}}
+\end{frame}
+
+\begin{frame}
+\frametitle{直角坐标算三重积分}
+\begin{example}
+计算$\iiint\limits_{\Omega}x\dx\dy\dz$，其中$\Omega$是三个坐标面及平面$x+2y+z=1$所围成的闭区域．
+\end{example}
+\pause
+\begin{columns}[onlytextwidth,b]
+\column{0.55\textwidth}
+\begin{tikzpicture}[x=(215:2em/sqrt 2), y=(0:2.5em), z=(90:2em),scale=2.2,thick]
+%coordinates
+\draw [-stealth, black!75, thin] (0,0,0) -- (1.5,0,0) node [above] {$x$}; 
+\draw [-stealth, black!75, thin] (0,0,0) -- (0,1.5,0) node [below] {$y$};
+\draw [-stealth, black!75, thin] (0,0,0) -- (0,0,1.3) node [left] {$z$};
+%Dxy 
+\visible<3->{\draw[accent1,thick] (1,0,0)--(0,0,0)--(0,0.5,0);}
+%a point in Dxy 
+\def\px{0.2} 
+\def\py{0.2}
+\visible<6->{
+\draw[accent3,fill=accent3] (\px,\py,0) circle (0.6pt) node[below right]{$\visible<7->{z=0}$}; 
+\draw[accent3] (\px,\py,0)--(\px,\py,{1-\px-2*\py});
+}
+%plane 
+\draw(1,0,0) -- (0,0.5,0) -- (0,0,1) -- (1,0,0);
+\shade[draw=none,left color=black!70,opacity=0.6] (1,0,0)--(0,0.5,0)--(0,0,1)--cycle;
+\draw[fill,font=\footnotesize] (1,0,0) circle (0.5pt) node[below right,inner sep=1pt] {$A(1,0,0)$}; 
+\draw[fill,font=\footnotesize] (0,0.5,0) circle (0.5pt) node[above right,inner sep=1pt] {$B(0,\frac{1}{2},0)$}; 
+\draw[fill,font=\footnotesize] (0,0,1) circle (0.5pt) node[right,inner sep=1pt] {$C(0,0,1)$};
+%Dxy 
+\visible<3->{
+\draw[accent1,thick] (1,0,0)--(0,0.5,0) node[pos=0.4]{$D_{xy}$};
+}
+%a point on the plane 
+\visible<6->{
+\draw[accent3,fill=accent3] (\px,\py,{1-\px-2*\py}) circle (0.6pt) node[above right]{$\visible<8->{z=1-x-2y}$};
+}
+\end{tikzpicture}
+\column{0.45\textwidth}
+\hfill\visible<4->{\begin{tikzpicture}[scale=2.5,thick,font=\small]
+%coordinates 
+\draw [-stealth, black!75,thin] (0,0) -- (1.3,0) node [below] {$x$}; 
+\draw [-stealth, black!75, thin] (0,0) -- (0,0.8) node [left] {$y$}; 
+\node[below left,inner sep=1pt]{$O$};
+%Dxy 
+\fill[gray!30,opacity=0.6] (0,0)--(1,0)--(0,0.5); 
+\draw[accent1,thick] (0,0)--(1,0) node[black,below]{$1$}
+  -- node[pos=0.5,right=3pt] {$\visible<5->{x+2y=1}$}
+  (0,0.5) node[black,left]{$\frac{1}{2}$}--node[pos=0.6,right=5pt]{$D_{xy}$} (0,0);
+\visible<9->{\node[above right=-4pt and -4pt] at(0.3,0.35) {$y=\frac{1}{2}(1-x)$};}
+\end{tikzpicture}}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{直角坐标算三重积分：土豆片法}
+\begin{columns}[onlytextwidth]
+\column{0.6\textwidth} %截面法
+\lead{先二后一}：将积分区域表示为
+\begin{align*}
+\Omega = \big\{ (x,y,z) \,\big|\, &c_1 \le z \le c_2,\\
+ &(x,y)\in D_{z} \big\}
+\end{align*}
+\vskip2em\onslide<2->{则有三重积分计算公式}
+\column{0.4\textwidth}
+\begin{tikzpicture}[thick,font=\small]
+\def\a{1} 
+\def\b{1.5}
+\def\d{0.8} 
+\pgfmathsetmacro{\e}{-sqrt(1-(\d)^2/\a/\a)*\b}
+%coordinates
+\draw[-stealth,thin,gray] ({-\a*2},{-\b*1.5})--++(225:{\a*1.2}) node[above]{$x$};
+\draw[-stealth,thin,gray] ({-\a*2},{-\b*1.5})--++({\a*3.5},0) node[below]{$y$}; 
+\draw[-stealth,thin,gray] ({-\a*2},{-\b*1.5})--++(0,{\b*3}) node[left]{$z$}; 
+%section 
+\fill [accent2,opacity=0.7] (0,0) ellipse ({\a} and {\b*0.3}); 
+\draw (0:{\a} and {\b*0.3}) arc (0:-180:{\a} and {\b*0.3}); 
+\draw[densely dashed] (0:{\a} and {\b*0.3}) arc (0:180:{\a} and {\b*0.3});
+\draw[densely dashed] ({-\a},0)--({-\a*2},0);
+\node[right] at(\a,0) {$D_z$};
+\node[left] at({-\a*2},0) {$z$}; 
+%3d body 
+\shade[ball color=gray1,opacity=0.7] (0,0) ellipse ({\a} and {\b});
+\draw (0,0) ellipse ({\a} and {\b}); 
+\node[left=3pt] at (150:{\a} and {\b}) {$\Omega$};
+\draw[densely dashed] (0,-\b)--({-\a*2},-\b) node[left] {$c_1$}; 
+\draw[densely dashed] (0,\b)--({-\a*2},\b) node[left] {$c_2$};
+\end{tikzpicture} 
+\end{columns}
+\vspace{-1em}%
+\onslide<2->{\[\bold{\iiint_{\Omega}f(x,y,z)\dv=\int_{c_1}^{c_2}\bigg[\iint_{D_z}f(x,y,z)\dx\dy\bigg]\dz}\]}
+\end{frame}
+
+\begin{frame}
+\frametitle{直角坐标算三重积分}
+\begin{example}
+利用直角坐标计算$\iiint_{\Omega}z\dx\dy\dz$，其中$\Omega$
+是由曲面$z=x^2+y^2$与平面$z=4$所围成的闭区域．
+\end{example}
+\vfill\onslide+<2->%\centering
+\begin{tikzpicture}[thick]
+\def\a{1.5} 
+\def\b{0.3} 
+\pgfmathsetmacro{\c}{(\a)^2}
+%coordinates
+\draw [-stealth,black!75,thin] (35:1) -- (215:1.2) node[left] {$x$};
+\draw [-stealth,black!75,thin] (-2,0) -- (2,0) node[right] {$y$}; 
+\draw [-stealth,black!75,thin] (0,0) -- (0,{\c+1}) node[right] {$z$}; 
+%section
+\visible<3->{
+  \draw[accent1,fill=filler1,fill opacity=0.8] (0,1) ellipse (1 and 0.2); 
+  \node[right,accent1] at(1,1) {$D_z=\big\{(x,y)\mid x^2+y^2\le z\big\}$};
+}
+%domain 
+\draw [right color=black!90, left color=white, opacity=0.7]
+    plot[variable=\t,domain=-\a:\a,smooth] (\t,{\t*\t}) -- (\a,\c) arc (0:-180:{\a} and {\b}); 
+\draw[fill=black!70, opacity=0.7] (0,\c) ellipse ({\a} and {\b});
+%\node[left] at(0,\c) {$4$}; 
+\node[above left] at({-\a/2},{\c+\b}) {$z=4$}; 
+\node[left] at({-\a*0.75},{(\a*0.75)^2}) {$z=x^2+y^2$};
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}
+\frametitle{柱面坐标算三重积分}
+\mylinebox{\cbold
+$\displaystyle\iiint\limits_{\Omega}f(x,y,z)\dv
+=\iiint\limits_{\Omega}f(\rho\cos\theta,\rho\sin\theta,z)\rho\d\rho\d\theta\dz$}
+\end{frame}
+
+\begin{frame}
+\frametitle{柱面坐标算三重积分}
+\begin{example}
+利用柱面坐标计算$\iiint_{\Omega}z\dx\dy\dz$，其中$\Omega$
+是由曲面$z=x^2+y^2$与平面$z=4$所围成的闭区域．
+\end{example}
+\vfill\onslide+<2->%\centering
+\begin{tikzpicture}[thick]
+\def\a{1.5} 
+\def\b{0.3} 
+\pgfmathsetmacro{\c}{(\a)^2}
+%coordinates
+\draw [-stealth,black!75,thin] (35:1) -- (215:1.2) node[left] {$x$};
+\draw [-stealth,black!75,thin] (-2,0) -- (2,0) node[right] {$y$}; 
+\draw [-stealth,black!75,thin] (0,0) -- (0,{\c+1}) node[right] {$z$}; 
+%Dxy 
+\draw [accent1,thick,fill=gray!40, opacity=0.7] (0,0) ellipse ({\a} and {\b}); 
+\draw [accent1,thin,densely dashed] (-\a,0)--(-\a,\c);
+\draw [accent1,thin,densely dashed] (\a,0)--(\a,\c);
+\node[below right,accent1] at(-30:0.6) {$D_{xy}$};
+%\pgfmathsetmacro{\px}{0.6*cos(-15)}
+%\pgfmathsetmacro{\py}{0.6*sin(-15)}
+%\pgfmathsetmacro{\pz}{1.4}
+%domain 
+\draw [right color=black!90, left color=white, opacity=0.7]
+    plot[variable=\t,domain=-\a:\a,smooth] (\t,{\t*\t}) -- (\a,\c) arc (0:-180:{\a} and {\b}); 
+\draw[fill=black!70, opacity=0.7] (0,\c) ellipse ({\a} and {\b});
+%\node[left] at(0,\c) {$4$}; 
+\node[above left] at({-\a/2},{\c+\b}) {$z=4$}; 
+\node[left=0.5em] at({-\a*0.75},{(\a*0.75)^2}) {$z=x^2+y^2$};
+%a point
+%\draw[accent3,fill] (\px,\py,0) circle (0.5pt);
+%\draw[accent3,densely dashed] (\px,\py)--(\px,\pz);
+%\draw[accent3] (\px,\pz)--(\px,\c);
+%\draw[accent3,fill] (\px,\pz) circle (0.5pt) node[below right]{$z=x^2+y^2$};
+%\draw[accent3,fill] (\px,\c) circle (0.5pt) node[above right]{$z=4$};
+\end{tikzpicture} 
+\end{frame}
+
+\begin{frame}
+\frametitle{三重积分的对称性}
+\begin{property*}[奇偶对称性]\par
+设空间中三维闭区域$\Omega$关于$xy$坐标面对称，
+\begin{columns}[onlytextwidth,T]
+\column{84mm}
+\begin{enumzero}
+  \item<2-> 若$f(x,y,z)$关于$z$是奇函数，则%（即：$f(x,y,-z)=-f(x,y,z)$）
+    \[ \iiint_{\Omega}f(x,y,z)\dv=0 \]%
+    \vskip1em%
+  \item<3-> 若$f(x,y,z)$关于$z$是偶函数，则%（即：$f(x,y,-z)=f(x,y,z)$）
+    \[ \iiint_{\Omega}\negthickspace f(x,y,z)\dv=2\iiint_{\Omega_{1}}\negthickspace f(x,y,z)\dv \]
+\end{enumzero}
+\column{44mm}
+%\begin{center}
+\begin{tikzpicture}[scale=0.8,thick,font=\small]
+\def\a{1} 
+\def\b{1.5}
+\def\d{0.25}
+%coordinates 
+\draw[-stealth,gray] ({-\a*1.5},{\b*0.5})--++(225:{\a*1.2}) node[above]{$x$};
+\draw[-stealth,gray] ({-\a*1.5},{\b*0.5})--++({\a*2.6},0) node[right]{$y$};
+\draw[-stealth,gray] ({-\a*1.5},{-\b*0.8})--++(0,{\b*2.2}) node[left]{$z$};
+%3d body 
+\draw[fill=filler2] (0:{\a} and {\b*0.3}) arc (0:360:{\a} and {\b*0.3});
+\shade[draw,ball color=gray!20,opacity=0.7] (0,0) ellipse ({\a} and {\b}); 
+\draw[densely dashed] (0:{\a} and {\b*0.3}) arc (0:180:{\a} and {\b*0.3});
+\node[left=5pt] at (0:{\a*2} and {\b}) {$\Omega$};
+%points 
+\draw[fill,color=accent1] (90:{\b*0.7}) circle (0.9pt) node[above] {$(x,y,z)\in\Omega_1$}; 
+\draw[fill,color=accent1] (-90:{\b*0.7}) circle (0.9pt) node[below] {$(x,y,-z)\in\Omega_2$};
+\end{tikzpicture} 
+%\end{center}
+\end{columns}
+\end{property*}
+\end{frame}
+
+\begin{frame}
+\frametitle{三重积分的对称性}
+\begin{example}[总习题第9题]
+设$\Omega$为球体$x^{2}+y^{2}+z^{2}\leq1$，计算$$\iiint_{\Omega}\frac{z\ln(1+x^2+y^2)}{1+x^2+y^2+z^2}\dv.$$
+\end{example}
+\stext{\vpause
+\begin{solution}
+\smark 因为
+\begin{enumlite}
+  \item 被积函数函数关于变量$z$是奇函数，
+  \item 积分区域$\Omega$关于$xy$坐标面对称，
+\end{enumlite}
+所以三重积分等于$0$．
+\end{solution}}
+\end{frame}
+
+\mybookmark{复习与提高}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+计算$I=\iiint_{\Omega}y\sqrt{1-x^{2}}\dx\dy\dz$，其中$\Omega$由
+$y=-\sqrt{1-x^2-z^2}$, $x^2+z^2=1$, $y=1$所围成．
+\end{puzzle}
+\pause
+\begin{center}
+\begin{tikzpicture}[thick,font=\small,scale=1.8]
+\def\a{0.3} 
+\def\b{1} 
+\pgfmathsetmacro{\px}{0.5*\a*cos(120)} 
+\pgfmathsetmacro{\py}{0.5*\b*sin(120)}
+%coordinates
+\draw [black!75,thin] (10:{\a} and {\b}) -- (190:{\a} and {\b}); 
+\draw [black!75,thin] (0,0) -- ({\a+\b},0); 
+\draw [-stealth, black!75,thin] (0,-1.3) -- (0,1.3) node [left] {$z$};
+%Dyx 
+\draw[densely dashed,blue,fill=accent2,opacity=0.5] (0,-\b) arc (-90:270:{\a} and {\b});
+%a point
+\draw[red,thick,fill] (\px,\py) circle (0.3pt) --++({\b+\a},0);
+\draw[red,thick,fill] (\px,\py) circle (0.3pt) --++({-\a*1.5},0);
+%domain
+\draw[top color=white, bottom color=black,opacity=0.7]
+    (0,\b) arc (90:270:{\a} and {\b}) -- ({\a+\b},-\b) arc (270:90:{\a} and {\b})--cycle; 
+\draw[top color=white, bottom color=black,opacity=0.7]
+    (0,\b) arc (90:270:{\a} and {\b}) -- (0,-\b) arc (270:90:\b)--cycle;
+\draw[left color=black, right color=white,opacity=0.7]
+    ({\b+\a},0) ellipse ({\a} and {\b});
+\node[below right] at (0,-\b) {$x^2+z^2=1$};
+%Dyx
+\draw[accent1] (0,\b) arc (90:270:{\a} and {\b});
+\draw[accent1,densely dashed] (0,-\b) arc (-90:90:{\a} and {\b});
+\node[accent1] at (0,0) {$D_{xz}$};
+%a point 
+\draw[accent3,fill] ($(\px,\py)+({\b+\a},0)$) circle (0.6pt) node[black,right] {$y=1$};
+\draw[accent3,fill] ($(\px,\py)+({-\a*1.5},0)$) circle (0.6pt) node[black,left] {$-\sqrt{1-x^2-z^2}=y$};
+%coordinates 
+\draw [-stealth, black!75,thin] (190:{\a} and {\b}) --++ (190:{\a*2.5} and {\b*2.5}) node [left] {$x$}; 
+\draw [-stealth, black!75,thin] ({\a+\b},0) --++ (0.5,0) node [right] {$y$}; 
+\draw [-stealth, black!75,thin] (0,-1.3) -- (0,1.3) node [left] {$z$};
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\begin{sframe}
+%\frametitle{复习与提高}
+\begin{solution}[投影法]
+投影到$xz$平面，则$D_{xz}$为单位圆盘$x^2+z^2\le1$，且
+\begin{align*}
+I&=\iint_{D_{xz}}\left[\int_{-\sqrt{1-x^2-z^2}}^1 y\sqrt{1-x^2}\dy\right]\dx\dz \\
+ &=\iint_{D_{xz}}\left[\sqrt{1-x^2}\cdot\frac{1}{2}(x^2+z^2)\right]\dx\dz \\
+ &=\int_{-1}^1\left[\int_{-\sqrt{1-x^2}}^{\sqrt{1-x^2}}\sqrt{1-x^2}\cdot\frac{1}{2}(x^2+z^2)\dz\right]\dx\\
+ &=\int_{-1}^1\left[\frac{1}{3}(1+x^{2}-2x^{4})\right]\dx =\frac{28}{45}
+\end{align*}
+\end{solution}
+\end{sframe}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{choice}
+设有空间闭区域
+\begin{align*}
+\Omega_1&=\{(x,y,z) \mid x^2+y^2+z^2\le R^2,\; z\ge0 \} \\
+\Omega_2&=\!\begin{aligned}[t]
+\{(x,y,z) \mid x^2+y^2&+z^2\le R^2,\; \\[-0.5em]
+    x&\ge0,\;y\ge0,\;z\ge0 \}
+\end{aligned}
+\end{align*}\vskip-0.5em
+则有\dotfill(\select{C})
+\begin{choiceline}
+  \item $\iiint_{\Omega_1}x\dv=4\iiint_{\Omega_2}x\dv$
+  \item $\iiint_{\Omega_1}y\dv=4\iiint_{\Omega_2}y\dv$
+  \item $\iiint_{\Omega_1}z\dv=4\iiint_{\Omega_2}z\dv$
+  \item $\iiint_{\Omega_1}xyz\dv=4\iiint_{\Omega_2}xyz\dv$
+\end{choiceline}
+\end{choice}
+\end{frame}
+
+\end{document}

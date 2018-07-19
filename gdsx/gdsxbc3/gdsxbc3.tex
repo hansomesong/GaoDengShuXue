@@ -1,0 +1,535 @@
+% -*- coding: utf-8 -*-
+% !TEX program = xelatex
+
+\documentclass[14pt,notheorems,leqno,xcolor={rgb}]{beamer} % ignorenonframetext
+
+\input{../common/theme.sty}
+\input{../common/share.sty}
+\input{../common/local.sty}
+
+\begin{document}
+
+\setbeamerfont{title}{size=\Huge}
+
+\occasion{高等数学课程}
+\title{补充：贝塞尔曲线}
+\author{\href{https://lvjr.bitbucket.io}{吕荐瑞}}
+\institute{暨南大学数学系}
+
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+\section{贝塞尔曲线简介}
+
+\begin{frame}
+\frametitle{贝塞尔曲线}
+\begin{columns}[onlytextwidth]
+\column{0.62\textwidth}
+贝塞尔曲线，又称贝济埃曲线，是在计算机图形学中广泛使用的一种参数曲线。
+\par\vspace{0.3em}
+皮埃尔·贝塞尔(Pierre B\'ezier)是法国雷诺汽车公司的工程师，
+他从1962年开始在汽车外形设计中运用此类曲线。
+\pause
+\column{0.37\textwidth}
+\includegraphics[width=\textwidth]{Pierre-bezier-portrait}
+\par\hfill\small 图片来源：
+\href{https://commons.wikimedia.org/wiki/File:Pierre-bezier-portrait.jpg}{\CJKunderline{Wikipedia}}
+%\end{columns}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{贝塞尔曲线}
+贝塞尔的想法是先用折线勾画出汽车外形的大致轮廓，
+然后用光滑的参数曲线去逼近这个折线多边形。\vpause
+\begin{tikzpicture}[scale=2.6,thick,font=\small]
+  \draw (2,0) -- (2.2,0.8) -- (1,0.8) -- (0.8,1.4) -- (-0.8,1.4) -- (-1,0.8) -- (-2.2,0.8) -- (-2,0) -- cycle;
+  \draw[fill=back1] (1,0) circle (0.3) (-1,0) circle (0.3);
+  \draw[accent1] (1.3,0) .. controls (2,0) and (2.2,0.8) .. (1,0.8)
+                         .. controls (0.8,1.4) and (-0.8,1.4) .. (-1,0.8)
+                         .. controls (-2.2,0.8) and (-2,0) .. (-1.3,0);
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}
+\frametitle{贝塞尔曲线}
+贝塞尔曲线的优点在于
+\begin{enumerate}
+  \item 常用的贝塞尔曲线是三次参数曲线，计算快捷．
+  \item 存储时只需记录若干控制点的坐标，节省空间．
+\end{enumerate}
+因此贝塞尔曲线在计算机图形中得到广泛应用．\pause
+\begin{columns}[onlytextwidth]
+\column{0.68\textwidth}
+比如电脑字体中的各个字符的轮廓，就是用贝塞尔曲线来描述的，
+右图显示了 Windows 系统中的楷体汉字．
+\column{0.3\textwidth}
+\includegraphics[width=\textwidth]{kaiti} %中易楷体
+\end{columns}
+\end{frame}
+
+\section{伯恩斯坦多项式}
+
+\begin{frame}
+\frametitle{伯恩斯坦多项式}
+贝塞尔曲线的定义需要用到下面的伯恩斯坦多项式．
+\vpause
+\begin{definition*}
+给定正整数$n$，以及$0\le k \le n$，我们定义$n+1$个$n$次多项式
+\[ b_{k,\,n}(t) = C_n^k\, t^k\, (1-t)^{n-k} \]
+其中$C_n^k$是组合数．这些多项式称为\bold{伯恩斯坦多项式}．
+\end{definition*}
+\vpause
+\begin{property*}
+所有$n$次伯恩斯坦多项式之和恒为零．
+\end{property*}
+\end{frame}
+
+\begin{frame}
+\frametitle{伯恩斯坦多项式}
+\begin{example}
+当$n=2$时，$3$个伯恩斯坦多项式之和
+\begin{align*}
+&\phantom{{}={}} b_{0,\,2}(t) + b_{1,\,2}(t) + b_{2,\,2}(t) \\
+&= (1-t)^2 + 2t(1-t) + t^2 = 0 
+\end{align*}
+\end{example}
+\vpause
+\begin{example}
+当$n=3$时，$4$个伯恩斯坦多项式之和
+\begin{align*}
+&\phantom{{}={}} b_{0,\,3}(t) + b_{1,\,3}(t) + b_{2,\,3}(t) + b_{3,\,3}(t) \\
+&= (1-t)^3 + 3t(1-t)^2 + 3t^2(1-t) + t^3 = 0
+\end{align*}
+\end{example}
+%\pause
+%\begin{example}
+%当$n=4$时，$5$个伯恩斯坦多项式之和
+%\begin{align*}
+%&\phantom{{}={}} b_{0,\,4}(t) + b_{1,\,4}(t) + b_{2,\,4}(t) + b_{3,\,4}(t) + b_{4,\,4}(t) \\
+%&= (1-t)^4 + 4t(1-t)^3 + 6t^2(1-t)^2 + 4t^3(1-t) + t^4 \\
+%&= 0    
+%\end{align*}
+%\end{example}
+\end{frame}
+
+\section{贝塞尔曲线定义}
+
+\begin{frame}
+\frametitle{贝塞尔曲线}
+\begin{definition*}
+给定平面或空间中$n+1$个点$P_0$, $P_1$, $\cdots$, $P_n$，我们定义参数曲线
+\[ P(t) = \sum_{i=0}^n b_{i,\,n}(t)\,P_i,\quad 0\le t\le 1. \]
+并称它为$n$次\bold{贝塞尔曲线}，称这些点为曲线的\bold{控制点}，
+称这些点依次连接起来所得折线为曲线的\bold{控制多边形}．
+\end{definition*}
+\end{frame}
+
+\begin{frame}
+\frametitle{一次贝塞尔曲线}
+\vspace{-0.5em}
+\begin{example}
+给定空间中两点$P_0(x_0,y_0)$和$P_1(x_1,y_1,z_1)$，则所得到的一次贝塞尔曲线为
+\[  P(t) = (1-t)\cdot(x_0,y_0,z_0) + t\cdot(x_1,y_1,z_1). \]\pause
+令$P(t)=\big(x(t),y(t),z(t)\big)$，则该曲线的参数方程\vspace{-0.4em}
+\[\left\{\begin{aligned}
+  x(t)&=x_0+(x_1-x_0)\,t, \\
+  y(t)&=y_0+(y_1-y_0)\,t, \\
+  z(t)&=z_0+(z_1-z_0)\,t, 
+\end{aligned}\right.\quad (0\le t \le 1). \]\vskip-0.6em
+因此，一次贝塞尔曲线就是连接两点的直线段$P_0P_1$．
+\end{example}
+\pause\vspace{0.4em}\hrule\vspace{0.2em}%
+\begin{remark*}
+我们要将$P_i$视为向量，$P(t)$视为向量值函数．
+\end{remark*}
+\end{frame}
+
+\begin{frame}
+\frametitle{二次贝塞尔曲线}
+\begin{example}
+给定平面上三点$P_0(1,0)$, $P_1(1,1)$, $P_2(0,1)$，则所得到的二次贝塞尔曲线为
+\begin{align*}
+  P(t) &= (1\!-\!t)^2\cdot(1,0) + 2t(1\!-\!t)\cdot(1,1) + t^2\cdot(0,1) \\[-0.2em]
+       &= (1-t^2,2t-t^2)
+\end{align*}\vspace{-1em}\pause
+\begin{columns}[onlytextwidth]
+\column{0.58\textwidth}
+令$P(t)=\big(x(t),y(t)\big)$，则曲线的参数方程为
+\[ \left\{ \begin{array}{@{}l@{}}
+  x(t)=1-t^2, \\ y(t)=2t-t^2,
+\end{array}\right.\ (0\le t \le 1). \]
+作为对比，图中的虚线是圆弧．
+\column{0.4\textwidth}\hfil
+\begin{tikzpicture}[thick,font=\small,scale=2.5,inner sep=2pt]
+  \draw[-stealth,thin] (0,0) -- (1.3,0);
+  \draw[-stealth,thin] (0,0) -- (0,1.3);
+  \draw[accent1] plot[variable=\t,domain=0:1,smooth] (1-\t^2,2*\t-\t^2);
+  \draw (1,0) node[below] {$P_0$}
+     -- (1,1) node[above] {$P_1$}
+     -- (0,1) node[left] {$P_2$};
+  \node[below left] at (0,0) {$O$};
+  \draw[dashed,accent3] (1,0) arc (0:90:1);
+\end{tikzpicture}
+\end{columns}
+\end{example}
+\end{frame}
+
+\begin{frame}
+\frametitle{二次贝塞尔曲线}
+\begin{example}
+给定平面上三点$P_0(0,0)$, $P_1(1,1)$, $P_2(2,0)$，则所得到的二次贝塞尔曲线为
+\begin{align*}
+  P(t) &= (1\!-\!t)^2\cdot(0,0) + 2t(1\!-\!t)\cdot(1,1) + t^2\cdot(2,0) \\[-0.2em]
+       &= (2t,2t-2t^2)
+\end{align*}\vspace{-1em}\pause
+\begin{columns}[onlytextwidth]
+\column{0.58\textwidth}
+令$P(t)=\big(x(t),y(t)\big)$，则曲线的参数方程为
+\[ \left\{ \begin{array}{@{}l@{}}
+  x(t)=2t, \\ y(t)=2t-2t^2,
+\end{array}\right.\ (0\le t \le 1). \]
+\column{0.4\textwidth}\hfil
+\begin{tikzpicture}[thick,font=\small,scale=1.8]
+  \draw[-stealth,thin] (0,0) -- (2.3,0);
+  \draw[-stealth,thin] (0,0) -- (0,1.3);
+  \draw[accent1] plot[variable=\t,domain=0:1,smooth] (2*\t,2*\t-2*\t^2);
+  \draw (0,0) node[below] {$P_0$}
+     -- (1,1) node[above] {$P_1$}
+     -- (2,0) node[below] {$P_2$};
+\end{tikzpicture}
+\end{columns}
+\end{example}
+\end{frame}
+
+%\begin{sframe}
+%\frametitle{三次贝塞尔曲线}
+%\vspace{-0.5em}%
+%\begin{example*}
+%给定平面上四点$P_0(0,0)$, $P_1(1,1)$, $P_2(2,1)$, $P_3(3,0)$，
+%则所得到的三次贝塞尔曲线为
+%\begin{align*}
+%P(t) &= (1-t)^3\cdot(0,0) + 3t(1-t)^2\cdot(1,1) \\[-0.3em]
+%&\qquad\qquad\qquad + 3t^2(1-t)\cdot(2,1) + t^3\cdot(3,0) \\[-0.3em]
+%&= (3t,3t-3t^2).
+%\end{align*}\vspace{-1em}\pause
+%\begin{columns}[onlytextwidth]
+%\column{0.55\textwidth}
+%令$P(t)=\big(x(t),y(t)\big)$，则曲线的参数方程为($0\le t \le 1$)
+%\[ \left\{ \begin{array}{@{}l@{}}
+%  x(t)=3t, \\ y(t)=3t-3t^2.
+%\end{array}\right. \]
+%\column{0.45\textwidth}
+%\centering
+%\begin{tikzpicture}[thick,font=\small,scale=1.5]
+%  \draw[-stealth,thin] (0,0) -- (3.3,0);
+%  \draw[-stealth,thin] (0,0) -- (0,1.3);
+%  \draw[accent1] plot[variable=\t,domain=0:1,smooth] (3*\t,3*\t-3*\t^2);
+%  \draw (0,0) node[below] {$P_0$}
+%     -- (1,1) node[above] {$P_1$}
+%     -- (2,1) node[above] {$P_2$}
+%     -- (3,0) node[below] {$P_3$};
+%\end{tikzpicture}
+%\end{columns}
+%\end{example*}
+%\end{sframe}
+
+\begin{frame}
+\frametitle{三次贝塞尔曲线}
+\vspace{-0.5em}%
+\begin{example}
+给定平面上四点$P_0(0,0)$, $P_1(1,1)$, $P_2(2,1)$, $P_3(2,0)$，
+则所得到的三次贝塞尔曲线为
+\begin{align*}
+P(t) &= (1-t)^3\cdot(0,0) + 3t(1-t)^2\cdot(1,1) \\[-0.3em]
+&\qquad\qquad\qquad + 3t^2(1-t)\cdot(2,1) + t^3\cdot(2,0) \\[-0.3em]
+&= (3t-t^3,3t-3t^2).
+\end{align*}\vspace{-1em}\pause
+\begin{columns}[onlytextwidth]
+\column{0.58\textwidth}
+令$P(t)=\big(x(t),y(t)\big)$，则曲线的参数方程为
+\[ \left\{ \begin{array}{@{}l@{}}
+  x(t)=3t-t^3, \\ y(t)=3t-3t^2.
+\end{array}\right.\ (0\le t \le 1).\]
+\column{0.4\textwidth}
+\hfill
+\begin{tikzpicture}[thick,font=\small,scale=1.5]
+  \draw[-stealth,thin] (0,0) -- (2.3,0);
+  \draw[-stealth,thin] (0,0) -- (0,1.3);
+  \draw[accent1] plot[variable=\t,domain=0:1,smooth] (3*\t-\t^3,3*\t-3*\t^2);
+  \draw (0,0) node[below] {$P_0$}
+     -- (1,1) node[above] {$P_1$}
+     -- (2,1) node[above] {$P_2$}
+     -- (2,0) node[below] {$P_3$};
+\end{tikzpicture}
+\end{columns}
+\end{example}
+\end{frame}
+
+\begin{frame}
+\frametitle{三次贝塞尔曲线}
+\vspace{-0.5em}%
+\begin{example}
+给定平面上四点$P_0(0,0)$, $P_1(1,1)$, $P_2(1,-1)$, $P_3(2,0)$，
+则所得到的三次贝塞尔曲线为
+\begin{align*}
+P(t) &= (1-t)^3\cdot(0,0) + 3t(1-t)^2\cdot(1,1) \\[-0.3em]
+&\qquad\qquad\qquad + 3t^2(1-t)\cdot(1,-1) + t^3\cdot(2,0) \\[-0.3em]
+&= (3t-3t^2+2t^3,3t-9t^2+6t^3).
+\end{align*}\vspace{-1em}\pause
+\begin{columns}[onlytextwidth]
+\column{0.58\textwidth}
+令$P(t)=\big(x(t),y(t)\big)$，则曲线的参数方程为$(0\le t \le 1)$
+\[ \left\{ \begin{array}{@{}l@{}}
+  x(t)=3t-3t^2+2t^3, \\ y(t)=3t-9t^2+6t^3.
+\end{array}\right.\]
+\column{0.4\textwidth}
+\hfill
+\begin{tikzpicture}[thick,font=\small,scale=1.5]
+  \draw[-stealth,thin] (-0.1,0) -- (2.2,0);
+  \draw[-stealth,thin] (0,-1.1) -- (0,1.1);
+  \draw[accent1] plot[variable=\t,domain=0:1,smooth] (3*\t-3*\t^2+2*\t^3,3*\t-9*\t^2+6*\t^3);
+  \draw (0,0)  node[below right] {$P_0$}
+     -- (1,1)  node[right] {$P_1$}
+     -- (1,-1) node[left] {$P_2$}
+     -- (2,0)  node[above] {$P_3$};
+\end{tikzpicture}
+\end{columns}
+\end{example}
+\end{frame}
+
+\begin{frame}
+\frametitle{贝塞尔曲线的性质}
+\begin{property*}
+贝塞尔曲线与控制点之间的有如下关系：
+\begin{enumerate}
+  \item $P(0)=P_0$，$P'(0)=n(P_1-P_0)$．
+  \item $P(1)=P_n$，$P'(1)=n(P_n-P_{n-1})$．
+\end{enumerate}
+\pause 或者说
+\begin{enumerate}
+  \item 贝塞尔曲线的起点与控制点$P_0$重合，\par
+        且在$P_0$点的切线与直线$P_0P_1$重合．
+  \item 贝塞尔曲线的终点与控制点$P_n$重合，\par
+        且在$P_n$点的切线与直线$P_{n-1}P_n$重合．
+\end{enumerate}
+\end{property*}
+\end{frame}
+
+\section{贝塞尔曲线应用}
+
+\begin{frame}
+\frametitle{用贝塞尔曲线作曲线逼近}
+\begin{example}
+用三次贝塞尔曲线逼近单位圆周$x^2+y^2=1$在第一象限部分．
+\end{example}
+\vpause
+\begin{solution}
+由贝塞尔曲线的性质，我们可以设
+\[ P_0(1,0),\quad P_1(1,\lambda),\quad P_2(\lambda,1),\quad P_3(0,1). \]
+\pause 则对应的三次贝塞尔曲线为
+\begin{align*}
+P(t) &=(x(t),y(t)) \\[-0.3em]
+&= (1-t)^3\cdot(1,0) + 3t(1-t)^2\cdot(1,\lambda) \\[-0.3em]
+&\qquad\qquad\qquad + 3t^2(1-t)\cdot(\lambda,1) + t^3\cdot(0,1) 
+\end{align*}
+\vskip-0.5em\pause 即$\begin{cases}
+x(t) = 1-3t^2+2t^3 + \lambda(3t^2-3t^3), \\
+y(t) = 3t^2-2t^3 + \lambda(3t-6t^2+3t^3).
+\end{cases}$
+\end{solution}
+\end{frame}
+
+\begin{frame}
+\frametitle{用贝塞尔曲线作曲线逼近}
+\begin{solution}[续]
+欲得到较好的逼近效果，可令贝塞尔曲线的中点与圆弧的中点重合，即
+\vspace{-0.5em}%
+\begin{columns}[onlytextwidth]
+\column{0.7\textwidth}
+\[\textstyle\left(x\left(\frac12\right),y\left(\frac12\right)\right)
+ =\left(\frac{\sqrt2}{2},\frac{\sqrt2}{2}\right).\]
+ 代入前面的参数方程，解得
+\[\textstyle\lambda=\lambda_0=\frac{4(\sqrt2-1)}{3}\approx0.5523.\]
+图中红线是圆弧，蓝线是贝塞尔曲线．
+\column{0.3\textwidth}
+\hfill
+\def\mylambda{4*(sqrt(2)-1)/3}
+\begin{tikzpicture}[thick,font=\small,scale=2.3,inner sep=1pt]
+  \draw[-stealth,thin] (0,0) -- (1.3,0);
+  \draw[-stealth,thin] (0,0) -- (0,1.3);
+  \draw[accent1] (1,0) arc (0:90:1);
+  \draw (1,0) node[below] {$P_0$}
+     -- (1,{\mylambda}) node[right] {$P_1$}
+     -- ({\mylambda},1) node[above] {$P_2$}
+     -- (0,1) node[left] {$P_3$};
+  \draw[dashed,accent3] (1,0) arc (0:90:1);
+  \node[below left] at (0,0) {$O$};
+\end{tikzpicture}
+\end{columns}
+从绘制出的图形看，贝塞尔曲线已经非常接近圆弧了．
+\end{solution}
+\end{frame}
+
+\begin{frame}
+\frametitle{用贝塞尔曲线作曲线逼近}
+\begin{solution}[续]
+现在来分析逼近误差
+\[\epsilon(t)=[x(t)]^2+[y(t)]^2-1.\]
+\pause 代入贝塞尔曲线的参数方程，得到
+\[ \epsilon(t)=A\,t^2(t-1/2)^2(t-1)^2, \]
+其中$A=2(3\lambda_0-2)^2=8(3-2\sqrt2)^2\approx0.2355$．
+\ppause
+求得$\epsilon(t)$在$0\le t\le1$中的最大值为
+\[ \frac{A}{432}\approx 0.0005. \]
+即用贝塞尔曲线代替圆弧时，逼近误差已经相当小了．
+\end{solution}
+\end{frame}
+
+\begin{frame}
+\frametitle{三次贝塞尔曲线}
+从之前例子可以看出，随着次数的增加，贝塞尔曲线的变化也更加多样．
+因此贝塞尔曲线足够描述实际应用中的复杂几何图形．
+\vpause
+但是，在实际应用中我们通常只使用\bold{三次贝塞尔曲线}．\pause 这是因为，
+如果其中一个控制点的坐标变化了，整个贝塞尔曲线的形状也变化了．
+这样次数越高越不容易对曲线作局部调整．
+\vpause
+常见的软件中， PowerPoint, Inkscape, Photoshop, Illustrator, CorelDraw 都支持绘制三次贝塞尔曲线．
+\end{frame}
+
+\begin{frame}
+\frametitle{三次贝塞尔曲线}
+要描述精细的几何图形，可以用多条三次贝塞尔曲线连接起来．比如（下图中$P_3$和$Q_0$重合）
+\vpause
+\centerline{\begin{tikzpicture}[thick,font=\small]
+  %\path[use as bounding box] (0,0) rectangle (8,4);
+  %\draw[thin,lightgray] (-1,0) grid[step=1cm] (9,4);
+  \coordinate (P0) at (0,2);
+  \coordinate (P1) at (1,3);
+  \coordinate (P2) at (2,1);
+  \coordinate (P3) at (4,2);
+  \coordinate (Q0) at (4,2);
+  \coordinate (Q1) at (5,1);
+  \coordinate (Q2) at (8,1);
+  \coordinate (Q3) at (8,2);
+  \draw[accent3] (P0) .. controls (P1) and (P2) .. (P3);
+  \draw[accent1] (P0) node[left] {$P_0$} -- (P1) node[left] {$P_1$}
+        (P2) node[left] {$P_2$} -- (P3) node[above] {$P_3$};
+  \draw[accent3] (Q0) .. controls (Q1) and (Q2) .. (Q3);
+  \draw[accent1] (Q0) node[below] {$Q_0$} -- (Q1) node[below] {$Q_1$}
+        (Q2) node[right] {$Q_2$} -- (Q3) node[right] {$Q_3$};
+  \node[draw,fill,inner sep=0pt,minimum size=2pt] at (P0) {};
+  \node[draw,fill,inner sep=0pt,minimum size=2pt] at (P3) {};
+  \node[draw,fill,inner sep=0pt,minimum size=2pt] at (Q0) {};
+  \node[draw,fill,inner sep=0pt,minimum size=2pt] at (Q3) {};
+  \node[draw,fill=white,inner sep=0pt,minimum size=2pt] at (P1) {};
+  \node[draw,fill=white,inner sep=0pt,minimum size=2pt] at (P2) {};
+  \node[draw,fill=white,inner sep=0pt,minimum size=2pt] at (Q1) {};
+  \node[draw,fill=white,inner sep=0pt,minimum size=2pt] at (Q2) {};
+\end{tikzpicture}}%
+\ppause
+%由于$P_0P_1$和$P_2P_3$分别控制曲线的切向量，在软件中绘制三次贝塞尔曲线时通常把这两个线段也标示出来．
+三次贝塞尔曲线的四个控制点可分为两类：$P_0$和$P_3$称为\bold{顶点}(或\bold{锚点})，
+$P_1$和$P_2$称为\bold{控点}(或\bold{方向点})．
+\vpause
+若$P_3P_2$与$Q_0Q_1$不共线，称$P_3$(即$Q_0$)为\bold{角部顶点}．
+\end{frame}
+
+\begin{frame}
+\frametitle{三次贝塞尔曲线}
+要去掉两条三次贝塞尔曲线连接处的尖角，可以让$P_3P_2$与$Q_0Q_1$方向相反．比如
+\ppause\centering
+\begin{tikzpicture}[thick,font=\small]
+  %\path[use as bounding box] (0,0) rectangle (8,4);
+  %\draw[thin,lightgray] (-1,0) grid[step=1cm] (9,4);
+  \coordinate (P0) at (0,2);
+  \coordinate (P1) at (1,3);
+  \coordinate (P2) at (2,4);
+  \coordinate (P3) at (4,2);
+  \coordinate (Q0) at (4,2);
+  \coordinate (Q1) at (5,1);
+  \coordinate (Q2) at (8,1);
+  \coordinate (Q3) at (8,2);
+  \draw[accent3] (P0) .. controls (P1) and (P2) .. (P3);
+  \draw[accent1] (P0) node[left] {$P_0$} -- (P1) node[left] {$P_1$}
+        (P2) node[right] {$P_2$} -- (P3) node[above] {$P_3$};
+  \draw[accent3] (Q0) .. controls (Q1) and (Q2) .. (Q3);
+  \draw[accent1] (Q0) node[below] {$Q_0$} -- (Q1) node[below] {$Q_1$}
+        (Q2) node[right] {$Q_2$} -- (Q3) node[right] {$Q_3$};
+  \node[draw,fill,inner sep=0pt,minimum size=2pt] at (P0) {};
+  \node[draw,fill,inner sep=0pt,minimum size=2pt] at (P3) {};
+  \node[draw,fill,inner sep=0pt,minimum size=2pt] at (Q0) {};
+  \node[draw,fill,inner sep=0pt,minimum size=2pt] at (Q3) {};
+  \node[draw,fill=white,inner sep=0pt,minimum size=2pt] at (P1) {};
+  \node[draw,fill=white,inner sep=0pt,minimum size=2pt] at (P2) {};
+  \node[draw,fill=white,inner sep=0pt,minimum size=2pt] at (Q1) {};
+  \node[draw,fill=white,inner sep=0pt,minimum size=2pt] at (Q2) {};
+\end{tikzpicture}
+\ppause
+如果$P_3P_2$与$Q_0Q_1$方向相反，我们称$P_3$（即$Q_0$）为\bold{直线顶点}．
+\end{frame}
+
+\begin{frame}
+\frametitle{三次贝塞尔曲线}
+要让两条三次贝塞尔曲线连接处更加光滑，可以让$P_3P_2$与$Q_0Q_1$方向相反且大小相等．比如
+\ppause\centering
+\begin{tikzpicture}[thick,font=\small]
+  %\path[use as bounding box] (0,0) rectangle (8,4);
+  %\draw[thin,lightgray] (-1,0) grid[step=1cm] (9,4);
+  \coordinate (P0) at (0,2);
+  \coordinate (P1) at (1,3);
+  \coordinate (P2) at (3,3);
+  \coordinate (P3) at (4,2);
+  \coordinate (Q0) at (4,2);
+  \coordinate (Q1) at (5,1);
+  \coordinate (Q2) at (8,1);
+  \coordinate (Q3) at (8,2);
+  \draw[accent3] (P0) .. controls (P1) and (P2) .. (P3);
+  \draw[accent1] (P0) node[left] {$P_0$} -- (P1) node[left] {$P_1$}
+        (P2) node[right] {$P_2$} -- (P3) node[above] {$P_3$};
+  \draw[accent3] (Q0) .. controls (Q1) and (Q2) .. (Q3);
+  \draw[accent1] (Q0) node[below] {$Q_0$} -- (Q1) node[below] {$Q_1$}
+        (Q2) node[right] {$Q_2$} -- (Q3) node[right] {$Q_3$};
+  \node[draw,fill,inner sep=0pt,minimum size=2pt] at (P0) {};
+  \node[draw,fill,inner sep=0pt,minimum size=2pt] at (P3) {};
+  \node[draw,fill,inner sep=0pt,minimum size=2pt] at (Q0) {};
+  \node[draw,fill,inner sep=0pt,minimum size=2pt] at (Q3) {};
+  \node[draw,fill=white,inner sep=0pt,minimum size=2pt] at (P1) {};
+  \node[draw,fill=white,inner sep=0pt,minimum size=2pt] at (P2) {};
+  \node[draw,fill=white,inner sep=0pt,minimum size=2pt] at (Q1) {};
+  \node[draw,fill=white,inner sep=0pt,minimum size=2pt] at (Q2) {};
+\end{tikzpicture}
+\ppause
+如果$P_3P_2$与$Q_0Q_1$方向相反且大小相等，我们称$P_3$（即$Q_0$）为\bold{平滑顶点}．
+此时曲线的切向量连续变化．
+\end{frame}
+
+\section{贝塞尔曲面简介}
+
+\begin{frame}
+\frametitle{贝塞尔曲面}
+\begin{definition*}
+设$P_{i,j}$（$i=0,1,2\cdots,n;\;j=0,1,2,\cdots,m$）是空间中给定的
+$(n+1)\times(m+1)$个点，参数曲面
+\[ P(u,v) = \sum_{i=0}^n\sum_{j=0}^m\,b_{i,\,n}(u)\,b_{j,\,m}(v)\,P_{i,j},\quad 0\le u,v\le 1. \]
+称为$n\times m$次\bold{贝塞尔曲面}，这些点称为曲面的\bold{控制点}．
+\end{definition*}
+\end{frame}
+
+\begin{frame}
+\frametitle{双三次贝塞尔曲面}
+\begin{columns}[onlytextwidth]
+\column{0.65\textwidth}
+\includegraphics[width=\textwidth]{Bicubic_Patches}
+\column{0.32\textwidth}
+\bold{图片来源：}\par
+\href{https://commons.wikimedia.org/wiki/File:Bicubic_Patches.png}{\CJKunderline{Wikipedia}}
+\par\vspace{1em}
+\bold{图片作者：}\par
+\href{https://commons.wikimedia.org/wiki/User:Philiprideout}{\CJKunderline{Philip Rideout}}
+\end{columns}
+\end{frame}
+
+\end{document}

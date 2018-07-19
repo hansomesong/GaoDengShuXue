@@ -1,0 +1,882 @@
+% -*- coding: utf-8 -*-
+% !TEX program = xelatex
+
+%\documentclass[14pt]{article}
+%\usepackage[notheorems]{beamerarticle}
+
+\documentclass[14pt,notheorems,leqno,xcolor={rgb}]{beamer} % ignorenonframetext
+
+\input{../common/theme.sty}
+\input{../common/share.sty}
+\input{../common/local.sty}
+
+\begin{document}
+%\ifxetex\else\heiti\fi
+
+\occasion{高等数学课程}
+\title{第七章·微分方程}
+\author{\href{https://lvjr.bitbucket.io}{吕荐瑞}}
+\institute{暨南大学数学系}
+
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+\section{微分方程的基本概念}
+
+\begin{frame}
+\begin{definition}
+含有未知函数的导数或微分的方程
+\[ F(x,y,y',y'',\cdots,y^{(n)})=0 \]
+称为\bold{微分方程}。\pause 其中出现的导数的最高阶数$n$，称为微分方程的\bold{阶}。
+\end{definition}
+\vpause
+\begin{example*}
+判别下列微分方程的阶数：
+\begin{enumlite}
+  \item $\dfrac{\d{y}}{\d{x}}+y=x$
+  \item $x\d{x}-y^2\d{y}=0$
+  \item $y''+y'=\e^x$
+\end{enumlite}
+\end{example*}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+求解一阶微分方程
+$\left\{\begin{aligned}
+&\frac{\d{y}}{\d{x}}=2x \\
+&y\big|_{x=1}=3\onslide<6->{\makebox[7.4em]{\space\cdotfill\space\text{\bold{初始条件}}}}
+\end{aligned}\right.$
+\end{example}
+\pause
+\begin{solution}
+对方程两边积分，得到\par
+\qquad$y=x^2+C$（$C$为任意常数）
+\uncover<5->{\cdotfill\space\bold{通解}}\par
+\uncover<3->{将$x=1$时$y=3$代入上式，得到$C=2$．}%
+\uncover<4->{因此}\par
+\uncover<4->{\qquad$y=x^2+2$}
+\onslide<7->{\space\cdotfill\space\bold{特解}}
+\end{solution}
+\end{frame}
+
+\begin{frame}
+\begin{example}求解二阶微分方程
+$\left\{\begin{array}{l}
+y''=-1, \\
+y\big|_{x=0}=0,\, y'\big|_{x=0}=1.
+\end{array}\right.$
+\end{example}
+\pause
+\begin{solution}
+对方程两边积分，得到\par
+\warn{\digitcircled{1}}\quad$y'=-x+C_1$（$C_1$为常数）\ppause
+再对前式两边积分，得到\par
+\warn{\digitcircled{2}}\quad$y=-\dfrac12x^2+C_1x+C_2$（$C_1,C_2$为常数）\pause
+\hskip-0.5em\cdotfill\space\bold{通解}\ppause
+将\bold{初始条件} $y'|_{x=0}=1$代入\ \warn{\digitcircled{1}}，得到$C_1=1$．\ppause
+将\bold{初始条件} $y|_{x=0}=0$代入\ \warn{\digitcircled{2}}，得到$C_2=0$．\pause 
+因此\ppause
+\noindent\phantom{\digitcircled{0}}\quad$y=-\dfrac12x^2+x$\pause
+\space\cdotfill\space\bold{特解}
+\end{solution}
+\end{frame}
+
+\section{可分离变量微分方程}
+
+\begin{frame}
+\frametitle{一阶微分方程}
+一阶微分方程的一般形式为$F(x,y,y')=0$。对应的初始条件为$y|_{x=x_0}=y_0$.\vpause
+在这一章中，我们将研究3种一阶微分方程：\pause
+\begin{enumerate}[<+->]
+  \item 可分离变量微分方程
+  \item 齐次微分方程
+  \item 一阶线性微分方程
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{㈠\ 可分离变量微分方程}
+形如$f(y)\d{y}=g(x)\d{x}$的方程称为\bold{可分离变量微分方程}。
+\ppause
+对这种方程的两边同时积分，就可以求出它的通解。
+\end{frame}
+
+\begin{frame}
+\frametitle{可分离变量微分方程}
+\begin{example}
+求微分方程$\dfrac{\d{y}}{\d{x}}=-\dfrac{y}{x}$的通解。
+\end{example}
+\pause
+\begin{exercise}
+求微分方程$(1+y)\d{x}-(1-x)\d{y}=0$的通解。
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\frametitle{可分离变量微分方程}
+\begin{example}
+求微分方程$y'=-\dfrac{x}{y}$在初始条件$y|_{x=0}=1$下的特解。
+\end{example}
+\pause
+\begin{exercise}
+求微分方程$\dfrac{x}{1+y}\d{x}-\dfrac{y}{1+x}\d{y}=0$满足初始条件$y|_{x=0}=1$的特解。
+\end{exercise}
+\end{frame}
+
+\begin{iframe}
+\frametitle{可分离变量微分方程}
+\begin{example}
+求微分方程$y'=2xy^2$的通解，以及在初始条件$y\big|_{x=0}=-1$下的特解．
+\end{example}
+\vpause
+\begin{solution}
+通解为$y=-\dfrac{1}{x^2+C}$．
+\end{solution}
+\vpause
+\begin{remark*}
+通解 $\warn{\neq}$ 全部解．
+\end{remark*}
+\end{iframe}
+
+\begin{frame}
+\frametitle{可分离变量微分方程}
+\begin{review}
+求方程$xy\d{x}+\sqrt{1-x^2}\d{y}=0$的通解。
+\end{review}
+\end{frame}
+
+\section{齐次微分方程}
+
+\begin{frame}
+\frametitle{㈡\ 齐次微分方程}
+形如
+\[\frac{\d{y}}{\d{x}}=f\left(\frac{y}{x}\right)\]
+的微分方程称为\bold{齐次微分方程}。\pause
+
+例如：
+\[ \frac{\d{y}}{\d{x}}=\frac{x-2y}{x+y} \]
+\[ \frac{\d{y}}{\d{x}}=\frac{y^2}{xy-x^2} \]
+\end{frame}
+
+\begin{frame}
+\frametitle{齐次微分方程的解法}
+\vspace{-1em}
+\begin{enumerate}
+  \item 标准化：将微分方程化为 $\frac{\d y}{\d x}=f(\frac{y}{x})$
+  \item<2-> 换元：令$v=\frac{y}x$，\pause 则有$y=xv$，\newline\pause
+        从而$\frac{\d y}{\d x}=x\frac{\d v}{\d x}+v$。\pause 代入原方程得到
+        \[ x\frac{\d v}{\d x}+v=f(v) \]
+  \item<5-> 分离变量：得到 $\dfrac{\d v}{f(v)-v}=\dfrac{\d x}{x}$
+  \item<6-> 两边积分：得到通解，然后将$v$代回
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{齐次微分方程}
+\begin{example}求$\frac{\d{y}}{\d{x}}=\frac{y^2}{xy-x^2}$的通解。
+\end{example}
+\pause
+\begin{exercise}
+求微分方程$y'=\frac{y+x}x$的通解。
+\end{exercise}
+\end{frame}
+
+\begin{frame}%[shrink=1]
+%\frametitle{齐次微分方程}
+\begin{example}求微分方程$\Big(x\tan\dfrac{y}{x}+y\Big)\d{x}=x\d{y}$
+在初始条件$y|_{x=2}=\pi$下的特解。
+\end{example}
+\pause\vspace{-0.3em}
+\begin{solution}
+方程即为$\dfrac{\dy}{\dx}=\tan\dfrac{y}{x}+\dfrac{y}{x}$．\pause\vspace{-0.6em}
+\begin{itemize}[<+->]
+  \item 令$v=\dfrac{y}{x}$，得到$x\dfrac{\dv}{\dx} + v = \tan v + v$．\vspace{-0.3em}
+  \item 分离变量，得到 $\cot v\dv = \dfrac{\dx}{x}$．
+  \item 两边积分，得到 $\ln|\sin v|=\ln|x|+C_0$．
+  \item 整理等式，得到 $\sin v=Cx$，即$\sin\dfrac{y}{x}=Cx$．
+\end{itemize}%
+\vspace{-0.6em}\onslide<7->{代入初始条件，得到$C=\dfrac12$，故特解为$\sin\dfrac{y}{x}=\dfrac12x$．}
+\end{solution}
+\end{frame}
+
+\begin{frame}
+\begin{exercise}
+求微分方程$(x^2+y^2)\d{x}-xy\d{y}=0$在初始条件$y|_{x=1}=0$下的特解。
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\frametitle{齐次微分方程}
+\begin{review}
+求微分方程$(x+y)\d x+x\d y=0$的通解。
+\end{review}
+\end{frame}
+
+\section{一阶线性微分方程}
+
+\begin{frame}
+\frametitle{㈢\ 一阶线性微分方程}
+\bold{一阶线性微分方程} $y'+p(x)y=q(x)$。\ppause
+\begin{itemize}
+  \item 若$q(x)\equiv0$，称为\bold{一阶线性\CJKunderdot{齐次}微分方程}
+  \item 若$q(x)\not\equiv0$，称为\bold{一阶线性\CJKunderdot{非齐次}微分方程}
+\end{itemize}
+\pause\cdotfill
+\begin{enumlite}[<+->]
+  \item $y'+xy=x^2$ \hfill\lead{\ding{51}}\kern12em
+  \item $y'+y^2=\sin x$ \hfill\warn{\ding{55}}\kern12em
+  \item $yy'+xy=1$ \hfill\warn{\ding{55}}\kern12em
+\end{enumlite}
+\end{frame}
+
+\begin{frame}
+\frametitle{一阶线性齐次微分方程}
+先看一阶线性\CJKunderdot{齐次}微分方程$\bold{y'+p(x)y=0}$．\ppause\cdotfill\par
+分离变量得到
+\[\frac{\dy}{y}=-p(x)\dx\]\pause
+两边同时积分，得到
+\[ \ln|y| = -\int p(x)\dx + C_0\]\pause
+消去对数，得到通解为（其中$C=\pm\e^{C_0}$）
+\[ \cbold y = C\e^{-\int p(x)\dx} \]
+\end{frame}
+
+%\begin{frame}
+%\frametitle{常数变易法}
+%将$\bold{y = u(x)\,\e^{-\int p(x)\d x}}$代入$\bold{y'+p(x)y=q(x)}$．\ppause
+%\cdotfill
+%\begin{align*}
+%\uncover<2->{y'}
+%&\uncover<2->{=u'(x)\,\e^{\int-p(x)\d x}+u(x)\left(\e^{\int-p(x)\d x}\right)'}\\
+%&\uncover<3->{=u'(x)\,\e^{\int-p(x)\d x}-u(x)\,p(x)\,\e^{\int-p(x)\d x}}\\
+%&\uncover<4->{=u'(x)\,\e^{\int-p(x)\d x}-p(x)y}
+%\end{align*}
+%\onslide<5->{得到\[ u'(x)\,\e^{\int-p(x)\d x}=q(x) \]}%
+%\onslide<6->{即有\[ \lead{u'(x)=q(x)\,\e^{\int p(x)\d x}} \]}
+%\end{frame}
+%
+%\begin{frame}
+%\frametitle{常数变易法}
+%将$\bold{y = u(x)\,\e^{-\int p(x)\d x}}$代入$\bold{y'+p(x)y=q(x)}$．\par
+%\cdotfill
+%\begin{align*}
+%&\ \lead{u'(x)=q(x)\,\e^{\int p(x)\d x}}\\
+% \uncover<2->{\rightwhitearrow}
+%&\uncover<2->{\ u(x)=\int q(x)\e^{\int p(x)\d x}+C}\\[-0.5em]
+% \uncover<3->{\rightwhitearrow}
+%&\uncover<3->{\ \bold{y=\e^{\int-p(x)\d x}\,\left(\int q(x)\e^{\int p(x)\d x}+C\right)}}
+%\end{align*}
+%\uncover<3->{上式即为一阶线性非齐次方程的通解公式．}
+%\end{frame}
+
+\begin{sframe}
+\frametitle{一阶线性微分方程}
+已知微分方程$\bold{y'+p(x)y=0}$ $\Leftrightarrow$ $\bold{y=C\e^{-\int p(x)\dx}}$
+\par\vspace{0.5em}\hrule
+\begin{align*}
+  & y = C\e^{-\int p(x)\dx} \\
+\Leftrightarrow\quad & y\,\e^{\int p(x)\dx}=C \\
+\Leftrightarrow\quad & \warn{\Big(y\e^{\int p(x)\dx}\Big)'=0}\\
+\Leftrightarrow\quad & \e^{\int p(x)\dx}\big(y'+p(x)y\big)=0
+\end{align*}
+\hrule
+\begin{remark*}
+方程两边同乘$\e^{\int p(x)\dx}$后，方程左边可以表示为导数．
+此方法也可以用于一阶线性\CJKunderdot{非齐次}微分方程．
+\end{remark*}
+\end{sframe}
+
+\begin{frame}
+\frametitle{一阶线性非齐次微分方程}
+再看一阶线性\CJKunderdot{非齐次}微分方程$\bold{y'+p(x)y=q(x)}$．\ppause\cdotfill
+\begin{example}
+求微分方程$y'+\frac{1}{x}\,y=1$的通解．
+\end{example}
+\pause
+\begin{enumerate}[<+->]
+  \item 恒等变形：$xy'+y=x$
+  \item 合并左边：$(xy)'=x$
+  \item 两边积分：$xy=\frac{1}{2}x^2+C$
+  \item 得到通解：$y=\frac{1}{2}x+C\frac{1}{x}$
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{一阶线性非齐次微分方程}
+再看一阶线性\CJKunderdot{非齐次}微分方程$\bold{y'+p(x)y=q(x)}$．\ppause\cdotfill
+\begin{example}
+求微分方程$y'-\frac{1}{x}\,y=x^2$的通解．
+\end{example}
+\pause
+\begin{enumerate}[<+->]
+  \item 恒等变形：$\frac{1}{x}\,y'-\frac{1}{x^2}\,y=x$
+  \item 合并左边：$\left(\frac{1}{x}\,y\right)'=x$
+  \item 两边积分：$\frac{1}{x}\,y=\frac{1}{2}x^2+C$
+  \item 得到通解：$y=\frac{1}{2}x^3+Cx$
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{一阶线性非齐次微分方程}
+再看一阶线性\CJKunderdot{非齐次}微分方程$\bold{y'+p(x)y=q(x)}$．\ppause\cdotfill
+\begin{example}
+求微分方程$y'+y=1$的通解．
+\end{example}
+\pause
+\begin{enumerate}[<+->]
+  \item 恒等变形：$\e^x y'+\e^x y=\e^x$
+  \item 合并左边：$\left(\e^x y\right)'=\e^x$
+  \item 两边积分：$\e^xy=\e^x+C$
+  \item 得到通解：$y=1+C\e^{-x}$
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{积分因子法}
+再看一阶线性\CJKunderdot{非齐次}微分方程$\bold{y'+p(x)y=q(x)}$．\ppause\cdotfill
+\begin{enumerate}[<+->]
+  \item 恒等变形：$\lead{v(x)}\,y'+p(x)\lead{v(x)}\,y=q(x)\lead{v(x)}$
+  \item 合并左边：$\big(v(x)\,y\big)'=q(x)v(x)$
+  \item 两边积分：$v(x)\,y=\int q(x)v(x)\dx+C$
+  \item 得到通解：$y=\frac{1}{v(x)}\left(\int q(x)v(x)\dx+C\right)$
+\end{enumerate}
+\onslide<6->{\begin{problem*}
+\bold{积分因子} $v(x)$是否一定存在？如何求出它？
+\end{problem*}}
+\end{frame}
+
+\begin{frame}
+\frametitle{积分因子法}
+\begin{problem*}
+寻找$v=v(x)$使得$v\,y'+p(x)\,v\,y=\left(v\,y\right)'$．
+\end{problem*}
+\vpause
+\begin{solution}
+展开等式右边得$v\,y'+p(x)\,v\,y=v\,y'+v'\,y$．\pause
+\begin{itemize}
+  \item 化简条件：$p(x)\,v=v'$，\pause 即 $p(x)\,v=\dfrac{\dv}{\dx}$\pause
+  \item 分离变量：$\dfrac{\dv}{v}=p(x)$\pause
+  \item 求解方程：$\ln v = \int p(x)\dx$，即 $v=\e^{\int p(x)\dx}$
+\end{itemize}
+\end{solution}
+\end{frame}
+
+\begin{frame}
+\frametitle{一阶线性微分方程的通解}
+对一阶线性非齐次微分方程
+$$y'+p(x)y=q(x)$$\pause
+令积分因子为
+$$\bold{v(x)=\e^{\int p(x)\dx}}$$\pause
+则方程的通解为
+$$\bold{y=\wfrac{1}{v(x)}\left(\int q(x)v(x)\dx + C\right)}$$
+\end{frame}
+
+\begin{frame}
+\frametitle{一阶线性微分方程}
+一阶线性微分方程$y'+p(x)y=q(x)$的通解为
+$$\bold{y=\e^{-\int p(x)\dx}\left(\int q(x)\e^{\int p(x)\dx}\dx + C\right)}$$
+\cdotfill\vpause
+\begin{remark}
+公式已经包含了任意常数，因此计算积分时不需要再加上任意常数．
+\end{remark}
+\vpause
+\begin{remark}
+若$\int p(x)\dx=\ln|f(x)|$，则代入公式时\warn{去掉绝对值号}不影响结果．
+\end{remark}
+\end{frame}
+
+\begin{frame}
+\frametitle{一阶线性微分方程}
+\begin{example}
+求 $y'-\dfrac2{x+1}y=(x+1)^3$ 的通解。
+\end{example}
+\pause
+\begin{exercise}
+求 $y'+y=\e^{-x}$ 的通解。
+\end{exercise}
+\end{frame}
+
+\begin{jframe}
+\frametitle{一阶线性微分方程}
+\begin{example}
+求$y'+\wfrac{1}{2x}\,y=1$的通解。
+\end{example}
+\pause
+\begin{solution}
+积分因子$v(x)=\e^{\int \dx/(2x)}=\e^{\ln\sqrt{|x|}}=\sqrt{|x|}$．\ppause
+方程的通解为$y=\frac1{\sqrt{|x|}}\left(\int\sqrt{|x|}\dx+C\right)$．即\ppause
+当$x>0$时，$y=\frac1{\sqrt{x}}\left(\int\sqrt{x}\dx+C\right)=\frac23x+\frac{C_0}{\sqrt{x}}$；\ppause
+当$x<0$时，$y=\frac1{\sqrt{-x}}\left(\int\sqrt{-x}\dx+C\right)=\frac23x+\frac{C_0}{\sqrt{-x}}$．\ppause
+因此通解为$y=\frac23x+\frac{C_0}{\sqrt{|x|}}$．\pause 也可继续整理，得通解为\par
+$x\left(y-\frac23x\right)^2=C$，其中$C=\pm C_0^2$．
+\end{solution}
+\end{jframe}
+
+\mybookmark{复习与提高}
+
+\begin{frame}
+% 可分离变量且一阶线性
+%\begin{review}
+%求微分方程$xy'+y=3$，$y|_{x=1}=0$的特解。
+%\end{review}
+% $y = 3 + C/x$
+% --------------------------------------
+% 齐次微分方程且一阶线性
+%\begin{review}
+%求一阶微分方程$xy'+y=2x$在初始条件$y|_{x=1}=0$下的特解。
+%\end{review}
+% $y = x + C/x$
+% --------------------------------------
+\frametitle{复习与提高}
+\begin{review}
+求一阶微分方程$xy'+y=3x^2$在初始条件$y|_{x=1}=0$下的特解。
+\end{review}
+\pause
+\begin{solution}
+通解$y=\dfrac{1}{x}\,\Big(x^3+C\Big)$，特解$y=\dfrac{1}{x}\,\Big(x^3-1\Big)$．
+\end{solution}
+\end{frame}
+
+\begin{iframe}
+\frametitle{复习与提高}
+\begin{puzzle}
+求微分方程$\dfrac{\dy}{\dx}=\dfrac{1}{x+y}$．
+\end{puzzle}
+\pause
+\begin{remark*}
+$\dfrac{\dx}{\dy}+p(y)x=q(y)$也是一阶线性微分方程．
+\end{remark*}
+\end{iframe}
+
+\begin{iframe}
+\frametitle{复习与提高}
+\begin{puzzle}
+求可导函数$\phi(x)$，使其满足
+$$\phi(x)+\int_0^x\!\phi(t)\dt =\e^x.$$
+\end{puzzle}
+\pause
+\begin{solution}
+求导得到微分方程，解得$\phi(x)=\frac12\left(\e^x+\e^{-x}\right)$．
+\end{solution}
+\end{iframe}
+
+\section{可降阶的高阶微分方程}
+
+\begin{frame}
+\frametitle{㈠\ $y''=f(x)$ 型}
+\begin{example}
+求 $y''=\e^{2x}$ 的通解。
+\end{example}
+\end{frame}
+
+\begin{frame}
+\frametitle{㈡\ $y''=f(x,y')$ 型}
+\begin{example}
+求 $y''=\frac1x\, y'$ 的通解。
+\end{example}
+\pause
+\begin{exercise}
+求 $xy''+y'=0$ 的通解。
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\frametitle{㈢\ $y''=f(y,y')$ 型}
+\begin{example}
+求 $y''=\frac32 y^2$ 满足初始条件 $y|_{x=3}=1$，$y'|_{x=3}=1$ 的特解。
+\end{example}
+\pause
+\begin{exercise}
+求 $y''=3\sqrt{y}$ 满足初始条件 $y|_{x=0}=1$，$y'|_{x=0}=2$ 的特解。
+\end{exercise}
+\end{frame}
+
+\section{高阶线性微分方程}
+
+\begin{frame}
+\frametitle{二阶线性微分方程}
+\bold{二阶线性微分方程} $y''+P(x)y'+Q(x)y=f(x)$。\ppause
+\begin{itemize}
+  \item 若$f(x)\equiv0$，称为\bold{二阶\CJKunderdot{齐次}线性微分方程}
+  \item 若$f(x)\not\equiv0$，称为\bold{二阶\CJKunderdot{非齐次}线性微分方程}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+研究\bold{二阶齐次线性微分方程} $y''+P(x)y'+Q(x)y=0$。\vpause
+\begin{theorem}
+如果$y_1(x)$和$y_2(x)$是方程的两个解，那么
+\[ \bold{y=C_1y_1(x)+C_2y_2(x)}\quad\text{($C_1$, $C_2$为任意常数)}\]
+也是方程的解．
+\end{theorem}
+\vpause
+\begin{theorem}
+如果$y_1(x)$和$y_2(x)$是方程的两个\CJKunderdot{线性无关}的特解，那么
+\[ \bold{y=C_1y_1(x)+C_2y_2(x)}\quad\text{($C_1$, $C_2$为任意常数)}\]
+就是方程的\CJKunderdot{通解}．
+\end{theorem}
+\vpause
+\begin{example}
+求微分方程$y''+y=0$的通解．
+\end{example}
+\end{frame}
+
+\begin{frame}
+\frametitle{线性相关与线性无关}
+\begin{definition}
+设$y_1(x)$, $y_2(x)$, $\cdots$, $y_n(x)$是定义在区间$I$上的$n$个函数，
+如果存在$n$个不全为零的常数$k_1$, $k_2$, $\cdots$, $k_n$，使得当$x\in I$时有恒等式
+\[ k_1y_1+k_2y_2+\cdots+k_ny_n \equiv 0 \]
+成立，则称这$n$个函数\bold{线性相关}；否则称\bold{线性无关}．
+\end{definition}
+\vpause
+\begin{remark*}
+$y_1(x)$, $y_2(x)$线性相关 $\;\Leftrightarrow\;$ $\dfrac{y_1(x)}{y_2(x)}$恒为常数．
+\end{remark*}
+\end{frame}
+
+\begin{frame}
+\begin{definition}
+齐次线性微分方程(1)的解称为\bold{齐次解}，而非齐次线性微分方程(2)的解称为\bold{非齐次解}．
+\begin{align}
+  y''+P(x)y'+Q(x)y&=0 \tag{1}\\
+  y''+P(x)y'+Q(x)y&=f(x) \tag{2}
+\end{align}
+\end{definition}
+\vpause
+\begin{theorem}
+线性微分方程的解有下列性质：
+\begin{enumerate}
+  \item 非齐次解$+$齐次解$=$非齐次解
+  \item 非齐次解$-$齐次解$=$非齐次解
+  \item 非齐次解$-$非齐次解$=$齐次解
+\end{enumerate}
+\end{theorem}
+\end{frame}
+
+\begin{frame}
+\noindent
+\begin{align}
+  y''+P(x)y'+Q(x)y&=0 \tag{1}\\
+  y''+P(x)y'+Q(x)y&=f(x) \tag{2}
+\end{align}
+\pause\vspace{-1em}
+\begin{theorem}[二阶非齐次线性微分方程的解的结构]\par
+假设$Y(x)$是齐次线性方程(1)的\CJKunderdot{通解}，而$y^*(x)$是非齐次线性方程(2)的一个\CJKunderdot{特解}，
+则\[y=Y(x)+y^*(x)\]是非齐次线性方程(2)的\CJKunderdot{通解}．\pause 即有
+\[\boxed{\cbold\text{齐次通解}+\text{非齐次特解}=\text{非齐次通解}}\]
+\end{theorem}
+\pause
+\begin{example}
+求微分方程$y''+y=x^2$的通解．
+\end{example}
+\end{frame}
+
+\begin{frame}
+\begin{theorem}[叠加原理]
+设$y^*_1(x)$和$y^*_2(x)$分别是下列两个方程
+\begin{align*}
+  y''+P(x)y'+Q(x)y&=f_1(x), \\
+  y''+P(x)y'+Q(x)y&=f_2(x)
+\end{align*}
+的特解，则$y^*_1(x)+y^*_2(x)$是方程
+\[  \bold{y''+P(x)y'+Q(x)y=f_1(x)+f_2(x)} \]
+的特解．
+\end{theorem}
+\vpause
+\begin{example}
+求微分方程$y''+y=x^2+\e^x$的一个特解．
+\end{example}
+\end{frame}
+
+\mybookmark{复习与提高}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{choice}
+设非齐次线性微分方程$y'+p(x)y=q(x)$有两个不同的解$y_1(x)$和$y_2(x)$，
+$C$为任意常数，则该方程的通解为\dotfill(\qquad)
+\begin{choiceline}
+  \item $C[y_1(x)-y_2(x)]$
+  \item $y_1(x)+C[y_1(x)-y_2(x)]$
+  \item $C[y_1(x)+y_2(x)]$
+  \item $y_1(x)+C[y_1(x)+y_2(x)]$
+\end{choiceline}
+\end{choice}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{choice}
+设线性无关的函数$y_1$, $y_2$, $y_3$都是二阶非齐次线性微分方程$y''+P(x)y'+Q(x)y=f(x)$的解，
+$C_1$, $C_2$为任意常数，则该方程的通解为\dotfill(\qquad)
+\begin{choiceline}
+  \item $C_1y_1+C_2y_2+y_3$
+  \item $C_1y_1+C_2y_2+(C_1+C_2)y_3$
+  \item $C_1y_1+C_2y_2-(1-C_1-C_2)y_3$
+  \item $C_1y_1+C_2y_2+(1-C_1-C_2)y_3$
+\end{choiceline}
+\end{choice}
+\end{frame}
+
+\section{常系数齐次线性微分方程}
+
+\begin{frame}
+\frametitle{二阶常系数齐次线性方程}
+研究\CJKunderdot{二阶常系数齐次线性方程}：$\bold{y''+py'+qy=0}$\ppause\cdotfill\par
+\begin{example}
+求微分方程$y''+4y'+3y=0$的通解．
+\end{example}
+\pause
+\begin{enumerate}[<+->]
+  \item 恒等变形：得$(y''+y')+3(y'+y)=0$
+  \item 变量代换：令$z=y'+y$，则$z'+3z=0$
+  \item 求解方程：得$z=C\e^{-3x}$，即$y'+y=C\e^{-3x}$
+  \item 求解方程：得$\bold{y=C_1\e^{-x}+C_2\e^{-3x}}$
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{二阶常系数齐次线性方程}
+研究\CJKunderdot{二阶常系数齐次线性方程}：$\bold{y''+py'+qy=0}$\ppause\cdotfill\par
+\begin{example}
+求微分方程$y''+4y'+4y=0$的通解．
+\end{example}
+\pause
+\begin{enumerate}[<+->]
+  \item 恒等变形：得$(y''+2y')+2(y'+2y)=0$
+  \item 变量代换：令$z=y'+2y$，则$z'+2z=0$
+  \item 求解方程：得$z=C\e^{-2x}$，即$y'+2y=C\e^{-2x}$
+  \item 求解方程：得$\bold{y=(C_1+C_2x)\,\e^{-2x}}$
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{二阶常系数齐次线性方程}
+研究\CJKunderdot{二阶常系数齐次线性方程}：$\bold{y''+py'+qy=0}$\ppause
+\begin{enumerate}[<+->]
+  \item 恒等变形：得$(y''-ay')-b(y'-ay)=0$
+  \item 变量代换：令$z=y'-ay$，则$z'-bz=0$
+  \item 求解方程：得$z=C\e^{bx}$，即$y'-ay=C\e^{bx}$
+  \item 求解方程：得$y=\e^{ax}\left(\int C\e^{(b-a)x}\dx+C'\right)$
+  \begin{itemize}
+    \item 当$a\neq b$时，$y=C_1\,\e^{ax}+C_2\,\e^{bx}$
+    \item 当$a=b$时，$y=(C_1+C_2x)\e^{ax}$
+  \end{itemize}
+\end{enumerate}
+\onslide<8->{\hrule\begin{problem*}
+常数$a$和$b$是否一定存在？如何求出它？
+\end{problem*}\pause
+\begin{solution}
+$a$和$b$是方程$\bold{r^2+pr+q=0}$的两个根．
+\end{solution}}
+\end{frame}
+
+\begin{frame}\vskip1em
+研究\bold{二阶常系数齐次线性方程}：$y''+py'+qy=0$\ppause\cdotfill\par
+设其\bold{特征方程} $r^2+pr+q=0$ 的两个根为$r_1$和$r_2$。\vpause
+\begin{enumerate}[<+->]
+  \item 若$r_1 \neq r_2$为相异实根，则方程的通解为 $$\lead{y=C_1\e^{r_1x}+C_2\e^{r_2x}}$$
+  \item 若$r_1=r_2=r$为相同实根，则方程的通解为 $$\lead{y=(C_1+C_2x)\e^{r x}}$$
+  \item 若$r_1=\alpha+i\beta, r_2=\alpha-i\beta$ 为共轭复根，则方程的通解为
+           $$\lead{y=\e^{\alpha x}(C_1\cos\beta x+C_2\sin \beta x)}$$
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{二阶常系数齐次线性方程}
+\begin{example}
+求微分方程$y''-2y'-3y=0$的通解．
+\end{example}
+\vpause
+\begin{example}
+求微分方程$y''+2y'+y=0$, $y|_{x=0}=4$, $y'|_{x=0}=-2$的特解．
+\end{example}
+\vpause
+\begin{example}
+求微分方程$y''-2y'+5y=0$的通解．
+\end{example}
+\end{frame}
+
+\begin{frame}
+研究 \bold{$n$阶常系数齐次线性方程}：
+$$y^{(n)}+p_1y^{(n-1)}+p_2y^{(n-2)}+\cdots+p_{n-1}y'+p_ny=0$$
+\cdotfill\ppause
+求出对应的\bold{特征方程}
+$$r^{n}+p_1r^{n-1}+p_2r^{n-2}+\cdots+p_{n-1}r+p_n=0$$
+的全部根，\pause 可以写出微分方程的通解：
+\begin{itemize}
+  \item 一个$k$重\CJKunderdot{实根}\ $r$给出通解的$k$项
+        $$\lead{\e^{rx}(C_1+C_2x+\cdots+C_kx^{k-1})}$$
+  \item 一对$k$重\CJKunderdot{复根}\ $r_{1,2}=\alpha\pm\beta i$给出通解的$2k$项
+       \clead\begin{align*}
+       \e^{\alpha x}\big[ &(C_1+C_2x+\cdots+C_kx^{k-1})\cos\beta x \\
+                    +&(D_1+D_2x+\cdots+D_kx^{k-1})\sin\beta x \big]
+       \end{align*}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{$n$阶常系数齐次线性方程}
+\begin{example}
+求微分方程$y^{(4)}-2y'''+5y''=0$的通解．
+\end{example}
+\vpause
+\begin{example}
+求微分方程$y^{(4)}+y=0$的通解．
+\end{example}
+\vpause
+\begin{example}
+求微分方程$y^{(4)}+2y''+y=0$的通解．
+\end{example}
+\vpause
+\begin{example}
+求微分方程$y^{(5)}-y^{(4)}=0$的通解．
+\end{example}
+\end{frame}
+
+\mybookmark{复习与提高}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+求微分方程$y''+ay=0$的通解．
+\end{puzzle}
+\vpause
+\begin{puzzle}
+求一个以$y_1=\e^x$，$y_2=2x\e^x$，$y_3=\cos 2x$，$y_4=3\sin 2x$为特解的
+$4$阶常系数齐次线性微分方程，并求其通解．
+\end{puzzle}
+\end{frame}
+
+\section{常系数非齐次线性微分方程}
+
+\begin{frame}
+研究\bold{二阶常系数非齐次线性微分方程}
+$$y''+py'+qy=f(x)$$
+\cdotfill\ppause
+由第六节和第七节的结论，只需讨论求该微分方程的一个特解的方法．\par
+\cdotfill\ppause
+\begin{enumerate}
+  \item $f(x)=\e^{\lambda x}P_m(x)$型
+  \item $f(x)=\e^{\lambda x}\big[P_l(x)\cos\omega x+Q_n(x)\sin\omega x\big]$型
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\begin{problem}
+求二阶常系数非齐次线性微分方程
+$$y''+py'+qy=f(x)$$
+的一个特解，其中$\bold{f(x)=\e^{\lambda x}P_m(x)}$，$P_m(x)$是$m$次多项式．
+\end{problem}
+\vpause
+\begin{method*}
+设方程的一个特解为$\bold{y^*=x^kQ_m(x)\e^{\lambda x}}$，
+其中$k$等于$\lambda$作为特征方程的根的重数．用待定系数法确定$Q_m(x)$．
+\end{method*}
+\vpause
+\begin{remark*}
+对$n$阶常系数非齐次线性微分方程有同样解法．
+\end{remark*}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+求方程$y''-2y'-3y=3x+1$的一个特解．
+\end{example}
+\vpause
+\begin{example}
+求微分方程$y''-5y'+6y=x\e^{2x}$的通解．
+\end{example}
+\end{frame}
+
+\begin{frame}
+\begin{problem}
+求二阶常系数非齐次线性微分方程
+$$y''+py'+qy=f(x)$$
+的一个特解，其中
+$$\bold{f(x)=\e^{\lambda x}\big[P_l(x)\cos\omega x+Q_n(x)\sin\omega x\big]},$$
+$P_l(x)$是$l$次多项式，$Q_n(x)$是$n$次多项式．
+\end{problem}
+\vpause
+\begin{method*}
+设方程的一个特解为
+$$\bold{y^*=x^k\e^{\lambda x}\big[R_m(x)\cos\omega x+S_m(x)\sin\omega x\big]},$$
+其中$m=\max\{l,n\}$，$k$等于$\lambda+\omega i$作为特征方程的根的重数．
+用待定系数法确定$R_m(x)$和$S_m(x)$．
+\end{method*}
+\vpause
+\begin{remark*}
+对$n$阶常系数非齐次线性微分方程有同样解法．
+\end{remark*}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+求微分方程$y''+y=x\cos 2x$的一个特解．
+\end{example}
+\vpause
+\begin{example}
+求微分方程$y''-y=\e^{x}\cos 2x$的一个特解．
+\end{example}
+\end{frame}
+
+\mybookmark{复习与提高}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+求二阶微分方程$y''+4y'+4y=\e^{\alpha x}$的通解．
+\end{puzzle}
+\vpause
+\begin{puzzle}
+求二阶微分方程$y''-2y'-3y=\e^x+3x+1$的通解．
+\end{puzzle}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{choice}
+微分方程$y''+y=x^2+1+\sin x$的特解形式可设为\dotfill(\qquad)%(A)
+\begin{choiceline}
+  \item $y^*=ax^2+bx+c+x(A\sin x+B\cos x)$
+  \item $y^*=x(ax^2+bx+c+A\sin x+B\cos x)$
+  \item $y^*=ax^2+bx+c+A\sin x$
+  \item $y^*=ax^2+bx+c+A\cos x$
+\end{choiceline}
+\end{choice}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{choice}
+已知常系数线性微分方程$y''+ay'+by=c\e^x$有特解$y^*=\e^{-x}(1+x\e^{2x})$，
+则\dotfill(\qquad)%求该微分方程的通解．
+\begin{choiceline}
+  \item $a=0$，$b=1$，$c=2$
+  \item $a=0$，$b=1$，$c=-2$
+  \item $a=0$，$b=-1$，$c=2$
+  \item $a=0$，$b=-1$，$c=-2$
+\end{choiceline}
+\end{choice}
+\end{frame}
+
+\begin{sframe}
+\frametitle{复习与提高}
+\begin{method}
+将特解$y^*=\e^{-x}+x\e^{x}$代入微分方程，得到
+\[ (1-a+b)\e^{-x}+(2+a)\e^x+(1+a+b)x\e^x=c\e^x \]
+解得$a=0$，$b=-1$，$c=2$．
+\end{method}
+\vpause
+\begin{method}
+由于$y^*=\e^{-x}+x\e^{x}$中包含$\e^{-x}$，而方程右边不含$\e^{-x}$，
+所以特征方程一定有一个解为$r_1=-1$．\ppause
+又因为$y^*=\e^{-x}+x\e^{x}$中包含$x\e^{x}$，所以特征方程的另一个解只能是$r_2=1$．\ppause
+从而特征方程为$r^2-1=0$，即得$a=0$，$b=-1$．\ppause
+此时$x\e^x$也是特解，将它代入微分方程，解得$c=2$．
+\end{method}
+\end{sframe}
+
+\end{document}

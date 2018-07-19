@@ -1,0 +1,2186 @@
+% -*- coding: utf-8 -*-
+% !TEX program = xelatex
+
+%\documentclass[14pt]{article}
+%\usepackage[notheorems]{beamerarticle}
+
+\documentclass[14pt,notheorems,leqno,xcolor={rgb}]{beamer} % ignorenonframetext
+
+\input{../common/theme.sty}
+\input{../common/share.sty}
+\input{../common/local.sty}
+
+\begin{document}
+%\ifxetex\else\heiti\fi
+
+\occasion{高等数学课程}
+\title{第九章·多元函数微分法}
+\author{\href{https://lvjr.bitbucket.io}{吕荐瑞}}
+\institute{暨南大学数学系}
+
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+\section{多元函数的基本概念}
+
+\subsection{多元函数的概念}
+
+\begin{frame}
+\frametitle{二元函数}
+\begin{definition}
+从平面$\mathbb{R}^2$的非空子集$D$到$\mathbb{R}$的对应关系
+$$f:D\longrightarrow\mathbb{R}$$
+称为\bold{二元函数}，其中对应$f$ 将点$(x,y)$对应到$f(x,y)$。记为$z=f(x,y)$。
+\pause $x$和$y$称为\bold{自变量}，$z$称为\bold{因变量}．
+%\vpause
+%类似地可以定义三元函数。
+\end{definition}
+\end{frame}
+
+\begin{frame}
+\frametitle{二元函数的定义域}
+二元函数的\bold{自然定义域}：由所有使得$f(x,y)$有意义的点$(x,y)$组成的集合．
+\ppause\vspace{1em}\hrule\vspace{1em}
+\begin{example}
+$z=\ln(x+y)$的定义域为\onslide<4->{\cdotfill\bold{无界\onslide<5->{开区域}}}
+$$D=\{(x,y) \mid x+y>0\}.$$
+\end{example}
+\pause
+\begin{example}
+$z=\sqrt{1-x^2-y^2}$的定义域为\onslide<4->{\cdotfill\bold{有界\onslide<5->{闭区域}}}
+$$D=\{(x,y) \mid x^2+y^2\leq1\}.$$
+\end{example}
+\end{frame}
+
+\begin{frame}
+\frametitle{自然定义域}
+\begin{exercise}
+求二元函数的定义域并画出该区域。
+\begin{enumlite}
+  \item $f(x,y)=\ln(x^2+y^2-1)$
+  \item $f(x,y)=\dfrac1{\sqrt{x+y-2}}$
+  \pause
+  \item $f(x,y)=\sqrt{1-|x|-|y|}$
+\end{enumlite}
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\frametitle{平面点集的分类}
+\begin{description}[一二三]
+  \item[有界集] 限制在有限范围的点集
+  \item[无界集] 延伸到无穷远的点集
+\end{description}
+\vpause
+\begin{description}[一二三]
+  \item[开区域] 不包含边界的区域
+  \item[闭区域] 包含边界的区域
+\end{description}
+\vpause\cdotfill
+\begin{problem*}
+如何准确描述上述几种平面点集？
+\end{problem*}
+\end{frame}
+
+\begin{frame}
+\frametitle{直线点集与平面点集}
+\begin{tabularx}{\textwidth}{XX}
+  \hline
+  \bold{直线$\mathbb{R}$} & \bold{平面$\mathbb{R}^2$} \\
+  \hline
+  邻域             & 邻域 \\
+  有限集           & 有界集 \\
+  无限集           & 无界集 \\
+  开区间           & 开区域 \\
+  闭区间           & 闭区域 \\
+  端点             & 边界 \\
+  \hline
+\end{tabularx}
+\end{frame}
+
+\begin{frame}
+%\frametitle{平面中的邻域}
+\begin{definition}
+平面上的点集
+\[ \left\{ (x,y) \;\middle|\; \sqrt{(x-x_0)^2+(y-y_0)^2} < \delta \right\}\]
+称为点$P_0(x_0,y_0)$的 \bold{$\delta$邻域}，记为$\bold{U(P_0,\delta)}$。
+\end{definition}
+\vpause
+\begin{definition}
+平面上的点集
+\[ \left\{ (x,y) \;\middle|\; 0 < \sqrt{(x-x_0)^2+(y-y_0)^2} < \delta \right\}\]
+称为点$P_0(x_0,y_0)$的 \bold{去心$\delta$邻域}，记为$\bold{\mathring{U}(P_0,\delta)}$。
+\end{definition}
+\pause\cdotfill
+\begin{description}[一二三]
+  \item[有界集] 存在某个$r>0$，使得$E\subset U(O,r)$．\pause
+  \item[无界集] 对于任何$r>0$，总有$E\not\subset U(O,r)$．
+\end{description}
+\end{frame}
+
+\begin{frame}
+%\frametitle{点与点集的关系}
+\begin{description}[一二]
+  \item[内点] 若存在$P$的某个邻域$U(P)$使得$U(P)\subset E$，\newline 则称$P$为$E$的内点．\pause
+  \item[外点] 若存在$P$的某个邻域$U(P)$使得$U(P)\cap E=\emptyset$，\newline 则称$P$为$E$的外点．
+\end{description}
+\pause
+\begin{description}[一二三]
+  \item[边界点] 若$P$的任何邻域，既含有属于$E$的点，又含有不属于$E$的点，则称$P$为$E$的边界点．
+\end{description}
+\pause
+\begin{remark*}
+(1) 内点一定属于$E$；(2) 外点一定不属于$E$；(3) 边界点可能属于$E$也可能不属于$E$．
+\end{remark*}
+\pause\cdotfill
+\begin{description}[一二]
+  \item[边界] $E$的边界点的全体，称为$E$的边界，记为$\bold{\partial E}$．
+\end{description}
+\end{frame}
+
+\begin{frame}
+%\frametitle{点集的特征}
+\begin{description}[一二]
+  \item[开集] 若$E$的边界点都不属于$E$，即$\partial E\cap E=\emptyset$，\newline 则称$E$为开集．\pause
+  \item[闭集] 若$E$的边界点都属于$E$，即$\partial E\subset E$，\newline 则称$E$为闭集．
+\end{description}
+\pause
+\begin{description}[一二三]
+  \item[连通集] 若$E$中任何两点都可用$E$中的折线联结起来．则称$E$为连通集．
+\end{description}
+\pause
+\begin{description}[一二三]
+  \item[开区域] \CJKunderdot{非空}的连通开集称为开区域．\pause %也可简称为\bold{区域}．\pause
+  \item[闭区域] 开区域及其边界一起构成的点集称为闭区域．
+\end{description}
+\end{frame}
+
+\begin{sframe}
+\frametitle{点集的特征}
+\begin{remark*}
+我们希望这里定义的开区域（闭区域）概念是上册的开区间（闭区间）概念在
+$\mathbb{R}^n$中的推广，因此
+\begin{enumerate}
+  \item 需要将开区域定义为\CJKunderdot{非空}的连通开集
+  \item 忽略可以将开区域简称为区域的说法
+\end{enumerate}
+\end{remark*}
+\vpause
+\begin{remark*}
+即使开区域可以是空集，连通的闭集也未必是闭区域，比如平面上的直线是连通闭集但不是闭区域．\par
+事实上，在$\mathbb{R}^2$中直线的内点集为空集，而空集的边界也是空集，因此直线不是闭区域．
+\end{remark*}
+\end{sframe}
+
+\subsection{多元函数的极限}
+
+\begin{iframe}
+\frametitle{二元函数的极限：定义}
+\begin{definition}
+如果任意给定$\epsilon>0$，总存在一个$\delta>0$，使得当点$(x,y)\in \mathring{U}(P_0,\delta)$时，
+$$|f(x,y)-A|<\epsilon$$
+总成立，则称当$(x,y)$趋于点$P_0(x_0,y_0)$时，函数$f(x,y)$以$A$为\bold{极限}，记为
+$$\limit_{(x,y)\to(x_0,y_0)}f(x,y)=A \text{\quad 或\quad} \limit_{P\to P_0}f(x,y)=A.$$
+\end{definition}
+\vpause
+\begin{example}
+证明$\limit_{(x,y)\to(0,0)}f(x,y)=0$，其中\vspace{-0.5em}
+$$f(x,y)=(x^2+y^2)\sin\dfrac1{x^2+y^2}.$$
+\end{example}
+\end{iframe}
+
+\begin{oframe}
+\frametitle{二元函数的极限：解释}
+若$(x,y)$以任意方式趋于$(x_0,y_0)$时，$f(x,y)$总趋于$A$，则称$f(x,y)$以$A$为\bold{极限}，记为
+$$\limit_{(x,y)\to(x_0,y_0)}f(x,y)=A \text{\quad 或\quad} \limit_{P\to P_0}f(x,y)=A.$$
+\end{oframe}
+
+\begin{iframe}
+\frametitle{二元函数的极限：解释}
+\begin{remark*}
+函数极限$\limit_{(x,y)\to(x_0,y_0)}f(x,y)=A$成立等价于当$(x,y)$ \warn{以任意方式}趋于$(x_0,y_0)$ 时，
+$f(x,y)$ 总趋于$A$。
+\end{remark*}
+\vpause
+\begin{example}
+证明$\limit_{(x,y)\to(0,0)}f(x,y)$不存在，其中
+$$f(x,y)=\left\{\begin{matrix}
+  \dfrac{xy}{x^2+y^2}, & (x,y)\neq(0,0); \\ 0, & (x,y)=(0,0).
+\end{matrix}\right.$$
+\end{example}
+\end{iframe}
+
+\begin{frame}
+\frametitle{二重极限的运算法则}
+\begin{remark*}
+二元函数的极限运算法则与一元函数的类似．
+\end{remark*}
+\vpause
+\begin{example}
+求极限$\limit_{(x,y)\to(0,2)}\dfrac{\sin{xy}}{x}$．
+\end{example}
+\vpause\cdotfill
+\begin{remark*}
+在二元函数极限的定义中，不要求函数在$P_0$的某个去心邻域有定义，
+只要求$P_0$是定义域$D$的\bold{聚点}．
+\end{remark*}
+\vpause
+\begin{definition*}
+若$\forall\delta>0$，$\mathring{U}(P,\delta)$内总有$E$中的点，则称$P$为$E$的\bold{聚点}．
+\end{definition*}
+\end{frame}
+
+\subsection{多元函数的连续性}
+
+\begin{frame}
+\frametitle{连续函数}
+\begin{definition}
+设$f(x,y)$的定义域$D$有聚点$(x_0,y_0)$．如果
+$$\limit_{(x,y)\to(x_0,y_0)}f(x,y)=f(x_0,y_0),$$
+则称$f(x,y)$在$(x_0,y_0)$处\bold{连续}，
+或者称$(x_0,y_0)$是$f(x,y)$的一个\bold{连续点}．
+\end{definition}
+\vpause
+\begin{remark*}
+函数$f(x,y)$的不连续点$(x_0,y_0)$称为\bold{间断点}．
+\end{remark*}
+\vpause
+\begin{property}
+二元初等函数在\CJKunderdot{定义区域}上总是连续的．
+\end{property}
+\end{frame}
+
+\begin{frame}
+\frametitle{二元函数的极限}
+\begin{example}
+求二元函数极限$\limit_{(x,y)\to(1,2)}\dfrac{x+y}{xy}$．
+\end{example}
+\vpause
+\begin{example}
+求极限$\limit_{(x,y)\to(0,0)}\dfrac{\sqrt{1+xy}-1}{xy}$．
+\end{example}
+\end{frame}
+
+\begin{frame}
+\frametitle{二元连续函数的性质}
+\begin{property}
+若$f(x,y)$在有界闭区域$D$上连续，则有
+\begin{enumerate}
+  \item 它在$D$上有界，且能取得最大值和最小值．
+  \item 它能取到介于最大值和最小值之间的任何值．
+\end{enumerate}
+\end{property}
+\end{frame}
+
+\begin{frame}
+\frametitle{二元函数的间断点}
+\begin{example}
+找出下列二元函数的所有间断点：
+\begin{enumlite}
+  \item $f(x,y)=\sin\dfrac1{x^2+y^2-1}$
+  \item $g(x,y)=\begin{cases}
+       \dfrac{xy}{x^2+y^2}, & (x,y)\neq(0,0); \\ 0, & (x,y)=(0,0).
+       \end{cases}$
+\end{enumlite}
+\end{example}
+\end{frame}
+
+\mybookmark{复习与提高}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{review}
+求二元函数的定义域并画出该区域。
+\begin{enumlite}
+  \item $f(x,y)=\sqrt{x^2+y^2-1}+\sqrt{4-x^2-y^2}$
+  \item $f(x,y)=\ln(x-y+2)+\ln(2x+y-2)$
+\end{enumlite}
+\end{review}
+\vpause
+\begin{remark*}
+\parbox[t]{0.8\textwidth}{%
+$y>f(x)$表示$y=f(x)$的上方区域。\newline
+$y<f(x)$表示$y=f(x)$的下方区域。}
+\end{remark*}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+设$f(x+y,x-y)=xy$，求$f(x,y)$．
+\end{puzzle}
+\vpause
+\begin{puzzle}
+求极限$\limit_{(x,y)\to(0,0)}\dfrac{x^2y^2}{x^2+y^2}$．
+\end{puzzle}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+说明极限$\limit_{(x,y)\to(0,0)}\dfrac{xy}{x+y}$不存在．
+\end{puzzle}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+找出下面函数的所有间断点：
+$$f(x,y)=\begin{cases}
+x\sin\dfrac{1}{y}, & y \neq 0; \\ 0, & y=0.
+\end{cases}$$
+\end{puzzle}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{choice}
+有且仅有一个间断点的函数为\dotfill(\select{C})
+\begin{choicehalf}
+  \item $\dfrac{x}{y}$ ~
+  \item $\dfrac{x}{x+y}$ ~
+  \item $\e^{-x}\ln(x^2+y^2)$ ~
+  \item $\arctan(|xy|+1)$ ~
+\end{choicehalf} 
+\end{choice}
+\end{frame}
+
+\section{偏导数}
+
+\subsection{一阶偏导数}
+
+\begin{frame}
+\frametitle{偏导数}
+\begin{definition}
+设函数$f(x,y)$在$(x_0,y_0)$某邻域内有定义，如果极限
+\[ \onslide*<2->{f'_x(x_0,y_0)=}\lim_{\Delta x\to0} \frac{f(x_0+\Delta x,y_0)-f(x_0,y_0)}{\Delta x}\]
+存在，则称该极限为函数在点$(x_0,y_0)$处\bold{对$x$的偏导数}，记为$f'_x(x_0,y_0)$。
+\ppause
+\onslide<3->类似地定义函数在点$(x_0,y_0)$处\bold{对$y$的偏导数}为
+\[ f'_y(x_0,y_0) = \lim_{\Delta y\to0} \frac{f(x_0,y_0+\Delta y)-f(x_0,y_0)}{\Delta y}\]
+\end{definition}
+\vpause\onslide<4->
+\begin{example}
+设$f(x,y)=xy^2$，求$f'_x(2,1)$和$f'_y(2,1)$．
+\end{example}
+\end{frame}
+
+\begin{frame}
+\frametitle{偏导函数}
+\begin{definition}
+设$f(x,y)$在区域$D$的每一点对$x$的偏导数都存在，则有\bold{对$x$的偏导函数}
+\[ f'_x(x,y)=\lim_{\Delta x\to0} \frac{f(x+\Delta x,y)-f(x,y)}{\Delta x}\]
+\ppause
+类似地，设$f(x,y)$在区域$D$的每一点对$y$的偏导数都存在，则有\bold{对$y$的偏导函数}
+\[ f'_y(x,y) = \lim_{\Delta y\to0} \frac{f(x,y+\Delta y)-f(x,y)}{\Delta y}\]
+\end{definition}
+\vpause
+\begin{remark*}
+在不至于混淆时，可把\bold{偏导函数}简称为\bold{偏导数}．
+\end{remark*}
+\end{frame}
+
+\begin{frame}
+\frametitle{偏导函数}
+对于$z=f(x,y)$，将$y$看为常数，对$x$求导，得到$z$对$x$的\bold{偏导数}，
+记为$\dfrac{\partial z}{\partial x}$，\pause 或$\dfrac{\partial f}{\partial x}$，或$z'_x$，或$f'_x$。
+\vpause
+对于$z=f(x,y)$，将$x$看为常数，对$y$求导，得到$z$对$y$的\bold{偏导数}，
+记为$\dfrac{\partial z}{\partial y}$，\pause 或$\dfrac{\partial f}{\partial y}$，或$z'_y$，或$f'_y$。
+\end{frame}
+
+\begin{frame}
+\begin{example}
+求$z=x^2+xy+y^2$的偏导数。
+\end{example}
+\pause
+\begin{example}
+求$z=\dfrac{xy}{2x-y}$的偏导数。
+\end{example}
+\pause
+\begin{example}
+求$f(x,y)=\mathrm{e}^{x^2y}$在点$(1,2)$处的偏导数。
+\end{example}
+\vpause
+\begin{exercise}
+求下列函数的偏导数。
+\begin{enumlite}
+  \item $z=2x^3-5xy^2+x^2y$
+  \item $z=\arctan\dfrac{y}x$
+\end{enumlite}
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\frametitle{偏导数的几何意义}
+\begin{columns}[onlytextwidth]
+\column{0.6\textwidth}
+\begin{tikzpicture}[thick,inner sep=2pt,
+                    x={(-0.5cm,-0.6cm)},y={(1.2cm,0)},z={(0,1cm)}]
+  \draw[-stealth,thin,gray] (0,0,0) -- (3.6,0,0);
+  \draw[-stealth,thin,gray] (0,0,0) -- (0,4.4,0);
+  \draw[-stealth,thin,gray] (0,0,0) -- (0,0,5.2) node[left,color=text1]{$z$};
+  \coordinate (x0) at (1,0,0);
+  \coordinate (y0) at (0,1,0);
+  \coordinate (x1) at (3,0,0);
+  \coordinate (y1) at (0,4,0);
+  \coordinate (P0) at (1,1,0);
+  \coordinate (P1) at (3,4,0);
+  \coordinate (Py) at (1,4,0);
+  \coordinate (Px) at (3,1,0);
+  \coordinate (Qy) at (1,4,3);
+  \coordinate (Qx) at (3,1,3);
+  \coordinate (Q1) at (3,4,3);
+  \coordinate (M0) at (1,1,3);
+  \coordinate (My) at (1,4,4.7);
+  \coordinate (Mx) at (3,1,5.5);
+  \coordinate (M1) at (3,4,7); 
+  \coordinate (Ty) at (1,4,3.8);
+  \coordinate (Tx) at (3,1,4.8);
+  \coordinate (T1) at (3,4,5.6);
+  \draw[densely dashed] (x0) node[left]{$x_0$} -- node[pos=0.6,fill=back1,inner sep=0pt]{$\Delta y$} (Py);
+  \draw[densely dashed] (y0) node[above]{$y_0$} -- node[pos=0.65,fill=back1,inner sep=0pt]{$\Delta x$} (Px);
+  \draw (x1) node[left]{$x$} -- (P1) node[right]{$P$} -- (y1) node[above]{$y$};
+  \draw[densely dashed] (Qx) -- (M0) node[below right]{$M_0$} -- (Qy);
+  \draw (Qx) node[left]{$Q_1$} -- (Q1) node[above left]{$Q$} -- (Qy) node[right]{$Q_2$};
+  \draw[densely dashed] (P0) node[below right]{$P_0$} -- (M0);
+  \draw (P1) -- (M1) node[left=2pt]{$M$} (Py) -- (My) (Px) -- (Mx);
+  \draw[densely dashed,color=accent1] (Mx) to[bend right=25] (M0) to[bend right=15] (My);
+  \draw[color=accent1] (Mx) node[left,color=text1] {$M_1$}
+       to[bend right=30] (M1) to[bend right=30] (My) node[right,color=text1] {$M_2$};
+  \draw[densely dashed,color=accent3] (Tx) -- (M0) -- (Ty);
+  \draw (Tx) node[left] {$T_1$} -- (T1) node[above left] {$T$} -- (Ty) node[right] {$T_2$};
+\end{tikzpicture}
+\column{0.39\textwidth}
+\setlength{\fboxsep}{4pt}%
+\adjustbox{cfbox=accent2}{\parbox{0.85\linewidth}{
+\begin{align*}
+  M_0M_1 \text{切线} &= M_0T_1 \\
+  \angle Q_1M_0T_1 &= \alpha \\
+  f'_x(x_0,y_0) &= \tan\alpha
+\end{align*}
+\vspace{0.5em}%
+\begin{align*}
+  M_0M_2 \text{切线} &= M_0T_2 \\
+  \angle Q_2M_0T_2 &= \beta \\
+  f'_y(x_0,y_0) &= \tan\beta
+\end{align*}}}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{偏导数与连续性}
+\begin{example}
+说明$f(x,y)$在点$(0,0)$的两个偏导数存在，但在点$(0,0)$不连续，其中
+$$f(x,y)=\left\{\begin{matrix}
+  \dfrac{xy}{x^2+y^2}, & (x,y)\neq(0,0); \\ 0, & (x,y)=(0,0).
+\end{matrix}\right.$$
+\end{example}
+\end{frame}
+
+\begin{frame}
+\frametitle{三元函数的偏导数}
+类似地，对于三元函数$u=f(x,y,z)$，可以定义三个偏导数$\dfrac{\partial u}{\partial x}$，
+$\dfrac{\partial u}{\partial y}$ 和 $\dfrac{\partial u}{\partial z}$。
+\pause
+\begin{example}
+求三元函数$u=xy^2z^3$的偏导数。
+\end{example}
+\pause
+\begin{example}
+求三元函数$r=\sqrt{x^2+y^2+z^2}$的偏导数．
+\end{example}
+\end{frame}
+
+\subsection{高阶偏导数}
+
+\begin{frame}
+\frametitle{二阶偏导数}
+对$z=f(x,y)$的偏导数$z'_x$和$z'_y$再求偏导数，就得到四个\bold{二阶偏导数}：\pause
+\begin{itemize}[<+->]
+  \item $(z'_x)'_x=z^{''}_{xx}$ 或 $(f'_x)'_x=f^{''}_{xx}$
+  \item $(z'_x)'_y=z^{''}_{xy}$ 或 $(f'_x)'_y=f^{''}_{xy}$
+  \item $(z'_y)'_x=z^{''}_{yx}$ 或 $(f'_y)'_x=f^{''}_{yx}$
+  \item $(z'_y)'_y=z^{''}_{yy}$ 或 $(f'_y)'_y=f^{''}_{yy}$
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+求$z=x^3+y^3-3xy^2$的各二阶偏导数。
+\end{example}
+\pause
+\begin{example}
+求$z=x^2ye^y$的各二阶偏导数。
+\end{example}
+\vpause
+\begin{theorem*}
+当二阶偏导数$f''_{xy}(x,y)$和$f''_{yx}(x,y)$都连续时，两者必定相等。
+\end{theorem*}
+\vpause
+\begin{exercise}
+求下列函数的二阶偏导数。
+\begin{enumlite}
+  \item $z=x^2y^3+\e^x\sin y$
+  \item $z=\ln(x-y)$
+\end{enumlite}
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\frametitle{二阶偏导数}
+$z=f(x,y)$的二阶偏导数也可以这样表示：\pause
+\begin{itemize}[<+->]
+  \item $\dfrac{\partial}{\partial x}\left(\dfrac{\partial z}{\partial x}\right)=\dfrac{\partial^2z}{\partial x^2}=z^{''}_{xx}$
+  \item $\dfrac{\partial}{\partial y}\left(\dfrac{\partial z}{\partial x}\right)=\dfrac{\partial^2z}{\partial x\partial y}=z^{''}_{xy}$
+  \item $\dfrac{\partial}{\partial x}\left(\dfrac{\partial z}{\partial y}\right)=\dfrac{\partial^2z}{\partial y\partial x}=z^{''}_{yx}$
+  \item $\dfrac{\partial}{\partial y}\left(\dfrac{\partial z}{\partial y}\right)=\dfrac{\partial^2z}{\partial y^2}=z^{''}_{yy}$
+\end{itemize}
+\end{frame}
+
+\mybookmark{复习与提高}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{review}
+求下列函数的偏导数。
+\begin{enumlite}
+  \item $z=\dfrac{x}{x^2-y^2}$\pause
+  \item $z=\arctan(x-y)$
+\end{enumlite}
+\end{review}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{review}
+求下列函数的二阶偏导数。
+\begin{enumlite}
+  \item $z=y^2\e^{x-y}$\pause
+  \item $z=xy\cos y$
+\end{enumlite}
+\end{review}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+设$z=\int_x^y f(t)\dt$，求$\dfrac{\partial z}{\partial x}$和$\dfrac{\partial z}{\partial y}$.
+\end{puzzle}
+\vpause
+\begin{puzzle}
+设$f(x,y)=x^2y+(y-1)\arctan\left(x/y\right)$，求$f'_x(1,1)$．
+\end{puzzle}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+判断$f(x,y)=\sqrt{x^2+y^2}$在$(0,0)$是否连续，以及偏导数是否存在．
+\end{puzzle}
+\vpause
+\begin{puzzle}
+判断$f(x,y)=\begin{cases}
+  1, & xy=0 \\
+  0, & xy\neq0
+\end{cases}$在$(0,0)$是否连续，以及偏导数是否存在．
+\end{puzzle}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+设二元函数
+$$f(x,y)=\begin{cases}
+  xy\,\dfrac{x^2-y^2}{x^2+y^2}, & x^2+y^2\neq0; \\
+  0, & x^2+y^2=0.
+\end{cases}$$
+说明混合偏导数$f''_{xy}(0,0)$和$f''_{yx}(0,0)$不相等．
+\end{puzzle}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+求满足条件$\dfrac{\partial f}{\partial y}=x^2+2y$，$f(x,x^2)=1$的二元函数$f(x,y)$．
+\end{puzzle}
+\end{frame}
+
+\section{全微分}
+
+\subsection{全微分的定义}
+
+\begin{frame}
+\frametitle{全微分}
+\begin{example*}
+用$S$表示边长分别为$x$与$y$的矩形的面积，则$S=xy$．\pause
+如果边长$x$与$y$分别取得改变量$\Delta x$与$\Delta y$，\pause
+则面积$S$相应地有一个改变量
+\[ \Delta S = y \Delta x + x \Delta y + \Delta x\Delta y. \]
+\end{example*}
+\stext{\vpause
+\begin{remark*}\smark
+当$\Delta P\to0$时，$\Delta x\Delta y=o(\Delta P)$．事实上，
+\[\limit_{\Delta P\to0}\frac{\Delta x\Delta y}{\Delta P}
+ =\limit_{(\Delta x,\Delta y)\to(0,0)}\frac{\Delta x\Delta y}{\sqrt{(\Delta x)^2+(\Delta y)^2}}=0.\]
+其中从极限定义知$\Delta P\to0$等价于$(\Delta x,\Delta y)\to(0,0)$．
+\end{remark*}}
+\end{frame}
+
+\begin{frame}
+\begin{definition*}
+如果$z=f(x,y)$在点$(x,y)$的某邻域内满足
+\[ \Delta z = A\Delta x + B\Delta y + o(\Delta P),\quad(\Delta P\to0) \]
+其中$A$，$B$与$\Delta x$，$\Delta y$无关，$\Delta P=\sqrt{(\Delta x)^2+(\Delta y)^2}$，
+则称函数在点$(x,y)$ \bold{可微分}，并称它的\bold{全微分}为
+\[ \d{z} = A\Delta{x} + B\Delta{y} \]
+\end{definition*}
+\vpause
+\begin{theorem*}
+函数在$(x,y)$点可微 \bold{\large$\rightwhitearrow$} 函数在$(x,y)$点连续．
+\end{theorem*}
+\vspace{0.3em}\vpause
+\begin{theorem*}%[可微的必要条件]
+如果函数$z=f(x,y)$可微，则$A=f'_x(x,y)$，$B=f'_y(x,y)$．即有\vspace{-0.5em}
+\[\bold{\d z=f'_x(x,y)\d x+f'_y(x,y)\d y},\]
+\vskip-0.8em 其中$\d{x}=\Delta{x}$，$\d{y}=\Delta{y}$．
+\end{theorem*}
+\end{frame}
+
+\begin{frame}
+\frametitle{微分的几何意义：以直代曲}
+\begin{tikzpicture}[thick,inner sep=2pt,declare function={
+    f(\x)=0.3*(\x-2)^2+2;
+    g(\x)=0.6*(\x-2); % 导函数
+}] % 定义函数后的分号不能省略
+%\useasboundingbox (-1,-1) rectangle (9,6.5);
+\draw[thin,-stealth] (-0.3,0) -- (6.9,0);
+\draw[thin,-stealth] (0,-0.4) -- (0,6.5) node[below left]{$y$};
+\draw[domain=0.7:5.7,samples=30,color=accent1] plot (\x,{f(\x)});
+\draw[domain=-0.3:7,color=accent3] plot (\x,{g(3)*(\x-3)+f(3)}); % 切线
+\fill (3,{f(3)}) node[above left]{$M_0$} circle (1.2pt);
+\fill (5,{f(5)}) node[above left]{$M$} circle (1.2pt);
+\fill (3,0) node[above left]{$P_0$} circle (1.2pt);
+\fill (5,0) node[above left]{$P$} circle (1.2pt);
+\draw[densely dashed] (3,0) node[below]{$x_0$} -- (3,{f(3)});
+\draw[densely dashed] (5,0) node[below]{$x$} -- (5,{f(5)});
+\draw[densely dashed,stealth-stealth,] (3.05,{f(3)}) -- node[below]{$\Delta x$} (4.99,{f(3)}) node[above left] {$Q$};
+\draw[stealth-stealth,color=accent3] (5,{f(3.01)}) -- node[pos=0.5,right]{$\dy$} (5,{g(3)*(5-3)+f(3)});
+\draw (4.9,{g(3)*(5-3)+f(3)}) -- node[left]{$T$} (5.1,{g(3)*(5-3)+f(3)});
+\draw (5,{f(3)}) -- (6.3,{f(3)}) (5,{f(5)}) -- (6.3,{f(5)});
+\draw[stealth-stealth,color=accent1] (6.15,{f(3)}) -- node[pos=0.45,right]{$\Delta y$} (6.15,{f(5)});
+\node[above right,text width=4cm,align=left,draw=accent2,inner sep=0.4em] at (7.1,-0.4)
+{当$P_0P\to0$时，\\[-0.3em] $TM=o(P_0P)$ \\[0.5em] 当$\Delta x\to0$时，\\[-0.3em] $\Delta y-\dy=o(\Delta x)$};
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}
+\frametitle{全微分的几何意义：以平代曲}
+\begin{tikzpicture}[thick,inner sep=2pt,
+                    x={(-0.5cm,-0.6cm)},y={(1.2cm,0)},z={(0,1cm)}]
+\draw[-stealth,thin,gray] (0,0,0) -- (3.6,0,0);
+\draw[-stealth,thin,gray] (0,0,0) -- (0,4.4,0);
+\draw[-stealth,thin,gray] (0,0,0) -- (0,0,5.2) node[left,color=text1]{$z$};
+\coordinate (x0) at (1,0,0);
+\coordinate (y0) at (0,1,0);
+\coordinate (x1) at (3,0,0);
+\coordinate (y1) at (0,4,0);
+\coordinate (P0) at (1,1,0);
+\coordinate (P1) at (3,4,0);
+\coordinate (Py) at (1,4,0);
+\coordinate (Px) at (3,1,0);
+\coordinate (Qy) at (1,4,3);
+\coordinate (Qx) at (3,1,3);
+\coordinate (Q1) at (3,4,3);
+\coordinate (Q2) at (3,5.8,3);
+\coordinate (Q3) at (3,6.8,3);
+\coordinate (M0) at (1,1,3);
+\coordinate (My) at (1,4,4.7);
+\coordinate (Mx) at (3,1,5.5);
+\coordinate (M1) at (3,4,7);
+\coordinate (M3) at (3,6.8,7);
+\coordinate (Ty) at (1,4,3.8);
+\coordinate (Tx) at (3,1,4.8);
+\coordinate (T1) at (3,4,5.6);
+\coordinate (T2) at (3,5.8,5.6);
+\draw[densely dashed] (x0) node[left]{$x_0$} -- node[pos=0.6,fill=back1,inner sep=0pt]{$\Delta y$} (Py);
+\draw[densely dashed] (y0) node[above]{$y_0$} -- node[pos=0.65,fill=back1,inner sep=0pt]{$\Delta x$} (Px);
+\draw[densely dashed] (P0) -- node[pos=0.5,fill=back1,inner sep=-1pt]{$\Delta P$} (P1);
+\draw (x1) node[left]{$x$} -- (P1) node[right]{$P$} -- (y1) node[above]{$y$};
+\draw[densely dashed] (Qx) -- (M0) node[below right]{$M_0$} -- (Qy);
+\draw (Qx) node[left]{$Q_1$} -- (Q1) node[above left]{$Q$} -- (Qy) node[right]{$Q_2$};
+\draw[densely dashed] (P0) node[above left]{$P_0$} -- (M0);
+\draw (P1) -- (M1) node[left=2pt]{$M$} (Py) -- (My) (Px) -- (Mx);
+\draw[densely dashed,color=accent1] (Mx) to[bend right=25] (M0) to[bend right=15] (My);
+\draw[color=accent1] (Mx) node[left,color=text1] {$M_1$}
+   to[bend right=30] (M1) to[bend right=30] (My) node[right,color=text1] {$M_2$};
+\draw[densely dashed,color=accent3] (Tx) -- (M0) -- (Ty);
+\draw[color=accent3] (Tx) node[left,color=text1] {$T_1$}
+                -- (T1) node[above left,color=text1] {$T$}
+                -- (Ty) node[right,color=text1] {$T_2$};
+\draw[dashdotted,thin] (Q1) -- (Q2);
+\draw[dashdotted,thin] (T1) -- (T2) -- +(0,0.05,0);
+\draw[stealth-stealth,accent3] (Q2) -- node[fill=back1]{$\dz$} (T2);
+\draw[dashdotted,thin] (Q2) -- (Q3) -- +(0,0.05,0);
+\draw[dashdotted,thin] (M1) -- (M3) -- +(0,0.05,0);
+\draw[stealth-stealth,accent1] (Q3) -- node[fill=back1]{$\Delta z$} (M3);
+\node[right,text width=3.8cm,align=left,draw=accent2,inner sep=0.4em] at (0.9,5.2,0)
+{当$P_0P\to0$时，\\[-0.3em] $TM=o(P_0P)$ \\[0.5em] 当$\Delta P\to0$时，\\[-0.3em] $\Delta z-\dz=o(\Delta P)$};
+\end{tikzpicture}
+\end{frame}
+
+\begin{rframe}
+%\frametitle{全微分的几何意义}
+\begin{remark*}
+在前面的图形中，我们断言$QT=\dz$．
+\end{remark*}
+%\pause
+\begin{solution}
+由偏导数几何意义，可得
+\[Q_1T_1=f'_x\cdot\Delta x,\quad Q_2T_2=f'_y\cdot\Delta y.\]
+因此我们只需说明$QT = Q_1T_1 + Q_2T_2$．事实上，
+\begin{align*}
+\ov{QT} &= \ov{M_0T} - \ov{M_0Q} \\
+&= (\ov{M_0T_1}+\ov{M_0T_2}) - (\ov{M_0Q_1}+\ov{M_0Q_2}) \\
+&= (\ov{M_0T_1}-\ov{M_0Q_1}) + (\ov{M_0T_2}-\ov{M_0Q_2}) \\
+&= \ov{Q_1T_1} + \ov{Q_2T_2}
+\end{align*}
+再由$\ov{QT}$，$\ov{Q_1T_1}$，$\ov{Q_2T_2}$平行，得到上述结论．
+\end{solution}
+\end{rframe}
+
+\begin{frame}
+\frametitle{全微分与偏导数}
+\begin{example}
+证明函数$f(x,y)$在点$(0,0)$的偏导数存在，但不可微分．其中
+$$f(x,y)=\begin{cases}
+  \dfrac{xy}{\sqrt{x^2+y^2}}, & (x,y)\neq(0,0); \\[1em]
+  0, & (x,y) = (0,0).
+\end{cases}$$
+\end{example}
+\vpause
+\begin{theorem*}%[可微的充分条件]
+若多元函数各个偏导数都连续，则全微分存在．
+\end{theorem*}
+\end{frame}
+
+\begin{frame}
+\frametitle{全微分}
+设二元函数$z=f(x,y)$可微，则全微分为
+$$\cbold\mathrm{d}z=f'_x(x,y)\mathrm{d}x+f'_y(x,y)\mathrm{d}y$$
+\vskip-1.3em\pause 设三元函数$u=f(x,y,z)$可微，则全微分为
+$$\cbold\mathrm{d}u=f'_x(x,y,z)\mathrm{d}x+f'_y(x,y,z)\mathrm{d}y+f'_z(x,y,z)\mathrm{d}z$$
+\vspace{-0.5em}\pause\hrule\par\vspace{0.4em}
+\begin{example}
+求$z=x^2y^3$在$x=1$，$y=2$，$\Delta x=0.2$，$\Delta y=0.1$时的全微分。
+\end{example}
+\vpause
+\begin{example}
+求$z=\e^{xy}$的全微分。
+\end{example}
+\vpause
+\begin{example}
+求$u=xy+yz+zx$的全微分。
+\end{example}
+\end{frame}
+
+\subsection{用全微分求近似值\optstar}
+
+\begin{frame}
+\frametitle{近似计算}
+利用全微分公式，我们有下列近似计算公式：
+\[ \cbold f(x+\Delta x,y+\Delta y) \approx f(x,y) + f'_x(x,y)\Delta x + f'_y(x,y)\Delta y \]
+\vpause
+\begin{example}
+求$1.01^{2.99}$的近似值。
+\end{example}
+\end{frame}
+
+\mybookmark{复习与提高}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+求$z=\arctan\left(\dfrac{x-y}{x+y}\right)$的全微分$\dz$．
+\end{puzzle}
+\vpause
+\begin{puzzle}
+求$f(x,y,z)=\sqrt[z]{x/y}$在点$(1,1,1)$的全微分．
+\end{puzzle}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+证明$f(x,y)=\sqrt{|xy|}$在点$(0,0)$偏导数存在，但不可微分．
+\end{puzzle}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{choice}%[2002]
+考虑二元函数$f(x,y)$的下面$4$条性质：\par
+\quad\digitcircled1 $f(x,y)$在点$(x_0,y_0)$处连续\par
+\quad\digitcircled2 $f(x,y)$在点$(x_0,y_0)$处的两个偏导数连续\par
+\quad\digitcircled3 $f(x,y)$在点$(x_0,y_0)$处可微\par
+\quad\digitcircled4 $f(x,y)$在点$(x_0,y_0)$处的两个偏导数存在\par
+若用$P\Rightarrow Q$表示可由性质$P$推出$Q$，
+则有\dotfill(\select{A})
+\begin{choicehalf}
+  \item \digitcircled2 $\Rightarrow$ \digitcircled3 $\Rightarrow$ \digitcircled1 ~
+  \item \digitcircled3 $\Rightarrow$ \digitcircled2 $\Rightarrow$ \digitcircled1 ~
+  \item \digitcircled3 $\Rightarrow$ \digitcircled4 $\Rightarrow$ \digitcircled1 ~
+  \item \digitcircled3 $\Rightarrow$ \digitcircled1 $\Rightarrow$ \digitcircled4 ~
+\end{choicehalf}
+\end{choice}
+\end{frame}
+
+\section{多元复合函数求导}
+
+\subsection{复合函数求导法则}
+
+\begin{frame}
+\frametitle{复合函数求导：情形1}
+设$z=f(x,y)$, $x=\phi(t)$, $y=\psi(t)$，\pause 则我们得到复合函数$z=f(\phi(t),\psi(t))$。\pause
+此时我们有\bold{全导数}
+\[ \bold{\frac{\dz}{\dt}=\frac{\partial z}{\partial x}\frac{\dx}{\dt}+\frac{\partial z}{\partial y}\frac{\dy}{\dt}} \]
+这里要求$f(x,y)$的偏导数连续．
+\pause\vspace{0.5em}\hrule % TODO: 若显示公式后没有正文，则这里的 \pause 将导致多余的竖直空隙
+\begin{example}
+设$z=xy$，$x=\e^t$, $y=\sin t$，求全导数$\dfrac{\dz}{\dt}$。
+\end{example}
+\end{frame}
+
+\begin{frame}
+\frametitle{复合函数求导：情形2}
+设$z=f(u,v)$, $u=\phi(x,y)$, $v=\psi(x,y)$，\pause 则有复合函数$z=f(\phi(x,y),\psi(x,y))$。\pause
+此时我们有偏导数\vspace{.5em}
+{\cbold\begin{align*}
+\frac{\partial z}{\partial x}
+&=\frac{\partial z}{\partial u}\frac{\partial u}{\partial x}+\frac{\partial z}{\partial v}\frac{\partial v}{\partial x},\\
+\frac{\partial z}{\partial y}
+&=\frac{\partial z}{\partial u}\frac{\partial u}{\partial y}+\frac{\partial z}{\partial v}\frac{\partial v}{\partial y}.
+\end{align*}}
+这里要求$f(u,v)$的偏导数连续．
+\pause\vspace{0.5em}\hrule%\vspace{-1em}
+\begin{example}
+设$z=uv$，$u=3x^2+y^2$, $v=2x+y$，求偏导数$\dfrac{\partial z}{\partial x}$和$\dfrac{\partial z}{\partial y}$。
+\end{example}
+\end{frame}
+
+\begin{frame}
+\frametitle{复合函数求导}
+\begin{exercise}
+\begin{enumlite}
+  \item 设$z=\e^{x-2y}$，$x=\sin t$, $y=\cos t$，求全导数$\dfrac{\mathrm{d}z}{\mathrm{d}t}$。\pause
+  \item 设$z=\e^u\sin v$，$u=xy$, $v=x-y$，求偏导数$\dfrac{\partial z}{\partial x}$和$\dfrac{\partial z}{\partial y}$。
+\end{enumlite}
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\frametitle{复合函数求导：情形3}
+\begin{example}
+设$z=f(u,v,t)=uv+\sin t$，而$u=\e^t$，$v=\cos t$．求全导数$\dfrac{\dz}{\dt}$．
+\end{example}
+\vpause
+\begin{example}
+设$w=f(x+y+z,xyz)$，且$f$具有二阶连续偏导数，求$\dfrac{\partial w}{\partial x}$
+及$\dfrac{\partial^2 w}{\partial x\partial z}$．
+\end{example}
+\end{frame}
+
+\begin{iframe}
+\frametitle{复合函数求导}
+\begin{example}
+设$u=f(x,y)$的所有二阶偏导数连续，把下列表达式转换为极坐标系中的形式：
+\begin{enumhalf}
+  \item $\left(\dfrac{\partial u}{\partial x}\right)^2+\left(\dfrac{\partial u}{\partial y}\right)^2$ ~
+  \item $\dfrac{\partial^2 u}{\partial x^2}+\dfrac{\partial^2 u}{\partial y^2}$ ~
+\end{enumhalf}
+\end{example}
+\end{iframe}
+
+\subsection{全微分形式不变性}
+
+\begin{frame}
+\frametitle{全微分的形式不变性}
+设有$z=f(u,v)$，$u$, $v$为自变量，则全微分为
+$$\d{z}=\frac{\partial z}{\partial u}\d{u}+\frac{\partial z}{\partial v}\d{v}$$
+\pause
+若又有$u=\phi(x,y)$, $v=\psi(x,y)$，$u$, $v$ 为中间变量，则全微分仍为
+$$\d{z}=\frac{\partial z}{\partial u}\d{u}+\frac{\partial z}{\partial v}\d{v}$$
+这里假定所有函数的偏导数都连续．
+\end{frame}
+
+\begin{frame}
+\begin{example}
+利用全微分的形式不变性，求二元函数$$z=(x^2-y^2)\e^{xy}$$的偏导数
+$\dfrac{\partial z}{\partial x}$和$\dfrac{\partial z}{\partial y}$.
+\end{example}
+\end{frame}
+
+\mybookmark{复习与提高}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{review}
+\begin{enumlite}
+  \item 设$z=\dfrac{x}y$，$x=\e^t$, $y=\sqrt{t}$，求全导数$\dfrac{\dz}{\dt}$。
+  \item 设$z=uv$，$u=x\sin y$, $v=y\cos x$，求偏导数$\dfrac{\partial z}{\partial x}$和$\dfrac{\partial z}{\partial y}$。
+\end{enumlite}
+\end{review}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+设$f(u,v)$有二阶连续偏导数，求$z=f(x,x/y)$的一阶和二阶偏导数．
+\end{puzzle}
+\vpause
+\begin{puzzle}
+设$f(u,v)$有连续偏导数，求$w=f(x/y,y/z)$的全微分．
+\end{puzzle}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+已知$f(x,y)|_{y=x^2}=1$，$f'_1(x,y)|_{y=x^2}=2x$，求$f'_2(x,y)|_{y=x^2}$．
+\pause\cdotfill$-1$
+\end{puzzle}
+\vpause
+\begin{puzzle}%[2001年考研]
+设$z=f(x,y)$在点$(1,1)$处可微，$f(1,1)=1$，$f'_1(1,1)=2$，求$f'_2(1,1)=3$，
+$\phi(x)=f(x,f(x,x))$，求$\left.\dfrac{\d}{\dx}\phi^3(x)\right|_{x=1}$．
+\pause\cdotfill$51$
+\end{puzzle}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{choice}
+已知二元函数$f(x,y)$具有一阶连续偏导数，且$f(x,y)=f(y,x)$，则有\dotfill(\select{B})
+\begin{choicehalf}
+  \item $f'_1(x,y)=f'_1(y,x)$ ~
+  \item $f'_1(x,y)=f'_2(y,x)$ ~
+  \item $f'_1(x,y)=f'_2(x,y)$ ~
+  \item $f'_2(x,y)=f'_2(y,x)$ ~
+\end{choicehalf} 
+\end{choice}
+\end{frame}
+
+\section{隐函数求导}
+
+\subsection{一个方程的情形}
+
+\begin{frame}
+\frametitle{隐函数的导数1}
+\begin{theorem*}
+设$F(x,y)$在$(x_0,y_0)$邻域有连续偏导数
+\[ \left\{\begin{array}{@{}l@{}}
+   F(x,y)=0 \\ F(x_0,y_0)=0
+\end{array}\right.
+\quad\overset{\cwarn F'_y\neq0}{\text{\LARGE\bold{$\rightwhitearrow$}}}\quad
+   \left\{\begin{array}{@{}l@{}}
+   y=f(x) \\ y_0=f(x_0)
+\end{array}\right. \]\pause
+而且隐函数$y=f(x)$也有连续偏导数
+\[ \wfrac{\dy}{\dx}=-\wfrac{F'_x}{F'_y} \]
+\end{theorem*}
+\pause\hrule
+%% 二阶导数的计算较繁琐，换成下面的例子
+%\begin{example}
+%设方程$y-x\e^y+x=0$确定了隐函数$y=f(x)$，求$\dfrac{\dy}{\dx}$和$\dfrac{\d^2y}{\dx^2}$．
+%\end{example}
+\begin{example}
+设方程$x^4+y^4=1$确定了隐函数$y=f(x)$，求$\dfrac{\dy}{\dx}$和$\dfrac{\d^2y}{\dx^2}$.
+\end{example}
+\end{frame}
+
+\begin{sframe}
+\frametitle{隐函数的导数1}
+\begin{solution}
+隐函数的一阶导数$\smash[t]{\dfrac{\dy}{\dx}=-\dfrac{x^3}{y^3}}$．因此二阶导数
+\begin{align*}
+  \frac{\d^2y}{\dx^2} &= -\frac{\dfrac{\d}{\dx}(x^3)\cdot y^3-x^3\cdot\bold{\dfrac{\d}{\dx}(y^3)}}{y^6} \\
+  &= -\frac{3x^2\cdot y^3-x^3\cdot\bold{3y^2\dfrac{\dy}{\dx}}}{y^6} = -\frac{3x^2}{y^7}
+\end{align*}
+\end{solution}
+\begin{remark*}
+注意不要错误认为$\dfrac{\d}{\dx}(y^3)=0$．
+\end{remark*}
+\end{sframe}
+
+\begin{frame}
+\frametitle{隐函数的导数2}
+\begin{theorem*}
+设$F(x,y,z)$在$(x_0,y_0,z_0)$邻域有连续偏导数
+\[ \left\{\begin{array}{@{}l@{}}
+   F(x,y,z)=0 \\ F(x_0,y_0,z_0)=0
+\end{array}\right.
+\quad\overset{\cwarn F'_z\neq0}{\text{\LARGE\bold{$\rightwhitearrow$}}}\quad
+   \left\{\begin{array}{@{}l@{}}
+   z=f(x,y) \\ z_0=f(x_0,y_0)
+\end{array}\right. \]\pause
+而且隐函数$z=f(x,y)$也有连续偏导数
+\[
+\wfrac{\partial z}{\partial x}=-\wfrac{F'_x}{F'_z}\qquad\qquad
+\wfrac{\partial z}{\partial y}=-\wfrac{F'_y}{F'_z}
+\]
+\end{theorem*}
+\pause\hrule
+\begin{example}
+设方程$x^2+y^2+z^2-4z=0$确定了隐函数$z=f(x,y)$，求二阶偏导数$\dfrac{\partial^2 z}{\partial x^2}$．
+\end{example}
+\end{frame}
+
+\begin{frame}
+\begin{exercise}
+\begin{enumlite}
+  \item 设方程$\sin y+\e^x-xy^2=0$确定了隐函数$y=f(x)$，求导数$\dfrac{\dy}{\dx}$。
+  \item 设方程$\e^z=xyz$确定了隐函数$z=f(x,y)$，求偏导数$\dfrac{\partial z}{\partial x}$ 和$\dfrac{\partial z}{\partial y}$。
+\end{enumlite}
+\end{exercise}
+\end{frame}
+
+\subsection{方程组的情形}
+
+\begin{iframe}
+\frametitle{方程组确定的隐函数}
+隐函数存在定理可以推广到方程组情形．比如
+\[ 
+\left\{\begin{array}{@{}l@{}}F(x,y,u,v)=0 \\ G(x,y,u,v)=0\end{array}\right.
+\quad\overset{\cwarn?}{\text{\LARGE\bold{$\rightwhitearrow$}}}\quad
+\left\{\begin{array}{@{}l@{}}u=u(x,y) \\ v=v(x,y)\end{array}\right.
+\]
+\vspace{0.5em}\hrule\vspace{0.5em}\pause
+由$F$、$G$的偏导数组成的行列式
+\[ J=\frac{\partial(F,G)}{\partial(u,v)}=\begin{vmatrix}
+  \frac{\partial F}{\partial u} & \frac{\partial F}{\partial v} \\[.5em]
+  \frac{\partial G}{\partial u} & \frac{\partial G}{\partial v}
+\end{vmatrix} \]
+称为$F$、$G$的\bold{雅可比行列式}．\pause 隐函数存在要求$\warn{J\neq0}$．
+\end{iframe}
+
+\begin{iframe}
+%\frametitle{方程组确定的隐函数}
+\begin{theorem*}
+设$F$, $G$在$(x_0,y_0,u_0,v_0)$邻域有连续偏导数
+\[ \left\{\begin{array}{@{}l@{}}
+   F(x,y,u,v)=0 \\ G(x,y,u,v)=0 \\ F(x_0,y_0,u_0,v_0)=0 \\ G(x_0,y_0,u_0,v_0)=0
+\end{array}\right.
+\quad\overset{\cwarn J\neq0}{\text{\LARGE\bold{$\rightwhitearrow$}}}\quad
+   \left\{\begin{array}{@{}l@{}}
+   u=u(x,y) \\ v=v(x,y) \\ u_0=u(x_0,y_0) \\ v_0=v(x_0,y_0)
+\end{array}\right. \]\pause
+而且隐函数也有连续偏导数\vspace{0.3em}
+\begin{align*}
+  \frac{\partial u}{\partial x} &= -\frac1J\,\frac{\partial(F,G)}{\partial(x,v)} &
+  \frac{\partial v}{\partial x} &= -\frac1J\,\frac{\partial(F,G)}{\partial(u,x)} \\
+  \frac{\partial u}{\partial y} &= -\frac1J\,\frac{\partial(F,G)}{\partial(y,v)} &
+  \frac{\partial v}{\partial y} &= -\frac1J\,\frac{\partial(F,G)}{\partial(u,y)}
+\end{align*}%
+\end{theorem*}
+\end{iframe}
+
+\begin{frame}
+\frametitle{方程组确定的隐函数}
+\begin{example}
+设$xu-yv=0$，$yu+xv=1$，求偏导数
+$$\dfrac{\partial u}{\partial x},\quad \dfrac{\partial u}{\partial y},\quad
+  \dfrac{\partial v}{\partial x},\quad \dfrac{\partial v}{\partial y}.$$
+\end{example}
+\end{frame}
+
+\mybookmark{复习与提高}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{review}
+\begin{enumlite}
+  \item 设方程$xy+\ln y-\ln x=0$确定了隐函数$y=f(x)$，求导数$\dfrac{\dy}{\dx}$。
+  \item 设方程$\dfrac{x}z=\ln z-\ln y$确定了隐函数$z=f(x,y)$，求偏导数
+        $\dfrac{\partial z}{\partial x}$和$\dfrac{\partial z}{\partial y}$。
+\end{enumlite}
+\end{review}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+设$F(u,v)$有连续偏导数，由方程$F\left(\frac{x}z,\frac{y}z\right)=0$求全微分$\dz$．
+\end{puzzle}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{choice}%[2006]
+设有三元方程$xy-z\ln y+\e^{xz}=1$，根据隐函数存在定理，存在点$(0,1,1)$的一个邻域，
+在此邻域内该方程所确定的具有连续偏导数的隐函数\dotfill(\select{D})
+\begin{choiceline}
+  \item 只有$z=z(x,y)$这一个
+  \item 只有$y=y(x,z)$和$z=z(x,y)$这两个
+  \item 只有$x=x(y,z)$和$z=z(x,y)$这两个
+  \item 只有$x=x(y,z)$和$y=y(x,z)$这两个
+\end{choiceline} 
+\end{choice}
+\end{frame}
+
+\ifligong % >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+\section{多元函数微分学的几何应用}
+
+\subsection{向量值函数及其导数}
+
+\begin{frame}
+\frametitle{函数与向量值函数}
+\begin{tabularx}{\textwidth}{|X|X|}
+  \hline
+  \bold{(一元)\kern0pt 函数}\par\vspace{0.5em}
+  $\begin{aligned}f:\mathbb{R}&\longrightarrow\mathbb{R}\\[-0.5em]
+                    x&\longmapsto y\end{aligned}$ &
+  \bold{多元函数}\par\vspace{0.5em}
+  $\begin{aligned}f:\mathbb{R}^3&\longrightarrow\mathbb{R}\\[-0.5em]
+                    (x,y,z)&\longmapsto u\end{aligned}$ \\
+  \hline
+  \bold{(一元)\kern0pt 向量值函数}\par\vspace{0.5em}
+  $\begin{aligned}\vec{f}:\mathbb{R}&\longrightarrow\mathbb{R}^3\\[-0.5em]
+                    t&\longmapsto (x,y,z)\end{aligned}$&
+  \bold{多元向量值函数}\par\vspace{0.5em}
+  $\begin{aligned}\vec{f}:\mathbb{R}^3&\longrightarrow\mathbb{R}^3\\[-0.5em]
+                    (r,s,t)&\longmapsto (x,y,z)\end{aligned}$ \\
+  \hline
+\end{tabularx}
+\end{frame}
+
+\begin{frame}
+\begin{definition}
+设数集$D\subset \mathbb{R}$．则称映射$\vec{f}:D\rightarrow\mathbb{R}^n$为\bold{向量值函数}，通常记为
+\[ \vec{r}=\vec{f}(t),\;t\in D. \]
+其中数集$D$称为函数的定义域，$t$称为自变量，$\vec{r}$称为因变量．
+\end{definition}
+\vpause
+\begin{remark*}
+普通的实值函数也称为\bold{数量函数}．
+\end{remark*}
+\end{frame}
+
+\begin{frame}
+\begin{example*}
+在$\mathbb{R}^3$中，向量值函数$\vec{f}(t)$可表示为
+\[ \bold{\vec{f}(t) = f_1(t)\,\vec{i} + f_2(t)\,\vec{j} + f_3(t)\,\vec{k},\quad t \in D} \]
+或者
+\[ \bold{\vec{f}(t) = \big( f_1(t), f_2(t), f_3(t) \big),\quad t \in D} \]
+\end{example*}
+\vpause
+\begin{remark*}
+$\mathbb{R}^3$中的向量值函数与空间曲线一一对应．
+\end{remark*}
+\end{frame}
+
+\begin{frame}
+\begin{definition}
+设向量值函数$\vec{f}(t)$在点$t_0$的某一去心邻域有定义．如果存在一个常向量$\vec{r}_0$，
+对于任意给定的$\epsilon>0$，总存在$\delta>0$，使得当$0<|t-t_0|<\epsilon$时，
+对应的函数值$\vec{f}(t_0)$都满足不等式
+\[ |\vec{f}(t)-\vec{r}_0|<\epsilon, \]
+那么，常向量$\vec{r}_0$就叫做向量值函数$\vec{f}(t)$当$t\to t_0$时的\bold{极限}，记为
+\[ \bold{\lim_{t\to t_0}\vec{f}(t)=\vec{r}_0}, \text{\quad 或者\quad} \bold{\vec{f}(t)\to\vec{r}_0,\,t\to t_0}. \]
+\end{definition}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+设$\vec{f}(t)=(\cos t)\,\vec{i}+(\sin t)\,\vec{j}+t\,\vec{k}$，求$\limit_{t\to\pi/4}\vec{f}(t)$．
+\end{example}
+\end{frame}
+
+\begin{frame}
+\begin{definition}
+设向量值函数$\vec{r}=\vec{f}(t)$在点$t_0$的某一邻域内有定义，如果
+\[ \lim_{\Delta t\to 0}\frac{\Delta \vec{r}}{\Delta t}
+  =\lim_{\Delta t\to 0}\frac{\vec{f}(t_0+\Delta t)-\vec{f}(t_0)}{\Delta t} \]
+存在，那么就称这个极限向量为向量值函数$\vec{r}=\vec{f}(t)$在$t_0$处的\bold{导数}或\bold{导向量}，
+记为$\bold{\vec{f}'(t_0)}$或$\bold{\left.\dfrac{\d\vec{r}}{\dt}\right|_{t=t_0}}$．
+\end{definition}
+\vpause
+\begin{remark*}
+向量值函数的导向量是所对应曲线$\Gamma$的\bold{切向量}．
+\end{remark*}
+\end{frame}
+
+\begin{frame}
+\begin{example}
+设空间曲线$\Gamma$的向量方程为
+\[ \vec{r}=\vec{f}(t)=(t^2+1,4t-3,2t^2-6t),\quad t\in\mathbb{R}. \]
+求曲线$\Gamma$在与$t=2$相应的点处的单位切向量．
+\end{example}
+\end{frame}
+
+\begin{iframe}
+\frametitle{向量值函数}
+\begin{example}
+一个人在悬挂式滑翔机上由于快速上升气流而沿位置向量为
+\[ \vec{r}=\vec{f}(t)=(3\cos t)\,\vec{i}+(3\sin t)\,\vec{j}+t^2\,\vec{k}\]
+的路径螺旋式向上．求
+\begin{enumlite}
+  \item 滑翔机在任意时刻$t$的速度向量和加速度向量．
+  \item 滑翔机在任意时刻$t$的速率．
+  \item 滑翔机的加速度与速度正交的时刻．
+\end{enumlite}
+\end{example}
+\end{iframe}
+
+\subsection{空间曲线的切线与法平面}
+
+\begin{frame}
+\frametitle{空间曲线的切线与法平面}
+\vspace{-0.6em}%
+设空间曲线$\Gamma$的参数方程为$\bold{\left\{\begin{array}{l}
+  x = \phi(t), \\
+  y = \psi(t), \\
+  z = \omega(t),
+\end{array}\right.}\ t\in[\alpha,\beta]$．\par
+则曲线在点$(x_0,y_0,z_0)=(\phi(t_0),\psi(t_0),\omega(t_0))$处有
+\begin{description}
+  \item[切向量] $\overrightarrow{T}=(T_1,T_2,T_3)=\bold{\big(\phi'(t_0),\psi'(t_0),\omega'(t_0)\big)}$\vspace{0.8em}
+  \item[切线\quad] $\dfrac{x-x_0}{T_1}=\dfrac{y-y_0}{T_2}=\dfrac{z-z_0}{T_3}$\vspace{0.8em}
+  \item[法平面] $T_1(x-x_0)+T_2(y-y_0)+T_3(z-z_0)=0$
+\end{description}
+\end{frame}
+
+\begin{frame}
+\frametitle{空间曲线的切线方程}
+\begin{columns}[onlytextwidth]
+\column{0.5\textwidth}
+\onslide<2->{用点向式写出\CJKunderdot{割线方程}：
+\[ \frac{x-x_0}{\Delta x}=\frac{y-y_0}{\Delta y}=\frac{z-z_0}{\Delta z} \]}
+\onslide<3->{\vskip0pt plus 0.5fill 分母同时除以$\Delta t$得到：
+\[ \frac{x-x_0}{\Delta x/\Delta t}=\frac{y-y_0}{\Delta y/\Delta t}=\frac{z-z_0}{\Delta z/\Delta t} \]}
+\onslide<4->{\vskip0pt plus 0.5fill 令$\Delta t\to0$得到\CJKunderdot{切线方程}：
+\[ \bold{\frac{x-x_0}{\phi'(t_0)} = \frac{y-y_0}{\psi'(t_0)} = \frac{z-z_0}{\omega'(t_0)}} \]}
+\column{0.44\textwidth}
+\hfill
+\begin{tikzpicture}[thick,inner sep=3pt]
+\draw[thin,-stealth] (0,0) -- (4,0) node[below] {$y$};
+\draw[thin,-stealth] (0,0) -- (0,4) node[left] {$z$};
+\draw[thin,-stealth] (0,0) -- (-1,-1) node[right] {$x$};
+\draw[color=accent1] (-0.8,2.2) .. controls (0,2.2) and (0,1) .. (1,1) to[bend right=45] (4,4);
+\draw[color=accent3] (0.25,0.75) -- (1,1) -- (2.8,1.6) -- (4,2);
+\fill (1,1) node[below right] {$M_0$}circle (1.2pt) (2.8,1.6) node[below right] {$M_1$} circle (1.2pt);
+\end{tikzpicture}
+\begin{align*}
+  t_0 &\longmapsto M_0(x_0,y_0,z_0) \\[-0.3em]
+  \Delta t &\longmapsto (\Delta x,\Delta y,\Delta z)
+\end{align*}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{空间曲线的切线与法平面}
+\begin{example}
+求曲线$x=t$, $y=t^2$, $z=t^3$在点$(1,1,1)$处的切线及法平面方程．
+\end{example}
+\end{frame}
+
+\begin{frame}
+\frametitle{空间曲线的切线与法平面}
+设空间曲线$\Gamma$的显式方程为$\bold{\left\{\begin{array}{l}
+  y = \psi(x), \\
+  z = \omega(x),
+\end{array}\right.}\ x\in[a,b]$．\par
+则曲线在点$(x_0,y_0,z_0)=(x_0,\psi(x_0),\omega(x_0))$处有
+\begin{description}
+  \item[切向量] $\overrightarrow{T}=(T_1,T_2,T_3)=\bold{\big(1,\psi'(x_0),\omega'(x_0)\big)}$\vspace{1em}
+  \item[切线\quad] $\dfrac{x-x_0}{T_1}=\dfrac{y-y_0}{T_2}=\dfrac{z-z_0}{T_3}$\vspace{1em}
+  \item[法平面] $T_1(x-x_0)+T_2(y-y_0)+T_3(z-z_0)=0$
+\end{description}
+\end{frame}
+
+\begin{iframe}
+\frametitle{空间曲线的切线与法平面}
+\vspace{-0.6em}%
+设空间曲线$\Gamma$的隐式方程为$\bold{\left\{\begin{array}{l}
+  F(x,y,z) = 0, \\
+  G(x,y,z) = 0.
+\end{array}\right.}$\par\vspace{-0.3em}
+则曲线在点$(x_0,y_0,z_0)$处有
+\begin{description}
+  \item[切向量] $\begin{aligned}[t]&\overrightarrow{T}=(T_1,T_2,T_3)\\[-0.3em]&=\bold{\left.\left(
+          \begin{vmatrix}F'_y & F'_z \\ G'_y & G'_z\end{vmatrix},
+          \begin{vmatrix}F'_z & F'_x \\ G'_z & G'_x\end{vmatrix},
+          \begin{vmatrix}F'_x & F'_y \\ G'_x & G'_y\end{vmatrix}
+        \right)\right|_{(x_0,y_0,z_0)}}\end{aligned}$\vspace{0.2em}
+  \item[切线\quad] $\dfrac{x-x_0}{T_1}=\dfrac{y-y_0}{T_2}=\dfrac{z-z_0}{T_3}$\vspace{0.3em}
+  \item[法平面] $T_1(x-x_0)+T_2(y-y_0)+T_3(z-z_0)=0$
+\end{description}
+\end{iframe}
+
+\begin{iframe}
+\frametitle{空间曲线的切线与法平面}
+\begin{example}
+求曲线$x^2+y^2+z^2=6$, $x+y+z=0$在点$(1,-2,1)$处的切线及法平面方程．
+\end{example}
+\end{iframe}
+
+\begin{jframe}
+\frametitle{空间曲线的切线与法平面}
+\begin{solution}
+两曲面在点$(1,-2,1)$处的法向量分别为
+\begin{align*}
+  \vn_1 &= (2x,2y,2z)\big|_{(1,-1,2)}=(2,-4,2) \\
+  \vn_2 &= (1,1,1)
+\end{align*}
+因此，曲线同时在两平面上，因此曲线有切向量为
+\[ \ov{T} = \vn_1\times\vn_2 = (-6,0,6) \text{\ 或者\ } \ov{T} = (1,0,-1) \]
+切线方程为
+$\dfrac{x-1}{1}=\dfrac{y+2}{0}=\dfrac{z-1}{-1}$, 即$\begin{cases}
+  x+z=2, \\ y=-2.
+\end{cases}$\par
+法平面方程为$(x-1)-(z-1)=0$，即$x-z=0$．
+\end{solution}
+\end{jframe}
+
+\subsection{空间曲面的法线与切平面}
+
+\begin{frame}
+\frametitle{空间曲面的法线与切平面}
+设空间曲面$\Sigma$的隐式方程为$\bold{F(x,y,z)=0}$．\par
+则曲面在点$(x_0,y_0,z_0)$处有
+\begin{description}
+  \item[法向量] $\vec{n}=(n_1,n_2,n_3)=\bold{\left.\left(F'_x,\;F'_y,\;F'_z\right)\right|_{(x_0,y_0,z_0)}}$\vspace{1em}
+  \item[法线\quad] $\dfrac{x-x_0}{n_1}=\dfrac{y-y_0}{n_2}=\dfrac{z-z_0}{n_3}$\vspace{1em}
+  \item[切平面] $n_1(x-x_0)+n_2(y-y_0)+n_3(z-z_0)=0$
+\end{description}
+\end{frame}
+
+\begin{frame}
+\frametitle{空间曲面的法线与切平面}
+在曲面$\Sigma$上任取一条过$M_0(x_0,y_0,z_0)$的曲线$\Gamma$．
+\[ \Gamma:\quad (x,y,z)=\big(\phi(t),\psi(t),\omega(t)\big) \]
+\begin{columns}[onlytextwidth]
+\column{0.6\textwidth}
+\begin{tikzpicture}[x={(170:1cm)},y={(55:.7cm)},z={(90:1cm)},thick,font=\small,inner sep=3pt]
+%%coordinates
+%\draw[->,thin,gray4] (0,0,0) -- (3,0,0) node[left] {$x$};
+%\draw[->,thin,gray4] (0,0,0) -- (0,3,0) node[above right] {$y$};
+%\draw[->,thin,gray4] (0,0,0) -- (0,0,3) node[right] {$z$};
+%surface S
+\draw[thick,looseness=.7] (2.5,-2.5,-1) node[above right=3pt and 3pt] {$\Sigma:\,F(x,y,z)=0$}
+  to[bend left]  (2.5,2.5,-1)   to[bend left]  (-2.5,2.5,-1)
+  to[bend right] (-2.5,-2.5,-1) to[bend right] (2.5,-2.5,-1) -- cycle;
+%curve on S
+\visible<2->{
+\draw[very thick,accent3,looseness=.4] (1,-1,-0.5) coordinate (c1) to[bend left]
+     (0,0,0) to[bend left] (-1.2,1.2,-0.5) ;
+\node[above] at (c1) {$\Gamma$};
+}
+%normal line through point M
+\visible<6->{\draw[densely dashed] (0,0,-2.5)--(0,0,0);}
+%tangent plane
+\visible<5->{
+\draw[accent1,fill=filler1,opacity=0.7] (2.5,-2.5,0) -- (2.5,2.5,0) -- (-2.5,2.5,0) -- (-2.5,-2.5,0) -- cycle;
+\draw[<-] (2.4,2.6,0) to[bend right=20] (3.2,3,0) node[left]{切平面};
+}
+%normal line through point M
+\visible<6->{\draw (0,0,0)--(0,0,2.3) node[right]{法线} --(0,0,2.5);}
+%tangent vector at point M
+\visible<3->{\draw[-latex,accent1](0,0,0)--(-0.8,0.7,0) node[right]{$\ov{T}$切向量};}
+%normal vector at point M
+\visible<4->{\draw[-latex,accent1](0,0,0)--(0,0,1) node[below left] {法向量$\vn$};}
+%point M on surface
+\draw[fill] (0,0,0) circle (1pt) node[below right] {$M_0$};
+\end{tikzpicture}
+\column{0.4\textwidth}
+\bold{通过$M_0$的任何曲线，它们在$M_0$点的切线都在同一个平面上．}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{空间曲面的法线与切平面}
+\begin{example}
+求球面$x^2+y^2+z^2=14$在点$(1,2,3)$处的法线和切平面方程．
+\end{example}
+\end{frame}
+
+\begin{frame}
+\frametitle{空间曲面的法线与切平面}
+设空间曲面$\Sigma$的显式方程为$\bold{z=f(x,y)}$．\par
+则曲面在点$(x_0,y_0,z_0)=(x_0,y_0,f(x_0,y_0))$处有
+\begin{description}
+  \item[法向量] $\vec{n}=(n_1,n_2,n_3)=\bold{\left.\left(f'_x,\;f'_y,\;-1\right)\right|_{(x_0,y_0)}}$\vspace{1em}
+  \item[法线\quad] $\dfrac{x-x_0}{n_1}=\dfrac{y-y_0}{n_2}=\dfrac{z-z_0}{n_3}$\vspace{1em}
+  \item[切平面] $n_1(x-x_0)+n_2(y-y_0)+n_3(z-z_0)=0$
+\end{description}
+\end{frame}
+
+\begin{frame}
+\frametitle{空间曲面的法线与切平面}
+\begin{example}
+求旋转抛物面$z=x^2+y^2-1$在点$(2,1,4)$处的法线和切平面方程．
+\end{example}
+\end{frame}
+
+\mybookmark{复习与提高}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+求螺旋线$x=a\cos\phi$, $y=a\sin\phi$, $z=b\phi$在
+$\phi=\pi/2$对应点处的切线方程和法平面方程．
+\end{puzzle}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+已知曲面$xyz=\sigma$与球面$x^2+y^2+z^2=a^2$在点$M(x_0,y_0,z_0)$处相切，求正数$\sigma$．
+\end{puzzle}
+\vpause
+\begin{puzzle}
+已知平面$3x+\lambda y-3z+16=0$与椭球面$3x^2+y^2+z^2=16$相切，求$\lambda$．
+\pause\cdotfill$\pm2$
+\end{puzzle}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+证明曲面$z=xf(y/x)$上任一点处的切平面都通过原点，其中$f(u)$可微．
+\end{puzzle}
+\vpause
+\begin{puzzle}
+证明曲面$F(x-my,z-ny)=0$的所有切平面恒与定直线平行, 其中$F(u,v)$可微．
+\end{puzzle}
+\end{frame}
+
+\section{方向导数与梯度}
+
+\subsection{方向导数}
+
+%\begin{rframe}
+%\frametitle{偏导数与方向导数}
+%\begin{description}
+%  \item[偏导数]   反映函数沿坐标轴的变化率%（四个方向）
+%  \item[方向导数] 反映函数沿任一方向的变化率
+%\end{description}
+%\end{rframe}
+
+\begin{frame}
+\begin{origin*}
+有一只蚂蚁在铁盘上某点$P_0(x_0,y_0)$处，铁盘上任意点的温度为$z=f(x,y)$．
+问这只蚂蚁应沿什么方向爬行，才能最快到达较凉快的地点？
+\end{origin*}
+\pause\vspace{0.5em}\hrule
+\begin{itemize}
+  \item 本质在于求出温度由高到低变化最剧烈的方向．\pause
+  \item 需要先研究温度函数沿任意方向的变化率问题．
+\end{itemize}
+\pause\hrule\vspace{0.5em}
+\begin{columns}[onlytextwidth]
+\column{0.58\textwidth}
+温度函数$f(x,y)$在$(x_0,y_0)$点沿方向$l$的变化率为\vspace{0.5em}%
+\[\left.\frac{\partial f}{\partial l}\right|_{(x_0,y_0)}=\limit_{\Delta P\to0^+}\frac{\Delta z}{\Delta P}\]%
+\vskip0.5em 称为函数沿方向$l$的\bold{方向导数}．
+\column{0.4\textwidth}
+\hfill
+\begin{tikzpicture}[thick,inner sep=0.2em]
+ \draw[-stealth,thin] (-0.5,-0.5) -- (3.8,-0.5);
+ \draw[-stealth,thin] (-0.5,-0.5) -- (-0.5,3.3);
+ \coordinate (P0) at (0.7,0.7);
+ \coordinate (P1) at (2.0,2.0);
+ \coordinate (P2) at (3.0,3.0);
+ \coordinate (Q0) at (2.0,0.7);
+ \coordinate (Q1) at (0.7,3.0);
+ \draw[-stealth,color=accent1] (P0) -- node[pos=0.7,color=text1,left]{$\Delta P$} (P1) -- (P2) node[right]{$l$};
+ \draw (P0) -- node[pos=0.5,below]{$\Delta x$} (Q0) -- node[pos=0.4,right]{$\Delta y$} (P1);
+ \path[fill=accent3] (P0) circle (1.5pt) node[left] {$P_0$}
+                     (P1) circle (1.5pt) node[right,inner sep=0.3em] {$P(x,y)$};
+\end{tikzpicture}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\begin{columns}[onlytextwidth]
+\column{0.55\textwidth}
+设方向$l$与两个坐标轴的夹角分别为$\alpha$和$\beta$，则有
+\begin{align*}
+  \Delta x&=\Delta P\cdot\cos\alpha \\[-0.3em]
+  \Delta y&=\Delta P\cdot\cos\beta
+\end{align*}%
+\onslide<2->{故函数沿方向$l$的\bold{方向导数}为\par\vspace{0.5em}%
+$\displaystyle\phantom{={}}\left.\frac{\partial f}{\partial l}\right|_{(x_0,y_0)}
+ =\limit_{\Delta P\to0^+}\frac{\Delta z}{\Delta P}$}
+\column{0.4\textwidth}
+\hfill
+\begin{tikzpicture}[thick,scale=1.5,inner sep=0.2em]
+ \draw[-stealth,thin] (0,0) -- (3,0);
+ \draw[-stealth,thin] (0,0) -- (0,3);
+ \coordinate (P0) at (0.7,0.7);
+ \coordinate (P1) at (2.0,2.0);
+ \coordinate (P2) at (2.9,2.9);
+ \coordinate (Q0) at (2.0,0.7);
+ \coordinate (Q1) at (0.7,3.0);
+ \draw[densely dashed] (P0) -- +(2.2,0) (P0) -- +(0,2);
+ \draw[-stealth,color=accent1] (P0) -- node[pos=0.7,color=text1,left]{$\Delta P$} (P1) -- (P2) node[right]{$l$};
+ \draw (P0) -- node[pos=0.5,below]{$\Delta x$} (Q0) -- node[pos=0.5,right]{$\Delta y$} (P1);
+ \path[fill=accent3] (P0) circle (1.5pt) node[left] {$P_0$}
+                     (P1) circle (1.5pt) node[right,inner sep=0.3em] {$P(x,y)$};
+ \path (P0) +(22.5:0.4) node[color=accent2] {$\alpha$};          
+ \path (P0) +(67.5:0.4) node[color=accent2] {$\beta$};
+\end{tikzpicture}
+\end{columns}\pause[3]
+$\!\!\begin{aligned}[t]
+  &=\limit_{\Delta P\to0^+}\!\frac{f(x_0+\Delta x,y_0+\Delta y)-f(x_0,y_0)}{\Delta P} \\
+  &=\limit_{\Delta P\to0^+}\!\frac{f(x_0+\Delta P\cos\alpha,y_0+\Delta P\cos\beta)-f(x_0,y_0)}{\Delta P}
+\end{aligned}$
+\end{frame}
+
+\begin{frame}
+\begin{remark*}
+\bold{单位向量} $\ve_l=(\cos\alpha,\cos\beta)$与方向$l$同方向．
+即$\cos\alpha$和$\cos\beta$是方向$l$的两个\bold{方向余弦}．
+\end{remark*}
+\pause\cdotfill
+\begin{theorem}
+若函数$f(x,y)$在点$P_0(x_0,y_0)$可微分，那么它在该点沿任一方向$l$的方向导数存在，且有
+\[ \left.\frac{\partial f}{\partial l}\right|_{(x_0,y_0)}
+  =f'_x(x_0,y_0)\cos\alpha + f'_y(x_0,y_0)\cos\beta. \]
+其中$\ve_l=(\cos\alpha,\cos\beta)$是与$l$同方向的单位向量．
+\end{theorem}
+\pause\cdotfill
+\begin{example}
+求函数$z=x\e^{2y}$在点$P(1,0)$处沿从点$P(1,0)$到点$Q(2,-1)$的方向导数．
+\end{example}
+\end{frame}
+
+\begin{sframe}
+\begin{proof}
+因为函数在点$P_0(x_0,y_0)$可微分，所以\vspace{0.4em}
+\begin{align*}
+&\phantom{={}}\limit_{\Delta P\to0^+}\frac{\Delta z}{\Delta P}
+ =\limit_{\Delta P\to0^+}\frac{\dz+o(\Delta P)}{\Delta P} \\[0.3em]
+&=\limit_{\Delta P\to0^+}\frac{\dz}{\Delta P}+\limit_{\Delta P\to0^+}\frac{o(\Delta P)}{\Delta P} \\[0.3em]
+&=\limit_{\Delta P\to0^+}\frac{f'_x(x_0,y_0)\bold{\Delta x}+f'_y(x_0,y_0)\bold{\Delta y}}{\bold{\Delta P}} \\[0.3em]
+&=\limit_{\Delta P\to0^+}\frac{f'_x(x_0,y_0)\,\bold{\Delta P\cos\alpha}
+                              +f'_y(x_0,y_0)\,\bold{\Delta P\cos\beta}}{\bold{\Delta P}} \\[0.3em]
+&=f'_x(x_0,y_0)\cos\alpha + f'_y(x_0,y_0)\cos\beta
+\end{align*}
+\end{proof}
+\end{sframe}
+
+\begin{frame}
+\frametitle{三元函数的方向导数}
+\begin{remark*}
+在二元函数方向导数的定义中，令$t=\Delta P$，则\par
+\mylinebox{%
+  $\displaystyle\left.\frac{\partial f}{\partial l}\right|_{(x_0,y_0)}\!\!\!
+  =\limit_{t\to 0^+}\frac{f(x_0+t\cos\alpha,y_0+t\cos\beta)-f(x_0,y_0)}{t}$}
+\end{remark*}
+\vpause
+\begin{definition*}
+对三元函数$f(x,y,z)$，它在点$P_0(x_0,y_0,z_0)$沿方向$\vec{e}_l=(\cos\alpha,\cos\beta,\cos\gamma)$
+的方向导数为
+\[ \left.\frac{\partial f}{\partial l}\right|_{(x_0,y_0,z_0)}
+  =\limit_{t\to 0^+}\frac{f(x_1,y_1,z_1)-f(x_0,y_0,z_0)}{t}, \]
+$(x_1,y_1,z_1)=(x_0+t\cos\alpha,y_0+t\cos\beta,z_0+\cos\gamma)$．
+\end{definition*}
+\end{frame}
+
+\begin{frame}
+\frametitle{三元函数的方向导数}
+\begin{theorem}
+若函数$f(x,y,z)$在点$P_0(x_0,y_0,z_0)$可微分，那么它在该点沿任一方向
+$\vec{e}_l=(\cos\alpha,\cos\beta,\cos\gamma)$的方向导数存在，且有
+\begin{align*}
+  \left.\frac{\partial f}{\partial l}\right|_{P_0}
+    = f'_x(x_0,y_0,z_0)\cos\alpha 
+    &+ f'_y(x_0,y_0,z_0)\cos\beta \\[-0.7em]
+    &+ f'_z(x_0,y_0,z_0)\cos\gamma.
+\end{align*}
+\end{theorem}
+\vpause\cdotfill
+\begin{example}
+求函数$f(x,y,z)=xy+yz+zx$在点$(1,1,2)$沿方向$l$的方向导数，
+其中$l$的方向角分别为$60^\circ$, $45^\circ$, $60^\circ$．
+\end{example}
+\end{frame}
+
+\subsection{梯度}
+
+\begin{frame}
+\begin{origin*}
+有一只蚂蚁在铁盘上某点$P_0(x_0,y_0)$处，铁盘上任意点的温度为$z=f(x,y)$．
+问这只蚂蚁应沿什么方向爬行，才能最快到达较凉快的地点？
+\end{origin*}
+\pause\vspace{0.5em}\hrule
+\begin{itemize}
+  \item 已经研究好温度函数沿任意方向的变化率问题．\pause
+  \item 现在要寻找出温度由高到低变化最剧烈的方向．
+\end{itemize}
+\pause\hrule\vspace{0.5em}
+\begin{align*}
+\left.\frac{\partial f}{\partial l}\right|_{(x_0,y_0)}
+  &=f'_x(x_0,y_0)\cos\alpha + f'_y(x_0,y_0)\cos\beta \\
+  &=\big(f'_x(x_0,y_0),f'_y(x_0,y_0)\big)\cdot\big(\cos\alpha,\cos\beta\big) \\
+  &=\big|\big(f'_x(x_0,y_0),f'_y(x_0,y_0)\big)\big|\cdot\cos\theta
+\end{align*}
+其中$\theta$是向量$(f'_x(x_0,y_0),f'_y(x_0,y_0)\big)$与$l$的夹角。
+\end{frame}
+
+\begin{frame}
+\begin{definition*}
+二元函数$f(x,y)$在点$P_0(x_0,y_0)$处的\bold{梯度}为
+\begin{align*}
+  \bold{\grad f(x_0,y_0)} &= \left(f'_x(x_0,y_0),\,f'_y(x_0,y_0)\right) \\
+  &= f'_x(x_0,y_0)\,\vi + f'_y(x_0,y_0)\,\vj
+\end{align*}
+或者记为$\bold{\nabla f(x_0,y_0)}$．
+\end{definition*}
+\vpause
+\begin{remark*}
+梯度与方向导数有如下关系：
+\begin{enumerate}
+  \item 当方向向量与梯度方向相同时，函数增加最快
+  \item 当方向向量与梯度方向相反时，函数减少最快
+  \item 当方向向量与梯度方向垂直时，函数变化率为零
+\end{enumerate}
+\end{remark*}
+\end{frame}
+
+\begin{frame}
+\frametitle{二元函数的梯度}
+\begin{example*}
+有一只蚂蚁在铁盘上点$(1,1)$处，\vspace{0.3em}%
+铁盘上任意点的温度为$f(x,y)=\dfrac{240}{x^2+\bold{2}y^2+1}$．\vspace{0.3em}%
+问这只蚂蚁应沿什么方向爬行，才能最快到达较凉快的地点？
+\end{example*}
+\pause
+\begin{solution}
+$\grad f(x,y)=\left(-\frac{480x}{(x^2+2y^2+1)^2},-\frac{960y}{(x^2+2y^2+1)^2}\right)$．\ppause
+蚂蚁的逃生路线应与梯度向量相切，\pause 解微分方程%\let\displaystyle=\textstyle
+\[ \frac{\dy}{\dx}=\frac{\bold{2}y}{x},\qquad y\big|_{x=1}=1, \]
+\pause 得曲线方程$y=x^{\bold{2}}$．\pause 沿远离原点方向温度下降最快．
+\end{solution}
+\end{frame}
+
+\begin{frame}
+%\frametitle{等值线}
+\begin{tikzpicture}[thick,scale=1.7,font=\small,inner sep=0.3pt]
+  \draw[-stealth,thin] (0,0) node[below left]{$O$} -- (3.6,0) node[below=3pt]{$x$};
+  \draw[-stealth,thin] (0,0) -- (0,2.5) node[left=2pt]{$y$};
+  \draw[color=accent3] (0,0) ellipse ({sqrt(16/8)} and {sqrt(16/16)});
+  \draw[color=accent3!50!accent4] (0,0) ellipse ({sqrt(17/7)} and {sqrt(17/14)});
+  \draw[color=accent4] (0,0) ellipse ({sqrt(18/6)} and {sqrt(18/12)});
+  \node[fill=back1] at (-10:{sqrt(18/6)} ) {$60$};
+  \draw[color=accent4!50!accent2] (0,0) ellipse ({sqrt(19/5)} and {sqrt(19/10)});
+  \draw[color=accent2] (0,0) ellipse ({sqrt(20/4)} and {sqrt(20/8)});
+  \node[fill=back1] at (-10:{sqrt(20/4)} ) {$40$};
+  \draw[color=accent2!50!accent1] (0,0) ellipse ({sqrt(21/3)} and {sqrt(21/6)});
+  \draw[color=accent1] (0,0) ellipse ({sqrt(22/2)} and {sqrt(22/4)});
+  \node[fill=back1] at (-10:{sqrt(22/2)} ) {$20$};
+  \draw[densely dashed,domain=-1.5:1.5,smooth] plot (\x,{(\x)^2});
+  \draw[densely dashed,domain=-2.5:2.5,smooth,thin] plot (\x,{-0.3*(\x)^2});
+  \draw (1.4,0.8) -- (0.6,1.2); 
+  \draw[-stealth,accent3] (1,1) -- +(0.25,0.5);
+  \draw[-stealth,accent1] (1,1) -- +(-0.25,-0.5);
+  \path[draw=text1,fill=accent3] (1,1) circle (0.8pt);
+  \node[right,font=\normalsize,accent1] at (-3.3,2.5) {等值线$f(x,y)=c$};
+  \node[left,font=\normalsize] at (3.6,2.5) {梯度曲线$y=x^2$};
+\end{tikzpicture}
+\end{frame}
+
+\begin{rframe}
+\begin{property*}
+过点$(x_0,y_{0})$处的梯度$\grad f(x_0,y_0)$垂直于过该点的等值线．
+即梯度向量是等值线的法向量．
+\end{property*}
+\begin{proof}
+等值线$f(x,y)=c$的切线斜率为$\displaystyle\wfrac[0.2em]{\dy}{\dx}=-\wfrac[0.4em]{f'_x}{f'_y}$，
+而梯度向量$\big(f'_x,\;f'_y\big)$的斜率为$\displaystyle\smash[t]{\wfrac[0.4em]{f'_y}{f'_x}}$．
+两个斜率乘积为$-1$，从而两者相互垂直．
+\end{proof}
+%\begin{proof}
+%设该等值线参数方程为$(x(t),y(t))$，且$t=t_0$时对应$(x_0,y_0)$点．
+%由$f\big(x(t),y(t)\big)\equiv c$得
+%\begin{align*}
+%0&=\left.\frac{\d}{\dt}\;f\big(x(t),y(t)\big)\right|_{t=t_0} \\
+% &=f'_{x}(x_0,y_0)\cdot x'(t_0)+f'_{y}(x_0,y_0)\cdot y'(t_0) \\
+% &=\grad f(x_0,y_0)\cdot\big(x'(t_0),y'(t_0)\big)
+%\end{align*}\vskip-\baselineskip
+%\end{proof}
+\end{rframe}
+
+%\begin{sframe}
+%\frametitle{二元函数的梯度}
+%\begin{example}
+%求梯度$\grad\dfrac1{x^2+y^2}$．
+%\end{example}
+%\vpause
+%\begin{example}
+%设$f(x,y)=\frac12(x^2+y^2)$，$P_0(1,1)$，求
+%\begin{enumlite}
+%  \item $f(x,y)$在$P_0$处增加最快的方向以及$f(x,y)$在这个方向的方向导数；
+%  \item $f(x,y)$在$P_0$处减少最快的方向以及$f(x,y)$在这个方向的方向导数；
+%  \item $f(x,y)$在$P_0$处的变化率为零的方向． 
+%\end{enumlite}
+%\end{example}
+%\end{sframe}
+
+\begin{frame}
+\frametitle{三元函数的梯度}
+\begin{definition*}
+函数$f(x,y,z)$在点$P_0(x_0,y_0,z_0)$处的\bold{梯度}为
+\begin{align*}
+   &\bold{\grad f(x_0,y_0,z_0) = \nabla f(x_0,y_0,z_0)} \\
+={}&\left(f'_x(x_0,y_0,z_0),\,f'_y(x_0,y_0,z_0),\,f'_z(x_0,y_0,z_0)\right) \\
+={}& f'_x(x_0,y_0,z_0)\,\vi 
+   + f'_y(x_0,y_0,z_0)\,\vj
+   + f'_z(x_0,y_0,z_0)\,\vk.
+\end{align*}
+\end{definition*}
+\vpause
+\begin{example}
+设$f(x,y,z)=x^3-xy^2-z$，$P_0(1,1,0)$，问$f(x,y,z)$在$P_0$处沿什么方向变化最快，
+在这个方向的变化率是多少？
+\end{example}
+%\vpause
+%\begin{example}
+%求曲面$x^2+y^2+z=9$在点$P_0(1,2,4)$的切平面和法线方程．
+%\end{example}
+\end{frame}
+
+\begin{frame}
+%\frametitle{数量场与向量场}
+%\begin{definition}
+%(1) 如果对于空间区域$G$内的任一点$M$，都有一个确定的数量$f(M)$，
+%那么称在这空间区域$G$内确定了一个\bold{数量场}．
+%一个数量场可用一个数量函数$f(M)$来确定．\par
+%(2) 如果对于空间区域$G$内的任一点$M$，都有一个确定的向量$\vec{F}(M)$，
+%那么称在这空间区域$G$内确定了一个\bold{向量场}．
+%一个向量场可用一个向量值函数$\vec{F}(M)$来确定，即
+%\[ \vec{F}(M) = P(M)\vec{i} + Q(M)\vec{j} + R(M)\vec{k}, \]
+%其中$P(M)$, $Q(M)$, $R(M)$ 是点$M$的数量函数．
+%\end{definition}
+\begin{definition}
+(1) 空间区域上的数量函数$f(M)$称为\bold{数量场}．\ppause
+(2) 空间区域上的向量值函数$\vec{F}(M)$称为\bold{向量场}．即有
+\[ \vec{F}(M) = P(M)\;\vec{i} + Q(M)\;\vec{j} + R(M)\;\vec{k}, \]
+其中$P(M)$, $Q(M)$, $R(M)$ 是点$M$的数量函数．
+\end{definition}
+\vpause
+\begin{remark*}
+由数量函数$f(M)$产生的梯度$\grad f(M)$是一个向量场．
+\end{remark*}
+\vpause
+\begin{example}
+求数量场$\dfrac{m}{r}$产生的梯度场，其中常数$m>0$，
+$r=\sqrt{x^2+y^2+z^2}$为原点$O$与点$M(x,y,z)$的距离．
+\end{example}
+\end{frame}
+
+\mybookmark{复习与提高}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}%[1996]
+求函数$u=\ln(x+\sqrt{y^2+z^2})$在点$A(1,0,1)$处沿点$A$指向$B(3,-2,2)$方向的方向导数．
+\pause\cdotfill$\frac12$
+\end{puzzle}
+\vpause
+\begin{puzzle}%[1992]
+求函数$u=\ln(x^2+y^2+z^2)$在点$M(1,2,-2)$处的梯度$\grad u\big|_M$．
+\pause\cdotfill$\big(\frac{2}{9},\frac{4}{9},-\frac{4}{9}\big)$
+\end{puzzle}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}%[总习题16]
+求$u=x^2+y^2+z^2$在椭球面$\dfrac{x^2}{a^2}+\dfrac{y^2}{b^2}+\dfrac{z^2}{c^2}=1$
+上点$M_0(x_0,y_0,z_0)$处沿\CJKunderdot{外法线方向}的方向导数．
+\end{puzzle}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+判定下列函数在$(0,0)$点的偏导数和方向导数是否存在：
+\begin{enumhalf}
+  \item $f(x,y)=\sqrt{x^2+y^2}$ ~
+  \item $g(x,y)=\sqrt[3]{xy}$ ~
+\end{enumhalf}
+\end{puzzle}
+\end{frame}
+
+\fi % <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+\makeatletter
+\beamer@tocsectionnumber=7\relax % 没有 \beamer@tocsubsectionnumber，修改 subsection 计数器时不用改
+\setcounter{section}{7}
+\makeatother
+
+\section{多元函数的极值}
+
+\subsection{多元函数的极值与最值}
+
+\begin{frame}%[shrink=7]
+\frametitle{极值和极值点}
+\begin{definition*}
+设点$(x_0,y_0)$在$z=f(x,y)$定义域内部。\pause
+\begin{enumerate}
+  \item 若对$(x_0,y_0)$去心邻域中任何点$(x,y)$，总有$$f(x,y)<f(x_0,y_0),$$\pause
+        称$(x_0,y_0)$为\bold{极大值点}，$f(x_0,y_0)$为\bold{极大值}。\pause
+  \item 若对$(x_0,y_0)$去心邻域中任何点$(x,y)$，总有$$f(x,y)>f(x_0,y_0),$$\pause
+        称$(x_0,y_0)$为\bold{极小值点}，$f(x_0,y_0)$为\bold{极小值}。
+\end{enumerate}
+\end{definition*}
+\vpause\hrule
+\begin{itemize}
+  \item 极大值和极小值统称\bold{极值}。
+  \item 极大值点和极小值点统称\bold{极值点}。
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{极值和极值点}
+\begin{example}
+对下列各函数，判定点$(0,0)$是否为极值点：\pause
+\begin{enumlite}[<+->]
+  \item $f(x,y)=x^2+y^2$
+  \item $f(x,y)=\sqrt{1-x^2-y^2}$
+  \item $f(x,y)=xy$
+\end{enumlite}
+\end{example}
+\end{frame}
+
+\begin{rframe}
+\frametitle{温习：二元函数与二次曲面}
+(1) \ $f(x,y)=x^2+y^2$\cdotfill 椭圆抛物面\par
+(2) \ $f(x,y)=\sqrt{1-x^2-y^2}$\cdotfill 上半球面\par
+(3) \ $f(x,y)=xy$\cdotfill 双曲抛物面
+\begin{remark*}
+在平面解析几何中，将双曲线$\dfrac{x^2}{2}-\dfrac{y^2}{2}=1$
+绕原点逆时针旋转$45^\circ$，双曲线的方程变成$xy=1$．\par
+在空间解析几何中，将双曲抛物面$z=\dfrac{x^2}{2}-\dfrac{y^2}{2}$
+绕$z$轴逆时针旋转$45^\circ$，双曲抛物面的方程变成$z=xy$．
+\end{remark*}
+\end{rframe}
+
+\begin{frame}
+\frametitle{极值和与驻点}
+\begin{theorem}[极值的必要条件]
+如果 $f(x,y)$ 在 $(x_0,y_0)$ 处取得极值，且偏导数存在，\pause 则有
+\[ f'_x(x_0,y_0)=0,\qquad f'_y(x_0,y_0)=0. \]
+\end{theorem}
+\vpause
+\begin{definition*}
+使两个偏导数都为零的点称为\bold{驻点}。
+\end{definition*}
+\vpause
+\begin{remark*}
+(1) 驻点\warn{未必}都是极值点．\pause 例如$z=xy$．%在原点不是极值点．
+\pause\newline
+(2) 极值点\warn{未必}都是驻点．\pause 例如$z=\sqrt{x^2+y^2}$．%在原点的偏导数不存在．
+\end{remark*}
+\end{frame}
+
+\begin{frame}
+\begin{theorem}[极值的充分条件]
+设函数$f(x,y)$在$(x_0,y_0)$某邻域有连续的二阶偏导数，且$(x_0,y_0)$是它的驻点。\pause
+设 $A=f''_{xx}(x_0,y_0)$，$B=f''_{xy}(x_0,y_0)$，$C=f''_{yy}(x_0,y_0)$，则有\pause
+\begin{enumerate}[<+->][(1)]
+  \item 如果 $AC-B^2>0$，则 $f(x_0,y_0)$ 为极值。
+  \begin{itemize}[<+->]
+    \item 若 $A<0$，则 $f(x_0,y_0)$ 为极大值
+    \item 若 $A>0$，则 $f(x_0,y_0)$ 为极小值
+  \end{itemize}
+  \item 如果 $AC-B^2<0$，则 $f(x_0,y_0)$ 不是极值。
+  \item 如果 $AC-B^2=0$，则 $f(x_0,y_0)$ 是否为极值需另外判定。
+\end{enumerate}
+\end{theorem}
+\end{frame}
+
+\begin{frame}
+\frametitle{极值问题}
+\begin{example}
+求二元函数的极值：
+$$f(x,y)=y^3-x^2+6x-12y+5.$$
+\end{example}
+\vpause
+\begin{exercise}
+求二元函数的极值：
+\begin{enumlite}
+  \item $f(x,y)=4(x-y)-x^2-y^2;$
+  \item $f(x,y)=x^3+y^3-3xy.$
+\end{enumlite}
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\frametitle{最值问题}
+设$f(x,y)$在有界闭区域$D$上连续，在$D$内可微分，且只有有限个驻点．\pause
+则它在$D$上的最值只可能出现在
+\begin{multicols}{2}\begin{enumerate}%[(1)]
+  \item 内部的驻点 \item 边界上的最值点 
+\end{enumerate}\end{multicols}
+\pause\cdotfill\par
+在很多实际问题中，最值一定存在，且在$D$内部取得．此时若驻点唯一，则该驻点就是最值点．
+\end{frame}
+
+\begin{frame}
+\frametitle{最值问题}
+\begin{example}
+要造一个容积为$2$的长方体箱子。问选择长、宽、高为多少时，所用的材料最少？
+\end{example}
+\vpause
+\begin{example}
+有一宽为$24$厘米的长方形铁板，把它两边折起来做成一断面为等腰梯形的水槽。
+问怎样折法才能使断面的面积最大？
+\end{example}
+\end{frame}
+
+\begin{sframe}
+\frametitle{最值问题}
+\begin{example}
+某工厂生产两种产品I和II，出售单价分别为10元与9元。生产$x$单位的产品I与生产$y$单位的产品II的总费用为
+$$C(x,y)=400+2x+3y+0.01(3x^2+xy+3y^2).$$
+问两种产品各生产多少时，总利润最大？
+\end{example}
+\end{sframe}
+
+\subsection{条件极值与拉格朗日乘数法}
+
+\begin{frame}
+\frametitle{极值问题}
+极值问题$\left\{\begin{array}{@{}l@{}}
+\text{\bold{无条件极值}\quad 对自变量只有定义域限制} \\
+\text{\bold{\makebox[5em][s]{条\ 件\ 极\ 值}}\quad
+    \smash[b]{\parbox[t]{12em}{要求自变量满足某些方程}}}
+\end{array}
+\right.$
+\ppause\cdotfill
+\begin{example*}
+求$z=xy$在条件$x^2+y^2=1$下的极值．
+\end{example*}
+\cdotfill\ppause
+条件极值的求法$\left\{\begin{array}{@{}l@{}}
+\text{\bold{代入法}\quad 消去变量化为无条件极值} \\
+\text{\bold{拉格朗日乘数法}\quad 直接求解方程组}
+\end{array}
+\right.$
+\end{frame}
+
+\begin{frame}
+\frametitle{拉格朗日乘数法1}
+\begin{problem*}
+求函数$u=f(x,y)$在约束条件$g(x,y)=0$下的极值。
+\end{problem*}
+\pause
+\begin{method*}
+令$L(x,y)=f(x,y)+\lambda g(x,y)$，\pause 由
+$$\left\{\begin{aligned}
+L'_x(x,y)&=0\\L'_y(x,y)&=0\\g(x,y)&=0
+\end{aligned}\right.$$\pause
+消去$\lambda$，解得的$(x,y)$即为极值可疑点。
+\end{method*}
+\end{frame}
+
+\begin{sframe}
+\frametitle{条件最值}
+\begin{example}
+求$f(x,y)=xy^2$在条件$x^2+y^2=1$，$x \ge 0$，$y \ge 0$下的最大值。
+\end{example}
+\vpause
+\begin{exercise}
+求$f(x,y)=x^2y$在条件$x+y=1$，$x \ge 0$，$y \ge 0$下的最大值。
+\end{exercise}
+\end{sframe}
+
+\begin{frame}
+\frametitle{拉格朗日乘数法1}
+\begin{problem*}
+求$u=f(x,y,z)$在约束条件$g(x,y,z)=0$下的极值。
+\end{problem*}
+\pause
+\begin{method*}
+令$L(x,y,z)=f(x,y,z)+\lambda g(x,y,z)$，\pause 由
+$$\left\{\begin{aligned}
+L'_x(x,y,z)&=0\\L'_y(x,y,z)&=0\\L'_z(x,y,z)&=0\\g(x,y,z)&=0
+\end{aligned}\right.$$\pause
+消去$\lambda$，解得的$(x,y,z)$即为极值可疑点。
+\end{method*}
+\end{frame}
+
+\begin{frame}
+\frametitle{条件最值}
+\begin{example}
+求表面积为$a^2$而体积为最大的长方体的体积．
+\end{example}
+\stext{\pause
+\begin{solution}\smark
+$L(x,y,z)=xyz+\lambda(2xy+2yz+2xz-a^2)$\pause
+\[\begin{cases}
+  yz+2\lambda(y+z)=0& \qquad\digitcircled{1}\\
+  xz+2\lambda(x+z)=0& \qquad\digitcircled{2}\\
+  xy+2\lambda(y+x)=0& \qquad\digitcircled{3}
+\end{cases}\]\pause
+$\digitcircled{1}$乘$x$减去$\digitcircled{2}$乘$y$，得到$x=y$．\pause 类似地有$y=z$．
+\end{solution}}
+\end{frame}
+
+\begin{iframe}
+\frametitle{拉格朗日乘数法2}
+\begin{problem*}
+求$u=f(x,y,z)$在约束条件$g(x,y,z)=0$和$h(x,y,z)=0$下的极值。
+\end{problem*}
+\pause
+\begin{method*}
+令$$L(x,y,z)=f(x,y,z)+\lambda g(x,y,z)+\mu h(x,y,z).$$\pause
+由下面方程组$$\left\{\begin{aligned}
+L'_x(x,y,z)&=0, & L'_y(x,y,z)&=0, & L'_z(x,y,z)&=0\\
+g(x,y,z)&=0, & h(x,y,z)&=0
+\end{aligned}\right.$$\pause
+消去$\lambda$和$\mu$，解得的$(x,y,z)$即为极值可疑点。
+\end{method*}
+\end{iframe}
+
+\begin{iframe}
+\frametitle{条件最值}
+\begin{example}%[2008数一第17题]\newline
+已知曲线$C$的方程为$\left\{\begin{array}{l}x^2+y^2-2z^2=0 \\ x+y+3z=5\end{array}\right.$．
+求$C$上距离$xOy$面最远的点和最近的点．
+\end{example}
+\end{iframe}
+
+\begin{jframe}
+%\frametitle{条件最值}
+\begin{solution}
+$L(x,y,z)=\bold{z^2}+\lambda\,g(x,y,z)+\mu\,h(x,y,z)$\pause
+\[\begin{cases}
+  2\lambda x + \mu = 0, & \qquad\digitcircled{1}\\
+  2\lambda y + \mu = 0, & \qquad\digitcircled{2}\\
+  2z - 4\lambda z +3\mu = 0, & \qquad\digitcircled{3}\\
+  x^2+y^2-2z^2=0, & \qquad\digitcircled{4}\\
+  x+y+3z=5. & \qquad\digitcircled{5}
+\end{cases}\]\pause
+由$\digitcircled{1}$和$\digitcircled{2}$得$x=y$，\pause
+代入$\digitcircled{4}$和$\digitcircled{5}$得
+\[\begin{cases}
+  2x^2-2z^2=0, \\ 2x+3z=5.
+\end{cases}\]\pause
+解得$(x,y,z)=(-5,-5,5)$或$(x,y,z)=(1,1,1)$．
+\end{solution}
+\end{jframe}
+
+\begin{iframe}
+\frametitle{拉格朗日乘数法2}
+\begin{problem*}
+求$u=f(x,y,z,t)$在约束条件$g(x,y,z,t)=0$和$h(x,y,z,t)=0$下的极值。
+\end{problem*}
+\pause
+\begin{method*}
+令\begin{align*}L(x,y,z,t)=f(x,y,z,t)&+\lambda g(x,y,z,t)\\&+\mu h(x,y,z,t).\end{align*}\pause
+由下面各式$$\begin{aligned}
+L'_x&=0, & L'_y&=0, & L'_z&=0, & L'_t&=0, & g&=0, & h&=0
+\end{aligned}$$\pause
+消去$\lambda$和$\mu$，解得的$(x,y,z,t)$即为极值可疑点。
+\end{method*}
+\end{iframe}
+
+\begin{sframe}
+\frametitle{条件最值}
+\begin{example}
+求抛物线$y=x^2$和直线$x-y-2=0$的最短距离．
+\end{example}
+\end{sframe}
+
+\mybookmark{复习与提高}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{review}
+求二元函数的极值：
+\begin{enumlite}
+  \item $f(x,y)=xy(1-x-y)$
+  \itext{\pause\item \imark$f(x,y)=(6x-x^2)(4y-y^2)$}
+\end{enumlite}
+\end{review}
+\vpause
+\begin{review}
+求二元函数$f(x,y)=x+2y$在约束条件$x^2+y^2=1$下的最值。
+\end{review}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+已知平面上两定点$A(1,3)$, $B(4,2)$．试在椭圆
+$$\dfrac{x^2}{9}+\dfrac{y^2}{4}=1\quad (x\ge0,y\ge0)$$
+圆周上求一点$C$，使$\triangle ABC$面积$S_{\triangle}$最大或最小．
+\end{puzzle}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+求旋转抛物面$z=x^2+y^2$与平面$x+y-2z=2$之间的最短距离．
+\end{puzzle}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+求二元函数$f(x,y)=x+y-xy$在闭区域$D=\{(x,y)\mid x^2+y^2\le5\}$上的最值．
+\end{puzzle}
+\end{frame}
+
+\begin{sframe}
+\frametitle{复习与提高}
+\vspace{-0.3em}\begin{solution}
+(1) 在区域内部求无条件极值：由
+\[ f'_x(x,y)=1-y=0,\quad f'_y(x,y)=1-x=0 \]
+得驻点$(1,1)$，函数值$f(1,1)=1$．\ppause
+(2) 在区域边界求条件极值：令
+$$L(x,y)=x+y-xy+\lambda(x^2+y^2-5),$$
+解得四组解\vspace{-0.3em}
+\[ 
+(-1,2),\quad (2,-1),\quad 
+\big(\tfrac{\sqrt{10}}{2},\tfrac{\sqrt{10}}{2}\big),\quad
+\big(-\tfrac{\sqrt{10}}{2},-\tfrac{\sqrt{10}}{2}\big)
+\]%\vspace*{-0.1em}%
+因此，函数有最小值$f\big(-\tfrac{\sqrt{10}}{2},-\tfrac{\sqrt{10}}{2}\big)=-\sqrt{10}-\frac{5}{2}$，
+有最大值$f(-1,2)=f(2,-1)=3$．
+\end{solution}
+\end{sframe}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{choice}
+已知函数$f(x,y)$在点$(0,0)$的某个邻域内连续，
+且$\limit_{(x,y)\to(0,0)}\dfrac{f(x,y)-xy}{(x^2+y^2)^2}=1$，则\dotfill(\select{A})
+\begin{choiceline}
+  \item 点$(0,0)$不是$f(x,y)$的极值点
+  \item 点$(0,0)$是$f(x,y)$的极大值点
+  \item 点$(0,0)$是$f(x,y)$的极小值点
+  \item 根据所给条件无法判断点$(0,0)$是否为$f(x,y)$的极值点
+\end{choiceline} 
+\end{choice}
+\end{frame}
+
+\begin{sframe}
+\frametitle{复习与提高}
+\begin{solution}
+首先必有$f(0,0)=0$，且当$(x,y)\to(0,0)$时
+\[ f(x,y)=xy+\big(x^2+y^2\big)^2+o\left(\big(x^2+y^2\big)^2\right) \]
+当$y=x$，且$|x|$充分小时，有
+\[ f(x,y)=x^2+4x^4+o(4x^4)=x^2\big[1+o(1)\big]>0 \]
+当$y=-x$，且$|x|$充分小时，有
+\[ f(x,y)=-x^2+4x^4+o(4x^4)=-x^2\big[1+o(1)\big]<0 \]
+因此$(0,0)$不是$f(x,y)$的极值点．
+\end{solution}
+\end{sframe}
+
+\end{document}

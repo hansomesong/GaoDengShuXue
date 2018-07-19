@@ -1,0 +1,539 @@
+% -*- coding: utf-8 -*-
+% !TEX program = xelatex
+
+%\documentclass[14pt]{article}
+%\usepackage[notheorems]{beamerarticle}
+
+\documentclass[14pt,notheorems,leqno,xcolor={rgb}]{beamer} % ignorenonframetext
+
+\input{../common/theme.sty}
+\input{../common/share.sty}
+\input{../common/local.sty}
+
+\occasion{高等数学第十章}
+\title{第二节·二重积分的计算法}
+\author{\href{https://lvjr.bitbucket.io}{吕荐瑞}}
+\institute{暨南大学数学系}
+\renewcommand<>{\section}[1]{\begin{frame}[plain]\titlepage\end{frame}}
+
+\setbeamerfont{title}{size=\Large}
+
+\makeatletter
+\beamer@tocsectionnumber=2\relax
+\setcounter{section}{2}
+\makeatother
+
+\begin{document}
+%\ifxetex\else\heiti\fi
+
+
+\section{二重积分的计算法}
+
+\subsection{用直角坐标计算二重积分}
+
+\begin{frame}
+\frametitle{直角坐标中的二重积分}
+在直角坐标中，我们有$\cbold\d\sigma=\d x\d y$，从而有
+$$\iint\limits_Df(x,y)\d\sigma=\iint\limits_Df(x,y)\d x\d y$$
+\end{frame}
+
+\begin{frame}
+\frametitle{$X$型区域}
+如果区域$D$由直线$x=a$和$x=b$，以及曲线$y=\phi_1(x)$和$y=\phi_2(x)$围成，
+我们称$D$为 \bold{$X$型区域}。\ppause 即$X$型区域可以表示为：
+$$D=\Big\{(x,y)\big|a\le x\le b, \phi_1(x)\le y\le \phi_2(x)\Big\}$$
+\end{frame}
+
+\begin{frame}
+\frametitle{用直角坐标计算二重积分I}
+如果积分区域$D$为$X$型区域，即有
+$$D=\Big\{(x,y)\big|a\le x\le b, \phi_1(x)\le y\le \phi_2(x)\Big\}$$
+二重积分可以用下面公式来计算：
+$$\iint\limits_Df(x,y)\d\sigma=\int_a^b\left[\int_{\phi_1(x)}^{\phi_2(x)}f(x,y)\d y\right]\d x.$$
+\end{frame}
+
+\begin{frame}
+%设$D=\{(x,y)|\thinspace\varphi_{1}(x)\leq y\leq\varphi_{2}(x),\thinspace a\leq x\leq b\}$，则
+\small\noindent
+$$
+\iint\limits_{D}f(x,y)\d\sigma
+\uncover<3->{=\int_{a}^{b}\lead{A(x)}\d{x}}
+\uncover<5->{=\int_{a}^{b}\left[\lead{\int_{\phi_{1}(x)}^{\phi_{2}(x)}f(x,y)\d{y}}\right]\d{x}}
+$$
+\unskip\quad
+\begin{tikzpicture}[x=(215:2em/sqrt 2), y=(0:2em), z=(90:2em), declare function={
+    f(\x,\y)=((\x-3)^2+(-0.9*\y+3)^3)/8+3; 
+    g(\x,\xa,\ya,\xb,\yb,\c)=\ya*((\x-\xb)/(\xa-\xb))^2+\yb*((\x-\xa)/(\xb-\xa))^2+\c*(\x-\xa)*(\xb-\x);
+  }, line join=round]    
+%coordinates 
+\draw [-stealth, black!75, thin] (0,-1.5,0) -- (6.5,-1.5,0); %node [left, font={\small}] {{$x$}}; 
+\draw [-stealth, black!75, thin] (0,-1.5,0) -- (0,5.5,0) node [right, font={\small}] {$y$}; 
+\draw [-stealth, black!75, thin] (0,-1.5,0) -- (0,-1.5,5) node [right, font={\small}] {$z$};
+%domain
+\def\xa{1}
+\def\xb{5} 
+\def\cl{0.01}
+\def\yal{1} 
+\def\ybl{1} 
+\def\yau{5} 
+\def\ybu{5} 
+\def\cu{0.75}
+\def\xs{2.7} %position of the section 
+\pgfmathsetmacro{\ysl}{g(\xs,\xa,\yal,\xb,\ybl,\cl)}
+\pgfmathsetmacro{\ysu}{g(\xs,\xa,\yau,\xb,\ybu,\cu)}
+\draw plot[variable=\t,domain=\xa:\xb,smooth] (\t,{g(\t,\xa,\yal,\xb,\ybl,\cl)},0); 
+\draw plot[variable=\t,domain=\xa:\xb,smooth] (\t,{g(\t,\xa,\yau,\xb,\ybu,\cu)},0); 
+\draw (1,1,0)--(1,5,0); \draw (5,1,0)--(5,5,0);
+\node[below right,font={\small}] at (4,5,0) {$D$};
+\draw[densely dashed] (1,1,0)--(1,-1.5,0) node[left,font={\small}]{$a$}; 
+\draw[densely dashed] (5,1,0)--(5,-1.5,0) node[left,font={\small}]{$b$};
+\visible<4->{
+\node[below right=-1pt and -8pt,font={\small}] at (\xs,\ysl,0) {$y=\phi_1(x)$}; 
+\node[right,font={\small}] at (\xs,\ysu,0) {$y=\phi_2(x)$};
+}
+\uncover<1->{
+\draw[very thin](1,1,0)--(1,1,{f(1,1)}); 
+\draw[very thin](1,5,0)--(1,5,{f(1,5)}); 
+\draw[very thin](5,1,0)--(5,1,{f(5,1)}); 
+\draw[very thin](5,5,0)--(5,5,{f(5,5)});
+}
+%section 
+\visible<2->{
+\draw[fill=blue!30,opacity=0.5]  
+	plot[variable=\t,domain=\ysl:\ysu,smooth](\xs,\t,{f(\xs,\t)})--(\xs,\ysu,{f(\xs,\ysu)})--(\xs,\ysu,0)--(\xs,\ysl,0)--cycle;
+}
+\visible<2->{
+\draw[densely dashed] (\xs,-1.5,0)node[left,font={\small}]{$x$}--(\xs,\ysl,0); 
+\draw(\xs,\ysl,0)--(\xs,\ysu,0);
+}
+\coordinate (p) at (\xs,-2,{f(\xs,\ysl)/2.5}); 
+\visible<2->{
+\node[left] at (p) {$\lead{A(x)}$};
+}
+\visible<2->{
+\draw[->] (p) to[out=30,in=150] (\xs,{\ysl+0.3},{f(\xs,\ysl)/2.5}); 
+}
+%surfaces
+\uncover<1->{
+\draw [black,thick,fill=black, fill opacity=0.125, domain=0:4, smooth, variable=\t]     
+	plot (1+\t, {g(1+\t,\xa,\yal,\xb,\ybl,\cl)}, {f(1+\t,g(1+\t,\xa,\yal,\xb,\ybl,\cl))}) --     
+	plot (5, 1+\t, {f(5,1+\t)}) --     
+	plot (5-\t, {g(5-\t,\xa,\yau,\xb,\ybu,\cu)}, {f(5-\t,g(5-\t,\xa,\yau,\xb,\ybu,\cu))}) --     
+	plot (1, 5-\t, {f(1,5-\t)}) -- cycle;  
+\node[font={\small}] at (1,3,{f(1,1)}) {$z=f(x,y)$};  
+}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}
+%\frametitle{二重积分的计算}
+\begin{example}
+计算二重积分$\iint_D x^2y\d\sigma$，其中$D$是由$x=1$，$y=2$与$x+y=2$所围成的图形。
+\end{example}
+\vpause
+\begin{example}
+计算二重积分$\iint_D x^2y\d\sigma$，其中$D$是由$x=0$，$y=0$与$x^2+y^2=1$在第一象限所围成的图形。
+\end{example}
+\stext{\begin{remark*}\smark
+这个二重积分也可以用极坐标来计算．
+\end{remark*}}
+\end{frame}
+
+\begin{frame}
+\begin{exercise}
+计算二重积分$\iint_D (x+6y)\d\sigma$，其中$D$是由$x=1$，$y=x$与$y=5x$所围成的图形。
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\frametitle{$Y$型区域}
+如果区域$D$由直线$y=c$和$y=d$，以及曲线$x=\phi_1(y)$和$x=\phi_2(y)$围成，
+我们称$D$为 \bold{$Y$型区域}。\ppause 即$Y$型区域可以表示为：
+$$D=\Big\{(x,y)\big|c\le y\le d, \phi_1(y)\le x\le \phi_2(y)\Big\}$$
+\end{frame}
+
+\begin{frame}
+\frametitle{用直角坐标计算二重积分II}
+如果积分区域$D$为$Y$型区域，即有
+$$D=\Big\{(x,y)\big|c\le y\le d, \phi_1(y)\le x\le \phi_2(y)\Big\}$$
+二重积分可以用下面公式来计算：
+$$\iint\limits_Df(x,y)\d\sigma=\int_c^d\left[\int_{\phi_1(y)}^{\phi_2(y)}f(x,y)\d x\right]\d y.$$
+\end{frame}
+
+\begin{frame}
+%\frametitle{二重积分的计算}
+\begin{example}
+求二重积分$\iint_D x^2y\d\sigma$，其中$D$是由$y=0$，$y=x$与$x+y=2$所围成的图形．
+\end{example}
+\vpause
+\begin{example}
+求二重积分$\iint_D x^2y\d\sigma$，其中$D$是由$x=1$与$x=y^2$所围成的图形．
+\end{example}
+\end{frame}
+
+\begin{frame}
+\begin{exercise}
+用$X$型区域和$Y$型区域分别计算二重积分$\iint_D xy\d\sigma$，
+其中$D$是由$x=0$，$y=1$及$x+y=2$所围成的图形。
+\pause \cdotfill\ $\frac{5}{24}$
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\frametitle{矩形区域的二重积分}
+如果积分区域$D$为\bold{矩形区域}，即
+$$D=\Big\{(x,y)\big|a\le x\le b, c\le y\le d\Big\},$$\pause
+而且被积函数$f(x,y)$ \bold{可分离变量}，即
+$$f(x,y)=g(x)h(y),$$\pause
+则二重积分可以用下面公式来计算：
+$$\iint\limits_Df(x,y)\d\sigma=\left(\int_a^b g(x)\d x\right)\left(\int_c^d h(y)\d y\right).$$
+\end{frame}
+
+%\begin{rframe}
+%\frametitle{用二重积分计算闭区域面积}
+%\begin{example}
+%利用二重积分计算闭区域$D$的面积，其中$D$由$y=x^2$与$y=4x-x^2$所围成的。
+%\end{example}
+%\vpause
+%\begin{exercise}
+%利用二重积分计算闭区域$D$的面积，其中$D$由$y=x^2$与$y=x$所围成的。
+%\end{exercise}
+%\end{rframe}
+
+\subsection{用极坐标计算二重积分}
+
+\begin{frame}
+\frametitle{用极坐标计算二重积分}
+直角坐标$(x,y)$ \onslide<2->{和极坐标$(\rho,\theta)$的关系为}
+\begin{columns}[onlytextwidth]
+\column{.4\textwidth}
+\begin{tikzpicture}[thick,font={\small}]
+%coordinates
+\visible<1->{
+\draw[-stealth] (-0.5,0) -- (3.2,0);
+\draw[-stealth] (0,-0.4) -- (0,2);
+%\node[below left=0pt and 0pt,darkgray] at (0,0){$O$};
+\coordinate (z) at ({3.2*cos(30)},{3.2*sin(30)});
+\draw[dashed] let \p1=(z) in (z) -- (\x1,0);
+\draw[dashed] let \p1=(z) in (z) -- (0,\y1);
+\draw[snake=brace,mirror snake,raise snake=3pt] let \p1=(z) in (0.05,0) -- (\x1,0)
+    node[midway,below=0.1] {$x$};
+\draw[snake=brace,raise snake=3pt] let \p1=(z) in (0,0.05) -- (0,\y1)
+    node[midway,left=0.1] {$y$};
+%\node[draw=none, above right, inner sep=-5pt] at (30:3.5) {$M$};
+\filldraw[fill=accent5] (z) circle[radius=1.2pt];
+}
+\visible<2->{
+\draw[-stealth] (0,0) -- ($(z)-(0.02,0.02)$);
+}
+\visible<2->{
+\draw[snake=brace,raise snake=2pt,blue](0.06,0) -- (z) node[midway,above left,blue]{$\rho$};
+}
+\visible<2->{
+\draw[<->,red] (0:0.8) arc (0:30:0.8);
+\node[red,right] at (20:0.8) {$\theta$}; % some bug in old tikz
+}
+\end{tikzpicture}
+\column{.6\textwidth}
+\visible<3->{
+$$\left\{\begin{gathered}x=\rho\cos\theta\\y=\rho\sin\theta\end{gathered}\right.
+%\Leftrightarrow\left\{\begin{aligned}\rho&=\sqrt{x^2+y^2}\\\theta&=\arctan(y/x)\end{aligned}\right.
+$$}
+\end{columns}
+\onslide<4->
+如果积分区域是圆盘或者圆盘的一部分，用极坐标来计算更容易。\onslide<5-> 此时
+$$\iint\limits_D f(x,y)\,\bold{\d\sigma}
+=\iint\limits_D f(\rho\cos\theta,\rho\sin\theta)\,\bold{\rho\d\rho\d\theta}$$
+\end{frame}
+
+\begin{frame}
+$$\iint\limits_D f(x,y)\,\bold{\d\sigma}
+=\iint\limits_D f(\rho\cos\theta,\rho\sin\theta)\,\bold{\rho\d\rho\d\theta}$$
+\unskip
+\begin{columns}[onlytextwidth,T]
+\column{.6\textwidth}
+\hfill\begin{tikzpicture}
+%coordinates 
+\draw[-stealth,thin,gray] (0,0)--(5.8,0) node[right,font={\small}] {$x$}; 
+\draw[-stealth,thin,gray] (0,0)--(0,5.2) node[below right,font={\small}] {$y$};
+%domain 
+\draw[fill=gray!30] (1,1) to[bend left=105] (4,3.2) to[bend right=-75]
+    node[pos=0.1,below right,font={\small}] {$D$}  (1,1);
+%partition
+\visible<2->{
+\foreach \b in {10,20,...,70}{ 
+	\draw[densely dashed,gray,thin] (0,0)--(\b:5.5); %node[above right,font={\tiny}] {$\theta=\b ^\circ$};
+}
+}
+\visible<3->{
+\foreach \t in {0.5,1,...,5.5}{ 
+	\draw[densely dashed,gray,thin] (10:\t) arc (10:70:\t); %node[left,font={\tiny}] {$\rho=\t$}; 
+}
+}
+%one piece 
+\visible<4->{
+\draw[red,thick,fill=blue!30,opacity=0.6] 
+    (40:3)--(40:3.5)-- 	(40:3.5) arc (40:50:3.5)-- 	(50:3.5)--(50:3)-- 	(50:3) arc (50:40:3)--cycle; 
+\node[font={\footnotesize}] at (45:3.25) {$\visible<5->{\Delta\sigma}$};
+}
+\visible<7->{
+\draw[blue,thick,snake=brace,mirror snake,raise snake=2pt](10:0.05)--(10:2.95)
+    node[pos=0.5,below,font={\footnotesize}] {$\rho$};
+\draw[blue,thick,snake=brace,mirror snake,raise snake=2pt](10:3)--(10:3.5)
+    node[pos=0.5,below,font={\footnotesize}] {$\Delta\rho$}; 
+\draw[red,thick,snake=brace,raise snake=3pt](50:3)--(50:3.5)
+    node[pos=0.5,above left,font={\footnotesize}] {$\Delta\rho$}; 
+}
+\visible<8->{
+\draw[blue,thick,<->](0:5.5) arc (0:39.5:5.5);
+\node[blue,right,font={\footnotesize}] at (20:5.5) {$\theta$}; % some bug in old tikz
+\draw[blue,thick,<->](40:5.5) arc (40:50:5.5) node[right,font={\footnotesize}] {$\Delta\theta$};
+}
+\visible<9->{
+\draw[red,thick,snake=brace,raise snake=2pt](40:3)--(50:3)
+    node[pos=0.5,below left,font={\footnotesize}] {$\rho\Delta\theta$}; 
+}
+\end{tikzpicture}
+\column{.4\textwidth}
+\begin{align*}
+ \visible<6->{\Delta\sigma}
+&\only<6-9|handout:0>{=\mathalpha{??}}
+ \only<10->{\approx\Delta\rho\cdot\rho\Delta\theta}\\
+ \visible<11->{\rightwhitearrow\Delta\sigma}
+&\visible<11->{\approx\rho\cdot\Delta\rho\cdot\Delta\theta}\\
+ \visible<12->{\rightwhitearrow\bold{\d\sigma}}
+&\visible<12->{\bold{{}=\rho\d\rho\d\theta}}
+\end{align*}
+\end{columns}
+\end{frame}
+
+\begin{sframe}
+\frametitle{极坐标中的面积元素}
+\noindent\begin{align*}
+ \uncover<1->{\Delta\sigma}
+&\uncover<1->{=\tfrac12\cdot(\rho+\Delta\rho )^{2}\cdot\Delta\theta}
+ \uncover<1->{-\tfrac12\cdot\rho^{2}\cdot\Delta\theta}\\
+&\uncover<1->{=\rho\cdot\Delta\rho\cdot\Delta\theta+\tfrac{1}{2}\cdot\Delta\rho^{2}\cdot\Delta\theta}
+ \intertext{\uncover<2->{略去高阶无穷小量$\tfrac{1}{2}\cdot\Delta\rho^{2}\cdot\Delta\theta$，得到}}
+ \uncover<2->{\Delta\sigma}
+&\uncover<2->{\approx\rho\Delta\rho\Delta\theta}
+ \uncover<3->{\quad\rightwhitearrow\quad\bold{\d\sigma}}
+ \uncover<3->{\bold{{}=\rho\d\rho\d\theta}}
+\end{align*}
+%%\begin{tikzpicture}
+%%%coordinates 
+%%\draw[-stealth,thin,gray] (0,0)--(5.8,0) node[right,font={\small}] {$x$}; 
+%%\draw[-stealth,thin,gray] (0,0)--(0,5.2) node[below right,font={\small}] {$y$};
+%%%domain 
+%%\draw[fill=gray!30] (1,1) to[bend left=105] (4,3.2) to[bend right=-75]
+%%    node[pos=0.1,below right,font={\small}] {$D$}  (1,1);
+%%%partition
+%%\visible<2->{
+%%\foreach \b in {10,20,...,70}{ 
+%%	\draw[densely dashed,gray,thin] (0,0)--(\b:5.5); %node[above right,font={\tiny}] {$\theta=\b ^\circ$};
+%%}
+%%}
+%%\visible<3->{
+%%\foreach \t in {0.5,1,...,5.5}{ 
+%%	\draw[densely dashed,gray,thin] (10:\t) arc (10:70:\t); %node[left,font={\tiny}] {$\rho=\t$}; 
+%%}
+%%}
+%%%one piece 
+%%\visible<4->{
+%%\draw[red,thick,fill=blue!30,opacity=0.6] 
+%%    (40:3)--(40:3.5)-- 	(40:3.5) arc (40:50:3.5)-- 	(50:3.5)--(50:3)-- 	(50:3) arc (50:40:3)--cycle; 
+%%\node[font={\footnotesize}] at (45:3.25) {$\visible<5->{\Delta\sigma}$};
+%%}
+%%\visible<7->{
+%%\draw[red](0,0)--(40:3); 
+%%\draw[red](0,0)--(50:3);
+%%%
+%%\draw[thick,gray] (0,0)--(40.38:2.98)--(40.38:2.98) arc (40.4:49.58:2.98)--(49.58:2.98)--cycle;
+%%\draw[thick,gray] (0,0)--(39.7:3.52)--(39.7:3.52) arc (39.7:50.3:3.52)--(50.3:3.52)--cycle;
+%%}
+%%\visible<8->{
+%%\draw[orange,thick,<->](0:5.5) arc (0:39.5:5.5);
+%%\node[orange,right,font={\footnotesize}] at (20:5.5) {$\theta$}; % some bug in old tikz
+%%\draw[red,thick,<->](40:5.5) arc (40:50:5.5) node[right,font={\footnotesize}] {$\Delta\theta$}; 
+%%}
+%%\visible<9->{
+%%\draw[orange,thick,snake=brace,raise snake=3pt](50:0.05)--(50:2.95)
+%%    node[pos=0.5,above left=1pt and 1pt,font={\footnotesize}] {$\rho$};
+%%\draw[red,thick,snake=brace,raise snake=3pt](50:3)--(50:3.5)
+%%    node[pos=0.5,above left,font={\footnotesize}] {$\Delta\rho$}; 
+%%}
+%%\end{tikzpicture}
+\end{sframe}
+
+\begin{frame}
+%\frametitle{极坐标中的积分}
+$\iint\limits_D f(\rho\cos\theta,\rho\sin\theta)\,\rho\d\rho\d\theta
+ \only<1-6|handout:0>{=\mathalpha{??}}$\newline
+\visible<7->{\hfill$=\int_{\lead{\alpha}}^{\lead{\beta}}
+    \left[\int_{\warn{\phi_1(\theta)}}^{\warn{\phi_2(\theta)}}
+    f(\rho\cos\theta,\rho\sin\theta)\rho\d\rho\right]\d\theta$}\par
+\begin{columns}[onlytextwidth]
+\column{.5\textwidth}
+\begin{tikzpicture}[thick,font={\small}]
+%coordinates 
+\draw[-stealth,thin,gray] (0,0)--(5.5,0);% node[right] {$x$}; 
+\draw[-stealth,thin,gray] (0,0)--(0,4.8);% node[right] {$y$};
+%domain 
+\draw[fill=gray!30] (1,1) to[bend left=105] (4,3.2) to[bend right=-75] (1,1);
+\node[right] at (2.5,2){$D$};
+%compute the domain
+\path[name path=curve 1,draw=none] (1,1) to[bend left=105](4,3.2); 
+\path[name path=curve 2,draw=none] (4,3.2) to[bend right=-75](1,1);
+\def\a{64.7}
+\def\b{19.7} 
+\visible<2->{
+\draw (0,0) -- (\a:5) node[below left=0pt and 4pt]{$\clead\theta=\beta$}; 
+\draw[fill] (\a:2.05) circle(0.8pt); 
+\draw (0,0) -- (\b:5) node[below=4pt]{$\clead\theta=\alpha$}; 
+\draw[fill] (\b:2.56) circle(0.8pt);
+}
+\visible<3->{
+\draw[name path=line](0,0)--(43:6); 
+\draw[->,color=blue](0:0.8) arc (0:43:0.8);
+\node[color=blue] at (22:0.5) {$\theta$}; % some bug in old tikz
+\fill [red,name intersections={of=line and curve 1}] (intersection-1) circle (1.5pt)
+    node[right]{$\visible<5->{\rho=\phi_2(\theta)}$};
+\fill [red,name intersections={of=line and curve 2}] (intersection-1) circle (1.5pt) 
+    node[right]{$\visible<4->{\rho=\phi_1(\theta)}$};
+}
+\end{tikzpicture}
+\column{.45\textwidth}
+用极坐标表示积分区域
+\begin{enumerate}
+  \item 先求$\theta$的范围
+  \item 再求$\rho$的函数
+\end{enumerate}
+\end{columns}
+\visible<3->{$D=\big\{(\rho,\theta)\mid\lead{\alpha\leq\theta\leq\beta},\,
+       \visible<6->{\warn{\phi_{1}(\theta)\leq\rho\leq\phi_{2}(\theta)}}\big\}$}
+\end{frame}
+
+\begin{frame}
+\frametitle{用极坐标计算二重积分}
+\begin{remark*}
+圆心在原点半径为$R$的圆盘$D$用极坐标表示为
+$$D=\Big\{(\rho,\theta)\,\big|\, 0\le \theta\le 2\pi, 0\le \rho\le R \Big\}.$$
+\end{remark*}
+\vpause
+\begin{example}
+计算二重积分$\displaystyle\iint\limits_D \dfrac{\d\sigma}{1+x^2+y^2}$，
+其中$D$是半径为$1$ 的圆盘$x^2+y^2\le1$。
+\end{example}
+\end{frame}
+
+\begin{iframe}
+\frametitle{用极坐标计算二重积分}
+\begin{example}
+计算二重积分$\displaystyle\iint\limits_D\sqrt{x^2+y^2}\d\sigma$，
+其中$D$是圆$x^2+y^2=2y$围成的区域。
+\end{example}
+\end{iframe}
+
+\begin{frame}
+\begin{exercise}
+计算二重积分$\displaystyle\iint\limits_D \sqrt{x^2+y^2}\d\sigma$，
+其中$D$是半径为$1$的圆盘$x^2+y^2\le1$。
+\pause\cdotfill\ $\frac{2\pi}{3}$
+\end{exercise}
+\end{frame}
+
+\begin{frame}
+\frametitle{用极坐标计算二重积分}
+\begin{example}
+计算二重积分$\displaystyle\iint\limits_D \e^{-(x^2+y^2)}\d\sigma$，
+其中$D$是半径为$R$的圆盘$x^2+y^2\le R^2$。
+\end{example}
+\vpause
+\begin{remark*}
+令$R\to+\infty$，可以得到泊松积分$$\int_{-\infty}^{+\infty}\e^{-x^2}\d{x}=\sqrt{\pi}.$$
+\end{remark*}
+\end{frame}
+
+\mybookmark{复习与提高}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{review}
+计算二重积分$\iint\limits_D xy\d\sigma$，其中$D$是由$x=2$，$y=1$与$y=x$所围成的图形。
+\end{review}
+\vpause
+\begin{review}
+计算二重积分$\iint\limits_D x\sqrt{y}\d\sigma$，其中$D$是由$y=x^2$与$y=\sqrt{x}$所围成的图形。
+\end{review}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{example}[习题第6题]
+交换下列二次积分的次序：
+\begin{enumhalf}
+  \item $\displaystyle\int_0^1\!\dy\!\int_0^y\!f(x,y)\dx$ ~
+  %\item $\displaystyle \int_0^1\dy\int_{-\sqrt{1-y^2}}^{\sqrt{1-y^2}} f(x,y)\dx$．
+  %\setcounter{mylistcnt}{4}
+  \item $\displaystyle\int_1^{\e}\!\dx\!\int_0^{\ln x}\!f(x,y)\dy$ ~
+\end{enumhalf}
+\end{example}
+\vpause
+\begin{example}[总习题第1题]
+求积分$\displaystyle\int_0^2\!\dx\int_x^2\!\e^{-y^2}\dy$．
+\end{example}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+交换下面二次积分的次序：
+$$\int_0^{2}\dx\int_0^{x^2/2}\!\!f(x,y)\dy+\int_2^{2\sqrt2}\!\dx\int_0^{\sqrt{8-x^2}}\!\!f(x,y)\dy.$$
+\end{puzzle}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+设$D$是由$y=x$, $y=0$, $x=\pi$所围成的闭区域，求二重积分：
+$$\iint_D \frac{\sin x}{x}\d\sigma. $$
+\end{puzzle}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+设闭区域$D$由圆周$x^2+y^2=2y$, $x^2+y^2=4y$及直线$x-\sqrt3y=0$, $y-\sqrt3x=0$所围成，求积分
+$$\iint_D (x^2+y^2)\dx\dy. $$
+\end{puzzle}
+\stext{\vpause
+\begin{solution}\smark
+将积分区域用极坐标表示为
+$$D=\left\{ (\rho,\theta) \,\middle|\, \frac{\pi}{6}\le\theta\le\frac{\pi}{3},\;
+            2\sin\theta\le\rho\le4\sin\theta \right\}$$
+求得积分等于$15\left(\dfrac{\pi}{2}-\sqrt3\right)$．
+\end{solution}}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{puzzle}
+设$f(x,y)$连续，求下面函数的导数：
+$$F(t)=\iint\limits_{x^2+y^2\le t^2}\!\!f(x,y)\dx\dy\quad(t>0).$$
+\end{puzzle}
+\end{frame}
+
+\begin{frame}
+\frametitle{复习与提高}
+\begin{choice}
+设$f(x)$为连续函数，$F(t)=\int_1^t\dy\int_y^t f(x)\dx$，则$F'(2)=$\dotfill(\select{B})
+\begin{choicehalf}
+  \item $2f(2)$ ~
+  \item $f(2)$ ~
+  \item $-f(2)$ ~
+  \item $0$ ~
+\end{choicehalf}
+\end{choice}
+\end{frame}
+
+\end{document}

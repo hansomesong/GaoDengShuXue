@@ -1,0 +1,59 @@
+% -*- coding: utf-8 -*-
+
+% ----------------------------------------------
+% 高等数学中的定义和改动
+% ----------------------------------------------
+
+\newif\ifligong % 理工类或经济类
+\ligongtrue
+
+% Repeating Things: P504 in manual 2.10
+\newcommand{\drawline}[4][]{%
+  \foreach \v [remember=\v as \u,count=\i] in {#4} {
+    \ifnum \i > 1
+      \ifodd \i \draw[#1,#3] \u -- \v; \else \draw[#1,#2] \u -- \v; \fi
+    \fi
+  }
+}
+\newcommand{\drawplot}[5][]{%
+  \foreach \v [remember=\v as \u,count=\i] in {#4} {
+    \ifnum \i > 1
+      \ifodd \i \draw[#1,#3] plot[domain=\u:\v] #5; \else \draw[#1,#2] plot[domain=\u:\v] #5; \fi
+    \fi
+  }
+}
+
+% http://tex.stackexchange.com/q/84302
+\DeclareMathOperator{\Prj}{Prj}
+\DeclareMathOperator{\grad}{grad}
+
+\newcommand{\va}{\vec{a\vphantom{b}}}
+\newcommand{\vb}{\vec{b}}
+\newcommand{\vc}{\vec{c\vphantom{b}}}
+\newcommand{\vd}{\vec{d}}
+\newcommand{\ve}{\vec{e}}
+\newcommand{\vi}{\vec{i}}
+\newcommand{\vj}{\vec{j}}
+\newcommand{\vk}{\vec{k}}
+\newcommand{\vn}{\vec{n}}
+\newcommand{\vs}{\vec{s}}
+\newcommand{\vv}{\vec{v}}
+
+\let\ov=\overrightarrow
+
+% xcolor 支持 hsb 色彩模型，但 pgf 不支持，因此需要指定输出的色彩模型为 rgb
+% 在 article 中可以用 \usepackage[rgb]{xcolor} \usepackage{tikz} 解决此问题
+% 在 beamer 中可以用 \documentclass[xcolor={rgb}]{beamer} 解决此问题
+
+%\definecolor{bcolor0}{Hsb}{0,0.6,0.9}   % red 红色
+%\definecolor{bcolor1}{Hsb}{60,0.6,0.9}  % yellow 黄色
+%\definecolor{bcolor2}{Hsb}{120,0.6,0.9} % green 绿色
+%\definecolor{bcolor3}{Hsb}{180,0.6,0.9} % cyan 青色
+%\definecolor{bcolor4}{Hsb}{240,0.6,0.9} % blue 蓝色
+%\definecolor{bcolor5}{Hsb}{300,0.6,0.9} % magenta 洋红色
+
+\colorlet{bcolor0}{accent3}
+\colorlet{bcolor1}{accent1}
+\colorlet{bcolor2}{accent2}
+\colorlet{bcolor3}{accent4}
+\colorlet{bcolor5}{accent5}
